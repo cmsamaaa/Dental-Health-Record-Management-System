@@ -1,0 +1,23 @@
+nav {
+    background-color: #3f96f3;
+    overflow: hidden;
+}
+
+nav a {
+    float: left;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+nav a:hover,
+nav a.active {
+    background-color: #107cf1;
+    color: #f2f2f2;
+}
+
+nav a.nav-right {
+    float: right;
+}

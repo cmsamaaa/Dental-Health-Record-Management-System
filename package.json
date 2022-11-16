@@ -1,0 +1,41 @@
+{
+  "name": "happy-smile",
+  "version": "1.0.0",
+  "description": "Happy Smile - Dental Health Record Management System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "nyc --reporter=html --reporter=text mocha test/test.js --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmsamaaa/Dental-Health-Record-Management-System.git"
+  },
+  "author": "FYP-22-S4-23",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmsamaaa/Dental-Health-Record-Management-System/issues"
+  },
+  "homepage": "https://github.com/cmsamaaa/Dental-Health-Record-Management-System#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "bootstrap": "^5.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jquery": "^3.6.1",
+    "knex": "^2.3.0",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "pug": "^3.0.2",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.20",
+    "nyc": "^15.1.0"
+  }
+}

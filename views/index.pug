@@ -1,0 +1,28 @@
+doctype html
+html
+    head
+        title Home | HappySmile
+        include includes/head
+    body
+        include includes/navbar
+        div.container.text-start.mt-5.mb-5
+            div.row
+                h1.label.mb-4 HappySmile
+            div.row
+                div.col-md-8.col-sm-12.mb-4
+                    span HappySmile is a <span class="label">Dental Health Record Management System</span> developed for the convenience of dental clinics and patients.
+            div.row
+                div.col-md-6.col-sm-12.mb-3
+                    div.card.h-100
+                        h4.card-title.text-center.mt-4.label New Customer?
+                        div.card-body.text-center
+                            div.mb-4
+                                a.btn.btn-custom(href='/verify') Register Now
+                            div Protect your teeth, register with us today!
+                div.col-md-6.col-sm-12.mb-3
+                    div.card.h-100
+                        h4.card-title.text-center.mt-4.label Make an Appointment
+                        div.card-body.text-center
+                            div.mb-4
+                                a.btn.btn-custom(href='/register') Book Here
+                            div For <span class="label">existing</span> customers, please book an appointment here.

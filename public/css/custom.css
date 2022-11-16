@@ -1,0 +1,41 @@
+.label {
+    color: #107cf1;
+    font-weight: bold;
+}
+
+.label-light {
+    color: #D93128;
+}
+
+.btn.btn-custom {
+    background-color: #D93128;
+    color: #fff;
+}
+
+.btn.btn-custom:hover,
+.btn.btn-custom:active {
+    background-color: #B94D48;
+    color: #fff;
+}
+
+.btn.btn-custom-secondary {
+    background-color: #205BAA;
+    color: #fff;
+}
+
+.btn.btn-custom-secondary:hover,
+.btn.btn-custom-secondary:active {
+    background-color: #0757C3;
+    color: #fff;
+}
+
+.btn.btn-custom-info {
+    background-color: #AFC1C5;
+    color: #000;
+}
+
+.btn.btn-custom-info:hover,
+.btn.btn-custom-info:active {
+    background-color: #67878E;
+    color: #fff;
+}

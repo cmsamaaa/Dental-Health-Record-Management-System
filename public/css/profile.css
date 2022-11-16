@@ -1,0 +1,45 @@
+.card {
+    background-color: #afc1c5 !important;
+}
+
+.profile-card {
+    width: 42rem !important;
+    pointer-events: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.profile-banner {
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+    margin-top: 16px;
+    pointer-events: none;
+}
+
+.profile-banner img {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    margin: auto;
+}
+
+.profile-image {
+    border: 1px solid black;
+    padding: 1px !important;
+    margin: 20px;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.profile-note {
+    margin: 0 20px;
+}
