@@ -1,8 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 const path = require('path');
+const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const flash = require('express-flash');
+const session = require('express-session');
 const logger = require('morgan');
+
 
 const errorController = require('./controllers/errorController');
 
@@ -20,11 +25,14 @@ const app = express();
 
 // load view engine
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 // serve css & js
-app.use('/css', express.static(path.join(__dirname, 'public/css')));
-app.use('/img', express.static(path.join(__dirname, 'public/img')));
+// uncomment after placing your favicon in /public
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/css', express.static(path.join(__dirname, 'public/css')));
+// app.use('/img', express.static(path.join(__dirname, 'public/img')));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
@@ -32,6 +40,9 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 // middleware
 app.use(bodyParser.json()); // parse application/json
 app.use(bodyParser.urlencoded({extended: false})); // parse application/x-www-form-urlencoded
+app.use(session({ secret: "tempPass123" }));
+app.use(flash());
+app.use(cookieParser());
 
 // middleware logger
 if (process.env.ENV !== "test")

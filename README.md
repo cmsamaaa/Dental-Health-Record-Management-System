@@ -2,8 +2,8 @@
 
 ## Start the Application
 
-Choose only one of the two following methods below to start the app. Once the app is running, you should be able to 
-access it via `http://localhost:3000`. If you have issues with starting or running the app, please refer to the 
+Choose only one of the two following methods below to start the app. Once the app is running, you should be able to
+access it via `http://localhost:3000`. If you have issues with starting or running the app, please refer to the
 [setup guide](#setup-guide-local) below.
 
 ### 1. Node
@@ -60,14 +60,22 @@ DB_DATABASE=dhrms
 
 | Parameters        | Type     | Description                                                                                                                                                                                       |
 |:------------------|:---------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `URI_IGNORE_PORT` | `Number` | **Required**. Set `1` if the port is not required. By default, you should set to `0` when running locally or when the port is necessary. Live deployment may require this value to be set to `1`. |
-| `ENV`             | `String` | **Optional**. Set value to `test` for unit testing only.                                                                                                                                          |
-| `PORT`            | `Number` | **Optional**. Specify the port that your app will run on. By default, it is set to 3000.                                                                                                          |
-| `DB_HOSTNAME`     | `String` | **Required**. Set database server hostname here.                                                                                                                                                  |
-| `DB_PORT`         | `Number` | **Required**. Set database server port here. By default, MySQL port is set to `3306`.                                                                                                             |
-| `DB_USER`         | `String` | **Required**. Set database username here.                                                                                                                                                         |
-| `DB_PASS`         | `String` | **Required**. Set database password here.                                                                                                                                                         |
-| `DB_DATABASE`     | `String` | **Required**. Set name of database here.                                                                                                                                                          |
+| `URI_IGNORE_PORT` | `Number` | **
+Required**. Set `1` if the port is not required. By default, you should set to `0` when running locally or when the port is necessary. Live deployment may require this value to be set to `1`. |
+| `ENV`             | `String` | **
+Optional**. Set value to `test` for unit testing only.                                                                                                                                          |
+| `PORT`            | `Number` | **
+Optional**. Specify the port that your app will run on. By default, it is set to 3000.                                                                                                          |
+| `DB_HOSTNAME`     | `String` | **
+Required**. Set database server hostname here.                                                                                                                                                  |
+| `DB_PORT`         | `Number` | **
+Required**. Set database server port here. By default, MySQL port is set to `3306`.                                                                                                             |
+| `DB_USER`         | `String` | **
+Required**. Set database username here.                                                                                                                                                         |
+| `DB_PASS`         | `String` | **
+Required**. Set database password here.                                                                                                                                                         |
+| `DB_DATABASE`     | `String` | **
+Required**. Set name of database here.                                                                                                                                                          |
 
 ## npm Commands
 
@@ -106,25 +114,31 @@ the following:
 
 Refer to [package-lock.json](./package-lock.json) for all the nitty-gritty details, or refer to the following for a
 summarised list taken from [package.json](./package.json):
+
 ```json5
     "dependencies": {
       "body-parser": "^1.20.1",
       "bootstrap": "^5.2.2",
+      "cookie-parser": "^1.4.6",
       "cors": "^2.8.5",
+      "ejs": "^3.1.8",
       "express": "^4.18.2",
+      "express-flash": "^0.0.2",
+      "express-session": "^1.17.3",
+      "express-validator": "^6.14.2",
       "jquery": "^3.6.1",
       "knex": "^2.3.0",
       "lodash": "^4.17.21",
       "morgan": "^1.10.0",
       "mysql2": "^2.3.3",
-      "pug": "^3.0.2",
-      "request": "^2.88.2"
-  },
-  "devDependencies": {
-    "chai": "^4.3.7",
-    "chai-http": "^4.3.0",
-    "mocha": "^10.1.0",
-    "nodemon": "^2.0.20",
-    "nyc": "^15.1.0"
-  }
+      "request": "^2.88.2",
+      "serve-favicon": "^2.5.0"
+    },
+    "devDependencies": {
+      "chai": "^4.3.7",
+      "chai-http": "^4.3.0",
+      "mocha": "^10.1.0",
+      "nodemon": "^2.0.20",
+      "nyc": "^15.1.0"
+    }
 ```
