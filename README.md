@@ -1,4 +1,19 @@
-# FYP-22-S4-23
+# HappySmile
+#### Dental Health Record Management System
+
+## Table of Contents
+
+- [Start the Application](#start-the-application)
+    1. [Node.js](#nodejs)
+- [Setup Guide (Local)](#setup-guide-local)
+    1. [Node.js](#1-nodejs)
+    2. [Process Environment Variables](#2-process-environment-variables)
+- [npm Commands](#npm-commands)
+    - [npm ci](#npm-ci)
+    - [npm start](#npm-start)
+    - [npm run dev](#npm-run-dev)
+    - [npm run test](#npm-run-test)
+- [Dependencies](#dependencies)
 
 ## Start the Application
 
@@ -6,7 +21,7 @@ Choose only one of the two following methods below to start the app. Once the ap
 access it via `http://localhost:3000`. If you have issues with starting or running the app, please refer to the
 [setup guide](#setup-guide-local) below.
 
-### 1. Node
+### Node.js
 
 A batch and shell script has been created for your convenience. The script will attempt to set any process environment
 variables before executing `npm start`. Remember to run `npm ci` in the before executing the batch or shell script. You
