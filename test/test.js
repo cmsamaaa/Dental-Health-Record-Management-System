@@ -5,13 +5,15 @@ const should = tester.should();
 
 tester.use(chaiHttp);
 
-describe('Check frontend paths', () => {
+describe('Run all test units', () => {
     before((done) => {
         // create table and insert seed data
+        done();
     });
 
     after((done) => {
         // drop tale
+        done();
     });
 
     /* Start of unit tests */
