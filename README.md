@@ -26,8 +26,8 @@ You may simply execute the following command to start the application:
 ./start.sh
 ```
 
-> **NOTE:** Uncomment the `PORT` in the batch or shell script to set the application to run on an available port of your
-> choice.
+> **NOTE:** Please configure the required environment variables in the script. For more details, you may refer to the 
+> setup guide [below](#2-process-environment-variables).
 
 ## Setup Guide (Local)
 
@@ -43,9 +43,9 @@ as [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 to install Node.js and npm. You may read more about
 it [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-### 2. Process Environment Variables `.env`
+### 2. Process Environment Variables
 
-Before running the app and unit test, you may configure the following optional process environment variable(s).
+Before running the app and unit test, you must configure the required process environment variable(s).
 
 ```
 URI_IGNORE_PORT=0
@@ -60,22 +60,14 @@ DB_DATABASE=dhrms
 
 | Parameters        | Type     | Description                                                                                                                                                                                       |
 |:------------------|:---------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `URI_IGNORE_PORT` | `Number` | **
-Required**. Set `1` if the port is not required. By default, you should set to `0` when running locally or when the port is necessary. Live deployment may require this value to be set to `1`. |
-| `ENV`             | `String` | **
-Optional**. Set value to `test` for unit testing only.                                                                                                                                          |
-| `PORT`            | `Number` | **
-Optional**. Specify the port that your app will run on. By default, it is set to 3000.                                                                                                          |
-| `DB_HOSTNAME`     | `String` | **
-Required**. Set database server hostname here.                                                                                                                                                  |
-| `DB_PORT`         | `Number` | **
-Required**. Set database server port here. By default, MySQL port is set to `3306`.                                                                                                             |
-| `DB_USER`         | `String` | **
-Required**. Set database username here.                                                                                                                                                         |
-| `DB_PASS`         | `String` | **
-Required**. Set database password here.                                                                                                                                                         |
-| `DB_DATABASE`     | `String` | **
-Required**. Set name of database here.                                                                                                                                                          |
+| `URI_IGNORE_PORT` | `Number` | **Required**. Set `1` if the port is not required. By default, you should set to `0` when running locally or when the port is necessary. Live deployment may require this value to be set to `1`. |
+| `ENV`             | `String` | **Optional**. Set value to `test` for unit testing only.                                                                                                                                          |
+| `PORT`            | `Number` | **Optional**. Specify the port that your app will run on. By default, it is set to 3000.                                                                                                          |
+| `DB_HOSTNAME`     | `String` | **Required**. Set database server hostname here.                                                                                                                                                  |
+| `DB_PORT`         | `Number` | **Required**. Set database server port here. By default, MySQL port is set to `3306`.                                                                                                             |
+| `DB_USER`         | `String` | **Required**. Set database username here.                                                                                                                                                         |
+| `DB_PASS`         | `String` | **Required**. Set database password here.                                                                                                                                                         |
+| `DB_DATABASE`     | `String` | **Required**. Set name of database here.                                                                                                                                                          |
 
 ## npm Commands
 
