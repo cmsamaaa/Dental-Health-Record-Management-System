@@ -1,16 +1,16 @@
 const express = require('express');
 
-const frontendController = require('../controllers/frontendController');
+const routeController = require('../controllers/getRouteController');
 
 const router = express.Router();
 
-router.get('/', frontendController.viewIndex);
-router.get('/home', frontendController.viewIndex);
-router.get('/index', frontendController.viewIndex);
-router.get('/login', frontendController.viewLogin);
-router.get('/register', frontendController.viewRegister);
-router.get('/forgot-password', frontendController.viewForgotPassword);
-router.get('/invoice', frontendController.viewInvoice);
-router.get('/invoice-print', frontendController.viewInvoicePrint);
+router.get('/', routeController.viewIndex);
+router.get('/home', routeController.viewIndex);
+router.get('/index', routeController.viewIndex);
+router.get('/login', routeController.viewLogin);
+router.get('/register', routeController.viewRegister);
+router.get('/forgot-password', routeController.viewForgotPassword);
+router.get('/invoice', routeController.viewInvoice);
+router.get('/invoice-print', routeController.viewInvoicePrint);
 
 module.exports = router;
