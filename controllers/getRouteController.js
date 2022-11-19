@@ -7,19 +7,19 @@ exports.viewIndex = async (req, res, next) => {
 };
 
 exports.viewLogin = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('login/login', {
+    res.status(HTTP_STATUS.OK).render('auth/login', {
         path: '/login'
     });
 };
 
 exports.viewRegister = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('login/register', {
+    res.status(HTTP_STATUS.OK).render('auth/register', {
         path: '/register'
     });
 };
 
 exports.viewForgotPassword = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('login/forgot-password', {
+    res.status(HTTP_STATUS.OK).render('auth/forgot-password', {
         path: '/forgot-password'
     });
 };

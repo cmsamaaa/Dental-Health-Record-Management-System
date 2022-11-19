@@ -123,29 +123,30 @@ Refer to [package-lock.json](./package-lock.json) for all the nitty-gritty detai
 summarised list taken from [package.json](./package.json):
 
 ```json5
-    "dependencies": {
-      "body-parser": "^1.20.1",
-      "bootstrap": "^5.2.2",
-      "cookie-parser": "^1.4.6",
-      "cors": "^2.8.5",
-      "ejs": "^3.1.8",
-      "express": "^4.18.2",
-      "express-flash": "^0.0.2",
-      "express-session": "^1.17.3",
-      "express-validator": "^6.14.2",
-      "jquery": "^3.6.1",
-      "knex": "^2.3.0",
-      "lodash": "^4.17.21",
-      "morgan": "^1.10.0",
-      "mysql2": "^2.3.3",
-      "request": "^2.88.2",
-      "serve-favicon": "^2.5.0"
-    },
-    "devDependencies": {
-      "chai": "^4.3.7",
-      "chai-http": "^4.3.0",
-      "mocha": "^10.1.0",
-      "nodemon": "^2.0.20",
-      "nyc": "^15.1.0"
-    }
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "bootstrap": "^5.2.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "jquery": "^3.6.1",
+    "knex": "^2.3.0",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "request": "^2.88.2",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.20",
+    "nyc": "^15.1.0"
+  }
 ```

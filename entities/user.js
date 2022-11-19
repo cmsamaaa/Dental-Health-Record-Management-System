@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const db = require('./db');
 const tableName = 'users';
 
@@ -18,6 +19,7 @@ class User {
     /**
      * Inserts a `user` record
      * Can be used for registration
+     * Returns: User
      * */
     async createUser() {
         let result;
@@ -40,23 +42,24 @@ class User {
     }
 
     /**
-     * Retrieves a `user` record by matching email AND password column
+     * Retrieves a `user` record and checks if password matches hash
      * Can be used for login authentication
      * */
     async authenticateUser() {
         let result;
+        let isMatch = false;
         try {
-            result = db(tableName)
-                .select('userId', 'firstName', 'lastName', 'email', 'nric', 'DOB', 'profilePic')
-                .where('email', this.email)
-                .where('password', this.password);
+            result = await db(tableName).select('*').where('email', this.email);
+
+            if (Array.isArray(result) && result.length)
+                isMatch = await bcrypt.compare(this.password, result[0].password);
         }
         catch (e) {
             console.error(e);
-            result = {}
+            result = {};
         }
 
-        return result;
+        return isMatch ? {userId: result[0].userId} : {};
     }
 }
 

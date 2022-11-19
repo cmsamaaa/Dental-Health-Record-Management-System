@@ -7,7 +7,6 @@ exports.createUser = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const user = new User(req.body);
         const results = await user.createUser();
-        console.log(results);
 
         if (!_.isEmpty(results))
             res.status(HTTP_STATUS.CREATED).json({userId: results[0]});
@@ -17,13 +16,14 @@ exports.createUser = async (req, res, next) => {
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
 };
 
-exports.retrieveUser = async (req, res, next) => {
+exports.authenticateUser = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const user = new User(req.body);
-        const results = await user.authenticateUser();
+        const result = await user.authenticateUser();
 
-        if (!_.isEmpty(results))
-            res.status(HTTP_STATUS.CREATED).json({userId: results[0].userId});
+        if (!_.isEmpty(result)) {
+            res.status(HTTP_STATUS.OK).json(result);
+        }
         else
             res.status(HTTP_STATUS.BAD_REQUEST).json({});
     } else
