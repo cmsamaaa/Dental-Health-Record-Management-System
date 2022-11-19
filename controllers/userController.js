@@ -38,9 +38,16 @@ exports.login = async (req, res, next) => {
         url: uri,
         form: req.body
     }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK)
+        if (response.statusCode === HTTP_STATUS.OK) {
+            req.session.isLoggedIn = true;
             res.redirect(parse_uri.parse(req, '/index?result=true&id=' + JSON.parse(body).userId));
+        }
         else
             res.redirect(parse_uri.parse(req, '/login?error=true'));
     });
+};
+
+exports.logout = async (req, res, next) => {
+    req.session.destroy();
+    res.redirect(parse_uri.parse(req, '/login?logout=true'));
 };
