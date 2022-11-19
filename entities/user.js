@@ -6,7 +6,6 @@ class User {
     firstName;
     lastName;
     email;
-    username;
     password;
     nric;
     DOB;
@@ -27,11 +26,30 @@ class User {
                 firstName: this.firstName,
                 lastName: this.lastName,
                 email: this.email,
-                username: this.username,
                 password: this.password,
                 nric: this.nric,
                 DOB: this.DOB
             });
+        }
+        catch (e) {
+            console.error(e);
+            result = {}
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves a `user` record by matching email AND password column
+     * Can be used for login authentication
+     * */
+    async authenticateUser() {
+        let result;
+        try {
+            result = db(tableName)
+                .select('userId', 'firstName', 'lastName', 'email', 'nric', 'DOB', 'profilePic')
+                .where('email', this.email)
+                .where('password', this.password);
         }
         catch (e) {
             console.error(e);
