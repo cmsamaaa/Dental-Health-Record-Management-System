@@ -1,6 +1,9 @@
 const express = require('express');
 
-const routeController = require('../controllers/getRouteController');
+const routeController = require('../route-controllers/routeController');
+const adminRouteController = require('../route-controllers/routeController-admin');
+const patientRouteController = require('../route-controllers/routeController-patient');
+const dentistRouteController = require('../route-controllers/routeController-dentist');
 const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
@@ -16,5 +19,18 @@ router.get('/home', isAuth, routeController.viewIndex);
 router.get('/index', isAuth, routeController.viewIndex);
 router.get('/invoice', isAuth, routeController.viewInvoice);
 router.get('/invoice-print', isAuth, routeController.viewInvoicePrint);
+
+// Admin Route
+router.get('/admin/patient/view-all', isAuth, adminRouteController.viewPatients);
+router.get('/admin/appointment/view-all', isAuth, adminRouteController.viewAppointments);
+router.get('/admin/inventory/view-all', isAuth, adminRouteController.viewInventory);
+router.get('/admin/bills/view-all', isAuth, adminRouteController.viewBills);
+
+// Patient Route
+router.get('/patient/appointment/view-all', isAuth, patientRouteController.viewAppointments);
+router.get('/patient/bills/view-all', isAuth, patientRouteController.viewBills);
+
+// Dentist Route
+router.get('/dentist/appointment/view-all', isAuth, dentistRouteController.viewAppointments);
 
 module.exports = router;

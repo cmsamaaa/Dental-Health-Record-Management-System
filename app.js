@@ -9,7 +9,7 @@ const session = require('express-session');
 const logger = require('morgan');
 
 
-const errorController = require('./controllers/errorController');
+const errorController = require('./route-controllers/errorController');
 
 // routers
 const frontendRoutes = require('./routes/frontend');
