@@ -24,6 +24,12 @@ exports.viewInventory = async (req, res, next) => {
     });
 };
 
+exports.createInventory = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('form/create-inventory', {
+        path: '/admin/inventory/new-record'
+    });
+};
+
 exports.viewBills = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('table/admin-bills', {
         path: '/admin/bill/view-all'
