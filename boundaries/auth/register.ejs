@@ -1,16 +1,11 @@
 <%- include('../includes/head.ejs') %>
-<style>
-    input[type="date"]::-webkit-inner-spin-button,
-    input[type="date"]::-webkit-calendar-picker-indicator {
-        display: none;
-        -webkit-appearance: none;
-    }
-</style>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
 </head>
 <body class="hold-transition register-page">
-<!-- Navbar -->
+<!-- Preloader -->
 <%- include('../includes/preloader.ejs') %>
-<!-- /.navbar -->
+<!-- /.preloader -->
 <div class="register-box">
     <%- include('login-logo.ejs') %>
     <!-- /.login-logo -->
@@ -44,7 +39,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input id="tb_DOB" name="DOB" type="date" class="form-control" placeholder="Birthday">
+                    <input type="date" id="tb_DOB" name="DOB" class="form-control" placeholder="dd/mm/yyyy" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-calendar"></span>

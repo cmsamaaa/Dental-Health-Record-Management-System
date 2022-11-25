@@ -1,0 +1,14 @@
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type=date]:required:invalid::-webkit-datetime-edit-fields-wrapper {
+    color: grey;
+}
+
+input[type=date]:required:valid::-webkit-datetime-edit-fields-wrapper,
+input[type=date]:focus::-webkit-datetime-edit-fields-wrapper {
+    color: black !important;
+}

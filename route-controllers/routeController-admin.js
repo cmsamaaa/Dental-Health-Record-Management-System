@@ -6,6 +6,12 @@ exports.viewPatients = async (req, res, next) => {
     });
 };
 
+exports.createPatient = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('form/create-patient', {
+        path: '/admin/patient/create'
+    });
+};
+
 exports.viewAppointments = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('table/admin-appointments', {
         path: '/admin/appointment/view-all'
