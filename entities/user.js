@@ -10,6 +10,7 @@ class User {
     password;
     nric;
     DOB;
+    gender;
     profilePic;
 
     constructor(data) {
@@ -30,7 +31,8 @@ class User {
                 email: this.email,
                 password: this.password,
                 nric: this.nric,
-                DOB: this.DOB
+                DOB: this.DOB,
+                gender: this.gender
             });
         }
         catch (e) {

@@ -8,6 +8,9 @@
 </style>
 </head>
 <body class="hold-transition register-page">
+<!-- Navbar -->
+<%- include('../includes/preloader.ejs') %>
+<!-- /.navbar -->
 <div class="register-box">
     <%- include('login-logo.ejs') %>
     <!-- /.login-logo -->
@@ -49,6 +52,25 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
+                    <label class="form-check-label ml-1" for="exampleRadios1">
+                        Gender
+                    </label>
+                    <div class="form-check ml-4">
+                        <input class="form-check-input" type="radio" name="gender" id="rb_gender_male"
+                               value="Male">
+                        <label class="form-check-label" for="rb_gender_male">
+                            Male
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <input class="form-check-input" type="radio" name="gender" id="rb_gender_female"
+                               value="Female">
+                        <label class="form-check-label" for="rb_gender_female">
+                            Female
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
                     <input id="tb_email" name="email" type="email" class="form-control" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -65,7 +87,8 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input id="tb_confirmPassword" name="confirmPassword" type="password" class="form-control" placeholder="Retype password">
+                    <input id="tb_confirmPassword" name="confirmPassword" type="password" class="form-control"
+                           placeholder="Retype password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
