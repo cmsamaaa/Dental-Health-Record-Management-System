@@ -18,41 +18,43 @@
     //   }
     // }, 1000)
 
+    $('body').addClass('layout-fixed');
+
     if (localStorage.getItem('dark-mode') === 'true') {
-        document.body.classList.add('dark-mode');
+        $('body').addClass('dark-mode');
     }
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    function createSkinBlock(colors, callback, noneSelected) {
-        var $block = $('<select />', {
-            class: noneSelected ? 'custom-select mb-3 border-0' : 'custom-select mb-3 text-light border-0 ' + colors[0].replace(/accent-|navbar-/, 'bg-')
-        });
-
-        if (noneSelected) {
-            var $default = $('<option />', {
-                text: 'None Selected'
-            });
-
-            $block.append($default);
-        }
-
-        colors.forEach(function (color) {
-            var $color = $('<option />', {
-                class: (typeof color === 'object' ? color.join(' ') : color).replace('navbar-', 'bg-').replace('accent-', 'bg-'),
-                text: capitalizeFirstLetter((typeof color === 'object' ? color.join(' ') : color).replace(/navbar-|accent-|bg-/, '').replace('-', ' '))
-            });
-
-            $block.append($color);
-        });
-        if (callback) {
-            $block.on('change', callback);
-        }
-
-        return $block;
-    }
+    // function createSkinBlock(colors, callback, noneSelected) {
+    //     var $block = $('<select />', {
+    //         class: noneSelected ? 'custom-select mb-3 border-0' : 'custom-select mb-3 text-light border-0 ' + colors[0].replace(/accent-|navbar-/, 'bg-')
+    //     });
+    //
+    //     if (noneSelected) {
+    //         var $default = $('<option />', {
+    //             text: 'None Selected'
+    //         });
+    //
+    //         $block.append($default);
+    //     }
+    //
+    //     colors.forEach(function (color) {
+    //         var $color = $('<option />', {
+    //             class: (typeof color === 'object' ? color.join(' ') : color).replace('navbar-', 'bg-').replace('accent-', 'bg-'),
+    //             text: capitalizeFirstLetter((typeof color === 'object' ? color.join(' ') : color).replace(/navbar-|accent-|bg-/, '').replace('-', ' '))
+    //         });
+    //
+    //         $block.append($color);
+    //     });
+    //     if (callback) {
+    //         $block.on('change', callback);
+    //     }
+    //
+    //     return $block;
+    // }
 
     var $sidebar = $('.control-sidebar');
     var $container = $('<div />', {
@@ -74,7 +76,7 @@
         class: 'mr-1'
     }).on('click', function () {
         if ($(this).is(':checked')) {
-            $('body').addClass('dark-mode')
+            $('body').addClass('dark-mode');
             localStorage.setItem('dark-mode', 'true');
         } else {
             $('body').removeClass('dark-mode');
