@@ -27,12 +27,12 @@ router.get('/admin/appointment/create', isAuth, adminRouteController.createAppoi
 router.get('/admin/appointment/view-all', isAuth, adminRouteController.viewAppointments);
 router.get('/admin/inventory/view-all', isAuth, adminRouteController.viewInventory);
 router.get('/admin/inventory/new-record', isAuth, adminRouteController.createInventory);
-router.get('/admin/bills/view-all', isAuth, adminRouteController.viewBills);
+router.get('/admin/bill/view-all', isAuth, adminRouteController.viewBills);
 
 // Patient Route
 router.get('/patient/appointment/create', isAuth, patientRouteController.createAppointment);
 router.get('/patient/appointment/view-all', isAuth, patientRouteController.viewAppointments);
-router.get('/patient/bills/view-all', isAuth, patientRouteController.viewBills);
+router.get('/patient/bill/view-all', isAuth, patientRouteController.viewBills);
 
 // Dentist Route
 router.get('/dentist/appointment/view-all', isAuth, dentistRouteController.viewAppointments);

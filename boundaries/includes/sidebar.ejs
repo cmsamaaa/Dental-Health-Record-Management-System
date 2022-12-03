@@ -18,6 +18,7 @@
     </div>
 
     <!-- Sidebar Menu -->
+    <% const arrPath = path.replaceAll('-', ' ').split('/') %>
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
@@ -25,13 +26,13 @@
         <!-- Start of Administration -->
         <li class="nav-header">ADMINISTRATION</li>
         <li class="nav-item">
-          <a href="/" class="nav-link active">
+          <a href="/" class="nav-link <% if(arrPath[1] === '') { %>active<% } %>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'patient') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'patient') { %>active<% } %>">
             <i class="nav-icon fas fa-book-medical"></i>
             <p>
               Patients
@@ -40,13 +41,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/admin/patient/create" class="nav-link">
+              <a href="/admin/patient/create" class="nav-link <% if(path === '/admin/patient/create') { %>active<% } %>">
                 <i class="nav-icon fas fa-file-medical"></i>
                 <p>Register</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/admin/patient/view-all" class="nav-link">
+              <a href="/admin/patient/view-all" class="nav-link <% if(path === '/admin/patient/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
                 <p>View All</p>
               </a>
@@ -59,8 +60,8 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'appointment') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
             <p>
               Appointments
@@ -69,13 +70,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/admin/appointment/create" class="nav-link">
+              <a href="/admin/appointment/create" class="nav-link <% if(path === '/admin/appointment/create') { %>active<% } %>">
                 <i class="nav-icon fas fa-plus"></i>
                 <p>Create</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/admin/appointment/view-all" class="nav-link">
+              <a href="/admin/appointment/view-all" class="nav-link <% if(path === '/admin/appointment/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
                 <p>View All</p>
               </a>
@@ -88,8 +89,8 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'inventory') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'inventory') { %>active<% } %>">
             <i class="nav-icon fas fa-boxes"></i>
             <p>
               Inventory
@@ -98,13 +99,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/admin/inventory/new-record" class="nav-link">
+              <a href="/admin/inventory/new-record" class="nav-link <% if(path === '/admin/inventory/new-record') { %>active<% } %>">
                 <i class="nav-icon fas fa-dolly-flatbed"></i>
                 <p>New Record</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/admin/inventory/view-all" class="nav-link">
+              <a href="/admin/inventory/view-all" class="nav-link <% if(path === '/admin/inventory/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
                 <p>View All</p>
               </a>
@@ -117,8 +118,8 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'bill') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'bill') { %>active<% } %>">
             <i class="nav-icon fas fa-file-invoice-dollar"></i>
             <p>
               Bills
@@ -127,7 +128,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/admin/bills/view-all" class="nav-link">
+              <a href="/admin/bill/view-all" class="nav-link <% if(path === '/admin/bill/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
                 <p>View All</p>
               </a>
@@ -144,8 +145,8 @@
 
         <!-- Start of Patient -->
         <li class="nav-header">PATIENT</li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
             <p>
               Appointments
@@ -154,21 +155,21 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/patient/appointment/create" class="nav-link">
+              <a href="/patient/appointment/create" class="nav-link <% if(path === '/patient/appointment/create') { %>active<% } %>">
                 <i class="nav-icon fas fa-plus"></i>
                 <p>Create</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/patient/appointment/view-all" class="nav-link">
+              <a href="/patient/appointment/view-all" class="nav-link <% if(path === '/patient/appointment/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
                 <p>View All</p>
               </a>
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <% if(arrPath[1] === 'patient' && arrPath[2] === 'bill') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'patient' && arrPath[2] === 'bill') { %>active<% } %>">
             <i class="nav-icon fas fa-file-invoice-dollar"></i>
             <p>
               Bills
@@ -177,7 +178,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/patient/bills/view-all" class="nav-link">
+              <a href="/patient/bill/view-all" class="nav-link <% if(path === '/patient/bill/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
                 <p>View All</p>
               </a>
@@ -195,7 +196,7 @@
         <!-- Start of Dentist -->
         <li class="nav-header">DENTIST</li>
         <li class="nav-item">
-          <a href="/dentist/appointment/view-all" class="nav-link">
+          <a href="/dentist/appointment/view-all" class="nav-link <% if(path === '/dentist/appointment/view-all') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
             <p>Appointments</p>
           </a>
@@ -204,7 +205,7 @@
 
         <li class="nav-header">MISCELLANEOUS</li>
         <li class="nav-item">
-          <a href="/invoice" class="nav-link">
+          <a href="/invoice" class="nav-link <% if(path === '/invoice') { %>active<% } %>">
             <i class="fas fa-receipt nav-icon"></i>
             <p>Invoice Template</p>
           </a>
@@ -213,26 +214,6 @@
           <a href="https://adminlte.io/docs/3.1/" class="nav-link">
             <i class="nav-icon fas fa-file"></i>
             <p>Documentation</p>
-          </a>
-        </li>
-
-        <li class="nav-header">LABELS</li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon far fa-circle text-danger"></i>
-            <p class="text">Important</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon far fa-circle text-warning"></i>
-            <p>Warning</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon far fa-circle text-info"></i>
-            <p>Informational</p>
           </a>
         </li>
       </ul>
