@@ -13,8 +13,8 @@ class Patient extends User {
     familyId;
     userId;
 
-    constructor(data, user) {
-        super(user);
+    constructor(data) {
+        super(data);
         Object.assign(this, data);
     }
 
