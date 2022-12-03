@@ -23,13 +23,14 @@ router.get('/invoice-print', isAuth, routeController.viewInvoicePrint);
 // Admin Route
 router.get('/admin/patient/view-all', isAuth, adminRouteController.viewPatients);
 router.get('/admin/patient/create', isAuth, adminRouteController.createPatient);
-router.get('/admin/appointment/view-all', isAuth, adminRouteController.viewAppointments);
 router.get('/admin/appointment/create', isAuth, adminRouteController.createAppointment);
+router.get('/admin/appointment/view-all', isAuth, adminRouteController.viewAppointments);
 router.get('/admin/inventory/view-all', isAuth, adminRouteController.viewInventory);
 router.get('/admin/inventory/new-record', isAuth, adminRouteController.createInventory);
 router.get('/admin/bills/view-all', isAuth, adminRouteController.viewBills);
 
 // Patient Route
+router.get('/patient/appointment/create', isAuth, patientRouteController.createAppointment);
 router.get('/patient/appointment/view-all', isAuth, patientRouteController.viewAppointments);
 router.get('/patient/bills/view-all', isAuth, patientRouteController.viewBills);
 
