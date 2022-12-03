@@ -20,7 +20,7 @@ class User {
     /**
      * Inserts a `user` record
      * Can be used for registration
-     * Returns: User
+     * Returns: Object
      * */
     async createUser() {
         let result;
@@ -72,7 +72,7 @@ class User {
     async getAllNRIC() {
         let result;
         try {
-            result = await db(tableName).select('userId', 'nric').where('verifiedEmail', 1).where('isDeactivated', 0);
+            result = await db(tableName).select('userId', 'nric').where('isDeactivated', 0);
         }
         catch (e) {
             console.error(e);
