@@ -37,7 +37,7 @@ class User {
         }
         catch (e) {
             console.error(e);
-            result = {}
+            result = {};
         }
 
         return result;
@@ -46,6 +46,7 @@ class User {
     /**
      * Retrieves a `user` record and checks if password matches hash
      * Can be used for login authentication
+     * Returns: JSON
      * */
     async authenticateUser() {
         let result;
@@ -61,7 +62,24 @@ class User {
             result = {};
         }
 
-        return isMatch ? {userId: result[0].userId} : {};
+        return isMatch ? { userId: result[0].userId } : {};
+    }
+
+    /**
+     * Retrieves all `user` userId and NRIC records
+     * Returns: JSON[]
+     * */
+    async getAllNRIC() {
+        let result;
+        try {
+            result = await db(tableName).select('userId', 'nric').where('verifiedEmail', 1).where('isDeactivated', 0);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
     }
 }
 

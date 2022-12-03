@@ -9,7 +9,7 @@ exports.createUser = async (req, res, next) => {
         const results = await user.createUser();
 
         if (!_.isEmpty(results))
-            res.status(HTTP_STATUS.CREATED).json({userId: results[0]});
+            res.status(HTTP_STATUS.CREATED).json({ userId: results[0] });
         else
             res.status(HTTP_STATUS.BAD_REQUEST).json({});
     } else
@@ -27,5 +27,16 @@ exports.authenticateUser = async (req, res, next) => {
         else
             res.status(HTTP_STATUS.BAD_REQUEST).json({});
     } else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
+
+exports.getAllNRIC = async (req, res, next) => {
+    const user = new User();
+    const result = await user.getAllNRIC();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).json(result);
+    }
+    else
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
 };
