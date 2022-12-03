@@ -1,7 +1,8 @@
 <%- include('../includes/head.ejs') %>
 </head>
+
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+  <div class="wrapper">
     <!-- Navbar -->
     <%- include('../includes/navbar.ejs') %>
     <!-- /.navbar -->
@@ -11,73 +12,57 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Invoice</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Invoice</li>
-                        </ol>
-                    </div>
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="callout callout-info">
+                <h5><i class="fas fa-info"></i> Note:</h5>
+                This page has been enhanced for printing. Click the print button at the bottom of the
+                invoice.
+              </div>
+
+
+              <!-- Main content -->
+              <div class="invoice p-3 mb-3">
+                <%- include('invoice-body.ejs') %>
+
+                <!-- this row will not appear when printing -->
+                <div class="row no-print">
+                  <div class="col-12">
+                    <a href="/invoice-print" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                      Payment
+                    </button>
+                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                      <i class="fas fa-download"></i> Generate PDF
+                    </button>
+                  </div>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="callout callout-info">
-                            <h5><i class="fas fa-info"></i> Note:</h5>
-                            This page has been enhanced for printing. Click the print button at the bottom of the
-                            invoice.
-                        </div>
-
-
-                        <!-- Main content -->
-                        <div class="invoice p-3 mb-3">
-                            <%- include('invoice-body.ejs') %>
-
-                            <!-- this row will not appear when printing -->
-                            <div class="row no-print">
-                                <div class="col-12">
-                                    <a href="/invoice-print" rel="noopener" target="_blank" class="btn btn-default"><i
-                                                class="fas fa-print"></i> Print</a>
-                                    <button type="button" class="btn btn-success float-right"><i
-                                                class="far fa-credit-card"></i> Submit
-                                        Payment
-                                    </button>
-                                    <button type="button" class="btn btn-primary float-right"
-                                            style="margin-right: 5px;">
-                                        <i class="fas fa-download"></i> Generate PDF
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.invoice -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+              </div>
+              <!-- /.invoice -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <!-- End -->
     <%- include('../includes/footer.ejs') %>
-</div>
-<!-- ./wrapper -->
+  </div>
+  <!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
-<%- include('../includes/end-scripts.ejs') %>
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
 
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="dist/js/demo.js"></script>
 
 </body>
+
 </html>

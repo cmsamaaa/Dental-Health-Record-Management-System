@@ -2,8 +2,9 @@
 <!-- Custom Input Date -->
 <link rel="stylesheet" href="/css/custom-input-date.css">
 </head>
+
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+  <div class="wrapper">
     <!-- Navbar -->
     <%- include('../includes/navbar.ejs') %>
     <!-- /.navbar -->
@@ -13,146 +14,120 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Patient</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                            <li class="breadcrumb-item active"><a href="#">Patient</a></li>
-                            <li class="breadcrumb-item active">Create</li>
-                        </ol>
-                    </div>
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Create Patient Form</h3>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- general form elements -->
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Create Patient Form</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <form>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="tb_lastName">First Name<span style="color:red;">*</span></label>
-                                                <input type="text" class="form-control" id="tb_lastName"
-                                                       name="firstName" placeholder="Enter first name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tb_nric">NRIC<span style="color:red;">*</span></label>
-                                                <input type="text" class="form-control" id="tb_nric" name="nric"
-                                                       placeholder="S12345678Z" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
-                                                <input type="email" class="form-control" id="tb_Email"
-                                                       placeholder="abc@xyz.com" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tb_medicareID">Medicare ID</label>
-                                                <input type="text" class="form-control" id="tb_medicareID"
-                                                       name="medicareID" placeholder="Enter medicare ID">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
-                                                <input type="text" class="form-control" id="tb_Address"
-                                                       name="address" placeholder="Enter home address" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="tb_lastName">Last Name (Surname)<span style="color:red;">*</span></label>
-                                                <input type="text" class="form-control" id="tb_lastName" name="lastName"
-                                                       placeholder="Enter last name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tb_DOB">Birthday<span style="color:red;">*</span></label>
-                                                <input type="date" class="form-control" id="tb_DOB" name="DOB"
-                                                       placeholder="dd/mm/yyyy" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="ddl_Gender">Gender<span style="color:red;">*</span></label>
-                                                <select class="form-control" id="ddl_Gender" style="width: 100%;"
-                                                        required>
-                                                    <option selected disabled>Select one...</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tb_FamilyID">Family Group ID</label>
-                                                <input type="text" class="form-control" id="tb_FamilyID"
-                                                       name="familyID" placeholder="Enter family group ID">
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="tb_Postal">Postal<span style="color:red;">*</span></label>
-                                                        <input type="text" class="form-control" id="tb_Postal"
-                                                               name="postal" placeholder="543210" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="tb_Postal">Unit Number<span style="color:red;">*</span></label>
-                                                        <input type="text" class="form-control" id="tb_Postal"
-                                                               name="postal" placeholder="01-01" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-
-                                <div class="card-footer text-right">
-                                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">First Name<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_lastName" name="firstName" placeholder="Enter first name" required>
                         </div>
-                        <!-- /.card -->
+                        <div class="form-group">
+                          <label for="tb_nric">NRIC<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_nric" name="nric" placeholder="S12345678Z" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
+                          <input type="email" class="form-control" id="tb_Email" placeholder="abc@xyz.com" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_medicareID">Medicare ID</label>
+                          <input type="text" class="form-control" id="tb_medicareID" name="medicareID" placeholder="Enter medicare ID">
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_Address" name="address" placeholder="Enter home address" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">Last Name (Surname)<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_lastName" name="lastName" placeholder="Enter last name" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_DOB">Birthday<span style="color:red;">*</span></label>
+                          <input type="date" class="form-control" id="tb_DOB" name="DOB" placeholder="dd/mm/yyyy" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="ddl_Gender">Gender<span style="color:red;">*</span></label>
+                          <select class="form-control" id="ddl_Gender" style="width: 100%;" required>
+                            <option selected disabled>Select one...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_FamilyID">Family Group ID</label>
+                          <input type="text" class="form-control" id="tb_FamilyID" name="familyID" placeholder="Enter family group ID">
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Postal<span style="color:red;">*</span></label>
+                              <input type="text" class="form-control" id="tb_Postal" name="postal" placeholder="543210" required>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Unit Number<span style="color:red;">*</span></label>
+                              <input type="text" class="form-control" id="tb_Postal" name="postal" placeholder="01-01" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <!-- End -->
     <%- include('../includes/footer.ejs') %>
-</div>
-<!-- ./wrapper -->
+  </div>
+  <!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
-<%- include('../includes/end-scripts.ejs') %>
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
 
-<!-- bs-custom-file-input -->
-<script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/dist/js/demo.js"></script>
-<!-- Page specific script -->
-<script>
-    $(function () {
-        bsCustomFileInput.init();
+  <!-- bs-custom-file-input -->
+  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      bsCustomFileInput.init();
     });
-</script>
+  </script>
 </body>
+
 </html>
