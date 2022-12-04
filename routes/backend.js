@@ -16,5 +16,6 @@ router.post('/admin/clinic/add-information', clinicInfoController.addClinicInfo)
 router.post('/admin/patient/create', patientController.registerPatient);
 
 router.post('/admin/appointment/create', appointmentController.createAppointment);
+router.post('/patient/appointment/create', appointmentController.createAppointment);
 
 module.exports = router;

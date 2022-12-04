@@ -62,6 +62,28 @@ exports.createPatient = async (req, res, next) => {
     });
 };
 
+exports.createAppointment = async (req, res, next) => {
+    // api endpoint uri
+    const uri = parse_uri.parse(req, '/api/patient/get/all');
+    request.get({
+        url: uri,
+    }, (err, response, body) => {
+        if (response.statusCode === HTTP_STATUS.OK) {
+            res.status(HTTP_STATUS.OK).render('form/appointment', {
+                pageTitle: 'Appointment',
+                path: '/admin/appointment/create',
+                userData: JSON.parse(response.body)
+            });
+        }
+        else {
+            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                pageTitle: 'Appointment',
+                path: '/admin/appointment/create'
+            });
+        }
+    });
+};
+
 exports.viewAppointments = async (req, res, next) => {
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/get/all');
@@ -86,28 +108,6 @@ exports.viewAppointments = async (req, res, next) => {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
                 path: '/admin/appointment/view-all'
-            });
-        }
-    });
-};
-
-exports.createAppointment = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/patient/get/all');
-    request.get({
-        url: uri,
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
-            res.status(HTTP_STATUS.OK).render('form/appointment', {
-                pageTitle: 'Appointment',
-                path: '/admin/appointment/create',
-                userData: JSON.parse(response.body)
-            });
-        }
-        else {
-            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Appointment',
-                path: '/admin/appointment/create'
             });
         }
     });

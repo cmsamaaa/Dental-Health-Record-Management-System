@@ -30,7 +30,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="tbl_Appointments" class="table table-bordered table-striped">
+                    <% if (path === '/admin/appointment/view-all') { %>
                     <thead>
                       <tr>
                         <th>Appt ID</th>
@@ -66,6 +67,36 @@
                         <th>Gender</th>
                       </tr>
                     </tfoot>
+                    <% } %>
+
+                    <% if (path === '/patient/appointment/view-all') { %>
+                    <thead>
+                      <tr>
+                        <th>Appt ID</th>
+                        <th>Date & Time</th>
+                        <th>Clinic Name</th>
+                        <th>Clinic Address</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < appointmentData.length; i++) { %>
+                      <tr>
+                        <td><%= appointmentData[i].apptId %></td>
+                        <td><%= appointmentData[i].apptDateTime %></td>
+                        <td><%= clinicInfo['Clinic Name'] %></td>
+                        <td><%= clinicInfo['Address'] + ", #" + clinicInfo['Unit'] + ", (S)" + clinicInfo['Postal'] %></td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Appt ID</th>
+                        <th>Date & Time</th>
+                        <th>Clinic Name</th>
+                        <th>Clinic Address</th>
+                      </tr>
+                    </tfoot>
+                    <% } %>
                   </table>
                 </div>
                 <!-- /.card-body -->
@@ -109,12 +140,12 @@
   <!-- Page specific script -->
   <script>
     $(function() {
-      $("#example1").DataTable({
+      $("#tbl_Appointments").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#tbl_Appointments_wrapper .col-md-6:eq(0)');
     });
   </script>
 </body>

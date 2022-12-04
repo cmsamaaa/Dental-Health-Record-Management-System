@@ -10,8 +10,8 @@ exports.createAppointment = async (req, res, next) => {
         form: req.body
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/admin/appointment/view-all?create=true&id=' + JSON.parse(body).apptId));
+            res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/view-all?create=true&id=' + JSON.parse(body).apptId));
         else
-            res.redirect(parse_uri.parse(req, '/admin/appointment/create?error=true'));
+            res.redirect(parse_uri.parse(req, '/' + req.body.userType + 'admin/appointment/create?error=true'));
     });
 };
