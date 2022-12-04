@@ -1,6 +1,6 @@
 const Patient = require('../entities/patient');
-
 const HTTP_STATUS = require("../constants/http_status");
+
 const _ = require('lodash');
 
 exports.registerPatient = async (req, res, next) => {

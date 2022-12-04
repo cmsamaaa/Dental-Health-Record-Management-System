@@ -54,15 +54,15 @@ class Patient extends User {
         let result;
         try {
             result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId');
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
         }
         catch (e) {
             console.error(e);
             result = {};
         }
-
-        result = _.map(result, (patient) => {
-            return _.omit(patient, 'password');
-        });
 
         return result;
     }
