@@ -3,8 +3,13 @@ const express = require('express');
 const userAPIController = require('../controllers/userAPIController');
 const patientAPIController = require('../controllers/patientAPIController');
 const appointmentAPIController = require('../controllers/appointmentAPIController');
+const clinicInfoAPIController = require('../controllers/clinicInfoAPIController');
 
 const router = express.Router();
+
+router.post('/info/create', clinicInfoAPIController.add);
+router.get('/info/get/all', clinicInfoAPIController.getAll);
+router.get('/info/get/:key', clinicInfoAPIController.get);
 
 router.post('/user/create', userAPIController.createUser);
 router.post('/user/login', userAPIController.authenticateUser);
@@ -15,6 +20,6 @@ router.get('/patient/get/all', patientAPIController.getAllPatients);
 
 
 router.post('/appointment/create', appointmentAPIController.createAppointment);
-router.get('/patient/get/all', appointmentAPIController.getAllAppointments);
+router.get('/appointment/get/all', appointmentAPIController.getAllAppointments);
 
 module.exports = router;

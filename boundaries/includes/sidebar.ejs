@@ -31,6 +31,29 @@
             <p>Dashboard</p>
           </a>
         </li>
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'clinic') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'clinic') { %>active<% } %>">
+            <i class="nav-icon fas fa-info-circle"></i>
+            <p>
+              Clinic Information
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/clinic/add-information" class="nav-link <% if(path === '/admin/clinic/add-information') { %>active<% } %>">
+                <i class="nav-icon fas fa-file-medical"></i>
+                <p>Add Information</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/clinic/view-all" class="nav-link <% if(path === '/admin/clinic/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-eye"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'patient') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'patient') { %>active<% } %>">
             <i class="nav-icon fas fa-book-medical"></i>
