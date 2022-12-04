@@ -20,9 +20,14 @@ exports.getAllAppointments = async (req, res, next) => {
     const appointment = new Appointment();
     const result = await appointment.getAllAppointments();
 
-    if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).json(result);
-    }
-    else
-        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+    res.status(HTTP_STATUS.OK).json(result);
+};
+
+exports.getAllUserAppointments = async (req, res, next) => {
+    const appointment = new Appointment({
+        userId: req.params.userId
+    });
+    const result = await appointment.getAllUserAppointments();
+
+    res.status(HTTP_STATUS.OK).json(result);
 };

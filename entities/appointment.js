@@ -58,6 +58,30 @@ class Appointment {
 
         return result;
     }
+
+    /**
+     * Retrieves all `appointment` inner join `patient` and `user` records by `userId`
+     * Returns: JSON[]
+     * */
+    async getAllUserAppointments() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('patients.userId', this.userId);
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
 }
 
 module.exports = Appointment;

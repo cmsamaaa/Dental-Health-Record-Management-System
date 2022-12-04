@@ -66,6 +66,27 @@ class Patient extends User {
 
         return result;
     }
+
+    /**
+     * Retrieves specific `patient` inner join `user` record
+     * Returns: JSON
+     * */
+    async getPatient() {
+        let result;
+        try {
+            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('patients.userId', this.userId);
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
 }
 
 module.exports = Patient;

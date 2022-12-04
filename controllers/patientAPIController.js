@@ -26,3 +26,16 @@ exports.getAllPatients = async (req, res, next) => {
     else
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
 };
+
+exports.getPatient = async (req, res, next) => {
+    const patient = new Patient({
+        userId: req.params.userId
+    });
+    const result = await patient.getPatient();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).json(result);
+    }
+    else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
