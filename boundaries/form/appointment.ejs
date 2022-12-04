@@ -36,16 +36,16 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form action="<%= path %>" method="post">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="tb_NRIC">Patient's NRIC<span style="color:red;">*</span></label>
-                          <select id="tb_NRIC" class="form-control select2bs4" style="width: 100%;">
+                          <select id="tb_NRIC" name="patientId" class="form-control select2bs4" style="width: 100%;">
                             <option selected="selected" disabled>Find NRIC...</option>
                             <% for (let i = 0; i < userData.length; i++) { %>
-                            <option value="<%= userData[i].userId %>"><%= userData[i].nric %></option>
+                            <option value="<%= userData[i].patientId %>"><%= userData[i].nric %></option>
                             <% } %>
                           </select>
                         </div>
@@ -54,7 +54,7 @@
                         <div class="form-group">
                           <label for="tb_ApptDateTime">Appointment Date & Time<span style="color:red;">*</span></label>
                           <div class="input-group date" id="tb_ApptDateTime" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" placeholder="DD/MM/YYYY hh:mm" />
+                            <input type="text" name="apptDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" placeholder="DD/MM/YYYY hh:mm" />
                             <div class="input-group-append" data-target="#tb_ApptDateTime" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>

@@ -40,7 +40,7 @@ exports.viewAppointments = async (req, res, next) => {
 
 exports.createAppointment = async (req, res, next) => {
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/user/get/nric/all');
+    const uri = parse_uri.parse(req, '/api/patient/get/all');
     request.get({
         url: uri,
     }, (err, response, body) => {
