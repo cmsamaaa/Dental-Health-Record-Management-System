@@ -1,8 +1,8 @@
 const express = require('express');
 
-const userAPIController = require('../route-controllers/apiController-user');
-const patientAPIController = require('../route-controllers/apiController-patient');
-const appointmentAPIController = require('../route-controllers/apiController-appointment');
+const userAPIController = require('../controllers/userAPIController');
+const patientAPIController = require('../controllers/patientAPIController');
+const appointmentAPIController = require('../controllers/appointmentAPIController');
 
 const router = express.Router();
 
