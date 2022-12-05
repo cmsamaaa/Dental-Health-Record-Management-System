@@ -96,7 +96,9 @@ class Staff extends User {
                 isMatch = await bcrypt.compare(this.password, result[0].password);
 
             result = _.map(result, (staff) => {
-                return _.omit(staff, 'password');
+                staff = _.omit(staff, 'password');
+                staff.nric = staff.nric[0] + "XXXX" + staff.nric.slice(6);
+                return staff;
             });
         }
         catch (e) {

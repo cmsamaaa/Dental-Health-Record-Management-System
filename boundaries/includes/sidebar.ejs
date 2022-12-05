@@ -13,7 +13,18 @@
         <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Full Name</a>
+        <a href="#" class="d-block">
+          <% if (_userRole === 'Dentist') { %>
+          Dr.
+          <% } %>
+          <% if (_gender === 'Male' && _userRole !== 'Dentist') { %>
+          Mr.
+          <% } %>
+          <% if (_gender === 'Female' && _userRole !== 'Dentist') { %>
+          Ms.
+          <% } %>
+          <%= _firstName %> <%= _lastName %>
+        </a>
       </div>
     </div>
 
@@ -21,8 +32,8 @@
     <% const arrPath = path.replaceAll('-', ' ').split('/') %>
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
+        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+        <% if (_userRole === 'Administrator') { %>
         <!-- Start of Administration -->
         <li class="nav-header">ADMINISTRATION</li>
         <li class="nav-item">
@@ -153,7 +164,9 @@
           </ul>
         </li>
         <!-- End of Administration -->
+        <% } %>
 
+        <% if (_userRole === 'Patient') { %>
         <!-- Start of Patient -->
         <li class="nav-header">PATIENT</li>
         <li class="nav-item <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
@@ -203,7 +216,9 @@
           </ul>
         </li>
         <!-- End of Patient -->
+        <% } %>
 
+        <% if (_userRole === 'Dentist' || _userRole === 'Dental Assistant') { %>
         <!-- Start of Dentist -->
         <li class="nav-header">DENTIST</li>
         <li class="nav-item">
@@ -213,6 +228,7 @@
           </a>
         </li>
         <!-- End of Dentist -->
+        <% } %>
 
         <li class="nav-header">MISCELLANEOUS</li>
         <li class="nav-item">

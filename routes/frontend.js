@@ -4,7 +4,8 @@ const routeController = require('../route-controllers/routeController');
 const adminRouteController = require('../route-controllers/routeController-admin');
 const patientRouteController = require('../route-controllers/routeController-patient');
 const dentistRouteController = require('../route-controllers/routeController-dentist');
-const isAuth = require('../middleware/is-auth');
+const routeAuth = require('../middleware/route-auth');
+const routeRedir = require('../middleware/route-redir');
 
 const router = express.Router();
 
@@ -15,29 +16,29 @@ router.get('/register', routeController.viewRegister);
 router.get('/forgot-password', routeController.viewForgotPassword);
 
 // Protected routes
-router.get('/', isAuth, routeController.viewIndex);
-router.get('/home', isAuth, routeController.viewIndex);
-router.get('/index', isAuth, routeController.viewIndex);
-router.get('/invoice', isAuth, routeController.viewInvoice);
-router.get('/invoice-print', isAuth, routeController.viewInvoicePrint);
+router.get('/', routeAuth.isAuth, routeRedir.defaultPage, routeController.viewIndex);
+router.get('/home', routeAuth.isAuth, routeRedir.defaultPage, routeController.viewIndex);
+router.get('/index', routeAuth.isAuth, routeRedir.defaultPage, routeController.viewIndex);
+router.get('/invoice', routeAuth.isAuth, routeController.viewInvoice);
+router.get('/invoice-print', routeAuth.isAuth, routeController.viewInvoicePrint);
 
 // Admin Route
-router.get('/admin/clinic/add-information', isAuth, adminRouteController.addClinicInfo);
-router.get('/admin/clinic/view-all', isAuth, adminRouteController.viewClinicInfo);
-router.get('/admin/patient/create', isAuth, adminRouteController.createPatient);
-router.get('/admin/patient/view-all', isAuth, adminRouteController.viewPatients);
-router.get('/admin/appointment/create', isAuth, adminRouteController.createAppointment);
-router.get('/admin/appointment/view-all', isAuth, adminRouteController.viewAppointments);
-router.get('/admin/inventory/view-all', isAuth, adminRouteController.viewInventory);
-router.get('/admin/inventory/new-record', isAuth, adminRouteController.createInventory);
-router.get('/admin/bill/view-all', isAuth, adminRouteController.viewBills);
+router.get('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.addClinicInfo);
+router.get('/admin/clinic/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewClinicInfo);
+router.get('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.createPatient);
+router.get('/admin/patient/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewPatients);
+router.get('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.createAppointment);
+router.get('/admin/appointment/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewAppointments);
+router.get('/admin/inventory/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewInventory);
+router.get('/admin/inventory/new-record', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.createInventory);
+router.get('/admin/bill/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewBills);
 
 // Patient Route
-router.get('/patient/appointment/create', isAuth, patientRouteController.createAppointment);
-router.get('/patient/appointment/view-all', isAuth, patientRouteController.viewAppointments);
-router.get('/patient/bill/view-all', isAuth, patientRouteController.viewBills);
+router.get('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, patientRouteController.createAppointment);
+router.get('/patient/appointment/view-all', routeAuth.isAuth, routeAuth.isPatient, patientRouteController.viewAppointments);
+router.get('/patient/bill/view-all', routeAuth.isAuth, routeAuth.isPatient, patientRouteController.viewBills);
 
 // Dentist Route
-router.get('/dentist/appointment/view-all', isAuth, dentistRouteController.viewAppointments);
+router.get('/dentist/appointment/view-all', routeAuth.isAuth, routeAuth.isDentist, dentistRouteController.viewAppointments);
 
 module.exports = router;

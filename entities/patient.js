@@ -22,7 +22,7 @@ class Patient extends User {
     /**
      * Inserts a `user` and `patient` record.
      * Can be used for registration.
-     * Returns: Object
+     * Returns: JSON Object
      * */
     async registerPatient() {
         const userId = await this.createUser();
@@ -70,7 +70,7 @@ class Patient extends User {
 
     /**
      * Retrieves specific `patient` inner join `user` record
-     * Returns: JSON
+     * Returns: JSON Object
      * */
     async getPatient() {
         let result;
@@ -92,7 +92,7 @@ class Patient extends User {
     /**
      * Retrieves a `patient` inner join `user` record and checks if password matches hash
      * Can be used for patient login authentication
-     * Returns: JSON
+     * Returns: JSON Object
      * */
     async authenticatePatient() {
         let result;
@@ -102,13 +102,19 @@ class Patient extends User {
 
             if (Array.isArray(result) && result.length)
                 isMatch = await bcrypt.compare(this.password, result[0].password);
+
+            result = _.map(result, (patient) => {
+                patient = _.omit(patient, 'password');
+                patient.nric = patient.nric[0] + "XXXX" + patient.nric.slice(6);
+                return patient;
+            });
         }
         catch (e) {
             console.error(e);
             result = {};
         }
 
-        return isMatch ? { userId: result[0].userId } : {};
+        return isMatch ? result[0] : {};
     }
 }
 

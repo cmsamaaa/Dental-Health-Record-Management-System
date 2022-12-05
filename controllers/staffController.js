@@ -42,9 +42,7 @@ exports.login = async (req, res, next) => {
         if (!_.isEmpty(result)) {
             req.session.isLoggedIn = true;
             req.session.userRole = result.role;
-            req.session.userId = result.userId;
-
-            console.log(result);
+            req.session.userInfo = result;
 
             request.get({
                 url: parse_uri.parse(req, '/api/info/get/all'),
@@ -57,7 +55,7 @@ exports.login = async (req, res, next) => {
                     }
 
                     req.session.clinicInfo = infoDict;
-                    res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userId));
+                    res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userInfo.userId));
                 }
                 else
                     res.redirect(parse_uri.parse(req, '/staff/login?error=true'));

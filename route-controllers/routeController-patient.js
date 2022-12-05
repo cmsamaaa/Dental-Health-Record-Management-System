@@ -6,7 +6,7 @@ const HTTP_STATUS = require("../constants/http_status");
 
 exports.createAppointment = async (req, res, next) => {
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/patient/get/' + req.session.userId);
+    const uri = parse_uri.parse(req, '/api/patient/get/' + req.session.userInfo.userId);
     request.get({
         url: uri,
     }, (err, response, body) => {
@@ -28,7 +28,7 @@ exports.createAppointment = async (req, res, next) => {
 
 exports.viewAppointments = async (req, res, next) => {
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/get/all/' + req.session.userId);
+    const uri = parse_uri.parse(req, '/api/appointment/get/all/' + req.session.userInfo.userId);
     request.get({
         url: uri,
     }, (err, response, body) => {
