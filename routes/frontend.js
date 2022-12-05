@@ -25,6 +25,8 @@ router.get('/invoice-print', routeAuth.isAuth, routeController.viewInvoicePrint)
 // Admin Route
 router.get('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.addClinicInfo);
 router.get('/admin/clinic/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewClinicInfo);
+router.get('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.createStaff);
+router.get('/admin/staff/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewStaffs);
 router.get('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.createPatient);
 router.get('/admin/patient/view-all', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.viewPatients);
 router.get('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, adminRouteController.createAppointment);

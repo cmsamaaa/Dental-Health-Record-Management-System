@@ -17,11 +17,7 @@ exports.register = async (req, res, next) => {
             gender: req.body.gender,
             email: req.body.email,
             password: hashedPassword,
-            medicareId: req.body.medicareId,
-            address: req.body.address,
-            postal: req.body.postal,
-            unit: req.body.unit,
-            familyId: req.body.familyId
+            role: req.body.role
         });
         const results = await staff.registerStaff();
 

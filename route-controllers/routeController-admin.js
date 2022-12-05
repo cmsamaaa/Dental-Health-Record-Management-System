@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const request = require('request');
 const moment = require('moment');
+const Staff = require('../entities/staff');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
@@ -33,6 +34,37 @@ exports.viewClinicInfo = async (req, res, next) => {
     });
 };
 
+
+
+exports.createStaff = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('form/staff', {
+        pageTitle: 'Staff',
+        path: '/admin/staff/create'
+    });
+};
+
+exports.viewStaffs = async (req, res, next) => {
+    const staff = new Staff();
+    const result = await staff.getAllStaffs();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('table/staffs', {
+            pageTitle: 'Staff',
+            path: '/admin/staff/view-all',
+            staffData: result
+        });
+    }
+    else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
+
+exports.createPatient = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('form/patient', {
+        pageTitle: 'Patient',
+        path: '/admin/patient/create'
+    });
+};
+
 exports.viewPatients = async (req, res, next) => {
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/patient/get/all');
@@ -52,13 +84,6 @@ exports.viewPatients = async (req, res, next) => {
                 path: '/admin/patient/view-all'
             });
         }
-    });
-};
-
-exports.createPatient = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('form/patient', {
-        pageTitle: 'Patient',
-        path: '/admin/patient/create'
     });
 };
 

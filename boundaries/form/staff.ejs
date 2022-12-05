@@ -1,0 +1,114 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Create Staff Account Form</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/admin/staff/create" method="post">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">First Name<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_lastName" name="firstName" placeholder="Enter first name" tabindex="1" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_nric">NRIC<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_nric" name="nric" placeholder="S12345678Z" tabindex="3" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
+                          <input type="email" class="form-control" id="tb_Email" name="email" placeholder="abc@xyz.com" tabindex="5" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">Last Name (Surname)<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_lastName" name="lastName" tabindex="2" placeholder="Enter last name" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_DOB">Birthday<span style="color:red;">*</span></label>
+                          <input type="date" class="form-control" id="tb_DOB" name="DOB" tabindex="4" placeholder="dd/mm/yyyy" required>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="ddl_Gender">Gender<span style="color:red;">*</span></label>
+                              <select class="form-control" id="ddl_Gender" name="gender" style="width: 100%;" tabindex="6" required>
+                                <option selected disabled>Select one...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="ddl_Role">Role<span style="color:red;">*</span></label>
+                              <select class="form-control" id="ddl_Role" name="role" style="width: 100%;" tabindex="7" required>
+                                <option selected disabled>Select one...</option>
+                                <option value="Administrator">Administrator</option>
+                                <option value="Dentist">Dentist</option>
+                                <option value="Dental Assistant">Dental Assistant</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+</body>
+
+</html>

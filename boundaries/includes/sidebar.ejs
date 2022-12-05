@@ -70,6 +70,29 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'staff') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'staff') { %>active<% } %>">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              Staffs
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/staff/create" class="nav-link <% if(path === '/admin/staff/create') { %>active<% } %>">
+                <i class="nav-icon fas fa-user-plus"></i>
+                <p>Register</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/staff/view-all" class="nav-link <% if(path === '/admin/staff/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-eye"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'patient') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'patient') { %>active<% } %>">
             <i class="nav-icon fas fa-book-medical"></i>
@@ -225,7 +248,7 @@
 
         <% if (_userRole === 'Dentist' || _userRole === 'Dental Assistant') { %>
         <!-- Start of Dentist -->
-        <li class="nav-header">DENTIST</li>
+        <li class="nav-header">DENTAL</li>
         <li class="nav-item">
           <a href="/dentist/appointment/view-all" class="nav-link <% if(path === '/dentist/appointment/view-all') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
