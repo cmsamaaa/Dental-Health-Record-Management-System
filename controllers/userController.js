@@ -17,27 +17,27 @@ exports.logout = async (req, res, next) => {
 
 exports.suspend = async (req, res, next) => {
     const user = new User({
-        userId: req.query.userId
+        userId: req.body.userId
     });
     const results = await user.suspendUser();
 
-    let path = req.query.for === 'staff' ? '/admin/staff' : '/admin/patient';
+    let path = req.body.for === 'staff' ? '/admin/staff' : '/admin/patient';
 
     if (results)
-        res.redirect(parse_uri.parse(req, path + '/view-all?action=suspend&userId=' + req.query.userId));
+        res.redirect(parse_uri.parse(req, path + '/view-all?action=suspend&userId=' + req.body.userId));
     else
         res.redirect(parse_uri.parse(req, path + '/view-all?error=true'));
 };
 
 exports.reactivate = async (req, res, next) => {
     const user = new User({
-        userId: req.query.userId
+        userId: req.body.userId
     });
     const results = await user.reactivateUser();
 
-    let path = req.query.for === 'staff' ? '/admin/staff' : '/admin/patient';
+    let path = req.body.for === 'staff' ? '/admin/staff' : '/admin/patient';
     if (results)
-        res.redirect(parse_uri.parse(req, path + '/view-all?action=reactivate&userId=' + req.query.userId));
+        res.redirect(parse_uri.parse(req, path + '/view-all?action=reactivate&userId=' + req.body.userId));
     else
         res.redirect(parse_uri.parse(req, path + '/view-all?error=true'));
 };

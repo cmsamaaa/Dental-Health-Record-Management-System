@@ -62,7 +62,9 @@
                         <td>
                           <% let actionText = 'suspend' %>
                           <% if(patientData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
-                          <form action="/admin/user/<%= actionText %>?userId=<%= patientData[i].userId %>&for=patient" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> User ID #<%= patientData[i].userId %>?');">
+                          <form action="/admin/user/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> User ID #<%= patientData[i].userId %>?');">
+                            <input type="hidden" name="userId" value="<%= patientData[i].userId %>">
+                            <input type="hidden" name="for" value="patient">
                             <button type="submit" class="btn <% if(patientData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize"><%= actionText %></button>
                           </form>
                         </td>
