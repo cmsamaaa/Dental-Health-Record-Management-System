@@ -2,14 +2,14 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const request = require('request');
 
-const Patient = require('../entities/patient');
+const Staff = require('../entities/staff');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
 exports.register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
     if (!_.isEmpty(req.body)) {
-        const patient = new Patient({
+        const staff = new Staff({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             nric: req.body.nric,
@@ -23,26 +23,28 @@ exports.register = async (req, res, next) => {
             unit: req.body.unit,
             familyId: req.body.familyId
         });
-        const results = await patient.registerPatient();
+        const results = await staff.registerStaff();
 
         if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?register=true&id=' + results[0]));
+            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?register=true&id=' + results[0]));
         else
-            res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
+            res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
+        res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
 };
 
 exports.login = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const patient = new Patient(req.body);
-        const result = await patient.authenticatePatient();
+        const staff = new Staff(req.body);
+        const result = await staff.authenticateStaff();
 
         if (!_.isEmpty(result)) {
             req.session.isLoggedIn = true;
-            req.session.userRole = 'Patient';
+            req.session.userRole = result.role;
             req.session.userId = result.userId;
+
+            console.log(result);
 
             request.get({
                 url: parse_uri.parse(req, '/api/info/get/all'),
@@ -58,12 +60,12 @@ exports.login = async (req, res, next) => {
                     res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userId));
                 }
                 else
-                    res.redirect(parse_uri.parse(req, '/login?error=true'));
+                    res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
             });
         }
         else
-            res.redirect(parse_uri.parse(req, '/login?error=true'));
+            res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/login?error=true'));
+        res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
 };

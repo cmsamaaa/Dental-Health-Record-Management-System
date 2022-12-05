@@ -3,6 +3,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const clinicInfoController = require('../controllers/clinicInfoController');
 const patientController = require('../controllers/patientController');
+const staffController = require('../controllers/staffController');
 const appointmentController = require('../controllers/appointmentController');
 const isAuth = require('../middleware/is-auth');
 
@@ -10,7 +11,8 @@ const router = express.Router();
 
 // Non-protected routes
 router.post('/login', patientController.login);
-router.post('/register', userController.register);
+router.post('/staff/login', staffController.login);
+// router.post('/register', userController.register);
 router.get('/logout', userController.logout);
 
 // Protected routes

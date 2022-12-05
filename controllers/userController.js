@@ -6,33 +6,33 @@ const User = require('../entities/user');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
-exports.register = async (req, res, next) => {
-    // if password confirmation does not match
-    if (req.body.password !== req.body.confirmPassword) {
-        res.redirect(parse_uri.parse(req, '/register?mismatchPass=true'));
-        return;
-    }
+// exports.register = async (req, res, next) => {
+//     // if password confirmation does not match
+//     if (req.body.password !== req.body.confirmPassword) {
+//         res.redirect(parse_uri.parse(req, '/register?mismatchPass=true'));
+//         return;
+//     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 12); // encrypt password with bcrypt, salt length 12
-    if (!_.isEmpty(req.body)) {
-        const user = new User({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            nric: req.body.nric,
-            DOB: req.body.DOB,
-            gender: req.body.gender,
-            email: req.body.email,
-            password: hashedPassword
-        });
-        const results = await user.createUser();
+//     const hashedPassword = await bcrypt.hash(req.body.password, 12); // encrypt password with bcrypt, salt length 12
+//     if (!_.isEmpty(req.body)) {
+//         const user = new User({
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             nric: req.body.nric,
+//             DOB: req.body.DOB,
+//             gender: req.body.gender,
+//             email: req.body.email,
+//             password: hashedPassword
+//         });
+//         const results = await user.createUser();
 
-        if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/login?register=true&id=' + results[0]));
-        else
-            res.redirect(parse_uri.parse(req, '/register?error=true'));
-    } else
-        res.redirect(parse_uri.parse(req, '/register?error=true'));
-};
+//         if (!_.isEmpty(results))
+//             res.redirect(parse_uri.parse(req, '/login?register=true&id=' + results[0]));
+//         else
+//             res.redirect(parse_uri.parse(req, '/register?error=true'));
+//     } else
+//         res.redirect(parse_uri.parse(req, '/register?error=true'));
+// };
 
 exports.login = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
@@ -68,6 +68,10 @@ exports.login = async (req, res, next) => {
 };
 
 exports.logout = async (req, res, next) => {
+    let path = '/login?logout=true';
+    if (req.session.userRole !== 'Patient')
+        path = '/staff' + path;
+
     req.session.destroy();
-    res.redirect(parse_uri.parse(req, '/login?logout=true'));
+    res.redirect(parse_uri.parse(req, path));
 };

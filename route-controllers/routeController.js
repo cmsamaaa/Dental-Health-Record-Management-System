@@ -7,10 +7,17 @@ exports.viewIndex = async (req, res, next) => {
     });
 };
 
-exports.viewLogin = async (req, res, next) => {
+exports.viewPatientLogin = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/login', {
         pageTitle: 'Login',
         path: '/login'
+    });
+};
+
+exports.viewStaffLogin = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('auth/login', {
+        pageTitle: 'Staff Login',
+        path: '/staff/login'
     });
 };
 
