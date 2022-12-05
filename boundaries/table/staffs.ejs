@@ -30,7 +30,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="tbl_Staffs" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Staff ID</th>
@@ -41,6 +41,8 @@
                         <th>Email</th>
                         <th>Gender</th>
                         <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -54,6 +56,14 @@
                         <td><%= staffData[i].email %></td>
                         <td><%= staffData[i].gender %></td>
                         <td><%= staffData[i].role %></td>
+                        <td><%= staffData[i].isDeactivated === 0 ? "Active" : "Suspended" %></td>
+                        <td>
+                          <% let actionText = 'suspend' %>
+                          <% if(staffData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
+                          <form action="/admin/user/<%= actionText %>?userId=<%= staffData[i].userId %>&for=staff" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> User ID #<%= staffData[i].userId %>?');">
+                            <button type="submit" class="btn <% if(staffData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize"><%= actionText %></button>
+                          </form>
+                        </td>
                       </tr>
                       <% } %>
                     </tbody>
@@ -67,6 +77,8 @@
                         <th>Email</th>
                         <th>Gender</th>
                         <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -112,12 +124,43 @@
   <!-- Page specific script -->
   <script>
     $(function() {
-      $("#example1").DataTable({
+      $("#tbl_Staffs").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        "buttons": [{
+            extend: 'copy',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'excel',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          "colvis"
+        ]
+      }).buttons().container().appendTo('#tbl_Staffs_wrapper .col-md-6:eq(0)');
     });
   </script>
 </body>

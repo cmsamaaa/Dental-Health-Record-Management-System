@@ -12,6 +12,8 @@ class User {
     DOB;
     gender;
     profilePic;
+    verifiedEmail;
+    isDeactivated;
 
     constructor(data) {
         Object.assign(this, data);
@@ -44,40 +46,45 @@ class User {
     }
 
     /**
-     * Retrieves a `user` record and checks if password matches hash
-     * Can be used for login authentication
-     * Returns: JSON
+     * Update a `user` record `isDeactivated` to 1
+     * Can be used for account suspension
+     * Returns: Object
      * */
-    async authenticateUser() {
+    async suspendUser() {
         let result;
-        let isMatch = false;
         try {
-            result = await db(tableName).select('*').where('email', this.email);
-
-            if (Array.isArray(result) && result.length)
-                isMatch = await bcrypt.compare(this.password, result[0].password);
+            result = await db(tableName).update({
+                isDeactivated: 1
+            }).where('userId', this.userId);
         }
         catch (e) {
             console.error(e);
             result = {};
         }
 
-        return isMatch ? { userId: result[0].userId } : {};
+        console.log(result);
+
+        return result;
     }
 
     /**
-     * Retrieves all `user` userId and NRIC records
-     * Returns: JSON[]
+     * Update a `user` record `isDeactivated` to 0
+     * Can be used for account reactivation
+     * Returns: Object
      * */
-    async getAllNRIC() {
+    async reactivateUser() {
         let result;
         try {
-            result = await db(tableName).select('userId', 'nric').where('isDeactivated', 0);
+            result = await db(tableName).update({
+                isDeactivated: 0
+            }).where('userId', this.userId);
         }
         catch (e) {
             console.error(e);
             result = {};
         }
+
+        console.log(result);
 
         return result;
     }
