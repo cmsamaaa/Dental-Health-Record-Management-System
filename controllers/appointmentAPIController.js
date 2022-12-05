@@ -1,7 +1,6 @@
+const _ = require('lodash');
 const Appointment = require('../entities/appointment');
 const HTTP_STATUS = require("../constants/http_status");
-
-const _ = require('lodash');
 
 exports.createAppointment = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {

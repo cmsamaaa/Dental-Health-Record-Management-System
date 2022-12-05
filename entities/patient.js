@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../entities/user');
 const db = require('./db');
 const tableName = 'patients';
@@ -86,6 +87,28 @@ class Patient extends User {
         }
 
         return result[0];
+    }
+
+    /**
+     * Retrieves a `patient` inner join `user` record and checks if password matches hash
+     * Can be used for patient login authentication
+     * Returns: JSON
+     * */
+    async authenticatePatient() {
+        let result;
+        let isMatch = false;
+        try {
+            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('email', this.email);
+
+            if (Array.isArray(result) && result.length)
+                isMatch = await bcrypt.compare(this.password, result[0].password);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return isMatch ? { userId: result[0].userId } : {};
     }
 }
 

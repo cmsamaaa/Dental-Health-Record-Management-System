@@ -1,5 +1,8 @@
+const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const request = require('request');
+
+const User = require('../entities/user');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
@@ -10,12 +13,9 @@ exports.register = async (req, res, next) => {
         return;
     }
 
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/user/create');
     const hashedPassword = await bcrypt.hash(req.body.password, 12); // encrypt password with bcrypt, salt length 12
-    request.post({
-        url: uri,
-        form: {
+    if (!_.isEmpty(req.body)) {
+        const user = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             nric: req.body.nric,
@@ -23,37 +23,37 @@ exports.register = async (req, res, next) => {
             gender: req.body.gender,
             email: req.body.email,
             password: hashedPassword
-        }
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/login?register=true&id=' + JSON.parse(body).userId));
+        });
+        const results = await user.createUser();
+
+        if (!_.isEmpty(results))
+            res.redirect(parse_uri.parse(req, '/login?register=true&id=' + results[0]));
         else
             res.redirect(parse_uri.parse(req, '/register?error=true'));
-    });
+    } else
+        res.redirect(parse_uri.parse(req, '/register?error=true'));
 };
 
 exports.login = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/user/login');
-    request.post({
-        url: uri,
-        form: req.body
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
+    if (!_.isEmpty(req.body)) {
+        const user = new User(req.body);
+        const result = await user.authenticateUser();
+
+        if (!_.isEmpty(result)) {
             req.session.isLoggedIn = true;
-            req.session.userId = JSON.parse(body).userId;
+            req.session.userId = result.userId;
 
             request.get({
                 url: parse_uri.parse(req, '/api/info/get/all'),
             }, (err, response, body) => {
                 if (response.statusCode === HTTP_STATUS.OK) {
                     const clinicInfo = JSON.parse(body);
-                    const dict = {};
+                    const infoDict = {};
                     for (let i = 0; i < clinicInfo.length; i++) {
-                        dict[clinicInfo[i].infoKey] = clinicInfo[i].value;
+                        infoDict[clinicInfo[i].infoKey] = clinicInfo[i].value;
                     }
 
-                    req.session.clinicInfo = dict;
+                    req.session.clinicInfo = infoDict;
                     res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userId));
                 }
                 else
@@ -62,7 +62,9 @@ exports.login = async (req, res, next) => {
         }
         else
             res.redirect(parse_uri.parse(req, '/login?error=true'));
-    });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/login?error=true'));
 };
 
 exports.logout = async (req, res, next) => {
