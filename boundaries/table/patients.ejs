@@ -33,8 +33,10 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>#</th>
-                        <th>Name</th>
+                        <th>Patient ID</th>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>NRIC</th>
                         <th>Medicare ID</th>
                         <th>Email</th>
@@ -46,28 +48,23 @@
                       <% for(let i = 0; i < patientData.length; i++) { %>
                       <tr>
                         <td><%= patientData[i].patientId %></td>
-                        <td><%= patientData[i].lastName %> <%= patientData[i].firstName %></td>
+                        <td><%= patientData[i].userId %></td>
+                        <td><%= patientData[i].firstName %></td>
+                        <td><%= patientData[i].lastName %></td>
                         <td><%= patientData[i].nric %></td>
                         <td><%= patientData[i].medicareId ? patientData[i].medicareId : 'Not Applicable' %></td>
                         <td><%= patientData[i].email %></td>
                         <td><%= patientData[i].gender %></td>
                         <td><%= patientData[i].verifiedEmail ? 'Verified' : 'Not verified' %></td>
                       </tr>
-                      <!-- <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                          Explorer 4.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
-                      </tr> -->
                       <% } %>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>#</th>
-                        <th>Name</th>
+                        <th>Patient ID</th>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>NRIC</th>
                         <th>Medicare ID</th>
                         <th>Email</th>

@@ -40,7 +40,7 @@ exports.viewPatients = async (req, res, next) => {
         url: uri,
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK) {
-            res.status(HTTP_STATUS.OK).render('table/admin-patients', {
+            res.status(HTTP_STATUS.OK).render('table/patients', {
                 pageTitle: 'Patient',
                 path: '/admin/patient/view-all',
                 patientData: JSON.parse(response.body)
