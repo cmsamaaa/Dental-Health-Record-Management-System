@@ -90,7 +90,10 @@ class Staff extends User {
         let result;
         let isMatch = false;
         try {
-            result = await db(tableName).select('*').innerJoin('users', 'staffs.userId', 'users.userId').where('email', this.email);
+            result = await db(tableName).select('*')
+                .innerJoin('users', 'staffs.userId', 'users.userId')
+                .where('email', this.email)
+                .andWhere('isDeactivated', '0');
 
             if (Array.isArray(result) && result.length)
                 isMatch = await bcrypt.compare(this.password, result[0].password);

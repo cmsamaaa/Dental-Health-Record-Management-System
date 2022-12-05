@@ -98,7 +98,10 @@ class Patient extends User {
         let result;
         let isMatch = false;
         try {
-            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('email', this.email);
+            result = await db(tableName).select('*')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('email', this.email)
+                .andWhere('isDeactivated', '0');
 
             if (Array.isArray(result) && result.length)
                 isMatch = await bcrypt.compare(this.password, result[0].password);
