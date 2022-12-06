@@ -1,0 +1,130 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path === '/admin/patient/create' ? 'create' : 'edit' %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">View Patient Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">First Name:</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_lastName" name="firstName" tabindex="1" value="<%= patientData.firstName %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_nric">NRIC:</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" tabindex="3" value="<%= patientData.nric %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Email">Email Address:</span></label>
+                          <input type="email" class="form-control-plaintext" id="tb_Email" name="email" tabindex="5" value="<%= patientData.email %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_medicareID">Medicare ID</label>
+                          <input type="text" class="form-control-plaintext" id="tb_medicareID" name="medicareId" tabindex="7" value="<%= patientData.medicareId ? patientData.medicareId : 'Not Applicable' %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Address">Home Address:</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_Address" name="address" tabindex="9" value="<%= patientData.address %>" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">Last Name (Surname):</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_lastName" name="lastName" tabindex="2" value="<%= patientData.lastName %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_DOB">Birthday:</span></label>
+                          <input type="date" class="form-control-plaintext" id="tb_DOB" name="DOB" tabindex="4" value="<%= patientData.DOB %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Gender">Gender:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_Gender" name="lastName" tabindex="6" value="<%= patientData.gender %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_FamilyID">Family Group ID</label>
+                          <input type="text" class="form-control-plaintext" id="tb_FamilyID" name="familyId" tabindex="8" value="<%= patientData.familyId ? patientData.familyId : 'Not Applicable' %>" disabled>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Postal:</span></label>
+                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="postal" tabindex="10" value="<%= patientData.postal %>" disabled>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Unit Number:</span></label>
+                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="unit" tabindex="11" value="<%= patientData.unit %>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <a href="/admin/patient/edit/<%= patientData.userId %>" class="btn btn-primary">Edit</a>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- disabled SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- bs-custom-file-input -->
+  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      bsCustomFileInput.init();
+    });
+  </script>
+</body>
+
+</html>

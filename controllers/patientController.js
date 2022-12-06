@@ -96,6 +96,23 @@ exports.viewCreatePatient = async (req, res, next) => {
     });
 };
 
+exports.viewEditPatient = async (req, res, next) => {
+    const patient = new Patient({
+        userId: req.params.userId
+    });
+    const result = await patient.getPatient();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/patient', {
+            pageTitle: 'Patient',
+            path: '/admin/patient/edit',
+            patientData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/patient/view-all?error=true'));
+};
+
 exports.viewPatients = async (req, res, next) => {
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/patient/get/all');
@@ -118,16 +135,16 @@ exports.viewPatients = async (req, res, next) => {
     });
 };
 
-exports.viewEditPatient = async (req, res, next) => {
+exports.viewPatient = async (req, res, next) => {
     const patient = new Patient({
         userId: req.params.userId
     });
     const result = await patient.getPatient();
 
     if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('form/patient', {
+        res.status(HTTP_STATUS.OK).render('detail/patient', {
             pageTitle: 'Patient',
-            path: '/admin/patient/edit',
+            path: '/admin/patient/view',
             patientData: result
         });
     }
