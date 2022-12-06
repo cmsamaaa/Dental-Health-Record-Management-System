@@ -30,7 +30,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="tbl_Patients" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Patient ID</th>
@@ -132,12 +132,43 @@
   <!-- Page specific script -->
   <script>
     $(function() {
-      $("#example1").DataTable({
+      $("#tbl_Patients").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        "buttons": [{
+            extend: 'copy',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'excel',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          "colvis"
+        ]
+      }).buttons().container().appendTo('#tbl_Patients_wrapper .col-md-6:eq(0)');
     });
   </script>
 </body>
