@@ -1,12 +1,12 @@
 const express = require('express');
 
+const defaultController = require('../controllers/defaultController');
 const appointmentController = require('../controllers/appointmentController');
 const billController = require('../controllers/billController');
 const clinicInfoController = require('../controllers/clinicInfoController');
 const inventoryController = require('../controllers/inventoryController');
 const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
-const defaultController = require('../controllers/defaultController');
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
@@ -45,7 +45,7 @@ router.get('/admin/appointment/view-all', routeAuth.isAuth, routeAuth.isAdmin, a
 
 // Inventory
 router.get('/admin/inventory/view-all', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventory);
-router.get('/admin/inventory/new-record', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewCreateInventory);
+router.get('/admin/inventory/add-inventory', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewCreateInventory);
 
 // Bill
 router.get('/admin/bill/view-all', routeAuth.isAuth, routeAuth.isAdmin, billController.viewBills_Admin);

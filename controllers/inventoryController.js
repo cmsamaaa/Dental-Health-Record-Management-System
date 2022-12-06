@@ -13,6 +13,6 @@ exports.viewInventory = async (req, res, next) => {
 exports.viewCreateInventory = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('form/inventory', {
         pageTitle: 'Inventory',
-        path: '/admin/inventory/new-record'
+        path: '/admin/inventory/add-inventory'
     });
 };
