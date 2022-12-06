@@ -109,7 +109,8 @@ exports.viewAppointments_Patient = async (req, res, next) => {
                 pageTitle: 'Appointment',
                 path: '/patient/appointment/view-all',
                 appointmentData: data,
-                clinicInfo: req.session.clinicInfo
+                clinicName: req.session.clinicInfo['Clinic Name'],
+                clinicAddress: req.session.clinicInfo['Address'] + ", #" + req.session.clinicInfo['Unit'] + ", (S)" + req.session.clinicInfo['Postal']
             });
         }
         else {
