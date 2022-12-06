@@ -46,7 +46,9 @@ exports.suspendAppointment = async (req, res, next) => {
     });
 };
 
-exports.viewCreateAppointment_Admin = async (req, res, next) => {
+exports.viewCreateAppointment = async (req, res, next) => {
+    let user = req.url.split('/')[1];
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/patient/get/all');
     request.get({
@@ -55,44 +57,57 @@ exports.viewCreateAppointment_Admin = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             res.status(HTTP_STATUS.OK).render('form/appointment', {
                 pageTitle: 'Appointment',
-                path: '/admin/appointment/create',
+                path: '/' + user + '/appointment/create',
                 userData: JSON.parse(response.body)
             });
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
-                path: '/admin/appointment/create'
+                path: '/' + user + '/appointment/create'
             });
         }
     });
 };
 
-exports.viewCreateAppointment_Patient = async (req, res, next) => {
+exports.viewEditAppointment = async (req, res, next) => {
+    let user = req.url.split('/')[1];
+
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/patient/get/' + req.session.userInfo.userId);
+    const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
     request.get({
         url: uri,
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK) {
+            let data = JSON.parse(response.body);
+
+            data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
+
             res.status(HTTP_STATUS.OK).render('form/appointment', {
                 pageTitle: 'Appointment',
-                path: '/patient/appointment/create',
-                userData: JSON.parse(response.body)
+                path: '/' + user + '/appointment/edit',
+                userData: data
             });
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
-                path: '/patient/appointment/create'
+                path: '/' + user + '/appointment/edit',
             });
         }
     });
 };
 
-exports.viewAppointments_Admin = async (req, res, next) => {
+exports.viewAppointments = async (req, res, next) => {
+    let user = req.url.split('/')[1];
+
+    let path = '/api/appointment/get/all/';
+    if (user === 'patient')
+        path += req.session.userInfo.userId;
+
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/get/all');
+    const uri = parse_uri.parse(req, path);
+
     request.get({
         url: uri,
     }, (err, response, body) => {
@@ -106,36 +121,7 @@ exports.viewAppointments_Admin = async (req, res, next) => {
 
             res.status(HTTP_STATUS.OK).render('table/appointments', {
                 pageTitle: 'Appointment',
-                path: '/admin/appointment/view-all',
-                appointmentData: data
-            });
-        }
-        else {
-            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Appointment',
-                path: '/admin/appointment/view-all'
-            });
-        }
-    });
-};
-
-exports.viewAppointments_Patient = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/get/all/' + req.session.userInfo.userId);
-    request.get({
-        url: uri,
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
-            let data = JSON.parse(response.body);
-
-            data = _.map(data, (appt) => {
-                appt.apptDateTime = moment(new Date(appt.apptDateTime)).format('DD/MM/YYYY hh:mmA');
-                return appt;
-            });
-
-            res.status(HTTP_STATUS.OK).render('table/appointments', {
-                pageTitle: 'Appointment',
-                path: '/patient/appointment/view-all',
+                path: '/' + user + '/appointment/view-all',
                 appointmentData: data,
                 clinicName: req.session.clinicInfo['Clinic Name'],
                 clinicAddress: req.session.clinicInfo['Address'] + ", #" + req.session.clinicInfo['Unit'] + ", (S)" + req.session.clinicInfo['Postal']
@@ -144,42 +130,15 @@ exports.viewAppointments_Patient = async (req, res, next) => {
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
-                path: '/patient/appointment/view-all'
+                path: '/' + user + '/appointment/view-all'
             });
         }
     });
 };
 
-exports.viewAppointments_Dentist = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/get/all');
-    request.get({
-        url: uri,
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
-            let data = JSON.parse(response.body);
+exports.viewAppointment = async (req, res, next) => {
+    let user = req.url.split('/')[1];
 
-            data = _.map(data, (appt) => {
-                appt.apptDateTime = moment(new Date(appt.apptDateTime)).format('DD/MM/YYYY hh:mmA');
-                return appt;
-            });
-
-            res.status(HTTP_STATUS.OK).render('table/appointments', {
-                pageTitle: 'Appointment',
-                path: '/dentist/appointment/view-all',
-                appointmentData: data
-            });
-        }
-        else {
-            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Appointment',
-                path: '/dentist/appointment/view-all'
-            });
-        }
-    });
-};
-
-exports.viewEditAppointment_Admin = async (req, res, next) => {
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
     request.get({
@@ -190,42 +149,17 @@ exports.viewEditAppointment_Admin = async (req, res, next) => {
 
             data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
 
-            res.status(HTTP_STATUS.OK).render('form/appointment', {
+            res.status(HTTP_STATUS.OK).render('detail/appointment', {
                 pageTitle: 'Appointment',
-                path: '/admin/appointment/edit',
-                userData: data
+                path: '/' + user + '/appointment/view',
+                userData: data,
+                userRole: user
             });
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
-                path: '/admin/appointment/edit',
-            });
-        }
-    });
-};
-
-exports.viewEditAppointment_Patient = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
-    request.get({
-        url: uri,
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
-            let data = JSON.parse(response.body);
-
-            data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
-
-            res.status(HTTP_STATUS.OK).render('form/appointment', {
-                pageTitle: 'Appointment',
-                path: '/patient/appointment/edit',
-                userData: data
-            });
-        }
-        else {
-            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Appointment',
-                path: '/patient/appointment/edit',
+                path: '/' + user + '/appointment/view',
             });
         }
     });

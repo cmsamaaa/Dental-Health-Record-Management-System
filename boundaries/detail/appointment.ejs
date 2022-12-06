@@ -1,0 +1,113 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<!-- <link rel="stylesheet" href="/css/custom-input-date.css"> -->
+
+<!-- Select2 -->
+<link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">New Appointment Form</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_NRIC">Patient's NRIC:</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_NRIC" name="nric" tabindex="1" value="<%= userData.nric %>" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_ApptDateTime">Appointment Date & Time:</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_ApptDateTime" name="nric" tabindex="1" value="<%= userData.apptDateTime %>" disabled>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <% if (userRole !== 'dentist') { %>
+                  <div class="card-footer text-right">
+                    <a href="/<%= userRole %>/appointment/edit/<%= userData.apptId %>" class="btn btn-primary">Edit</a>
+                  </div>
+                  <% } %>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- Select2 -->
+  <script src="/plugins/select2/js/select2.full.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+
+  <!-- Page specific script -->
+  <script>
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+
+    $('button[type=reset]').on('click', () => {
+      $('#tb_NRIC').val('Find NRIC...').trigger('change');
+    });
+
+    //Date and time picker
+    $('#tb_ApptDateTime').datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+      minDate: new Date(),
+      icons: {
+        time: 'far fa-clock'
+      }
+    });
+  </script>
+</body>
+
+</html>

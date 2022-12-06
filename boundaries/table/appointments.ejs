@@ -59,7 +59,7 @@
                         <% if (path !== '/dentist/appointment/view-all') { %>
                         <td class="d-flex">
                           <% if(appointmentData[i].status === 'Upcoming') { %>
-                          <a href="#" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <a href="/admin/appointment/view/<%= appointmentData[i].apptId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <a href="/admin/appointment/edit/<%= appointmentData[i].apptId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
                           <form action="/admin/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
                             <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
@@ -70,7 +70,7 @@
                         </td>
                         <% } else { %>
                         <td class="d-flex">
-                          <a href="#" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <a href="/dentist/appointment/view/<%= appointmentData[i].apptId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                         </td>
                         <% } %>
                       </tr>
@@ -111,6 +111,7 @@
                         <td><%= clinicAddress ? clinicAddress : "Unspecified" %></td>
                         <td><%= appointmentData[i].status %></td>
                         <td class="d-flex">
+                          <a href="/patient/appointment/view/<%= appointmentData[i].apptId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <% if(appointmentData[i].status === 'Upcoming') { %>
                           <a href="/patient/appointment/edit/<%= appointmentData[i].apptId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
                           <form action="/patient/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">

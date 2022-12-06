@@ -44,9 +44,10 @@ router.get('/admin/patient/view-all', routeAuth.isAuth, routeAuth.isAdmin, patie
 router.get('/admin/patient/view/:userId', routeAuth.isAuth, routeAuth.isAdmin, patientController.viewPatient);
 
 // Appointment
-router.get('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewCreateAppointment_Admin);
-router.get('/admin/appointment/edit/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewEditAppointment_Admin);
-router.get('/admin/appointment/view-all', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointments_Admin);
+router.get('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewCreateAppointment);
+router.get('/admin/appointment/edit/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewEditAppointment);
+router.get('/admin/appointment/view-all', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointments);
+router.get('/admin/appointment/view/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointment);
 
 // Inventory
 router.get('/admin/inventory/view-all', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventory);
@@ -61,9 +62,10 @@ router.get('/admin/bill/view-all', routeAuth.isAuth, routeAuth.isAdmin, billCont
 /* Start of Patient Route */
 
 // Appointment
-router.get('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment_Patient);
-router.get('/patient/appointment/edit/:apptId', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewEditAppointment_Patient);
-router.get('/patient/appointment/view-all', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointments_Patient);
+router.get('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);
+router.get('/patient/appointment/edit/:apptId', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewEditAppointment);
+router.get('/patient/appointment/view-all', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointments);
+router.get('/patient/appointment/view/:apptId', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointment);
 
 // Bill
 router.get('/patient/bill/view-all', routeAuth.isAuth, routeAuth.isPatient, billController.viewBills_Patient);
@@ -73,7 +75,8 @@ router.get('/patient/bill/view-all', routeAuth.isAuth, routeAuth.isPatient, bill
 /* Start of Dentist Route */
 
 // Appointment
-router.get('/dentist/appointment/view-all', routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointments_Dentist);
+router.get('/dentist/appointment/view-all', routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointments);
+router.get('/dentist/appointment/view/:apptId', routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointment);
 
 /* End of Dentist Route */
 
