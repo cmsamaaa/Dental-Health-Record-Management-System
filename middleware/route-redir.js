@@ -1,4 +1,8 @@
 exports.defaultPage = (req, res, next) => {
+    if (req.session.userRole === 'Administrator') {
+        return res.redirect('/admin/clinic/view-all');
+    }
+
     if (req.session.userRole === 'Patient') {
         return res.redirect('/patient/appointment/view-all');
     }
