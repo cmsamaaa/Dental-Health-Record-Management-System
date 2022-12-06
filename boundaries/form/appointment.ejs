@@ -82,7 +82,7 @@
                     <input type="hidden" name="apptId" value="<%= userData.apptId %>">
                     <input type="hidden" name="for" value="<%= path.split('/')[1] %>">
                     <% } %>
-                    <% if (path !== '/patient/appointment/edit') { %>
+                    <% if (path !== '/patient/appointment/edit' && path !== '/admin/appointment/edit') { %>
                     <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
                     <% } %>
                     <button type="submit" class="btn btn-primary">Submit</button>
