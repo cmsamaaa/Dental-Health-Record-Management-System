@@ -31,7 +31,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="tbl_Appointments" class="table table-bordered table-striped">
-                    <% if (path === '/admin/appointment/view-all') { %>
+                    <% if (path === '/admin/appointment/view-all' || path === '/dentist/appointment/view-all') { %>
                     <thead>
                       <tr>
                         <th>Appt ID</th>
@@ -56,8 +56,10 @@
                         <td><%= appointmentData[i].email %></td>
                         <td><%= appointmentData[i].gender %></td>
                         <td><%= appointmentData[i].status %></td>
+                        <% if (path !== '/dentist/appointment/view-all') { %>
                         <td class="d-flex">
                           <% if(appointmentData[i].status === 'Upcoming') { %>
+                          <a href="#" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <a href="/admin/appointment/edit/<%= appointmentData[i].apptId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
                           <form action="/admin/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
                             <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
@@ -66,6 +68,11 @@
                           </form>
                           <% } %>
                         </td>
+                        <% } else { %>
+                        <td class="d-flex">
+                          <a href="#" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                        </td>
+                        <% } %>
                       </tr>
                       <% } %>
                     </tbody>

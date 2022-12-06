@@ -61,6 +61,7 @@
                         <td><%= patientData[i].isDeactivated === 0 ? "Active" : "Suspended" %></td>
                         <td class="d-flex">
                           <% if(patientData[i].isDeactivated === 0) { %>
+                          <a href="#" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <a href="/admin/patient/edit/<%= patientData[i].userId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
                           <% } %>
                           <% let actionText = 'suspend' %>
