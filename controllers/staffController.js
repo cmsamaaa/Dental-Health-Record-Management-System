@@ -66,17 +66,7 @@ exports.register = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const staff = new Staff({
-            userId: req.body.userId,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            nric: req.body.nric,
-            DOB: req.body.DOB,
-            gender: req.body.gender,
-            email: req.body.email,
-            staffId: req.body.staffId,
-            role: req.body.role
-        });
+        const staff = new Staff(req.body);
         const results = await staff.updateStaff();
 
         if (results)
