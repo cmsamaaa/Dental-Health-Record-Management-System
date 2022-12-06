@@ -18,9 +18,23 @@ exports.createAppointment = async (req, res, next) => {
     });
 };
 
+exports.editAppointment = async (req, res, next) => {
+    // api endpoint uri
+    const uri = parse_uri.parse(req, '/api/appointment/edit');
+    request.post({
+        url: uri,
+        form: req.body
+    }, (err, response, body) => {
+        if (response.statusCode === HTTP_STATUS.CREATED)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?edit=true&apptId=' + req.body.apptId));
+        else
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
+    });
+};
+
 exports.suspendAppointment = async (req, res, next) => {
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/suspend/' + req.body.apptId);
+    const uri = parse_uri.parse(req, '/api/appointment/suspend');
     request.post({
         url: uri,
         form: req.body
@@ -140,5 +154,57 @@ exports.viewAppointments_Dentist = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('table/dentist-appointments', {
         pageTitle: 'Appointment',
         path: '/dentist/appointment/view-all'
+    });
+};
+
+exports.viewEditAppointment_Admin = async (req, res, next) => {
+    // api endpoint uri
+    const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
+    request.get({
+        url: uri,
+    }, (err, response, body) => {
+        if (response.statusCode === HTTP_STATUS.OK) {
+            let data = JSON.parse(response.body);
+
+            data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
+
+            res.status(HTTP_STATUS.OK).render('form/appointment', {
+                pageTitle: 'Appointment',
+                path: '/admin/appointment/edit',
+                userData: data
+            });
+        }
+        else {
+            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                pageTitle: 'Appointment',
+                path: '/admin/appointment/edit',
+            });
+        }
+    });
+};
+
+exports.viewEditAppointment_Patient = async (req, res, next) => {
+    // api endpoint uri
+    const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
+    request.get({
+        url: uri,
+    }, (err, response, body) => {
+        if (response.statusCode === HTTP_STATUS.OK) {
+            let data = JSON.parse(response.body);
+
+            data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
+
+            res.status(HTTP_STATUS.OK).render('form/appointment', {
+                pageTitle: 'Appointment',
+                path: '/patient/appointment/edit',
+                userData: data
+            });
+        }
+        else {
+            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                pageTitle: 'Appointment',
+                path: '/patient/appointment/edit',
+            });
+        }
     });
 };

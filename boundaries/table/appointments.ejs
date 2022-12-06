@@ -58,7 +58,8 @@
                         <td><%= appointmentData[i].status %></td>
                         <td class="d-flex">
                           <% if(appointmentData[i].status === 'Upcoming') { %>
-                          <form action="/admin/appointment/suspend/<%= appointmentData[i].apptId %>" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
+                          <a href="/admin/appointment/edit/<%= appointmentData[i].apptId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <form action="/admin/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
                             <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
                             <input type="hidden" name="for" value="admin">
                             <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-user-times"></i></button>
@@ -104,7 +105,8 @@
                         <td><%= appointmentData[i].status %></td>
                         <td class="d-flex">
                           <% if(appointmentData[i].status === 'Upcoming') { %>
-                          <form action="/patient/appointment/suspend/<%= appointmentData[i].apptId %>" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
+                          <a href="/patient/appointment/edit/<%= appointmentData[i].apptId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <form action="/patient/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
                             <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
                             <input type="hidden" name="for" value="patient">
                             <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-user-times"></i></button>

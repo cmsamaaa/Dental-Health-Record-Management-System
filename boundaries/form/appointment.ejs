@@ -3,8 +3,8 @@
 <!-- <link rel="stylesheet" href="/css/custom-input-date.css"> -->
 
 <!-- Select2 -->
-<link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -54,7 +54,7 @@
                           <% } %>
 
                           <!-- Patient Fields -->
-                          <% if (path === '/patient/appointment/create') { %>
+                          <% if (path === '/patient/appointment/create' || path === '/admin/appointment/edit' || path === '/patient/appointment/edit') { %>
                           <label for="tb_NRIC">Patient's NRIC<span style="color:red;">*</span></label>
                           <input type="text" class="form-control-plaintext" id="tb_NRIC" name="nric" placeholder="S12345678Z" tabindex="1" value="<%= userData.nric %>" required readonly>
                           <input type="hidden" name="patientId" value="<%= userData.patientId %>">
@@ -66,7 +66,7 @@
                         <div class="form-group">
                           <label for="tb_ApptDateTime">Appointment Date & Time<span style="color:red;">*</span></label>
                           <div class="input-group date" id="tb_ApptDateTime" data-target-input="nearest">
-                            <input type="text" name="apptDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" tabindex="2" placeholder="DD/MM/YYYY hh:mm" />
+                            <input type="text" name="apptDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" tabindex="2" placeholder="DD/MM/YYYY hh:mm" value="<%= userData.apptDateTime ? userData.apptDateTime : '' %>" />
                             <div class="input-group-append" data-target="#tb_ApptDateTime" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -78,7 +78,13 @@
                   <!-- /.card-body -->
 
                   <div class="card-footer text-right">
+                    <% if (path === '/admin/appointment/edit' || path === '/patient/appointment/edit') { %>
+                    <input type="hidden" name="apptId" value="<%= userData.apptId %>">
+                    <input type="hidden" name="for" value="<%= path.split('/')[1] %>">
+                    <% } %>
+                    <% if (path !== '/patient/appointment/edit') { %>
                     <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <% } %>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
@@ -102,7 +108,7 @@
   <%- include('../includes/end-scripts.ejs') %>
 
   <!-- Select2 -->
-  <script src="../../plugins/select2/js/select2.full.min.js"></script>
+  <script src="/plugins/select2/js/select2.full.min.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="/plugins/moment/moment.min.js"></script>
   <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>

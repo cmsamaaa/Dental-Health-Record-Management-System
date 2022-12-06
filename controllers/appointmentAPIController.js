@@ -31,6 +31,28 @@ exports.getAllUserAppointments = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).json(result);
 };
 
+exports.getAppointment = async (req, res, next) => {
+    const appointment = new Appointment({
+        apptId: req.params.apptId
+    });
+    const result = await appointment.getAppointment();
+
+    res.status(HTTP_STATUS.OK).json(result);
+};
+
+exports.editAppointment = async (req, res, next) => {
+    if (!_.isEmpty(req.body)) {
+        const appointment = new Appointment(req.body);
+        const results = await appointment.updateAppointment();
+
+        if (results)
+            res.status(HTTP_STATUS.CREATED).json({ success: true });
+        else
+            res.status(HTTP_STATUS.BAD_REQUEST).json({});
+    } else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
+
 exports.suspendAppointment = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const appointment = new Appointment(req.body);

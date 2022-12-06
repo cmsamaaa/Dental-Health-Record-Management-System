@@ -43,6 +43,7 @@ router.get('/admin/patient/view-all', routeAuth.isAuth, routeAuth.isAdmin, patie
 
 // Appointment
 router.get('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewCreateAppointment_Admin);
+router.get('/admin/appointment/edit/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewEditAppointment_Admin);
 router.get('/admin/appointment/view-all', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointments_Admin);
 
 // Inventory
@@ -59,6 +60,7 @@ router.get('/admin/bill/view-all', routeAuth.isAuth, routeAuth.isAdmin, billCont
 
 // Appointment
 router.get('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment_Patient);
+router.get('/patient/appointment/edit/:apptId', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewEditAppointment_Patient);
 router.get('/patient/appointment/view-all', routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointments_Patient);
 
 // Bill

@@ -85,6 +85,52 @@ class Appointment {
     }
 
     /**
+     * Retrieves one `appointment` inner join `patient` and `user` record
+     * Returns: JSON Object
+     * */
+    async getAppointment() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('apptId', this.apptId);
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
+    /**
+     * Update a `appointment` record.
+     * Can be used to update appointment.
+     * Returns: Object
+     * */
+    async updateAppointment() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                apptDateTime: dateTimeFormat.parse(this.apptDateTime)
+            }).where('apptId', this.apptId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        console.log(result);
+
+        return result;
+    }
+
+    /**
      * Update a `appointment` record status to 'Cancelled'.
      * Can be used to suspend appointment.
      * Returns: Object

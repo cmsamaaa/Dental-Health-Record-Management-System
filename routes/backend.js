@@ -21,15 +21,17 @@ router.post('/admin/user/suspend', routeAuth.isAuth, routeAuth.isAdmin, userCont
 router.post('/admin/user/reactivate', routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
 
 router.post('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, staffController.register);
-router.post('/admin/staff/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
+router.post('/admin/staff/edit', routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
 
 router.post('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, patientController.register);
-router.post('/admin/patient/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, patientController.edit);
+router.post('/admin/patient/edit', routeAuth.isAuth, routeAuth.isAdmin, patientController.edit);
 
 router.post('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.createAppointment);
-router.post('/admin/appointment/suspend/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
+router.post('/admin/appointment/edit', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.editAppointment);
+router.post('/admin/appointment/suspend', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
 
 router.post('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
-router.post('/patient/appointment/suspend/:apptId', routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
+router.post('/patient/appointment/edit', routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);
+router.post('/patient/appointment/suspend', routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
 
 module.exports = router;
