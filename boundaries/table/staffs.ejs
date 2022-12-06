@@ -57,7 +57,10 @@
                         <td><%= staffData[i].gender %></td>
                         <td><%= staffData[i].role %></td>
                         <td><%= staffData[i].isDeactivated === 0 ? "Active" : "Suspended" %></td>
-                        <td>
+                        <td class="d-flex">
+                          <% if(staffData[i].isDeactivated === 0) { %>
+                          <a href="/admin/staff/edit/<%= staffData[i].userId %>" class="btn btn-primary text-capitalize mr-2">Edit</a>
+                          <% } %>
                           <% let actionText = 'suspend' %>
                           <% if(staffData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
                           <form action="/admin/user/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> User ID #<%= staffData[i].userId %>?');">

@@ -17,6 +17,8 @@
       <!-- Content Header (Page header) -->
       <%- include('../includes/content-header.ejs') %>
 
+      <% let actionText = path === '/admin/staff/create' ? 'create' : 'edit' %>
+
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -25,44 +27,50 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Create Staff Account Form</h3>
+                  <h3 class="card-title text-capitalize"><%= actionText %> Staff Account Form</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="/admin/staff/create" method="post">
+                <form action="<%= actionText === 'create' ? path : path + '/' + staffData.userId %>" method="post">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="tb_lastName">First Name<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_lastName" name="firstName" placeholder="Enter first name" tabindex="1" required>
+                          <input type="text" class="form-control" id="tb_lastName" name="firstName" placeholder="Enter first name" tabindex="1" value="<%= actionText === 'edit' ? staffData.firstName : '' %>" required>
                         </div>
                         <div class="form-group">
                           <label for="tb_nric">NRIC<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_nric" name="nric" placeholder="S12345678Z" tabindex="3" required>
+                          <input type="text" class="form-control" id="tb_nric" name="nric" placeholder="S12345678Z" tabindex="3" value="<%= actionText === 'edit' ? staffData.nric : '' %>" required>
                         </div>
                         <div class="form-group">
                           <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
-                          <input type="email" class="form-control" id="tb_Email" name="email" placeholder="abc@xyz.com" tabindex="5" required>
+                          <input type="email" class="form-control" id="tb_Email" name="email" placeholder="abc@xyz.com" tabindex="5" value="<%= actionText === 'edit' ? staffData.email : '' %>" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="tb_lastName">Last Name (Surname)<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_lastName" name="lastName" tabindex="2" placeholder="Enter last name" required>
+                          <input type="text" class="form-control" id="tb_lastName" name="lastName" tabindex="2" placeholder="Enter last name" value="<%= actionText === 'edit' ? staffData.lastName : '' %>" required>
                         </div>
                         <div class="form-group">
                           <label for="tb_DOB">Birthday<span style="color:red;">*</span></label>
-                          <input type="date" class="form-control" id="tb_DOB" name="DOB" tabindex="4" placeholder="dd/mm/yyyy" required>
+                          <input type="date" class="form-control" id="tb_DOB" name="DOB" tabindex="4" placeholder="dd/mm/yyyy" value="<%= actionText === 'edit' ? staffData.DOB : '' %>" required>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="ddl_Gender">Gender<span style="color:red;">*</span></label>
                               <select class="form-control" id="ddl_Gender" name="gender" style="width: 100%;" tabindex="6" required>
-                                <option selected disabled>Select one...</option>
+                                <option <% if (actionText === 'create') { %>selected<% } %> disabled>Select one...</option>
+                                <% if (actionText === 'create') { %>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
+                                <% } %>
+                                <% if (actionText === 'edit') { %>
+                                <option <% if (staffData.gender === 'Male') { %>selected<% } %> value="Male">Male</option>
+                                <option <% if (staffData.gender === 'Female') { %>selected<% } %> value="Female">Female</option>
+                                <% } %>
                               </select>
                             </div>
                           </div>
@@ -70,10 +78,17 @@
                             <div class="form-group">
                               <label for="ddl_Role">Role<span style="color:red;">*</span></label>
                               <select class="form-control" id="ddl_Role" name="role" style="width: 100%;" tabindex="7" required>
-                                <option selected disabled>Select one...</option>
+                                <option <% if (actionText === 'create') { %>selected<% } %> disabled>Select one...</option>
+                                <% if (actionText === 'create') { %>
                                 <option value="Administrator">Administrator</option>
                                 <option value="Dentist">Dentist</option>
                                 <option value="Dental Assistant">Dental Assistant</option>
+                                <% } %>
+                                <% if (actionText === 'edit') { %>
+                                <option <% if (staffData.role === 'Administrator') { %>selected<% } %> value="Administrator">Administrator</option>
+                                <option <% if (staffData.role === 'Dentist') { %>selected<% } %> value="Dentist">Dentist</option>
+                                <option <% if (staffData.role === 'Dental Assistant') { %>selected<% } %> value="Dental Assistant">Dental Assistant</option>
+                                <% } %>
                               </select>
                             </div>
                           </div>
@@ -84,6 +99,10 @@
                   <!-- /.card-body -->
 
                   <div class="card-footer text-right">
+                    <% if (actionText === 'edit') { %>
+                    <input type="hidden" name="userId" value="<%= staffData.userId %>">
+                    <input type="hidden" name="staffId" value="<%= staffData.staffId %>">
+                    <% } %>
                     <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>

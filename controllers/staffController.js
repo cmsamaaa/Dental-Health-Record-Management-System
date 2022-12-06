@@ -6,30 +6,6 @@ const Staff = require('../entities/staff');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
-exports.register = async (req, res, next) => {
-    const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
-    if (!_.isEmpty(req.body)) {
-        const staff = new Staff({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            nric: req.body.nric,
-            DOB: req.body.DOB,
-            gender: req.body.gender,
-            email: req.body.email,
-            password: hashedPassword,
-            role: req.body.role
-        });
-        const results = await staff.registerStaff();
-
-        if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?register=true&id=' + results[0]));
-        else
-            res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
-    }
-    else
-        res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
-};
-
 exports.login = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const staff = new Staff(req.body);
@@ -64,6 +40,54 @@ exports.login = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
 };
 
+exports.register = async (req, res, next) => {
+    const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
+    if (!_.isEmpty(req.body)) {
+        const staff = new Staff({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            nric: req.body.nric,
+            DOB: req.body.DOB,
+            gender: req.body.gender,
+            email: req.body.email,
+            password: hashedPassword,
+            role: req.body.role
+        });
+        const results = await staff.registerStaff();
+
+        if (!_.isEmpty(results))
+            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?register=true&id=' + results[0]));
+        else
+            res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
+};
+
+exports.edit = async (req, res, next) => {
+    if (!_.isEmpty(req.body)) {
+        const staff = new Staff({
+            userId: req.body.userId,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            nric: req.body.nric,
+            DOB: req.body.DOB,
+            gender: req.body.gender,
+            email: req.body.email,
+            staffId: req.body.staffId,
+            role: req.body.role
+        });
+        const results = await staff.updateStaff();
+
+        if (results)
+            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?edit=true&id=' + req.body.userId));
+        else
+            res.redirect(parse_uri.parse(req, '/admin/staff/edit/' + req.body.userId + '?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/staff/edit/' + req.body.userId + '?error=true'));
+};
+
 exports.viewLogin = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/login', {
         pageTitle: 'Staff Login',
@@ -91,4 +115,21 @@ exports.viewStaffs = async (req, res, next) => {
     }
     else
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
+
+exports.viewEditStaff = async (req, res, next) => {
+    const staff = new Staff({
+        userId: req.params.userId
+    });
+    const result = await staff.getStaff();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/staff', {
+            pageTitle: 'Staff',
+            path: '/admin/staff/edit',
+            staffData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/staff/view-all?error=true'));
 };

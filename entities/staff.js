@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 
 const User = require('../entities/user');
 const db = require('./db');
@@ -70,7 +71,9 @@ class Staff extends User {
             result = await db(tableName).select('*').innerJoin('users', 'staffs.userId', 'users.userId').where('staffs.userId', this.userId);
 
             result = _.map(result, (staff) => {
-                return _.omit(staff, 'password');
+                staff.DOB = moment(staff.DOB).format('YYYY-MM-DD');
+                staff = _.omit(staff, 'password');
+                return staff;
             });
         }
         catch (e) {
@@ -110,6 +113,28 @@ class Staff extends User {
         }
 
         return isMatch ? result[0] : {};
+    }
+
+    /**
+     * Update a `staff` record
+     * Can be used for update staff
+     * Returns: Object
+     * */
+    async updateStaff() {
+        await this.updateUser();
+
+        let result;
+        try {
+            result = await db(tableName).update({
+                role: this.role
+            }).where('staffId', this.staffId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
     }
 }
 

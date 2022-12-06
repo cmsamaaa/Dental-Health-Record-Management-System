@@ -21,6 +21,7 @@ router.post('/admin/user/suspend', routeAuth.isAuth, routeAuth.isAdmin, userCont
 router.post('/admin/user/reactivate', routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
 
 router.post('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, staffController.register);
+router.post('/admin/staff/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
 
 router.post('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, patientController.register);
 
