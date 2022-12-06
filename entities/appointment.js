@@ -61,6 +61,30 @@ class Appointment {
     }
 
     /**
+     * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime >= today
+     * Returns: JSON[]
+     * */
+    async getAllUpcomingAppointments() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('apptDateTime', '>=', new Date());
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves all `appointment` inner join `patient` and `user` records by `userId`
      * Returns: JSON[]
      * */

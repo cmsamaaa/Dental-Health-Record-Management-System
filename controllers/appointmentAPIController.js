@@ -31,6 +31,15 @@ exports.getAllUserAppointments = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).json(result);
 };
 
+exports.getAllUpcomingAppointments = async (req, res, next) => {
+    const appointment = new Appointment({
+        userId: req.params.userId
+    });
+    const result = await appointment.getAllUpcomingAppointments();
+
+    res.status(HTTP_STATUS.OK).json(result);
+};
+
 exports.getAppointment = async (req, res, next) => {
     const appointment = new Appointment({
         apptId: req.params.apptId
