@@ -14,7 +14,21 @@ exports.createAppointment = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.CREATED)
             res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/view-all?create=true&id=' + JSON.parse(body).apptId));
         else
-            res.redirect(parse_uri.parse(req, '/' + req.body.userType + 'admin/appointment/create?error=true'));
+            res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/create?error=true'));
+    });
+};
+
+exports.suspendAppointment = async (req, res, next) => {
+    // api endpoint uri
+    const uri = parse_uri.parse(req, '/api/appointment/suspend/' + req.body.apptId);
+    request.post({
+        url: uri,
+        form: req.body
+    }, (err, response, body) => {
+        if (response.statusCode === HTTP_STATUS.CREATED)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?cancel=true&apptId=' + req.body.apptId));
+        else
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
     });
 };
 

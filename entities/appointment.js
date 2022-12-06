@@ -8,6 +8,7 @@ class Appointment {
     apptId;
     apptDateTime;
     followUpApptId;
+    status;
     patientId;
 
     constructor(data) {
@@ -79,6 +80,28 @@ class Appointment {
             console.error(e);
             result = {};
         }
+
+        return result;
+    }
+
+    /**
+     * Update a `appointment` record status to 'Cancelled'.
+     * Can be used to suspend appointment.
+     * Returns: Object
+     * */
+    async suspendAppointment() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                status: 'Cancelled'
+            }).where('apptId', this.apptId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        console.log(result);
 
         return result;
     }

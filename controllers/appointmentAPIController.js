@@ -30,3 +30,16 @@ exports.getAllUserAppointments = async (req, res, next) => {
 
     res.status(HTTP_STATUS.OK).json(result);
 };
+
+exports.suspendAppointment = async (req, res, next) => {
+    if (!_.isEmpty(req.body)) {
+        const appointment = new Appointment(req.body);
+        const results = await appointment.suspendAppointment();
+
+        if (results)
+            res.status(HTTP_STATUS.CREATED).json({ success: true });
+        else
+            res.status(HTTP_STATUS.BAD_REQUEST).json({});
+    } else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};

@@ -27,7 +27,9 @@ router.post('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, patien
 router.post('/admin/patient/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, patientController.edit);
 
 router.post('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.createAppointment);
+router.post('/admin/appointment/suspend/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
 
 router.post('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
+router.post('/patient/appointment/suspend/:apptId', routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
 
 module.exports = router;

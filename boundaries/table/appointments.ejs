@@ -41,6 +41,8 @@
                         <th>Medicare ID</th>
                         <th>Email</th>
                         <th>Gender</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -53,6 +55,16 @@
                         <td><%= appointmentData[i].medicareId ? appointmentData[i].medicareId : 'Not Applicable' %></td>
                         <td><%= appointmentData[i].email %></td>
                         <td><%= appointmentData[i].gender %></td>
+                        <td><%= appointmentData[i].status %></td>
+                        <td class="d-flex">
+                          <% if(appointmentData[i].status === 'Upcoming') { %>
+                          <form action="/admin/appointment/suspend/<%= appointmentData[i].apptId %>" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
+                            <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
+                            <input type="hidden" name="for" value="admin">
+                            <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-user-times"></i></button>
+                          </form>
+                          <% } %>
+                        </td>
                       </tr>
                       <% } %>
                     </tbody>
@@ -65,6 +77,8 @@
                         <th>Medicare ID</th>
                         <th>Email</th>
                         <th>Gender</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
                     </tfoot>
                     <% } %>
@@ -76,6 +90,8 @@
                         <th>Date & Time</th>
                         <th>Clinic Name</th>
                         <th>Clinic Address</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -85,6 +101,16 @@
                         <td><%= appointmentData[i].apptDateTime %></td>
                         <td><%= clinicName ? clinicName : "Unspecified" %></td>
                         <td><%= clinicAddress ? clinicAddress : "Unspecified" %></td>
+                        <td><%= appointmentData[i].status %></td>
+                        <td class="d-flex">
+                          <% if(appointmentData[i].status === 'Upcoming') { %>
+                          <form action="/patient/appointment/suspend/<%= appointmentData[i].apptId %>" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
+                            <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
+                            <input type="hidden" name="for" value="patient">
+                            <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-user-times"></i></button>
+                          </form>
+                          <% } %>
+                        </td>
                       </tr>
                       <% } %>
                     </tbody>
@@ -94,6 +120,8 @@
                         <th>Date & Time</th>
                         <th>Clinic Name</th>
                         <th>Clinic Address</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
                     </tfoot>
                     <% } %>
@@ -144,7 +172,38 @@
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        "buttons": [{
+            extend: 'copy',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'excel',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          "colvis"
+        ]
       }).buttons().container().appendTo('#tbl_Appointments_wrapper .col-md-6:eq(0)');
     });
   </script>

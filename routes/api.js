@@ -16,6 +16,6 @@ router.post('/appointment/create', appointmentAPIController.createAppointment);
 router.get('/appointment/get/all', appointmentAPIController.getAllAppointments);
 router.get('/appointment/get/all/:userId', appointmentAPIController.getAllUserAppointments);
 // update appointment
-// suspend (cancel) appointment
+router.post('/appointment/suspend/:apptId', appointmentAPIController.suspendAppointment);
 
 module.exports = router;
