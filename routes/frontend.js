@@ -16,7 +16,6 @@ const router = express.Router();
 // Non-protected routes
 router.get('/login', routeController.viewPatientLogin);
 router.get('/staff/login', routeController.viewStaffLogin);
-router.get('/register', routeController.viewRegister);
 router.get('/forgot-password', routeController.viewForgotPassword);
 
 // Protected routes

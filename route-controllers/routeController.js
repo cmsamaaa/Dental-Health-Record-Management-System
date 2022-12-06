@@ -21,13 +21,6 @@ exports.viewStaffLogin = async (req, res, next) => {
     });
 };
 
-exports.viewRegister = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('auth/register', {
-        pageTitle: 'Register',
-        path: '/register'
-    });
-};
-
 exports.viewForgotPassword = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/forgot-password', {
         pageTitle: 'Forget Password',
