@@ -16,3 +16,17 @@ exports.viewBills_Patient = async (req, res, next) => {
         path: '/patient/bill/view-all'
     });
 };
+
+exports.viewInvoice = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('bill/invoice', {
+        pageTitle: 'Invoice',
+        path: '/invoice'
+    });
+};
+
+exports.viewInvoicePrint = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('bill/invoice-print', {
+        pageTitle: 'Invoice',
+        path: '/invoice-print'
+    });
+};

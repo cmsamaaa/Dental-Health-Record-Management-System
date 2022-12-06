@@ -68,6 +68,13 @@ exports.login = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/login?error=true'));
 };
 
+exports.viewLogin = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('auth/login', {
+        pageTitle: 'Login',
+        path: '/login'
+    });
+};
+
 exports.viewCreatePatient = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('form/patient', {
         pageTitle: 'Patient',

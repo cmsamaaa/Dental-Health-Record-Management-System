@@ -9,7 +9,7 @@ const session = require('express-session');
 const logger = require('morgan');
 
 
-const errorController = require('./route-controllers/errorController');
+const defaultController = require('./controllers/defaultController');
 
 // routers
 const frontendRoutes = require('./routes/frontend');
@@ -41,7 +41,7 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 
 // middleware
 app.use(bodyParser.json()); // parse application/json
-app.use(bodyParser.urlencoded({extended: false})); // parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(session({
     secret: "tempPass123",
     resave: true,
@@ -63,11 +63,11 @@ app.use('/', backendRoutes);
 // api endpoint route
 const corsOptions = { // allow the server to accept GET & POST requests from external clients
     methods: "GET, POST"
-}
+};
 app.use('/api', cors(corsOptions), apiRoutes);
 
 // error route
-app.use(errorController.get404);
+app.use(defaultController.view404);
 
 // seed database and start app server
 if (process.env.ENV !== "test") {
