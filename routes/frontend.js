@@ -35,6 +35,7 @@ router.get('/admin/clinic/view-all', routeAuth.isAuth, routeAuth.isAdmin, clinic
 router.get('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);
 router.get('/admin/staff/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditStaff);
 router.get('/admin/staff/view-all', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewStaffs);
+router.get('/admin/staff/view/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewStaff);
 
 // Patient
 router.get('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, patientController.viewCreatePatient);

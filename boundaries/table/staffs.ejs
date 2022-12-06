@@ -59,7 +59,7 @@
                         <td><%= staffData[i].isDeactivated === 0 ? "Active" : "Suspended" %></td>
                         <td class="d-flex">
                           <% if(staffData[i].isDeactivated === 0) { %>
-                          <a href="#" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <a href="/admin/staff/view/<%= staffData[i].userId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <a href="/admin/staff/edit/<%= staffData[i].userId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
                           <% } %>
                           <% let actionText = 'suspend' %>

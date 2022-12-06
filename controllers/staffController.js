@@ -92,6 +92,23 @@ exports.viewCreateStaff = async (req, res, next) => {
     });
 };
 
+exports.viewEditStaff = async (req, res, next) => {
+    const staff = new Staff({
+        userId: req.params.userId
+    });
+    const result = await staff.getStaff();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/staff', {
+            pageTitle: 'Staff',
+            path: '/admin/staff/edit',
+            staffData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/staff/view-all?error=true'));
+};
+
 exports.viewStaffs = async (req, res, next) => {
     const staff = new Staff();
     const result = await staff.getAllStaffs();
@@ -107,16 +124,16 @@ exports.viewStaffs = async (req, res, next) => {
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
 };
 
-exports.viewEditStaff = async (req, res, next) => {
+exports.viewStaff = async (req, res, next) => {
     const staff = new Staff({
         userId: req.params.userId
     });
     const result = await staff.getStaff();
 
     if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('form/staff', {
+        res.status(HTTP_STATUS.OK).render('detail/staff', {
             pageTitle: 'Staff',
-            path: '/admin/staff/edit',
+            path: '/admin/staff/view',
             staffData: result
         });
     }

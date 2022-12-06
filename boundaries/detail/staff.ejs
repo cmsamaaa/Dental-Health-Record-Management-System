@@ -1,0 +1,104 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Staff Account Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">First Name:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_lastName" name="firstName" placeholder="Enter first name" tabindex="1" value="<%= staffData.firstName %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_nric">NRIC:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" placeholder="S12345678Z" tabindex="3" value="<%= staffData.nric %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Email">Email Address:</label>
+                          <input type="email" class="form-control-plaintext" id="tb_Email" name="email" placeholder="abc@xyz.com" tabindex="5" value="<%= staffData.email %>" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">Last Name (Surname):</label>
+                          <input type="text" class="form-control-plaintext" id="tb_lastName" name="lastName" tabindex="2" placeholder="Enter last name" value="<%= staffData.lastName %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_DOB">Birthday:</label>
+                          <input type="date" class="form-control-plaintext" id="tb_DOB" name="DOB" tabindex="4" placeholder="dd/mm/yyyy" value="<%= staffData.DOB %>" disabled>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Gender">Gender:</label>
+                              <input type="text" class="form-control-plaintext" id="tb_Gender" name="lastName" tabindex="6" placeholder="" value="<%= staffData.gender %>" disabled>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Role">Role:</label>
+                              <input type="text" class="form-control-plaintext" id="tb_Role" name="role" tabindex="7" placeholder="" value="<%= staffData.role %>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <a href="/admin/staff/edit/<%= staffData.userId %>" class="btn btn-primary">Edit</a>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+</body>
+
+</html>
