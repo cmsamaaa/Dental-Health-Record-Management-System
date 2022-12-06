@@ -63,3 +63,25 @@ exports.login = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
 };
+
+exports.viewCreateStaff = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('form/staff', {
+        pageTitle: 'Staff',
+        path: '/admin/staff/create'
+    });
+};
+
+exports.viewStaffs = async (req, res, next) => {
+    const staff = new Staff();
+    const result = await staff.getAllStaffs();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('table/staffs', {
+            pageTitle: 'Staff',
+            path: '/admin/staff/view-all',
+            staffData: result
+        });
+    }
+    else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
