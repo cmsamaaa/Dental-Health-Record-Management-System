@@ -62,8 +62,6 @@ class User {
             result = {};
         }
 
-        console.log(result);
-
         return result;
     }
 
@@ -83,8 +81,6 @@ class User {
             console.error(e);
             result = {};
         }
-
-        console.log(result);
 
         return result;
     }
