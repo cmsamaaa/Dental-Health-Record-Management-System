@@ -6,34 +6,6 @@ const Patient = require('../entities/patient');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
-exports.register = async (req, res, next) => {
-    const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
-    if (!_.isEmpty(req.body)) {
-        const patient = new Patient({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            nric: req.body.nric,
-            DOB: req.body.DOB,
-            gender: req.body.gender,
-            email: req.body.email,
-            password: hashedPassword,
-            medicareId: req.body.medicareId,
-            address: req.body.address,
-            postal: req.body.postal,
-            unit: req.body.unit,
-            familyId: req.body.familyId
-        });
-        const results = await patient.registerPatient();
-
-        if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?register=true&id=' + results[0]));
-        else
-            res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
-    }
-    else
-        res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
-};
-
 exports.login = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const patient = new Patient(req.body);
@@ -66,6 +38,48 @@ exports.login = async (req, res, next) => {
     }
     else
         res.redirect(parse_uri.parse(req, '/login?error=true'));
+};
+
+exports.register = async (req, res, next) => {
+    const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
+    if (!_.isEmpty(req.body)) {
+        const patient = new Patient({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            nric: req.body.nric,
+            DOB: req.body.DOB,
+            gender: req.body.gender,
+            email: req.body.email,
+            password: hashedPassword,
+            medicareId: req.body.medicareId,
+            address: req.body.address,
+            postal: req.body.postal,
+            unit: req.body.unit,
+            familyId: req.body.familyId
+        });
+        const results = await patient.registerPatient();
+
+        if (!_.isEmpty(results))
+            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?register=true&id=' + results[0]));
+        else
+            res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
+};
+
+exports.edit = async (req, res, next) => {
+    if (!_.isEmpty(req.body)) {
+        const patient = new Patient(req.body);
+        const results = await patient.updatePatient();
+
+        if (results)
+            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?edit=true&id=' + req.body.userId));
+        else
+            res.redirect(parse_uri.parse(req, '/admin/patient/edit/' + req.body.userId + '?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/patient/edit/' + req.body.userId + '?error=true'));
 };
 
 exports.viewLogin = async (req, res, next) => {
@@ -102,4 +116,21 @@ exports.viewPatients = async (req, res, next) => {
             });
         }
     });
+};
+
+exports.viewEditPatient = async (req, res, next) => {
+    const patient = new Patient({
+        userId: req.params.userId
+    });
+    const result = await patient.getPatient();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/patient', {
+            pageTitle: 'Patient',
+            path: '/admin/patient/edit',
+            patientData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/patient/view-all?error=true'));
 };

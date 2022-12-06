@@ -59,13 +59,16 @@
                         <td><%= patientData[i].gender %></td>
                         <td><%= patientData[i].verifiedEmail ? 'Verified' : 'Not verified' %></td>
                         <td><%= patientData[i].isDeactivated === 0 ? "Active" : "Suspended" %></td>
-                        <td>
+                        <td class="d-flex">
+                          <% if(patientData[i].isDeactivated === 0) { %>
+                          <a href="/admin/patient/edit/<%= patientData[i].userId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <% } %>
                           <% let actionText = 'suspend' %>
                           <% if(patientData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
                           <form action="/admin/user/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> User ID #<%= patientData[i].userId %>?');">
                             <input type="hidden" name="userId" value="<%= patientData[i].userId %>">
                             <input type="hidden" name="for" value="patient">
-                            <button type="submit" class="btn <% if(patientData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize"><%= actionText %></button>
+                            <button type="submit" class="btn <% if(patientData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(patientData[i].isDeactivated === 0) { %><i class="fas fa-user-times"></i><% } else { %><i class="fas fa-user-check"></i><% } %></button>
                           </form>
                         </td>
                       </tr>

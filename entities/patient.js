@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 const User = require('../entities/user');
 const db = require('./db');
 const tableName = 'patients';
@@ -78,7 +79,9 @@ class Patient extends User {
             result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('patients.userId', this.userId);
 
             result = _.map(result, (patient) => {
-                return _.omit(patient, 'password');
+                patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
+                patient = _.omit(patient, 'password');
+                return patient;
             });
         }
         catch (e) {
@@ -118,6 +121,32 @@ class Patient extends User {
         }
 
         return isMatch ? result[0] : {};
+    }
+
+    /**
+     * Update a `patient` record
+     * Can be used for update patient
+     * Returns: Object
+     * */
+    async updatePatient() {
+        await this.updateUser();
+
+        let result;
+        try {
+            result = await db(tableName).update({
+                medicareId: this.medicareId,
+                address: this.address,
+                postal: this.postal,
+                unit: this.unit,
+                familyId: this.familyId
+            }).where('patientId', this.patientId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
     }
 }
 

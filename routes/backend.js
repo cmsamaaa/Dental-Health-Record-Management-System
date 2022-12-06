@@ -24,6 +24,7 @@ router.post('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, staffCon
 router.post('/admin/staff/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
 
 router.post('/admin/patient/create', routeAuth.isAuth, routeAuth.isAdmin, patientController.register);
+router.post('/admin/patient/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, patientController.edit);
 
 router.post('/admin/appointment/create', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.createAppointment);
 
