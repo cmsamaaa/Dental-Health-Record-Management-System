@@ -107,7 +107,9 @@
                     <input type="hidden" name="userId" value="<%= patientData.userId %>">
                     <input type="hidden" name="patientId" value="<%= patientData.patientId %>">
                     <% } %>
+                    <% if (actionText !== 'edit') { %>
                     <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <% } %>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
