@@ -22,7 +22,7 @@ describe('Run all test units', () => {
 
     /* Start of API endpoint unit tests */
 
-    describe('/GET /api/info/get/all 200 | Request for all clinic info', () => {
+    describe('01 | /GET /api/info/get/all 200 | Get all clinic info', () => {
         it('it should return an array of JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/info/get/all')
@@ -34,7 +34,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/info/get/:key 200 | Request with Valid Key', () => {
+    describe('02 | /GET /api/info/get/:key 200 | Request with Valid Key', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/info/get/address')
@@ -47,7 +47,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/info/get/:key 404 | Request with Invalid Key', () => {
+    describe('03 | /GET /api/info/get/:key 404 | Request with Invalid Key', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
                 .get('/api/info/get/' + Number.MAX_SAFE_INTEGER)
@@ -59,7 +59,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/patient/get/all 200 | Request for all patient info', () => {
+    describe('04 | /GET /api/patient/get/all 200 | Get all patient info', () => {
         it('it should return an array of JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/patient/get/all')
@@ -71,7 +71,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/patient/get/:userId 200 | Request with Valid UserId', () => {
+    describe('05 | /GET /api/patient/get/:userId 200 | Request with Valid UserId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/patient/get/36')
@@ -84,7 +84,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/patient/get/:userId 404 | Request with Invalid UserId', () => {
+    describe('06 | /GET /api/patient/get/:userId 404 | Request with Invalid UserId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
                 .get('/api/patient/get/' + Number.MAX_SAFE_INTEGER)
@@ -96,7 +96,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/POST /api/appointment/create 201 | Create Appointment Record', () => {
+    describe('07 | /POST /api/appointment/create 201 | Create Appointment Record', () => {
         it('it should return a json object with `apptId` and 201 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/create')
@@ -110,7 +110,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/POST /api/appointment/create 400 | Create Appointment Record with Empty Body', () => {
+    describe('08 | /POST /api/appointment/create 400 | Create Appointment Record with Empty Body', () => {
         it('it should return an empty json object with 400 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/create')
@@ -123,7 +123,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/appointment/get/all 200 | Request for all appointment records', () => {
+    describe('09 | /GET /api/appointment/get/all 200 | Get all appointment records', () => {
         it('it should return an array of JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/all')
@@ -135,7 +135,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/appointment/get/all/upcoming 200 | Request for all present & future appointment records', () => {
+    describe('10 | /GET /api/appointment/get/all/upcoming 200 | Get all present & future appointment records', () => {
         it('it should return an array of JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/all/upcoming')
@@ -147,7 +147,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/appointment/get/all/:userId 200 | Request with Valid UserId', () => {
+    describe('11 | /GET /api/appointment/get/all/:userId 200 | Request with Valid UserId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/all/37')
@@ -160,7 +160,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/appointment/get/all/:userId 404 | Request with Invalid UserId', () => {
+    describe('12 | /GET /api/appointment/get/all/:userId 404 | Request with Invalid UserId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/all/' + Number.MAX_SAFE_INTEGER)
@@ -172,10 +172,10 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/appointment/get/:apptId 200 | Request with Valid ApptId', () => {
+    describe('13 | /GET /api/appointment/get/:apptId 200 | Request with Valid ApptId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
-                .get('/api/appointment/get/2')
+                .get('/api/appointment/get/1')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.not.be.null;
@@ -185,7 +185,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/GET /api/appointment/get/:apptId 404 | Request with Invalid ApptId', () => {
+    describe('14 | /GET /api/appointment/get/:apptId 404 | Request with Invalid ApptId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/' + Number.MAX_SAFE_INTEGER)
@@ -197,7 +197,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/POST /api/appointment/edit 200 | Edit Appointment Record', () => {
+    describe('15 | /POST /api/appointment/edit 200 | Edit Appointment Record', () => {
         it('it should return a json object with id with 200 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/edit')
@@ -211,7 +211,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/POST /api/appointment/edit 400 | Edit Appointment Record with Empty Body', () => {
+    describe('16 | /POST /api/appointment/edit 400 | Edit Appointment Record with Empty Body', () => {
         it('it should return an empty json object with 400 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/edit')
@@ -224,7 +224,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/POST /api/appointment/suspend 200 | Suspend Appointment Record', () => {
+    describe('17 | /POST /api/appointment/suspend 200 | Suspend Appointment Record', () => {
         it('it should return a json object with id with 200 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/suspend')
@@ -238,7 +238,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('/POST /api/appointment/suspend 400 | Suspend Appointment Record with Empty Body', () => {
+    describe('18 | /POST /api/appointment/suspend 400 | Suspend Appointment Record with Empty Body', () => {
         it('it should return an empty json object with 400 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/suspend')
