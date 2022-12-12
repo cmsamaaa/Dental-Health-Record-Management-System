@@ -149,8 +149,6 @@ class Appointment {
             result = {};
         }
 
-        console.log(result);
-
         return result;
     }
 
@@ -170,8 +168,6 @@ class Appointment {
             console.error(e);
             result = {};
         }
-
-        console.log(result);
 
         return result;
     }
