@@ -1,46 +1,51 @@
 name: Node.js CI/CD
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    push:
+        branches: ['main']
+    pull_request:
+        branches: ['main']
 
 jobs:
-  build:
-    
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js '16.x'
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-          cache: 'npm'
-      - name: Cache node modules
-        id: cache-nodemodules
-        uses: actions/cache@v3.0.11
-        env:
-          cache-name: cache-node-modules
-        with:
-          # caching node_modules
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install, Build, and Test
-        env:
-          URI_IGNORE_PORT: 0
-          ENV: 'test'
-        run: |
-          npm ci
-          npm run build --if-present
-          npm test --if-present
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-report
-          path: coverage
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js '16.x'
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '16.x'
+                  cache: 'npm'
+            - name: Cache node modules
+              id: cache-nodemodules
+              uses: actions/cache@v3.0.11
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  # caching node_modules
+                  path: node_modules
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+            - name: Install, Build, and Test
+              env:
+                  URI_IGNORE_PORT: 0
+                  ENV: 'test'
+                  PORT: 3001
+                  DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+                  DB_PORT: ${{ secrets.DB_PORT }}
+                  DB_USER: ${{ secrets.DB_USER }}
+                  DB_PASS: ${{ secrets.DB_PASS }}
+                  DB_DATABASE: ${{ secrets.DB_DATABASE }}
+              run: |
+                  npm ci
+                  npm run build --if-present
+                  npm test --if-present
+            - name: Archive code coverage results
+              uses: actions/upload-artifact@v3
+              with:
+                  name: code-coverage-report
+                  path: coverage

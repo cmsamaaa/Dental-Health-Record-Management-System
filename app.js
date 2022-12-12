@@ -69,15 +69,9 @@ app.use('/api', cors(corsOptions), apiRoutes);
 // error route
 app.use(defaultController.view404);
 
-// seed database and start app server
-if (process.env.ENV !== "test") {
-    app.listen(PORT, () => {
-        console.log(`App listening on port ${PORT}`);
-    });
-}
-else
-    app.listen(PORT, () => {
-        console.log(`App listening on port ${PORT}`);
-    });
+// start app server
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+});
 
 module.exports = app;
