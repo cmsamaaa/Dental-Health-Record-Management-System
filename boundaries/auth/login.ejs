@@ -10,6 +10,11 @@
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
+        <% if (query.error === 'true') { %>
+        <p class="login-box-msg text-danger">
+          Invalid email and/or password.
+        </p>
+        <% } else { %>
         <p class="login-box-msg">
           <% if (path === '/login') { %>
           Sign in to start your session
@@ -18,6 +23,7 @@
           For staff only
           <% } %>
         </p>
+        <% } %>
 
         <form action="<%= path %>" method="post">
           <div class="input-group mb-3">

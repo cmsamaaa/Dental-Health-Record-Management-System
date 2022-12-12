@@ -21,7 +21,8 @@ exports.addClinicInfo = async (req, res, next) => {
 exports.viewAddClinicInfo = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('form/clinic-info', {
         pageTitle: 'Clinic',
-        path: '/admin/clinic/add-information'
+        path: '/admin/clinic/add-information',
+        query: req.query
     });
 };
 
@@ -35,6 +36,7 @@ exports.viewClinicInfo = async (req, res, next) => {
             res.status(HTTP_STATUS.OK).render('table/clinic-info', {
                 pageTitle: 'Clinic',
                 path: '/admin/clinic/view-all',
+                query: req.query,
                 clinicInfoData: JSON.parse(response.body)
             });
         }

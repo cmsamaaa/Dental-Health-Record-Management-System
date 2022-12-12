@@ -1,0 +1,20 @@
+<% if (query.create === 'true') { %>
+<div class="callout callout-success">
+  <h5><i class="fas fa-exclamation-triangle"></i> Success</h5>
+  You have successfully created the record!
+</div>
+<% } %>
+
+<% if (query.edit === 'true') { %>
+<div class="callout callout-success">
+  <h5><i class="fas fa-exclamation-triangle"></i> Success</h5>
+  You have successfully updated the record!
+</div>
+<% } %>
+
+<% if (query.error === 'true') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  An unusual error has occurred. Please try again later.
+</div>
+<% } %>

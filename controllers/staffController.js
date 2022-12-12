@@ -81,14 +81,16 @@ exports.edit = async (req, res, next) => {
 exports.viewLogin = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/login', {
         pageTitle: 'Staff Login',
-        path: '/staff/login'
+        path: '/staff/login',
+        query: req.query
     });
 };
 
 exports.viewCreateStaff = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('form/staff', {
         pageTitle: 'Staff',
-        path: '/admin/staff/create'
+        path: '/admin/staff/create',
+        query: req.query
     });
 };
 
@@ -102,6 +104,7 @@ exports.viewEditStaff = async (req, res, next) => {
         res.status(HTTP_STATUS.OK).render('form/staff', {
             pageTitle: 'Staff',
             path: '/admin/staff/edit',
+            query: req.query,
             staffData: result
         });
     }
@@ -117,6 +120,7 @@ exports.viewStaffs = async (req, res, next) => {
         res.status(HTTP_STATUS.OK).render('table/staffs', {
             pageTitle: 'Staff',
             path: '/admin/staff/view-all',
+            query: req.query,
             staffData: result
         });
     }
@@ -134,6 +138,7 @@ exports.viewStaff = async (req, res, next) => {
         res.status(HTTP_STATUS.OK).render('detail/staff', {
             pageTitle: 'Staff',
             path: '/admin/staff/view',
+            query: req.query,
             staffData: result
         });
     }

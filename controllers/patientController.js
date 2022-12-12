@@ -85,14 +85,16 @@ exports.edit = async (req, res, next) => {
 exports.viewLogin = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/login', {
         pageTitle: 'Login',
-        path: '/login'
+        path: '/login',
+        query: req.query
     });
 };
 
 exports.viewCreatePatient = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('form/patient', {
         pageTitle: 'Patient',
-        path: '/admin/patient/create'
+        path: '/admin/patient/create',
+        query: req.query
     });
 };
 
@@ -106,6 +108,7 @@ exports.viewEditPatient = async (req, res, next) => {
         res.status(HTTP_STATUS.OK).render('form/patient', {
             pageTitle: 'Patient',
             path: '/admin/patient/edit',
+            query: req.query,
             patientData: result
         });
     }
@@ -123,13 +126,15 @@ exports.viewPatients = async (req, res, next) => {
             res.status(HTTP_STATUS.OK).render('table/patients', {
                 pageTitle: 'Patient',
                 path: '/admin/patient/view-all',
+                query: req.query,
                 patientData: JSON.parse(response.body)
             });
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Patient',
-                path: '/admin/patient/view-all'
+                path: '/admin/patient/view-all',
+                query: req.query
             });
         }
     });
@@ -145,6 +150,7 @@ exports.viewPatient = async (req, res, next) => {
         res.status(HTTP_STATUS.OK).render('detail/patient', {
             pageTitle: 'Patient',
             path: '/admin/patient/view',
+            query: req.query,
             patientData: result
         });
     }

@@ -59,13 +59,15 @@ exports.viewCreateAppointment = async (req, res, next) => {
                 res.status(HTTP_STATUS.OK).render('form/appointment', {
                     pageTitle: 'Appointment',
                     path: '/' + user + '/appointment/create',
+                    query: req.query,
                     userData: JSON.parse(response.body)
                 });
             }
             else {
                 res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                     pageTitle: 'Appointment',
-                    path: '/' + user + '/appointment/create'
+                    path: '/' + user + '/appointment/create',
+                    query: req.query
                 });
             }
         });
@@ -80,13 +82,15 @@ exports.viewCreateAppointment = async (req, res, next) => {
                 res.status(HTTP_STATUS.OK).render('form/appointment', {
                     pageTitle: 'Appointment',
                     path: '/' + user + '/appointment/create',
+                    query: req.query,
                     userData: JSON.parse(response.body)
                 });
             }
             else {
                 res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                     pageTitle: 'Appointment',
-                    path: '/' + user + '/appointment/create'
+                    path: '/' + user + '/appointment/create',
+                    query: req.query
                 });
             }
         });
@@ -109,6 +113,7 @@ exports.viewEditAppointment = async (req, res, next) => {
             res.status(HTTP_STATUS.OK).render('form/appointment', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/edit',
+                query: req.query,
                 userData: data
             });
         }
@@ -116,6 +121,7 @@ exports.viewEditAppointment = async (req, res, next) => {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/edit',
+                query: req.query
             });
         }
     });
@@ -147,6 +153,7 @@ exports.viewAppointments = async (req, res, next) => {
             res.status(HTTP_STATUS.OK).render('table/appointments', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/view-all',
+                query: req.query,
                 appointmentData: data,
                 clinicName: req.session.clinicInfo['Clinic Name'],
                 clinicAddress: req.session.clinicInfo['Address'] + ", #" + req.session.clinicInfo['Unit'] + ", (S)" + req.session.clinicInfo['Postal']
@@ -177,6 +184,7 @@ exports.viewAppointment = async (req, res, next) => {
             res.status(HTTP_STATUS.OK).render('detail/appointment', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/view',
+                query: req.query,
                 userData: data,
                 userRole: user
             });
@@ -185,6 +193,7 @@ exports.viewAppointment = async (req, res, next) => {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/view',
+                query: req.query
             });
         }
     });

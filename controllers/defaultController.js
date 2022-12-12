@@ -3,14 +3,16 @@ const HTTP_STATUS = require("../constants/http_status");
 exports.viewIndex = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('index', {
         pageTitle: 'Index',
-        path: '/'
+        path: '/',
+        query: req.query,
     });
 };
 
 exports.viewForgotPassword = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/forgot-password', {
         pageTitle: 'Forget Password',
-        path: '/forgot-password'
+        path: '/forgot-password',
+        query: req.query,
     });
 };
 

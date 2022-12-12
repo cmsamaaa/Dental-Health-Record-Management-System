@@ -6,13 +6,15 @@ const HTTP_STATUS = require("../constants/http_status");
 exports.viewInventory = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('table/admin-inventory', {
         pageTitle: 'Inventory',
-        path: '/admin/inventory/view-all'
+        path: '/admin/inventory/view-all',
+        query: req.query
     });
 };
 
 exports.viewCreateInventory = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('form/inventory', {
         pageTitle: 'Inventory',
-        path: '/admin/inventory/add-inventory'
+        path: '/admin/inventory/add-inventory',
+        query: req.query
     });
 };
