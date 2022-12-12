@@ -74,7 +74,7 @@ exports.edit = async (req, res, next) => {
         const results = await patient.updatePatient();
 
         if (results)
-            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?edit=true&id=' + req.body.userId));
+            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=edit&id=' + req.body.userId));
         else
             res.redirect(parse_uri.parse(req, '/admin/patient/edit/' + req.body.userId + '?error=true'));
     }

@@ -12,7 +12,7 @@ exports.createAppointment = async (req, res, next) => {
         form: req.body
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/view-all?create=true&id=' + JSON.parse(body).apptId));
+            res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/view-all?action=create&id=' + JSON.parse(body).apptId));
         else
             res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/create?error=true'));
     });
@@ -25,8 +25,8 @@ exports.editAppointment = async (req, res, next) => {
         url: uri,
         form: req.body
     }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?edit=true&apptId=' + req.body.apptId));
+        if (response.statusCode === HTTP_STATUS.OK)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?action=edit&id=' + req.body.apptId));
         else
             res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
     });
@@ -39,8 +39,8 @@ exports.suspendAppointment = async (req, res, next) => {
         url: uri,
         form: req.body
     }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?cancel=true&apptId=' + req.body.apptId));
+        if (response.statusCode === HTTP_STATUS.OK)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?action=cancel&id=' + req.body.apptId));
         else
             res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
     });

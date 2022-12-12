@@ -70,7 +70,7 @@ exports.edit = async (req, res, next) => {
         const results = await staff.updateStaff();
 
         if (results)
-            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?edit=true&id=' + req.body.userId));
+            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?action=edit&id=' + req.body.userId));
         else
             res.redirect(parse_uri.parse(req, '/admin/staff/edit/' + req.body.userId + '?error=true'));
     }

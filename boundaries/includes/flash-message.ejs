@@ -1,14 +1,35 @@
-<% if (query.create === 'true') { %>
+<% if (query.action === 'create') { %>
 <div class="callout callout-success">
-  <h5><i class="fas fa-exclamation-triangle"></i> Success</h5>
-  You have successfully created the record!
+  <h5><i class="fas fa-check-circle"></i> Success</h5>
+  You have successfully created a new record!
 </div>
 <% } %>
 
-<% if (query.edit === 'true') { %>
+<% if (query.action === 'edit') { %>
 <div class="callout callout-success">
-  <h5><i class="fas fa-exclamation-triangle"></i> Success</h5>
+  <h5><i class="fas fa-check-circle"></i> Success</h5>
   You have successfully updated the record!
+</div>
+<% } %>
+
+<% if (query.action === 'cancel') { %>
+<div class="callout callout-success">
+  <h5><i class="fas fa-check-circle"></i> Success</h5>
+  You have successfully cancelled the appointment!
+</div>
+<% } %>
+
+<% if (query.action === 'suspend') { %>
+<div class="callout callout-success">
+  <h5><i class="fas fa-check-circle"></i> Success</h5>
+  You have successfully suspended the record!
+</div>
+<% } %>
+
+<% if (query.action === 'reactivate') { %>
+<div class="callout callout-success">
+  <h5><i class="fas fa-check-circle"></i> Success</h5>
+  You have successfully reactivated the record!
 </div>
 <% } %>
 
