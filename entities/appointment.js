@@ -24,6 +24,7 @@ class Appointment {
         let result;
         try {
             result = await db(tableName).insert({
+                apptId: this.apptId ? this.apptId : null,
                 apptDateTime: dateTimeFormat.parse(this.apptDateTime),
                 followUpApptId: this.followUpApptId ? this.followUpApptId : null,
                 patientId: this.patientId
@@ -163,6 +164,27 @@ class Appointment {
             result = await db(tableName).update({
                 status: 'Cancelled'
             }).where('apptId', this.apptId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Delete a `appointment` record.
+     * Can be used to clear record after unit testing.
+     * Returns: Object
+     * */
+    async deleteAppointment() {
+        let result;
+        try {
+            result = await db(tableName).del()
+                .where({
+                    apptId: this.apptId
+                });
         }
         catch (e) {
             console.error(e);

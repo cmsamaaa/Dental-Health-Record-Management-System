@@ -1,6 +1,7 @@
 node_modules
 .idea
 dev.bat
+run-test.bat
 .nyc_output
 coverage
 .vscode

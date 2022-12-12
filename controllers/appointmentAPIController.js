@@ -26,18 +26,24 @@ exports.getAllUserAppointments = async (req, res, next) => {
     const appointment = new Appointment({
         userId: req.params.userId
     });
-    const result = await appointment.getAllUserAppointments();
+    const results = await appointment.getAllUserAppointments();
 
-    res.status(HTTP_STATUS.OK).json(result);
+    if (!_.isEmpty(results))
+        res.status(HTTP_STATUS.OK).json(results);
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).json({});
 };
 
 exports.getAllUpcomingAppointments = async (req, res, next) => {
     const appointment = new Appointment({
         userId: req.params.userId
     });
-    const result = await appointment.getAllUpcomingAppointments();
+    const results = await appointment.getAllUpcomingAppointments();
 
-    res.status(HTTP_STATUS.OK).json(result);
+    if (!_.isEmpty(results))
+        res.status(HTTP_STATUS.OK).json(results);
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).json({});
 };
 
 exports.getAppointment = async (req, res, next) => {
@@ -46,7 +52,10 @@ exports.getAppointment = async (req, res, next) => {
     });
     const result = await appointment.getAppointment();
 
-    res.status(HTTP_STATUS.OK).json(result);
+    if (!_.isEmpty(result))
+        res.status(HTTP_STATUS.OK).json(result);
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).json({});
 };
 
 exports.editAppointment = async (req, res, next) => {
@@ -55,7 +64,7 @@ exports.editAppointment = async (req, res, next) => {
         const results = await appointment.updateAppointment();
 
         if (results)
-            res.status(HTTP_STATUS.CREATED).json({ success: true });
+            res.status(HTTP_STATUS.OK).json({ success: true });
         else
             res.status(HTTP_STATUS.BAD_REQUEST).json({});
     } else
@@ -68,7 +77,7 @@ exports.suspendAppointment = async (req, res, next) => {
         const results = await appointment.suspendAppointment();
 
         if (results)
-            res.status(HTTP_STATUS.CREATED).json({ success: true });
+            res.status(HTTP_STATUS.OK).json({ success: true });
         else
             res.status(HTTP_STATUS.BAD_REQUEST).json({});
     } else
