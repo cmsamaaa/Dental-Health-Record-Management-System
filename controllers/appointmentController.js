@@ -146,7 +146,7 @@ exports.viewAppointments = async (req, res, next) => {
             let data = JSON.parse(response.body);
 
             data = _.map(data, (appt) => {
-                appt.apptDateTime = moment(new Date(appt.apptDateTime)).format('DD/MM/YYYY hh:mmA');
+                appt.apptDateTime = moment(new Date(appt.apptDateTime)).format('YYYY-MM-DD HH:mm');
                 return appt;
             });
 
