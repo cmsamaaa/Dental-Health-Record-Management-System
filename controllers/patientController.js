@@ -60,7 +60,7 @@ exports.register = async (req, res, next) => {
         const results = await patient.registerPatient();
 
         if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?register=true&id=' + results[0]));
+            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=create&id=' + results[0]));
         else
             res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
     }

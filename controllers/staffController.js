@@ -56,7 +56,7 @@ exports.register = async (req, res, next) => {
         const results = await staff.registerStaff();
 
         if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?register=true&id=' + results[0]));
+            res.redirect(parse_uri.parse(req, '/admin/staff/view-all?action=create&id=' + results[0]));
         else
             res.redirect(parse_uri.parse(req, '/admin/staff/create?error=true'));
     }
