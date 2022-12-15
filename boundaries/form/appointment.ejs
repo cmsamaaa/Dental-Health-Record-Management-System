@@ -59,7 +59,7 @@
                           <!-- Patient Fields -->
                           <% if (path === '/patient/appointment/create' || path === '/admin/appointment/edit' || path === '/patient/appointment/edit') { %>
                           <label for="tb_NRIC">Patient's NRIC<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control-plaintext" id="tb_NRIC" name="nric" placeholder="S12345678Z" tabindex="1" value="<%= userData.nric %>" required readonly>
+                          <input type="text" class="form-control-plaintext" id="tb_NRIC" name="nric" placeholder="S1234567Z" tabindex="1" value="<%= userData.nric %>" required readonly>
                           <input type="hidden" name="patientId" value="<%= userData.patientId %>">
                           <input type="hidden" name="userType" value="patient">
                           <% } %>
