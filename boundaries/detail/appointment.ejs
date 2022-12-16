@@ -63,7 +63,7 @@
                   </div>
                   <!-- /.card-body -->
 
-                  <% if (userRole !== 'dentist') { %>
+                  <% if (userRole !== 'dentist' && userData.status === 'Upcoming') { %>
                   <div class="card-footer text-right">
                     <a href="/<%= userRole %>/appointment/edit/<%= userData.apptId %>" class="btn btn-primary">Edit</a>
                   </div>
