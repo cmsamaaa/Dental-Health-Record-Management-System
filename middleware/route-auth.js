@@ -1,6 +1,7 @@
 exports.isAuth = (req, res, next) => {
     if (req.session.isLoggedIn) {
         res.locals._userRole = req.session.userRole;
+        res.locals._clinicId = req.session.userInfo.clinicId;
         res.locals._firstName = req.session.userInfo.firstName;
         res.locals._lastName = req.session.userInfo.lastName;
         res.locals._gender = req.session.userInfo.gender;

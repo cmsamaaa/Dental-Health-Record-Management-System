@@ -10,6 +10,7 @@ class Staff extends User {
     staffId;
     role;
     userId;
+    clinicId;
 
     constructor(data) {
         super(data);
@@ -29,7 +30,8 @@ class Staff extends User {
         try {
             result = await db(tableName).insert({
                 role: this.role,
-                userId: this.userId
+                userId: this.userId,
+                clinicId: this.clinicId
             });
         }
         catch (e) {
@@ -47,7 +49,7 @@ class Staff extends User {
     async getAllStaffs() {
         let result;
         try {
-            result = await db(tableName).select('*').innerJoin('users', 'staffs.userId', 'users.userId');
+            result = await db(tableName).select('*').innerJoin('users', 'staffs.userId', 'users.userId').where('clinicId', this.clinicId);
 
             result = _.map(result, (staff) => {
                 return _.omit(staff, 'password');

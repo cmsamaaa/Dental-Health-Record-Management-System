@@ -102,6 +102,7 @@
                   <!-- /.card-body -->
 
                   <div class="card-footer text-right">
+                    <input type="hidden" name="clinicId" value="<%= _clinicId %>">
                     <% if (actionText === 'edit') { %>
                     <input type="hidden" name="userId" value="<%= staffData.userId %>">
                     <input type="hidden" name="staffId" value="<%= staffData.staffId %>">

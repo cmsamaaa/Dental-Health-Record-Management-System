@@ -51,7 +51,8 @@ exports.register = async (req, res, next) => {
             gender: req.body.gender,
             email: req.body.email,
             password: hashedPassword,
-            role: req.body.role
+            role: req.body.role,
+            clinicId: req.body.clinicId
         });
         const results = await staff.registerStaff();
 
@@ -113,7 +114,9 @@ exports.viewEditStaff = async (req, res, next) => {
 };
 
 exports.viewStaffs = async (req, res, next) => {
-    const staff = new Staff();
+    const staff = new Staff({
+        clinicId: req.session.userInfo.clinicId
+    });
     const result = await staff.getAllStaffs();
 
     if (!_.isEmpty(result)) {
