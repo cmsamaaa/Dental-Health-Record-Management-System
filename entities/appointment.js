@@ -102,7 +102,7 @@ class Appointment {
         try {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
-                .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('patients.userId', this.userId);
 
             result = _.map(result, (patient) => {

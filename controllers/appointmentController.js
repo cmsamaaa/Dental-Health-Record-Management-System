@@ -260,21 +260,21 @@ exports.viewAppointments = async (req, res, next) => {
         request.get({
             url: uri,
         }, (err, response, body) => {
-            let data = JSON.parse(response.body);
+            let apptData = JSON.parse(response.body);
 
-            data = _.map(data, (appt) => {
+            apptData = _.map(apptData, (appt) => {
                 appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
                 appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
                 return appt;
             });
 
+            console.log(apptData);
+
             res.status(HTTP_STATUS.OK).render('table/appointments', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/view-all',
                 query: req.query,
-                appointmentData: data,
-                // clinicName: req.session.clinicInfo.name,
-                // clinicAddress: req.session.clinicInfo.address + ", #" + req.session.clinicInfo.unit + ", (S)" + req.session.clinicInfo.postal
+                appointmentData: apptData
             });
         });
     }
