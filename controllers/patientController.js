@@ -16,22 +16,7 @@ exports.login = async (req, res, next) => {
             req.session.userRole = 'Patient';
             req.session.userInfo = result;
 
-            request.get({
-                url: parse_uri.parse(req, '/api/info/get/all'),
-            }, (err, response, body) => {
-                if (response.statusCode === HTTP_STATUS.OK) {
-                    const clinicInfo = JSON.parse(body);
-                    const infoDict = {};
-                    for (let i = 0; i < clinicInfo.length; i++) {
-                        infoDict[clinicInfo[i].infoKey] = clinicInfo[i].value;
-                    }
-
-                    req.session.clinicInfo = infoDict;
-                    res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userInfo.userId));
-                }
-                else
-                    res.redirect(parse_uri.parse(req, '/login?error=true'));
-            });
+            res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userInfo.userId));
         }
         else
             res.redirect(parse_uri.parse(req, '/login?error=true'));
