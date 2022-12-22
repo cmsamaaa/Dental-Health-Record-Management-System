@@ -268,8 +268,6 @@ exports.viewAppointments = async (req, res, next) => {
                 return appt;
             });
 
-            console.log(apptData);
-
             res.status(HTTP_STATUS.OK).render('table/appointments', {
                 pageTitle: 'Appointment',
                 path: '/' + user + '/appointment/view-all',
