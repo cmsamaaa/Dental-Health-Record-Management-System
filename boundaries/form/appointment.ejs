@@ -41,7 +41,7 @@
                 </div>
                 <!-- /.card-header -->
 
-                <% if (_userRole === "Patient" && !query.clinicId) { %>
+                <% if (_userRole === "Patient" && !query.clinicId && actionText !== 'edit') { %>
                 <form>
                   <div class="card-body">
                     <div class="row">
@@ -64,7 +64,7 @@
                 </form>
                 <% } %>
 
-                <% if (_userRole !== "Patient" || (_userRole === "Patient" && query.clinicId > 0)) { %>
+                <% if (_userRole !== "Patient" || (_userRole === "Patient" && query.clinicId > 0) || actionText === 'edit') { %>
                 <!-- form start -->
                 <form action="<%= path %>" method="post">
                   <div class="card-body">
@@ -92,25 +92,38 @@
                           <% } %>
                         </div>
                         <div class="form-group">
+                          <% if (actionText === 'create') { %>
                           <label for="ddl_Dentist">Choose Dentist<span style="color:red;">*</span></label>
-                          <select id="ddl_Dentist" name="staffId" class="form-control select2bs4" style="width: 100%;" tabindex="2">
+                          <select id="ddl_Dentist" name="staffId" class="form-control select2bs4" style="width: 100%;" tabindex="3">
                             <option selected="selected" disabled>Find dentist...</option>
                             <% for (let i = 0; i < dentistData.length; i++) { %>
                             <option value="<%= dentistData[i].staffId %>">Dr. <%= dentistData[i].firstName %> <%= dentistData[i].lastName %></option>
                             <% } %>
                           </select>
+                          <% } %>
+                          <% if (actionText === 'edit') { %>
+                          <label for="tb_Dentist">Dentist<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_Dentist" name="dentist" placeholder="Dr. First Last" tabindex="3" value="Dr. <%= dentistData.firstName + ' ' + dentistData.lastName %>" required readonly>
+                          <input type="hidden" name="staffId" value="<%= dentistData.staffId %>">
+                          <% } %>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="tb_ClinicName">Clinic Name<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="1" value="<%= dentistData[0].name %>" required readonly>
+                          <% if (actionText === 'create') { %>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="2" value="<%= dentistData[0].name %>" required readonly>
                           <input type="hidden" name="clinicId" value="<%= dentistData[0].clinicId %>">
+                          <% } %>
+                          <% if (actionText === 'edit') { %>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="2" value="<%= dentistData.name %>" required readonly>
+                          <input type="hidden" name="clinicId" value="<%= dentistData.clinicId %>">
+                          <% } %>
                         </div>
                         <div class="form-group">
                           <label for="tb_ApptDateTime">Appointment Date & Time<span style="color:red;">*</span></label>
                           <div class="input-group date" id="tb_ApptDateTime" data-target-input="nearest">
-                            <input type="text" name="startDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" tabindex="3" placeholder="DD/MM/YYYY hh:mm" value="<%= userData.startDateTime ? userData.startDateTime : '' %>" />
+                            <input type="text" name="startDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" tabindex="4" placeholder="DD/MM/YYYY hh:mm" value="<%= userData.startDateTime ? userData.startDateTime : '' %>" />
                             <div class="input-group-append" data-target="#tb_ApptDateTime" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>

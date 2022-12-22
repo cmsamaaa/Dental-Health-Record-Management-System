@@ -87,6 +87,33 @@ class Staff extends User {
     }
 
     /**
+     * Retrieves specific `staff` inner join `user` record by staffId
+     * Returns: JSON Object
+     * */
+    async getDentist() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('users', 'staffs.userId', 'users.userId')
+                .innerJoin('clinics', 'staffs.clinicId', 'clinics.clinicId')
+                .where('staffs.staffId', this.staffId)
+                .andWhere('staffs.role', 'Dentist');
+
+            result = _.map(result, (staff) => {
+                staff.DOB = moment(staff.DOB).format('YYYY-MM-DD');
+                staff = _.omit(staff, 'password');
+                return staff;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
+    /**
      * Retrieves a `staff` inner join `user` record and checks if password matches hash
      * Can be used for staff login authentication
      * Returns: JSON Object

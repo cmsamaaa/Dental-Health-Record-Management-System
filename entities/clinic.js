@@ -1,5 +1,5 @@
 const db = require('./db');
-const tableName = 'clinic';
+const tableName = 'clinics';
 
 const _ = require('lodash');
 
@@ -61,9 +61,9 @@ class Clinic {
         let result;
         try {
             result = await db(tableName).select('*')
-                .innerJoin('staffs', 'clinic.clinicId', 'staffs.clinicId')
+                .innerJoin('staffs', 'clinics.clinicId', 'staffs.clinicId')
                 .innerJoin('users', 'staffs.userId', 'users.userId')
-                .where('clinic.clinicId', this.clinicId)
+                .where('clinics.clinicId', this.clinicId)
                 .andWhere('staffs.role', 'Dentist');
 
             result = _.map(result, (staff) => {

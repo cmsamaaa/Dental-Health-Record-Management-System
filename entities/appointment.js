@@ -146,7 +146,8 @@ class Appointment {
         let result;
         try {
             result = await db(tableName).update({
-                startDateTime: dateTimeFormat.parse(this.startDateTime)
+                startDateTime: dateTimeFormat.parse(this.startDateTime),
+                endDateTime: dateTimeFormat.parseWithAddition(this.startDateTime, 1, 30)
             }).where('apptId', this.apptId);
         }
         catch (e) {

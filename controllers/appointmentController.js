@@ -161,15 +161,30 @@ exports.viewEditAppointment = async (req, res, next) => {
         url: uri,
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK) {
-            let data = JSON.parse(response.body);
+            let userData = JSON.parse(response.body);
 
-            data.startDateTime = moment(new Date(data.startDateTime)).format('DD/MM/YYYY HH:mm');
+            userData.startDateTime = moment(new Date(userData.startDateTime)).format('DD/MM/YYYY HH:mm');
+            userData.endDateTime = moment(new Date(userData.endDateTime)).format('DD/MM/YYYY HH:mm');
 
-            res.status(HTTP_STATUS.OK).render('form/appointment', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/edit',
-                query: req.query,
-                userData: data
+            request.get({
+                url: parse_uri.parse(req, '/api/dentist/get/' + userData.staffId)
+            }, (err, response, body) => {
+                if (response.statusCode === HTTP_STATUS.OK) {
+                    res.status(HTTP_STATUS.OK).render('form/appointment', {
+                        pageTitle: 'Appointment',
+                        path: '/' + user + '/appointment/edit',
+                        query: req.query,
+                        dentistData: JSON.parse(response.body),
+                        userData: userData
+                    });
+                }
+                else {
+                    res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                        pageTitle: 'Appointment',
+                        path: '/' + user + '/appointment/edit',
+                        query: req.query
+                    });
+                }
             });
         }
         else {
@@ -201,6 +216,7 @@ exports.viewAppointments = async (req, res, next) => {
 
         data = _.map(data, (appt) => {
             appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+            appt.endDateTime = moment(new Date(appt.endDateTime)).format('DD/MM/YYYY HH:mm');
             return appt;
         });
 
@@ -227,6 +243,7 @@ exports.viewAppointment = async (req, res, next) => {
             let data = JSON.parse(response.body);
 
             data.startDateTime = moment(new Date(data.startDateTime)).format('DD/MM/YYYY HH:mm');
+            data.endDateTime = moment(new Date(data.endDateTime)).format('DD/MM/YYYY HH:mm');
 
             res.status(HTTP_STATUS.OK).render('detail/appointment', {
                 pageTitle: 'Appointment',

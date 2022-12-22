@@ -1,6 +1,7 @@
 const express = require('express');
 
 const patientAPIController = require('../controllers/patientAPIController');
+const staffAPIController = require('../controllers/staffAPIController');
 const appointmentAPIController = require('../controllers/appointmentAPIController');
 const clinicAPIController = require('../controllers/clinicAPIController');
 
@@ -12,6 +13,8 @@ router.get('/clinic/get/:clinicId', clinicAPIController.get);
 
 router.get('/patient/get/all', patientAPIController.getAllPatients);
 router.get('/patient/get/:userId', patientAPIController.getPatient);
+
+router.get('/dentist/get/:staffId', staffAPIController.getDentist);
 
 router.post('/appointment/create', appointmentAPIController.createAppointment);
 router.get('/appointment/get/all', appointmentAPIController.getAllAppointments);
