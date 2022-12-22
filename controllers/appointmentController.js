@@ -3,6 +3,7 @@ const moment = require('moment');
 const request = require('request');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
+const Appointment = require("../entities/appointment");
 
 exports.createAppointment = async (req, res, next) => {
     // api endpoint uri
@@ -200,35 +201,60 @@ exports.viewEditAppointment = async (req, res, next) => {
 exports.viewAppointments = async (req, res, next) => {
     let user = req.url.split('/')[1];
 
-    let path = '/api/appointment/get/all/';
-    if (user === 'patient')
-        path += req.session.userInfo.userId;
-    if (user === 'dentist')
-        path += 'upcoming';
-
-    // api endpoint uri
-    const uri = parse_uri.parse(req, path);
-
-    request.get({
-        url: uri,
-    }, (err, response, body) => {
-        let data = JSON.parse(response.body);
-
-        data = _.map(data, (appt) => {
-            appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
-            appt.endDateTime = moment(new Date(appt.endDateTime)).format('DD/MM/YYYY HH:mm');
-            return appt;
+    if (user === 'dentist') {
+        const appointment = new Appointment({
+            staffId: req.session.userInfo.staffId
         });
+        const results = await appointment.getAllUpcomingAppointments();
 
-        res.status(HTTP_STATUS.OK).render('table/appointments', {
-            pageTitle: 'Appointment',
-            path: '/' + user + '/appointment/view-all',
-            query: req.query,
-            appointmentData: data,
-            // clinicName: req.session.clinicInfo.name,
-            // clinicAddress: req.session.clinicInfo.address + ", #" + req.session.clinicInfo.unit + ", (S)" + req.session.clinicInfo.postal
+        if (!_.isEmpty(results)) {
+            let apptData = results;
+
+            apptData = _.map(apptData, (appt) => {
+                appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+                appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
+                return appt;
+            });
+
+            res.status(HTTP_STATUS.OK).render('table/appointments', {
+                pageTitle: 'Appointment',
+                path: '/' + user + '/appointment/view-all',
+                query: req.query,
+                appointmentData: apptData
+            });
+        }
+        else
+            res.status(HTTP_STATUS.NOT_FOUND).json({});
+    }
+    else {
+        let path = '/api/appointment/get/all/';
+        if (user === 'patient')
+            path += req.session.userInfo.userId;
+
+        // api endpoint uri
+        const uri = parse_uri.parse(req, path);
+
+        request.get({
+            url: uri,
+        }, (err, response, body) => {
+            let data = JSON.parse(response.body);
+
+            data = _.map(data, (appt) => {
+                appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+                appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
+                return appt;
+            });
+
+            res.status(HTTP_STATUS.OK).render('table/appointments', {
+                pageTitle: 'Appointment',
+                path: '/' + user + '/appointment/view-all',
+                query: req.query,
+                appointmentData: data,
+                // clinicName: req.session.clinicInfo.name,
+                // clinicAddress: req.session.clinicInfo.address + ", #" + req.session.clinicInfo.unit + ", (S)" + req.session.clinicInfo.postal
+            });
         });
-    });
+    }
 };
 
 exports.viewAppointment = async (req, res, next) => {

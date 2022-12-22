@@ -75,7 +75,8 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .where('startDateTime', '>=', new Date());
+                .where('startDateTime', '>=', new Date())
+                .andWhere('staffId', this.staffId);
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');

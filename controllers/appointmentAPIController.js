@@ -34,18 +34,6 @@ exports.getAllUserAppointments = async (req, res, next) => {
         res.status(HTTP_STATUS.NOT_FOUND).json({});
 };
 
-exports.getAllUpcomingAppointments = async (req, res, next) => {
-    const appointment = new Appointment({
-        userId: req.params.userId
-    });
-    const results = await appointment.getAllUpcomingAppointments();
-
-    if (!_.isEmpty(results))
-        res.status(HTTP_STATUS.OK).json(results);
-    else
-        res.status(HTTP_STATUS.NOT_FOUND).json({});
-};
-
 exports.getAppointment = async (req, res, next) => {
     const appointment = new Appointment({
         apptId: req.params.apptId

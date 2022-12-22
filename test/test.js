@@ -185,19 +185,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('14 | /GET /api/appointment/get/all/upcoming 200 | Get all present & future appointment records', () => {
-        it('it should return an array of JSON object with HTTP status code 200', (done) => {
-            tester.request(app)
-                .get('/api/appointment/get/all/upcoming')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.not.be.null;
-                    done();
-                });
-        });
-    });
-
-    describe('15 | /GET /api/appointment/get/all/:userId 200 | Request with Valid UserId', () => {
+    describe('14 | /GET /api/appointment/get/all/:userId 200 | Request with Valid UserId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/all/37')
@@ -210,7 +198,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('16 | /GET /api/appointment/get/all/:userId 404 | Request with Invalid UserId', () => {
+    describe('15 | /GET /api/appointment/get/all/:userId 404 | Request with Invalid UserId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/all/' + Number.MAX_SAFE_INTEGER)
@@ -222,7 +210,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('17 | /GET /api/appointment/get/:apptId 200 | Request with Valid ApptId', () => {
+    describe('16 | /GET /api/appointment/get/:apptId 200 | Request with Valid ApptId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/1')
@@ -235,7 +223,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('18 | /GET /api/appointment/get/:apptId 404 | Request with Invalid ApptId', () => {
+    describe('17 | /GET /api/appointment/get/:apptId 404 | Request with Invalid ApptId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
                 .get('/api/appointment/get/' + Number.MAX_SAFE_INTEGER)
@@ -247,7 +235,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('19 | /POST /api/appointment/edit 200 | Edit Appointment Record', () => {
+    describe('18 | /POST /api/appointment/edit 200 | Edit Appointment Record', () => {
         it('it should return a json object with id with 200 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/edit')
@@ -261,7 +249,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('20 | /POST /api/appointment/edit 400 | Edit Appointment Record with Empty Body', () => {
+    describe('19 | /POST /api/appointment/edit 400 | Edit Appointment Record with Empty Body', () => {
         it('it should return an empty json object with 400 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/edit')
@@ -274,7 +262,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('21 | /POST /api/appointment/suspend 200 | Suspend Appointment Record', () => {
+    describe('20 | /POST /api/appointment/suspend 200 | Suspend Appointment Record', () => {
         it('it should return a json object with id with 200 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/suspend')
@@ -288,7 +276,7 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('22 | /POST /api/appointment/suspend 400 | Suspend Appointment Record with Empty Body', () => {
+    describe('21 | /POST /api/appointment/suspend 400 | Suspend Appointment Record with Empty Body', () => {
         it('it should return an empty json object with 400 status code', (done) => {
             tester.request(app)
                 .post('/api/appointment/suspend')
