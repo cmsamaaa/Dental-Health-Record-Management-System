@@ -1,6 +1,8 @@
 const db = require('./db');
 const tableName = 'clinic';
 
+const _ = require('lodash');
+
 class Clinic {
     clinicId;
     name;
@@ -42,6 +44,33 @@ class Clinic {
         let result;
         try {
             result = await db(tableName).select('*');
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `clinic` records inner join `staff` role dentists
+     * Returns: JSON[]
+     * */
+    async getAllDentists() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('staffs', 'clinic.clinicId', 'staffs.clinicId')
+                .innerJoin('users', 'staffs.userId', 'users.userId')
+                .where('clinic.clinicId', this.clinicId)
+                .andWhere('staffs.role', 'Dentist');
+
+            result = _.map(result, (staff) => {
+                staff = _.omit(staff, 'password');
+                staff.nric = staff.nric[0] + "XXXX" + staff.nric.slice(5);
+                return staff;
+            });
         }
         catch (e) {
             console.error(e);

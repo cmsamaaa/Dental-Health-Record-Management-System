@@ -40,6 +40,31 @@
                   <h3 class="card-title text-capitalize"><%= actionText %> Appointment Form</h3>
                 </div>
                 <!-- /.card-header -->
+
+                <% if (_userRole === "Patient" && !query.clinicId) { %>
+                <form>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="ddl_Clinic">List of Clinics<span style="color:red;">*</span></label>
+                          <select id="ddl_Clinic" name="clinicId" class="form-control select2bs4" style="width: 100%;" required>
+                            <option selected="selected" disabled>Find clinic...</option>
+                            <% for (let i = 0; i < clinicData.length; i++) { %>
+                            <option value="<%= clinicData[i].clinicId %>"><%= clinicData[i].clinicId %>. <%= clinicData[i].name %> | <%= clinicData[i].address %> #<%= clinicData[i].unit %> (S)<%= clinicData[i].postal %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-primary">Next</button>
+                  </div>
+                </form>
+                <% } %>
+
+                <% if (_userRole !== "Patient" || (_userRole === "Patient" && query.clinicId > 0)) { %>
                 <!-- form start -->
                 <form action="<%= path %>" method="post">
                   <div class="card-body">
@@ -49,7 +74,7 @@
                           <!-- Admin Fields -->
                           <% if (path === '/admin/appointment/create') { %>
                           <label for="ddl_NRIC">Patient's NRIC<span style="color:red;">*</span></label>
-                          <select id="ddl_NRIC" name="patientId" class="form-control select2bs4" style="width: 100%;">
+                          <select id="ddl_NRIC" name="patientId" class="form-control select2bs4" style="width: 100%;" tabindex="1">
                             <option selected="selected" disabled>Find NRIC...</option>
                             <% for (let i = 0; i < userData.length; i++) { %>
                             <option value="<%= userData[i].patientId %>"><%= userData[i].nric %></option>
@@ -66,12 +91,26 @@
                           <input type="hidden" name="userType" value="patient">
                           <% } %>
                         </div>
+                        <div class="form-group">
+                          <label for="ddl_Dentist">Choose Dentist<span style="color:red;">*</span></label>
+                          <select id="ddl_Dentist" name="staffId" class="form-control select2bs4" style="width: 100%;" tabindex="2">
+                            <option selected="selected" disabled>Find dentist...</option>
+                            <% for (let i = 0; i < dentistData.length; i++) { %>
+                            <option value="<%= dentistData[i].staffId %>">Dr. <%= dentistData[i].firstName %> <%= dentistData[i].lastName %></option>
+                            <% } %>
+                          </select>
+                        </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
+                          <label for="tb_ClinicName">Clinic Name<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="1" value="<%= dentistData[0].name %>" required readonly>
+                          <input type="hidden" name="clinicId" value="<%= dentistData[0].clinicId %>">
+                        </div>
+                        <div class="form-group">
                           <label for="tb_ApptDateTime">Appointment Date & Time<span style="color:red;">*</span></label>
                           <div class="input-group date" id="tb_ApptDateTime" data-target-input="nearest">
-                            <input type="text" name="apptDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" tabindex="2" placeholder="DD/MM/YYYY hh:mm" value="<%= userData.apptDateTime ? userData.apptDateTime : '' %>" />
+                            <input type="text" name="startDateTime" class="form-control datetimepicker-input" data-target="#tb_ApptDateTime" tabindex="3" placeholder="DD/MM/YYYY hh:mm" value="<%= userData.startDateTime ? userData.startDateTime : '' %>" />
                             <div class="input-group-append" data-target="#tb_ApptDateTime" data-toggle="datetimepicker">
                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -93,6 +132,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
+                <% } %>
               </div>
               <!-- /.card -->
             </div>

@@ -3,13 +3,16 @@ const tableName = 'appointments';
 
 const _ = require('lodash');
 const dateTimeFormat = require("../lib/dateTimeFormat");
+const moment = require('moment');
 
 class Appointment {
     apptId;
-    apptDateTime;
+    startDateTime;
+    endDateTime;
     followUpApptId;
     status;
     patientId;
+    staffId;
 
     constructor(data) {
         Object.assign(this, data);
@@ -25,9 +28,11 @@ class Appointment {
         try {
             result = await db(tableName).insert({
                 apptId: this.apptId ? this.apptId : null,
-                apptDateTime: dateTimeFormat.parse(this.apptDateTime),
+                startDateTime: dateTimeFormat.parse(this.startDateTime),
+                endDateTime: dateTimeFormat.parseWithAddition(this.startDateTime, 1, 30),
                 followUpApptId: this.followUpApptId ? this.followUpApptId : null,
-                patientId: this.patientId
+                patientId: this.patientId,
+                staffId: this.staffId
             });
         }
         catch (e) {
@@ -142,7 +147,7 @@ class Appointment {
         let result;
         try {
             result = await db(tableName).update({
-                apptDateTime: dateTimeFormat.parse(this.apptDateTime)
+                startDateTime: dateTimeFormat.parse(this.startDateTime)
             }).where('apptId', this.apptId);
         }
         catch (e) {

@@ -56,12 +56,51 @@ exports.viewCreateAppointment = async (req, res, next) => {
             url: uri,
         }, (err, response, body) => {
             if (response.statusCode === HTTP_STATUS.OK) {
-                res.status(HTTP_STATUS.OK).render('form/appointment', {
-                    pageTitle: 'Appointment',
-                    path: '/' + user + '/appointment/create',
-                    query: req.query,
-                    userData: JSON.parse(response.body)
-                });
+                const userData = JSON.parse(response.body);
+
+                if (!req.query.clinicId) {
+                    request.get({
+                        url: parse_uri.parse(req, '/api/clinic/get/all')
+                    }, (err, response, body) => {
+                        if (response.statusCode === HTTP_STATUS.OK) {
+                            res.status(HTTP_STATUS.OK).render('form/appointment', {
+                                pageTitle: 'Appointment',
+                                path: '/' + user + '/appointment/create',
+                                query: req.query,
+                                clinicData: JSON.parse(response.body)
+                            });
+                        }
+                        else {
+                            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                                pageTitle: 'Appointment',
+                                path: '/' + user + '/appointment/create',
+                                query: req.query
+                            });
+                        }
+                    });
+                }
+                else {
+                    request.get({
+                        url: parse_uri.parse(req, '/api/clinic/get/dentist/' + req.query.clinicId)
+                    }, (err, response, body) => {
+                        if (response.statusCode === HTTP_STATUS.OK) {
+                            res.status(HTTP_STATUS.OK).render('form/appointment', {
+                                pageTitle: 'Appointment',
+                                path: '/' + user + '/appointment/create',
+                                query: req.query,
+                                dentistData: JSON.parse(response.body),
+                                userData: userData
+                            });
+                        }
+                        else {
+                            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                                pageTitle: 'Appointment',
+                                path: '/' + user + '/appointment/create',
+                                query: req.query
+                            });
+                        }
+                    });
+                }
             }
             else {
                 res.status(HTTP_STATUS.NOT_FOUND).render('404', {
@@ -79,11 +118,27 @@ exports.viewCreateAppointment = async (req, res, next) => {
             url: uri,
         }, (err, response, body) => {
             if (response.statusCode === HTTP_STATUS.OK) {
-                res.status(HTTP_STATUS.OK).render('form/appointment', {
-                    pageTitle: 'Appointment',
-                    path: '/' + user + '/appointment/create',
-                    query: req.query,
-                    userData: JSON.parse(response.body)
+                const userData = JSON.parse(response.body);
+
+                request.get({
+                    url: parse_uri.parse(req, '/api/clinic/get/dentist/' + req.session.userInfo.clinicId)
+                }, (err, response, body) => {
+                    if (response.statusCode === HTTP_STATUS.OK) {
+                        res.status(HTTP_STATUS.OK).render('form/appointment', {
+                            pageTitle: 'Appointment',
+                            path: '/' + user + '/appointment/create',
+                            query: req.query,
+                            dentistData: JSON.parse(response.body),
+                            userData: userData
+                        });
+                    }
+                    else {
+                        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                            pageTitle: 'Appointment',
+                            path: '/' + user + '/appointment/create',
+                            query: req.query
+                        });
+                    }
                 });
             }
             else {
@@ -142,29 +197,21 @@ exports.viewAppointments = async (req, res, next) => {
     request.get({
         url: uri,
     }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
-            let data = JSON.parse(response.body);
+        let data = JSON.parse(response.body);
 
-            data = _.map(data, (appt) => {
-                appt.apptDateTime = moment(new Date(appt.apptDateTime)).format('YYYY-MM-DD HH:mm');
-                return appt;
-            });
+        data = _.map(data, (appt) => {
+            appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+            return appt;
+        });
 
-            res.status(HTTP_STATUS.OK).render('table/appointments', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/view-all',
-                query: req.query,
-                appointmentData: data,
-                // clinicName: req.session.clinicInfo.name,
-                // clinicAddress: req.session.clinicInfo.address + ", #" + req.session.clinicInfo.unit + ", (S)" + req.session.clinicInfo.postal
-            });
-        }
-        else {
-            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/view-all'
-            });
-        }
+        res.status(HTTP_STATUS.OK).render('table/appointments', {
+            pageTitle: 'Appointment',
+            path: '/' + user + '/appointment/view-all',
+            query: req.query,
+            appointmentData: data,
+            // clinicName: req.session.clinicInfo.name,
+            // clinicAddress: req.session.clinicInfo.address + ", #" + req.session.clinicInfo.unit + ", (S)" + req.session.clinicInfo.postal
+        });
     });
 };
 

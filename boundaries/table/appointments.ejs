@@ -52,7 +52,7 @@
                       <% for(let i = 0; i < appointmentData.length; i++) { %>
                       <tr>
                         <td><%= appointmentData[i].apptId %></td>
-                        <td><%= appointmentData[i].apptDateTime %></td>
+                        <td><%= appointmentData[i].startDateTime %></td>
                         <td><%= appointmentData[i].lastName %> <%= appointmentData[i].firstName %></td>
                         <td><%= appointmentData[i].nric %></td>
                         <td><%= appointmentData[i].medicareId ? appointmentData[i].medicareId : 'Not Applicable' %></td>
@@ -109,7 +109,7 @@
                       <% for(let i = 0; i < appointmentData.length; i++) { %>
                       <tr>
                         <td><%= appointmentData[i].apptId %></td>
-                        <td><%= appointmentData[i].apptDateTime %></td>
+                        <td><%= appointmentData[i].startDateTime %></td>
                         <td><%= "Clinic Name (WIP)" %></td>
                         <td><%= "Clinic Address (WIP)" %></td>
                         <td><%= appointmentData[i].status %></td>

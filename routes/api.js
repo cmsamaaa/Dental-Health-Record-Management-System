@@ -7,6 +7,7 @@ const clinicAPIController = require('../controllers/clinicAPIController');
 const router = express.Router();
 
 router.get('/clinic/get/all', clinicAPIController.getAll);
+router.get('/clinic/get/dentist/:clinicId', clinicAPIController.getAllDentists);
 router.get('/clinic/get/:clinicId', clinicAPIController.get);
 
 router.get('/patient/get/all', patientAPIController.getAllPatients);
