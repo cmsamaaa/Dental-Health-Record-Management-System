@@ -1,0 +1,125 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path === '/admin/patient/create' ? 'create' : 'edit' %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Flash Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Clinic Information</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_ClinicInfo">Clinic ID:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicInfo" name="firstName" tabindex="1" value="<%= clinicData.clinicId %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Email">Email Address:</label>
+                          <input type="email" class="form-control-plaintext" id="tb_Email" name="email" tabindex="5" value="<%= clinicData.email %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_nric">Phone:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" tabindex="3" value="<%= clinicData.phone %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Address">Address:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_Address" name="address" tabindex="9" value="<%= clinicData.address %>" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">Name:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_lastName" name="firstName" tabindex="2" value="<%= clinicData.name %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_lastName">Email Address (Secondary):</label>
+                          <input type="email" class="form-control-plaintext" id="tb_lastName" name="lastName" tabindex="3" value="<%= clinicData.subEmail %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_nric">Phone (Secondary):</label>
+                          <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" tabindex="3" value="<%= clinicData.subPhone %>" disabled>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Postal:</label>
+                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="postal" tabindex="10" value="<%= clinicData.postal %>" disabled>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Unit Number:</label>
+                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="unit" tabindex="11" value="<%= clinicData.unit %>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <a href="/admin/clinic/edit/<%= clinicData.clinicId %>" class="btn btn-primary">Edit</a>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- disabled SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- bs-custom-file-input -->
+  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      bsCustomFileInput.init();
+    });
+  </script>
+</body>
+
+</html>

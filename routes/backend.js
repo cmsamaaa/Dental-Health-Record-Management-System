@@ -15,7 +15,7 @@ router.post('/staff/login', staffController.login);
 router.get('/logout', userController.logout);
 
 // Protected routes
-// router.post('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, clinicInfoController.addClinicInfo);
+router.post('/admin/clinic/edit/:clinicId', routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
 
 router.post('/admin/user/suspend', routeAuth.isAuth, routeAuth.isAdmin, userController.suspend);
 router.post('/admin/user/reactivate', routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);

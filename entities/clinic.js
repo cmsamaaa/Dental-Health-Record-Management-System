@@ -67,6 +67,33 @@ class Clinic {
 
         return result[0] ? result[0] : {};
     }
+
+    /**
+     * Update a `clinic` record
+     * Can be used for update clinic information
+     * Returns: Object
+     * */
+    async updateClinic() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                name: this.name,
+                address: this.address,
+                postal: this.postal,
+                unit: this.unit,
+                email: this.email,
+                subEmail: this.subEmail ? this.subEmail : null,
+                phone: this.phone,
+                subPhone: this.subPhone ? this.subPhone : null
+            }).where('clinicId', this.clinicId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
 }
 
 module.exports = Clinic;

@@ -29,7 +29,8 @@ router.get('/invoice-print', routeAuth.isAuth, billController.viewInvoicePrint);
 
 // Clinic Info
 // router.get('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewAddClinicInfo);
-router.get('/admin/clinic/view-all', routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewClinicInfo);
+router.get('/admin/clinic', routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewClinicInfo);
+router.get('/admin/clinic/edit/:clinicId', routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewEditClinicInfo);
 
 // Staff
 router.get('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);
