@@ -22,10 +22,10 @@ describe('Run all test units', () => {
 
     /* Start of API endpoint unit tests */
 
-    describe('01 | /GET /api/info/get/all 200 | Get all clinic info', () => {
+    describe('01 | /GET /api/info/get/all 200 | Get all clinics', () => {
         it('it should return an array of JSON object with HTTP status code 200', (done) => {
             tester.request(app)
-                .get('/api/info/get/all')
+                .get('/api/clinic/get/all')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.not.be.null;
@@ -34,10 +34,10 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('02 | /GET /api/info/get/:key 200 | Request with Valid Key', () => {
+    describe('02 | /GET /api/info/get/:clinicId 200 | Request with Valid ClinicId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
-                .get('/api/info/get/address')
+                .get('/api/clinic/get/1')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.not.be.null;
@@ -47,10 +47,10 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('03 | /GET /api/info/get/:key 404 | Request with Invalid Key', () => {
+    describe('03 | /GET /api/info/get/:key 404 | Request with Invalid ClinicId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
-                .get('/api/info/get/' + Number.MAX_SAFE_INTEGER)
+                .get('/api/clinic/get/' + Number.MAX_SAFE_INTEGER)
                 .end((err, res) => {
                     res.should.have.status(404);
                     res.body.should.be.empty;
