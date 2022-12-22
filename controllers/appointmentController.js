@@ -163,7 +163,7 @@ exports.viewEditAppointment = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             let data = JSON.parse(response.body);
 
-            data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
+            data.startDateTime = moment(new Date(data.startDateTime)).format('DD/MM/YYYY HH:mm');
 
             res.status(HTTP_STATUS.OK).render('form/appointment', {
                 pageTitle: 'Appointment',
@@ -226,7 +226,7 @@ exports.viewAppointment = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             let data = JSON.parse(response.body);
 
-            data.apptDateTime = moment(new Date(data.apptDateTime)).format('DD/MM/YYYY HH:mm');
+            data.startDateTime = moment(new Date(data.startDateTime)).format('DD/MM/YYYY HH:mm');
 
             res.status(HTTP_STATUS.OK).render('detail/appointment', {
                 pageTitle: 'Appointment',

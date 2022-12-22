@@ -3,7 +3,6 @@ const tableName = 'appointments';
 
 const _ = require('lodash');
 const dateTimeFormat = require("../lib/dateTimeFormat");
-const moment = require('moment');
 
 class Appointment {
     apptId;
@@ -76,7 +75,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .where('apptDateTime', '>=', new Date());
+                .where('startDateTime', '>=', new Date());
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');

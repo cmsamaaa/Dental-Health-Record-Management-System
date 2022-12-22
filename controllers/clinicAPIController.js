@@ -24,7 +24,7 @@ exports.getAllDentists = async (req, res, next) => {
         res.status(HTTP_STATUS.OK).json(result);
     }
     else
-        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+        res.status(HTTP_STATUS.NOT_FOUND).json({});
 };
 
 exports.get = async (req, res, next) => {
