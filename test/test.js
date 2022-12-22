@@ -22,7 +22,7 @@ describe('Run all test units', () => {
 
     /* Start of API endpoint unit tests */
 
-    describe('01 | /GET /api/info/get/all 200 | Get all clinics', () => {
+    describe('01 | /GET /api/clinic/get/all 200 | Get all clinics', () => {
         it('it should return an array of JSON object with HTTP status code 200', (done) => {
             tester.request(app)
                 .get('/api/clinic/get/all')
