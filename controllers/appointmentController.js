@@ -201,6 +201,30 @@ exports.viewEditAppointment = async (req, res, next) => {
 exports.viewAppointments = async (req, res, next) => {
     let user = req.url.split('/')[1];
 
+    if (user === 'admin') {
+        const appointment = new Appointment();
+        const results = await appointment.getAllClinicAppointments();
+
+        if (!_.isEmpty(results)) {
+            let apptData = results;
+
+            apptData = _.map(apptData, (appt) => {
+                appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+                appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
+                return appt;
+            });
+
+            res.status(HTTP_STATUS.OK).render('table/appointments', {
+                pageTitle: 'Appointment',
+                path: '/' + user + '/appointment/view-all',
+                query: req.query,
+                appointmentData: apptData
+            });
+        }
+        else
+            res.status(HTTP_STATUS.NOT_FOUND).json({});
+    }
+
     if (user === 'dentist') {
         const appointment = new Appointment({
             staffId: req.session.userInfo.staffId
@@ -226,10 +250,9 @@ exports.viewAppointments = async (req, res, next) => {
         else
             res.status(HTTP_STATUS.NOT_FOUND).json({});
     }
-    else {
-        let path = '/api/appointment/get/all/';
-        if (user === 'patient')
-            path += req.session.userInfo.userId;
+
+    if (user === 'patient') {
+        let path = '/api/appointment/get/all/' + req.session.userInfo.userId;
 
         // api endpoint uri
         const uri = parse_uri.parse(req, path);

@@ -15,13 +15,6 @@ exports.createAppointment = async (req, res, next) => {
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
 };
 
-exports.getAllAppointments = async (req, res, next) => {
-    const appointment = new Appointment();
-    const result = await appointment.getAllAppointments();
-
-    res.status(HTTP_STATUS.OK).json(result);
-};
-
 exports.getAllUserAppointments = async (req, res, next) => {
     const appointment = new Appointment({
         userId: req.params.userId

@@ -46,12 +46,13 @@ class Appointment {
      * Retrieves all `appointment` inner join `patient` and `user` records
      * Returns: JSON[]
      * */
-    async getAllAppointments() {
+    async getAllClinicAppointments() {
         let result;
         try {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
-                .innerJoin('users', 'patients.userId', 'users.userId');
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
