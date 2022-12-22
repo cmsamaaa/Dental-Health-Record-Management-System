@@ -111,7 +111,7 @@ class Patient extends User {
 
             result = _.map(result, (patient) => {
                 patient = _.omit(patient, 'password');
-                patient.nric = patient.nric[0] + "XXXX" + patient.nric.slice(6);
+                patient.nric = patient.nric[0] + "XXXX" + patient.nric.slice(5);
                 return patient;
             });
         }

@@ -105,7 +105,7 @@ class Staff extends User {
 
             result = _.map(result, (staff) => {
                 staff = _.omit(staff, 'password');
-                staff.nric = staff.nric[0] + "XXXX" + staff.nric.slice(6);
+                staff.nric = staff.nric[0] + "XXXX" + staff.nric.slice(5);
                 return staff;
             });
         }
