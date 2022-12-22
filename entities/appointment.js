@@ -12,6 +12,7 @@ class Appointment {
     status;
     patientId;
     staffId;
+    clinicId;
 
     constructor(data) {
         Object.assign(this, data);
@@ -31,7 +32,8 @@ class Appointment {
                 endDateTime: dateTimeFormat.parseWithAddition(this.startDateTime, 1, 30),
                 followUpApptId: this.followUpApptId ? this.followUpApptId : null,
                 patientId: this.patientId,
-                staffId: this.staffId
+                staffId: this.staffId,
+                clinicId: this.clinicId
             });
         }
         catch (e) {
