@@ -1,7 +1,7 @@
 const express = require('express');
 
 const userController = require('../controllers/userController');
-const clinicInfoController = require('../controllers/clinicInfoController');
+const clinicController = require('../controllers/clinicController');
 const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
 const appointmentController = require('../controllers/appointmentController');
@@ -15,7 +15,7 @@ router.post('/staff/login', staffController.login);
 router.get('/logout', userController.logout);
 
 // Protected routes
-router.post('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, clinicInfoController.addClinicInfo);
+// router.post('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, clinicInfoController.addClinicInfo);
 
 router.post('/admin/user/suspend', routeAuth.isAuth, routeAuth.isAdmin, userController.suspend);
 router.post('/admin/user/reactivate', routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);

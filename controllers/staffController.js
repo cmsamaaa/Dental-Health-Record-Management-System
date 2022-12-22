@@ -17,16 +17,10 @@ exports.login = async (req, res, next) => {
             req.session.userInfo = result;
 
             request.get({
-                url: parse_uri.parse(req, '/api/info/get/all'),
+                url: parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId),
             }, (err, response, body) => {
                 if (response.statusCode === HTTP_STATUS.OK) {
-                    const clinicInfo = JSON.parse(body);
-                    const infoDict = {};
-                    for (let i = 0; i < clinicInfo.length; i++) {
-                        infoDict[clinicInfo[i].infoKey] = clinicInfo[i].value;
-                    }
-
-                    req.session.clinicInfo = infoDict;
+                    req.session.clinicInfo = JSON.parse(body);
                     res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userInfo.userId));
                 }
                 else

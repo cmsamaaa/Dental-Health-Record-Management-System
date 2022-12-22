@@ -41,12 +41,42 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% for(let i = 0; i < clinicInfoData.length; i++) { %>
                       <tr>
-                        <td><%= clinicInfoData[i].infoKey %></td>
-                        <td><%= clinicInfoData[i].value %></td>
+                        <td>Clinic ID</td>
+                        <td><%= clinicData.clinicId %></td>
                       </tr>
-                      <% } %>
+                      <tr>
+                        <td>Name</td>
+                        <td><%= clinicData.name %></td>
+                      </tr>
+                      <tr>
+                        <td>Address</td>
+                        <td><%= clinicData.address %></td>
+                      </tr>
+                      <tr>
+                        <td>Postal</td>
+                        <td><%= clinicData.postal %></td>
+                      </tr>
+                      <tr>
+                        <td>Unit</td>
+                        <td><%= clinicData.unit %></td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td><%= clinicData.email %></td>
+                      </tr>
+                      <tr>
+                        <td>Sub Email</td>
+                        <td><%= clinicData.subEmail %></td>
+                      </tr>
+                      <tr>
+                        <td>Phone</td>
+                        <td><%= clinicData.phone %></td>
+                      </tr>
+                      <tr>
+                        <td>Sub Phone</td>
+                        <td><%= clinicData.subPhone %></td>
+                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>

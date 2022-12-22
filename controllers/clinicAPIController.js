@@ -1,11 +1,11 @@
-const ClinicInfo = require('../entities/clinicInfo');
+const Clinic = require('../entities/clinic');
 const HTTP_STATUS = require("../constants/http_status");
 
 const _ = require('lodash');
 
 exports.getAll = async (req, res, next) => {
-    const clinicInfo = new ClinicInfo();
-    const result = await clinicInfo.getAll();
+    const clinic = new Clinic();
+    const result = await clinic.getAll();
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).json(result);
@@ -15,10 +15,10 @@ exports.getAll = async (req, res, next) => {
 };
 
 exports.get = async (req, res, next) => {
-    const clinicInfo = new ClinicInfo({
-        infoKey: req.params.key
+    const clinic = new Clinic({
+        clinicId: req.params.clinicId
     });
-    const result = await clinicInfo.get();
+    const result = await clinic.get();
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).json(result);

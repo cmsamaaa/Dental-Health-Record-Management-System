@@ -1,17 +1,24 @@
 const db = require('./db');
-const tableName = 'clinic_info';
+const tableName = 'clinic';
 
-class ClinicInfo {
-    infoKey;
-    value;
+class Clinic {
+    clinicId;
+    name;
+    address;
+    postal;
+    unit;
+    email;
+    subEmail;
+    phone;
+    subPhone;
 
     constructor(data) {
         Object.assign(this, data);
     }
 
     /**
-     * Inserts a `clinic_info` record.
-     * Can be used to add a new clinic info record.
+     * Inserts a `clinic` record.
+     * Can be used to add a new clinic record.
      * Returns: Object
      * */
     async add() {
@@ -28,7 +35,7 @@ class ClinicInfo {
     }
 
     /**
-     * Retrieves all `clinic_info` records
+     * Retrieves all `clinic` records
      * Returns: JSON[]
      * */
     async getAll() {
@@ -45,13 +52,13 @@ class ClinicInfo {
     }
 
     /**
-     * Retrieves a specific `clinic_info` value by key
+     * Retrieves a specific `clinic` value by `clinicId`
      * Returns: JSON[]
      * */
     async get() {
         let result;
         try {
-            result = await db(tableName).select('*').where('infoKey', this.infoKey);
+            result = await db(tableName).select('*').where('clinicId', this.clinicId);
         }
         catch (e) {
             console.error(e);
@@ -62,4 +69,4 @@ class ClinicInfo {
     }
 }
 
-module.exports = ClinicInfo;
+module.exports = Clinic;

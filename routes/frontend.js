@@ -3,7 +3,7 @@ const express = require('express');
 const defaultController = require('../controllers/defaultController');
 const appointmentController = require('../controllers/appointmentController');
 const billController = require('../controllers/billController');
-const clinicInfoController = require('../controllers/clinicInfoController');
+const clinicController = require('../controllers/clinicController');
 const inventoryController = require('../controllers/inventoryController');
 const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
@@ -28,8 +28,8 @@ router.get('/invoice-print', routeAuth.isAuth, billController.viewInvoicePrint);
 /* Start of Admin Route */
 
 // Clinic Info
-router.get('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, clinicInfoController.viewAddClinicInfo);
-router.get('/admin/clinic/view-all', routeAuth.isAuth, routeAuth.isAdmin, clinicInfoController.viewClinicInfo);
+// router.get('/admin/clinic/add-information', routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewAddClinicInfo);
+router.get('/admin/clinic/view-all', routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewClinicInfo);
 
 // Staff
 router.get('/admin/staff/create', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);

@@ -2,12 +2,12 @@ const express = require('express');
 
 const patientAPIController = require('../controllers/patientAPIController');
 const appointmentAPIController = require('../controllers/appointmentAPIController');
-const clinicInfoAPIController = require('../controllers/clinicInfoAPIController');
+const clinicAPIController = require('../controllers/clinicAPIController');
 
 const router = express.Router();
 
-router.get('/info/get/all', clinicInfoAPIController.getAll);
-router.get('/info/get/:key', clinicInfoAPIController.get);
+router.get('/clinic/get/all', clinicAPIController.getAll);
+router.get('/clinic/get/:clinicId', clinicAPIController.get);
 
 router.get('/patient/get/all', patientAPIController.getAllPatients);
 router.get('/patient/get/:userId', patientAPIController.getPatient);
