@@ -5,14 +5,14 @@ const _ = require('lodash');
 
 class Clinic {
     clinicId;
-    name;
-    address;
-    postal;
-    unit;
-    email;
-    subEmail;
-    phone;
-    subPhone;
+    clinicName;
+    clinicAddress;
+    clinicPostal;
+    clinicUnit;
+    clinicEmail;
+    clinicSubEmail;
+    clinicPhone;
+    clinicSubPhone;
 
     constructor(data) {
         Object.assign(this, data);
@@ -106,14 +106,14 @@ class Clinic {
         let result;
         try {
             result = await db(tableName).update({
-                name: this.name,
-                address: this.address,
-                postal: this.postal,
-                unit: this.unit,
-                email: this.email,
-                subEmail: this.subEmail ? this.subEmail : null,
-                phone: this.phone,
-                subPhone: this.subPhone ? this.subPhone : null
+                clinicName: this.clinicName,
+                clinicAddress: this.clinicAddress,
+                clinicPostal: this.clinicPostal,
+                clinicUnit: this.clinicUnit,
+                clinicEmail: this.clinicEmail,
+                clinicSubEmail: this.clinicSubEmail ? this.clinicSubEmail : null,
+                clinicPhone: this.clinicPhone,
+                clinicSubPhone: this.clinicSubPhone ? this.clinicSubPhone : null
             }).where('clinicId', this.clinicId);
         }
         catch (e) {

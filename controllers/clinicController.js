@@ -54,7 +54,7 @@ exports.viewEditClinicInfo = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             res.status(HTTP_STATUS.OK).render('form/clinic', {
                 pageTitle: 'Clinic',
-                path: '/admin/clinic/edit/' + req.params.clinicId,
+                path: '/admin/clinic/edit',
                 query: req.query,
                 clinicData: JSON.parse(response.body)
             });
@@ -62,7 +62,7 @@ exports.viewEditClinicInfo = async (req, res, next) => {
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Clinic',
-                path: '/admin/clinic/edit' + req.params.clinicId
+                path: '/admin/clinic/edit'
             });
         }
     });

@@ -51,7 +51,7 @@
                           <select id="ddl_Clinic" name="clinicId" class="form-control select2bs4" style="width: 100%;" required>
                             <option selected="selected" disabled>Find clinic...</option>
                             <% for (let i = 0; i < clinicData.length; i++) { %>
-                            <option value="<%= clinicData[i].clinicId %>"><%= clinicData[i].clinicId %>. <%= clinicData[i].name %> | <%= clinicData[i].address %> #<%= clinicData[i].unit %> (S)<%= clinicData[i].postal %></option>
+                            <option value="<%= clinicData[i].clinicId %>"><%= clinicData[i].clinicId %>. <%= clinicData[i].clinicName %> | <%= clinicData[i].clinicAddress + ' #' +  clinicData[i].clinicUnit + ' (S)' + clinicData[i].clinicPostal %></option>
                             <% } %>
                           </select>
                         </div>
@@ -112,11 +112,11 @@
                         <div class="form-group">
                           <label for="tb_ClinicName">Clinic Name<span style="color:red;">*</span></label>
                           <% if (actionText === 'create') { %>
-                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="2" value="<%= dentistData[0].name %>" required readonly>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="2" value="<%= dentistData[0].clinicName %>" required readonly>
                           <input type="hidden" name="clinicId" value="<%= dentistData[0].clinicId %>">
                           <% } %>
                           <% if (actionText === 'edit') { %>
-                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="2" value="<%= dentistData.name %>" required readonly>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="name" placeholder="Clinic Name" tabindex="2" value="<%= dentistData.clinicName %>" required readonly>
                           <input type="hidden" name="clinicId" value="<%= dentistData.clinicId %>">
                           <% } %>
                         </div>
