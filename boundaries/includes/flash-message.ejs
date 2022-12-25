@@ -39,3 +39,10 @@
   An unusual error has occurred. Please try again later.
 </div>
 <% } %>
+
+<% if (query.action === 'duplicate') { %>
+  <div class="callout callout-danger">
+    <h5><i class="fas fa-exclamation-triangle"></i>Error</h5>
+    Duplicate NRIC found!
+  </div>
+  <% } %>

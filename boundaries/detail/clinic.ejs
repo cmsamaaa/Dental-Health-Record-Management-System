@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group">
                           <label for="tb_Phone">Phone:</label>
-                          <input type="text" class="form-control-plaintext" id="tb_Phone" name="clinicPhone" tabindex="3" value="<%= clinicData.clinicPhone %>" disabled>
+                          <input type="text" class="form-control-plaintext" id="tb_Phone" pattern="^[0-9]{8}$" title="E.g 98765432" name="clinicPhone" tabindex="3" value="<%= clinicData.clinicPhone %>" disabled>
                         </div>
                         <div class="form-group">
                           <label for="tb_Address">Address:</label>
@@ -66,13 +66,13 @@
                         </div>
                         <div class="form-group">
                           <label for="tb_ClinicSubPhone">Phone (Secondary):</label>
-                          <input type="text" class="form-control-plaintext" id="tb_ClinicSubPhone" name="clinicSubPhone" tabindex="3" value="<%= clinicData.clinicSubPhone %>" disabled>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicSubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="3" value="<%= clinicData.clinicSubPhone %>" disabled>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="tb_Postal">Postal:</label>
-                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="clinicPostal" tabindex="10" value="<%= clinicData.clinicPostal %>" disabled>
+                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="clinicPostal" tabindex="10" pattern="\b[0-9]{6}\b" title="E.g 543210" value="<%= clinicData.clinicPostal %>" disabled>
                             </div>
                           </div>
                           <div class="col-md-6">
