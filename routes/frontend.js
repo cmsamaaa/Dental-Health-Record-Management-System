@@ -51,8 +51,8 @@ router.get('/admin/appointment/view-all', routeAuth.isAuth, routeAuth.isAdmin, a
 router.get('/admin/appointment/view/:apptId', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointment);
 
 // Inventory
+router.get('/admin/inventory/create', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewCreateInventory);
 router.get('/admin/inventory/view-all', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventory);
-router.get('/admin/inventory/add-inventory', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewCreateInventory);
 
 // Bill
 router.get('/admin/bill/view-all', routeAuth.isAuth, routeAuth.isAdmin, billController.viewBills_Admin);
