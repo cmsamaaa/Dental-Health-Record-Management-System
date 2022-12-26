@@ -5,7 +5,7 @@ const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
 exports.register = async (req, res, next) => {
-    // register clinic
+    // TODO: register clinic
 };
 
 exports.edit = async (req, res, next) => {
