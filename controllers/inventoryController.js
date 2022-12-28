@@ -34,7 +34,7 @@ exports.createInventory = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, '/admin/inventory/create?error=true'));
 };
-exports.editInventory = async (req, res, next) => {
+/* exports.editInventory = async (req, res, next) => {
     // api endpoint uri
     const uri = parse_uri.parse(req, '/admin/inventory/edit');
     request.post({
@@ -60,7 +60,7 @@ exports.suspendInventory = async (req, res, next) => {
         else
             res.redirect(parse_uri.parse(req, '/' + req.body.for + '/inventory/view-all?error=true'));
     });
-};
+}; */
 
 exports.viewInventory = async (req, res, next) => {
     const inventory = new Inventory({

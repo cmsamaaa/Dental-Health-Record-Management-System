@@ -32,8 +32,8 @@ router.post('/admin/appointment/edit', routeAuth.isAuth, routeAuth.isAdmin, appo
 router.post('/admin/appointment/suspend', routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
 
 router.post('/admin/inventory/create', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.createInventory);
-router.post('/admin/inventory/edit', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.editInventory);
-router.post('/admin/inventory/suspend', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.suspendInventory);
+//router.post('/admin/inventory/edit', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.editInventory);
+//router.post('/admin/inventory/suspend', routeAuth.isAuth, routeAuth.isAdmin, inventoryController.suspendInventory);
 
 router.post('/patient/appointment/create', routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
 router.post('/patient/appointment/edit', routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);

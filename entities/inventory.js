@@ -49,42 +49,12 @@ class Inventory {
      * Retrieves all `appointment` inner join `patient` and `user` records
      * Returns: JSON[]
      * */
-    async getAllClinicAppointments() {
+    async getAllInventories() {
         let result;
         try {
             result = await db(tableName).select('*')
-                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
-                .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId');
-
-            result = _.map(result, (patient) => {
-                return _.omit(patient, 'password');
-            });
-        }
-        catch (e) {
-            console.error(e);
-            result = {};
-        }
-
-        return result;
-    }
-
-    /**
-     * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime >= today
-     * Returns: JSON[]
-     * */
-    async getAllUpcomingAppointments() {
-        let result;
-        try {
-            result = await db(tableName).select('*')
-                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
-                .innerJoin('users', 'patients.userId', 'users.userId')
-                .where('startDateTime', '>=', new Date())
-                .andWhere('staffId', this.staffId);
-
-            result = _.map(result, (patient) => {
-                return _.omit(patient, 'password');
-            });
+                //.innerJoin('inventories', 'inventories.patientId', 'patients.patientId')
+                //.innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId');
         }
         catch (e) {
             console.error(e);
@@ -122,17 +92,13 @@ class Inventory {
      * Retrieves one `appointment` inner join `patient` and `user` record
      * Returns: JSON Object
      * */
-    async getAppointment() {
+    async getInventory() {
         let result;
         try {
             result = await db(tableName).select('*')
-                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
-                .innerJoin('users', 'patients.userId', 'users.userId')
-                .where('apptId', this.apptId);
-
-            result = _.map(result, (patient) => {
-                return _.omit(patient, 'password');
-            });
+                //.innerJoin('inventories', 'inventories.inventoryId')
+                //.innerJoin('users', 'patients.userId', 'users.userId')
+                .where('inventoryId', this.inventoryId);
         }
         catch (e) {
             console.error(e);
