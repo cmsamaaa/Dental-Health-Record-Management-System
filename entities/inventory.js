@@ -1,7 +1,6 @@
 const db = require('./db');
 const tableName = 'inventories';
 const _ = require('lodash');
-const dateTimeFormat = require("../lib/dateTimeFormat");
 
 class Inventory {
     inventoryId;
