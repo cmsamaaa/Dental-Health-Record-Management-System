@@ -56,7 +56,7 @@ router.get('/admin/appointment/view/:apptId', routeAuth.setSession, routeAuth.is
 // Treatment
 router.get('/admin/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewCreateTreatment);
 // router.get('/admin/treatment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewEditTreatment);
-// router.get('/admin/treatment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewTreatments);
+router.get('/admin/treatment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewTreatments);
 // router.get('/admin/treatment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewTreatment);
 
 // Inventory

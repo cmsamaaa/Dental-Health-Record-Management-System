@@ -32,3 +32,29 @@ exports.viewCreateTreatment = async (req, res, next) => {
         query: req.query
     });
 };
+
+exports.viewTreatments = async (req, res, next) => {
+    const pageTitle = 'Treatment';
+    const path = '/admin/treatment/create';
+
+    const clinicTreatment = new ClinicTreatment({
+        clinicId: req.session.userInfo.clinicId
+    });
+    const result = await clinicTreatment.getAll();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('table/clinicTreatments', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            treatmentData: result
+        });
+    }
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).render('table/clinicTreatments', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            treatmentData: []
+        });
+};
