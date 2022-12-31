@@ -48,7 +48,7 @@ exports.suspendAppointment = async (req, res, next) => {
 };
 
 exports.viewCreateAppointment = async (req, res, next) => {
-    let user = req.url.split('/')[1];
+    const user = req.url.split('/')[1];
 
     if (user === 'patient') {
         // api endpoint uri
@@ -151,7 +151,7 @@ exports.viewCreateAppointment = async (req, res, next) => {
 };
 
 exports.viewEditAppointment = async (req, res, next) => {
-    let user = req.url.split('/')[1];
+    const user = req.url.split('/')[1];
 
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
@@ -196,7 +196,10 @@ exports.viewEditAppointment = async (req, res, next) => {
 };
 
 exports.viewAppointments = async (req, res, next) => {
-    let user = req.url.split('/')[1];
+    const user = req.url.split('/')[1];
+
+    const pageTitle = 'Appointment';
+    const path = '/' + user + '/appointment/view-all';
 
     if (user === 'admin') {
         const appointment = new Appointment();
@@ -212,14 +215,19 @@ exports.viewAppointments = async (req, res, next) => {
             });
 
             res.status(HTTP_STATUS.OK).render('table/appointments', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/view-all',
+                pageTitle: pageTitle,
+                path: path,
                 query: req.query,
                 appointmentData: apptData
             });
         }
         else
-            res.status(HTTP_STATUS.NOT_FOUND).json({});
+            res.status(HTTP_STATUS.NOT_FOUND).render('table/appointments', {
+                pageTitle: pageTitle,
+                path: path,
+                query: req.query,
+                appointmentData: []
+            });
     }
 
     if (user === 'dentist') {
@@ -238,14 +246,19 @@ exports.viewAppointments = async (req, res, next) => {
             });
 
             res.status(HTTP_STATUS.OK).render('table/appointments', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/view-all',
+                pageTitle: pageTitle,
+                path: path,
                 query: req.query,
                 appointmentData: apptData
             });
         }
         else
-            res.status(HTTP_STATUS.NOT_FOUND).json({});
+            res.status(HTTP_STATUS.NOT_FOUND).render('table/appointments', {
+                pageTitle: pageTitle,
+                path: path,
+                query: req.query,
+                appointmentData: []
+            });
     }
 
     if (user === 'patient') {
@@ -259,24 +272,33 @@ exports.viewAppointments = async (req, res, next) => {
         }, (err, response, body) => {
             let apptData = JSON.parse(response.body);
 
-            apptData = _.map(apptData, (appt) => {
-                appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
-                appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
-                return appt;
-            });
+            if (!_.isEmpty(apptData)) {
+                apptData = _.map(apptData, (appt) => {
+                    appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+                    appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
+                    return appt;
+                });
 
-            res.status(HTTP_STATUS.OK).render('table/appointments', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/view-all',
-                query: req.query,
-                appointmentData: apptData
-            });
+                res.status(HTTP_STATUS.OK).render('table/appointments', {
+                    pageTitle: pageTitle,
+                    path: path,
+                    query: req.query,
+                    appointmentData: apptData
+                });
+            }
+            else
+                res.status(HTTP_STATUS.NOT_FOUND).render('table/appointments', {
+                    pageTitle: pageTitle,
+                    path: path,
+                    query: req.query,
+                    appointmentData: []
+                });
         });
     }
 };
 
 exports.viewAppointment = async (req, res, next) => {
-    let user = req.url.split('/')[1];
+    const user = req.url.split('/')[1];
 
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
