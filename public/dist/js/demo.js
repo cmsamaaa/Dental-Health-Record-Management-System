@@ -66,10 +66,11 @@
     // Checkboxes
 
     $container.append(
-        '<h5>Customize Theme</h5><hr class="mb-2"/>'
+        '<h5>Customise Theme</h5><hr class="mb-2"/>'
     );
 
     var $dark_mode_checkbox = $('<input />', {
+        id: 'cb_DarkMode',
         type: 'checkbox',
         value: 1,
         checked: $('body').hasClass('dark-mode'),
@@ -83,7 +84,7 @@
             localStorage.setItem('dark-mode', 'false');
         }
     });
-    var $dark_mode_container = $('<div />', {class: 'mb-4'}).append($dark_mode_checkbox).append('<span>Dark Mode</span>');
+    var $dark_mode_container = $('<div />', { class: 'mb-4' }).append($dark_mode_checkbox).append('<label class="font-weight-normal" for="cb_DarkMode">Dark Mode</label>');
     $container.append($dark_mode_container);
 
     // $container.append('<h6>Header Options</h6>');
