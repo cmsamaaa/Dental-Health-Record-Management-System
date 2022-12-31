@@ -62,11 +62,11 @@
                         </div>
                         <div class="form-group">
                           <label for="tb_SubEmail">Email Address (Secondary):</label>
-                          <input type="email" class="form-control-plaintext" id="tb_SubEmail" name="clinicSubEmail" tabindex="3" value="<%= clinicData.clinicSubEmail %>" disabled>
+                          <input type="email" class="form-control-plaintext" id="tb_SubEmail" name="clinicSubEmail" tabindex="3" value="<%= clinicData.clinicSubEmail ? clinicData.clinicSubEmail : 'Not provided' %>" disabled>
                         </div>
                         <div class="form-group">
                           <label for="tb_ClinicSubPhone">Phone (Secondary):</label>
-                          <input type="text" class="form-control-plaintext" id="tb_ClinicSubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="3" value="<%= clinicData.clinicSubPhone %>" disabled>
+                          <input type="text" class="form-control-plaintext" id="tb_ClinicSubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="3" value="<%= clinicData.clinicSubPhone ? clinicData.clinicSubPhone : 'Not provided' %>" disabled>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
