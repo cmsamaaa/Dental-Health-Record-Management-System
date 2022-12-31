@@ -17,7 +17,7 @@
       <!-- Content Header (Page header) -->
       <%- include('../includes/content-header.ejs') %>
 
-      <% let actionText = path.split('/')[3] %>
+      <% let actionText = path === '/admin/inventory/create' ? 'create' : 'edit' %>
 
       <!-- Main content -->
       <section class="content">
@@ -30,25 +30,25 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title text-capitalize"><%= actionText %> Inventory Inbound Form</h3>
+                  <h3 class="card-title">Inventory Inbound Form</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="<%= path %>" method="post">
+                <form>
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="tb_itemName">Item Name<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_itemName" name="itemName" pattern="[a-zA-Z\s]+" title="E.g Antibiotics" placeholder="Antibiotics"  value="<%= actionText === 'edit' ? inventoryData.name : '' %>" required>
+                          <label for="tb_itemName">Item Name</label>
+                          <input type="text" class="form-control-plaintext" id="tb_itemName" name="itemName" pattern="[a-zA-Z\s]+" title="E.g Antibiotics" value="<%= inventoryData.name %>" disabled>
                         </div>
                         <div class="form-group">
                           <label for="tb_expiry">Expiry Date</label>
-                          <input type="date" class="form-control" id="tb_expiry" min="<%= new Date().toISOString().split('T')[0] %>" name="expiry" placeholder="dd/mm/yyyy" value="<%= actionText === 'edit' ? inventoryData.expiryDate : '' %>" required>
+                          <input type="text" class="form-control-plaintext" id="tb_expiry" min="<%= new Date().toISOString().split('T')[0] %>" name="expiry" value="<%= inventoryData.expiryDate %>" disabled>
                         </div>
                         <div class="form-group">
                           <label for="tb_sku">SKU<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_sku" name="SKU" pattern="[a-zA-Z0-9\s]+" title="Alphanumeric only! Eg. FYP123456HD" placeholder="FYP123456HD" value="<%= actionText === 'edit' ? inventoryData.SKU : '' %>" required>
+                          <input type="text" class="form-control-plaintext" id="tb_sku" name="SKU" pattern="[a-zA-Z0-9\s]+" title="Alphanumeric only! Eg. FYP123456HD" value="<%= inventoryData.SKU %>" disabled>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -56,23 +56,23 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="tb_Quantity">Quantity<span style="color:red;">*</span></label>
-                              <input type="number" class="form-control" id="tb_Quantity" name="quantity" min="1" placeholder="100" value="<%= actionText === 'edit' ? inventoryData.quantity : '' %>" required>
+                              <input type="number" class="form-control-plaintext" id="tb_Quantity" name="quantity" min="1" value="<%= inventoryData.quantity %>" disabled>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="tb_cost">Cost per Unit ($)<span style="color:red;">*</span></label>
-                              <input type="number" class="form-control" step="0.01" id="tb_cost" name="cost" min="1" placeholder="1.99" value="<%= actionText === 'edit' ? inventoryData.costPerUnit : '' %>" required>
+                              <input type="number" class="form-control-plaintext" step="0.01" id="tb_cost" name="cost" min="1" value="<%= inventoryData.costPerUnit %>" disabled>
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="tb_inbound">Inbound Date<span style="color:red;">*</span></label>
-                          <input type="date" class="form-control" min="<%= new Date().toISOString().split('T')[0] %>" id="tb_inbound" name="inbound" placeholder="dd/mm/yyyy" value="<%= actionText === 'edit' ? inventoryData.inboundDate : '' %>" required>
+                          <input type="text" class="form-control-plaintext" min="<%= new Date().toISOString().split('T')[0] %>" id="tb_inbound" name="inbound" value="<%= inventoryData.inboundDate %>" disabled>
                         </div>
                         <div class="form-group">
                           <label for="tb_upc">UPC<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_upc" name="UPC" pattern="[0-9]{12}" title="12 digits only! Eg. 123456789012" placeholder="123456789012" value="<%= actionText === 'edit' ? inventoryData.UPC : '' %>" required>
+                          <input type="text" class="form-control-plaintext" id="tb_upc" name="UPC" pattern="[0-9]{12}" title="12 digits only! Eg. 123456789012" value="<%= inventoryData.UPC %>" disabled>
                         </div>
                       </div>
                     </div>
@@ -80,21 +80,14 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="tb_note">Note</label>
-                          <textarea class="form-control" id="tb_note" name="note" placeholder="Additional notes" rows="4"><%= actionText === 'edit' ? inventoryData.note : '' %></textarea>
+                          <textarea class="form-control-plaintext" id="tb_note" name="note" rows="4" disabled><%= inventoryData.note %></textarea>
                         </div>
                       </div>
                     </div>
                   </div>
                   <!-- /.card-body -->
-
                   <div class="card-footer text-right">
-                    <% if (actionText === 'edit') { %>
-                    <input type="hidden" name="inventoryId" value="<%= inventoryData.inventoryId %>">
-                    <% } %>
-                    <% if (actionText !== 'edit') { %>
-                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
-                    <% } %>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="/admin/inventory/edit/<%= inventoryData.inventoryId %>" class="btn btn-primary">Edit</a>
                   </div>
                 </form>
               </div>

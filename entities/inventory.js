@@ -1,6 +1,8 @@
 const db = require('./db');
 const tableName = 'inventories';
 const _ = require('lodash');
+const moment = require('moment');
+
 
 class Inventory {
     inventoryId;
@@ -26,7 +28,7 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).insert({
-                inventoryId: this.inventoryId,
+                inventoryId: this.inventoryId  ? this.inventoryId : null,
                 name: this.name,
                 quantity: this.quantity,
                 costPerUnit: this.costPerUnit,
@@ -46,39 +48,19 @@ class Inventory {
     }
 
     /**
-     * Retrieves all `appointment` inner join `patient` and `user` records
+     * Retrieves all `inventories` records
      * Returns: JSON[]
      * */
     async getAllInventories() {
         let result;
         try {
-            result = await db(tableName).select('*')
-                //.innerJoin('inventories', 'inventories.patientId', 'patients.patientId')
-                //.innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId');
-        }
-        catch (e) {
-            console.error(e);
-            result = {};
-        }
-
-        return result;
-    }
-
-    /**
-     * Retrieves all `appointment` inner join `patient` and `user` records by `userId`
-     * Returns: JSON[]
-     * */
-    async getAllUserAppointments() {
-        let result;
-        try {
-            result = await db(tableName).select('*')
-                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
-                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
-                .where('patients.userId', this.userId);
-
-            result = _.map(result, (patient) => {
-                return _.omit(patient, 'password');
+            result = await db(tableName).select('*');
+            result = _.map(result, (inventory) => {
+                inventory.expiryDate = moment(inventory.expiryDate).format('DD-MM-YYYY');
+                inventory.inboundDate = moment(inventory.inboundDate).format('DD-MM-YYYY');
+                return inventory;
             });
+
         }
         catch (e) {
             console.error(e);
@@ -89,16 +71,19 @@ class Inventory {
     }
 
     /**
-     * Retrieves one `appointment` inner join `patient` and `user` record
+     * Retrieves one `inventories` record
      * Returns: JSON Object
      * */
     async getInventory() {
         let result;
         try {
             result = await db(tableName).select('*')
-                //.innerJoin('inventories', 'inventories.inventoryId')
-                //.innerJoin('users', 'patients.userId', 'users.userId')
                 .where('inventoryId', this.inventoryId);
+            result = _.map(result, (inventory) => {
+                inventory.expiryDate = moment(inventory.expiryDate).format('YYYY-MM-DD');
+                inventory.inboundDate = moment(inventory.inboundDate).format('YYYY-MM-DD');
+                return inventory;
+            });
         }
         catch (e) {
             console.error(e);
@@ -107,25 +92,30 @@ class Inventory {
 
         return result[0];
     }
-
+    
     /**
-     * Update a `appointment` record.
-     * Can be used to update appointment.
+     * Update a `inventory` record.
+     * Can be used to update inventory.
      * Returns: Object
      * */
-    async updateAppointment() {
+    async updateInventory() {
         let result;
         try {
             result = await db(tableName).update({
-                startDateTime: dateTimeFormat.parse(this.startDateTime),
-                endDateTime: dateTimeFormat.parseWithAddition(this.startDateTime, 1, 30)
-            }).where('apptId', this.apptId);
+                name: this.name,
+                quantity: this.quantity,
+                costPerUnit: this.costPerUnit,
+                expiryDate: this.expiryDate,
+                inboundDate: this.inboundDate,
+                SKU: this.SKU,
+                UPC: this.UPC,
+                note: this.note
+            }).where('inventoryId', this.inventoryId);
         }
         catch (e) {
             console.error(e);
             result = {};
         }
-
         return result;
     }
 
@@ -140,27 +130,6 @@ class Inventory {
             result = await db(tableName).update({
                 status: 'Cancelled'
             }).where('apptId', this.apptId);
-        }
-        catch (e) {
-            console.error(e);
-            result = {};
-        }
-
-        return result;
-    }
-
-    /**
-     * Delete a `appointment` record.
-     * Can be used to clear record after unit testing.
-     * Returns: Object
-     * */
-    async deleteAppointment() {
-        let result;
-        try {
-            result = await db(tableName).del()
-                .where({
-                    apptId: this.apptId
-                });
         }
         catch (e) {
             console.error(e);
