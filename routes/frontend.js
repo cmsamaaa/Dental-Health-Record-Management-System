@@ -18,6 +18,7 @@ router.get('/login', patientController.viewLogin);
 router.get('/staff/login', staffController.viewLogin);
 router.get('/forgot-password', defaultController.viewForgotPassword);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);
+router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
 
 // Protected routes
 router.get('/', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
@@ -79,6 +80,7 @@ router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, rou
 /* Start of Dentist Route */
 
 // Appointment
+router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicController.viewClinicInfo);
 router.get('/dentist/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointments);
 router.get('/dentist/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointment);
 

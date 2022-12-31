@@ -8,7 +8,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
-    <% if (_isLoggedIn === true) { %>
+    <% if (_isLoggedIn) { %>
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <% if (_gender === 'Male') { %>
@@ -40,7 +40,33 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-        <% if (_isLoggedIn === true && _userRole === 'Administrator') { %>
+
+        <!-- Start of Unregistered Users -->
+        <% if (!_isLoggedIn) { %>
+        <li class="nav-item">
+          <a href="/login" class="nav-link <% if(path === '/login') { %>active<% } %>">
+            <i class="fas fa-sign-in-alt nav-icon"></i>
+            <p>Login</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link <% if(path === '/register') { %>active<% } %>">
+            <i class="fas fa-user-plus nav-icon"></i>
+            <p>Register</p>
+          </a>
+        </li>
+        <% } %>
+
+        <li class="nav-header">CLINICS</li>
+        <li class="nav-item">
+          <a href="/clinic/search" class="nav-link <% if(path === '/clinic/search') { %>active<% } %>">
+            <i class="fas fa-search nav-icon"></i>
+            <p>Clinics Near Me</p>
+          </a>
+        </li>
+        <!-- Start of Unregistered Users -->
+
+        <% if (_isLoggedIn && _userRole === 'Administrator') { %>
         <!-- Start of Administration -->
         <li class="nav-header">ADMINISTRATION</li>
         <li class="nav-item">
@@ -167,7 +193,7 @@
         <!-- End of Administration -->
         <% } %>
 
-        <% if (_isLoggedIn === true && _userRole === 'Patient') { %>
+        <% if (_isLoggedIn && _userRole === 'Patient') { %>
         <!-- Start of Patient -->
         <li class="nav-header">PATIENT</li>
         <li class="nav-item <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
@@ -213,9 +239,15 @@
         <!-- End of Patient -->
         <% } %>
 
-        <% if (_isLoggedIn === true && (_userRole === 'Dentist' || _userRole === 'Dental Assistant')) { %>
+        <% if (_isLoggedIn && (_userRole === 'Dentist' || _userRole === 'Dental Assistant')) { %>
         <!-- Start of Dentist -->
         <li class="nav-header">DENTAL</li>
+        <li class="nav-item">
+          <a href="/dentist/clinic" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'clinic') { %>active<% } %>">
+            <i class="nav-icon fas fa-info-circle"></i>
+            <p>Clinic Information</p>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="/dentist/appointment/view-all" class="nav-link <% if(path === '/dentist/appointment/view-all') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
@@ -224,29 +256,6 @@
         </li>
         <!-- End of Dentist -->
         <% } %>
-
-        <!-- Start of Unregistered Users -->
-        <li class="nav-item">
-          <a href="/login" class="nav-link <% if(path === '/login') { %>active<% } %>">
-            <i class="fas fa-sign-in-alt nav-icon"></i>
-            <p>Login</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link <% if(path === '/register') { %>active<% } %>">
-            <i class="fas fa-user-plus nav-icon"></i>
-            <p>Register</p>
-          </a>
-        </li>
-
-        <li class="nav-header">CLINICS</li>
-        <li class="nav-item">
-          <a href="/clinic/search" class="nav-link <% if(path === '/clinic/search') { %>active<% } %>">
-            <i class="fas fa-search nav-icon"></i>
-            <p>Clinics Near Me</p>
-          </a>
-        </li>
-        <!-- Start of Unregistered Users -->
 
         <li class="nav-header">MISCELLANEOUS</li>
         <li class="nav-item">

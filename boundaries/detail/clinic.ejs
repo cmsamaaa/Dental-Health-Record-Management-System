@@ -87,9 +87,13 @@
                   </div>
                   <!-- /.card-body -->
 
+                  <% if (_isLoggedIn) { %>
+                  <% if (_userRole === 'Administrator') { %>
                   <div class="card-footer text-right">
                     <a href="/admin/clinic/edit/<%= clinicData.clinicId %>" class="btn btn-primary">Edit</a>
                   </div>
+                  <% } %>
+                  <% } %>
                 </form>
               </div>
               <!-- /.card -->

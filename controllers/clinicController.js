@@ -59,23 +59,42 @@ exports.findClinicsByPostal = async (req, res, next) => {
 };
 
 exports.viewClinicInfo = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+
+    const pageTitle = 'Clinic';
+    let path = '/clinic/view';
+    let clinicId = -1;
+
+    if (req.session.userInfo) {
+        if (req.params.clinicId)
+            clinicId = req.params.clinicId;
+        else {
+            path = '/' + user + '/clinic';
+            clinicId = req.session.userInfo.clinicId;
+        }
+    }
+    else {
+        if (req.params.clinicId)
+            clinicId = req.params.clinicId;
+    }
+
     // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId);
+    const uri = parse_uri.parse(req, '/api/clinic/get/' + clinicId);
     request.get({
         url: uri,
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             res.status(HTTP_STATUS.OK).render('detail/clinic', {
-                pageTitle: 'Clinic',
-                path: '/admin/clinic',
+                pageTitle: pageTitle,
+                path: path,
                 query: req.query,
                 clinicData: JSON.parse(response.body)
             });
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Clinic',
-                path: '/admin/clinic'
+                pageTitle: pageTitle,
+                path: path
             });
         }
     });
