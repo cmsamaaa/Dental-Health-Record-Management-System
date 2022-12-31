@@ -68,6 +68,7 @@ exports.viewCreateAppointment = async (req, res, next) => {
                                 pageTitle: 'Appointment',
                                 path: '/' + user + '/appointment/create',
                                 query: req.query,
+                                dentistData: [],
                                 clinicData: JSON.parse(response.body)
                             });
                         }
@@ -94,11 +95,7 @@ exports.viewCreateAppointment = async (req, res, next) => {
                             });
                         }
                         else {
-                            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                                pageTitle: 'Appointment',
-                                path: '/' + user + '/appointment/create',
-                                query: req.query
-                            });
+                            res.redirect(parse_uri.parse(req, '/' + user + '/appointment/create?apptCreate=false&listClinics=error'));
                         }
                     });
                 }

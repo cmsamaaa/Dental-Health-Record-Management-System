@@ -64,7 +64,7 @@
                 </form>
                 <% } %>
 
-                <% if (_userRole !== "Patient" || (_userRole === "Patient" && query.clinicId > 0) || actionText === 'edit') { %>
+                <% if ((_userRole !== "Patient" || (_userRole === "Patient" && query.clinicId > 0) || actionText === 'edit') && dentistData.length > 0) { %>
                 <!-- form start -->
                 <form action="<%= path %>" method="post">
                   <div class="card-body">

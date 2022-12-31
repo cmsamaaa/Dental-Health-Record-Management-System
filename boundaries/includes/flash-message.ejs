@@ -40,9 +40,16 @@
 </div>
 <% } %>
 
+<% if (query.apptCreate === 'false' && query.listClinics === 'error') { %>
+<div class="callout callout-warning">
+  <h5><i class="fas fa-exclamation-triangle"></i> Warning</h5>
+  This clinic does not have any dentist available for booking in our system. Please contact them directly for help.
+</div>
+<% } %>
+
 <% if (query.action === 'duplicate') { %>
-  <div class="callout callout-danger">
-    <h5><i class="fas fa-exclamation-triangle"></i>Error</h5>
-    Duplicate NRIC found!
-  </div>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i>Error</h5>
+  Duplicate NRIC found!
+</div>
 <% } %>
