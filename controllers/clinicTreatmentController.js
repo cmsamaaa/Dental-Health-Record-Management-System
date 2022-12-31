@@ -26,7 +26,7 @@ exports.viewCreateTreatment = async (req, res, next) => {
     const pageTitle = 'Treatment';
     const path = '/admin/treatment/create';
 
-    res.status(HTTP_STATUS.OK).render('form/treatment', {
+    res.status(HTTP_STATUS.OK).render('form/clinicTreatment', {
         pageTitle: pageTitle,
         path: path,
         query: req.query
