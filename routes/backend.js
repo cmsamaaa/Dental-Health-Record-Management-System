@@ -6,6 +6,7 @@ const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
 const appointmentController = require('../controllers/appointmentController');
 const inventoryController = require('../controllers/inventoryController');
+const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 const routeAuth = require('../middleware/route-auth');
 
 const router = express.Router();
@@ -30,6 +31,8 @@ router.post('/admin/patient/edit', routeAuth.setSession, routeAuth.isAuth, route
 router.post('/admin/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.createAppointment);
 router.post('/admin/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.editAppointment);
 router.post('/admin/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
+
+router.post('/admin/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.createTreatment);
 
 router.post('/admin/inventory/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.createInventory);
 router.post('/admin/inventory/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.editInventory);

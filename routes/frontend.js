@@ -7,6 +7,7 @@ const clinicController = require('../controllers/clinicController');
 const inventoryController = require('../controllers/inventoryController');
 const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
+const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
@@ -51,6 +52,12 @@ router.get('/admin/appointment/create', routeAuth.setSession, routeAuth.isAuth, 
 router.get('/admin/appointment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewEditAppointment);
 router.get('/admin/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointments);
 router.get('/admin/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointment);
+
+// Treatment
+router.get('/admin/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewCreateTreatment);
+// router.get('/admin/treatment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewEditTreatment);
+// router.get('/admin/treatment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewTreatments);
+// router.get('/admin/treatment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewTreatment);
 
 // Inventory
 router.get('/admin/inventory/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewCreateInventory);

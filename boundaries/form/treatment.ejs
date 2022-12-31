@@ -1,0 +1,90 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path.split('/')[3] %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize"><%= actionText %> Treatment</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="<%= path %>" method="post">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_TreatmentName">Treatment Name<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_TreatmentName" name="ctName" pattern="[a-zA-Z\s]+" title="E.g. Impacted/Wisdom tooth surgery" placeholder="Impacted/Wisdom tooth surgery" value="<%= actionText === 'edit' ? treatmentData.ctName : '' %>" tabindex="1" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_TreatmentPrice">Treatment Price ($)<span style="color:red;">*</span></label>
+                          <input type="number" class="form-control" step="0.01" id="tb_TreatmentPrice" name="ctPrice" min="1" placeholder="1100.00" value="<%= actionText === 'edit' ? treatmentData.costPerUnit : '' %>" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <input type="hidden" name="clinicId" value="<%= _clinicId %>">
+                    <% if (actionText === 'edit') { %>
+                    <input type="hidden" name="ctId" value="<%= treatmentData.ctId %>">
+                    <% } %>
+                    <% if (actionText !== 'edit') { %>
+                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+</body>
+
+</html>
