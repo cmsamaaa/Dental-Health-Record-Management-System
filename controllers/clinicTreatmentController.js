@@ -82,3 +82,24 @@ exports.viewTreatments = async (req, res, next) => {
             treatmentData: []
         });
 };
+
+exports.viewTreatment = async (req, res, next) => {
+    const pageTitle = 'Treatment';
+    const path = '/admin/treatment/view';
+
+    const clinicTreatment = new ClinicTreatment({
+        ctId: req.params.ctId
+    });
+    const result = await clinicTreatment.get();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('detail/clinicTreatment', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            treatmentData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
+};
