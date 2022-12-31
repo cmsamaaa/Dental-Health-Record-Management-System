@@ -41,7 +41,7 @@ exports.reactivateTreatment = async (req, res, next) => {
     const result = await clinicTreatment.reactivate();
 
     if (result)
-        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?action=suspend&ctId=' + req.body.ctId));
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?action=reactivate&ctId=' + req.body.ctId));
     else
         res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
 };
