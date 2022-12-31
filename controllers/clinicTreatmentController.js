@@ -22,6 +22,20 @@ exports.createTreatment = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/admin/treatment/create?error=true'));
 };
 
+exports.editTreatment = async (req, res, next) => {
+    const clinicTreatment = new ClinicTreatment({
+        ctId: req.body.ctId,
+        ctName: req.body.ctName,
+        ctPrice: req.body.ctPrice,
+    });
+    const result = await clinicTreatment.updateClinicTreatment();
+
+    if (result)
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?action=edit&ctId=' + req.body.ctId));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
+};
+
 exports.suspendTreatment = async (req, res, next) => {
     const clinicTreatment = new ClinicTreatment({
         ctId: req.body.ctId
@@ -55,6 +69,27 @@ exports.viewCreateTreatment = async (req, res, next) => {
         path: path,
         query: req.query
     });
+};
+
+exports.viewEditTreatment = async (req, res, next) => {
+    const pageTitle = 'Treatment';
+    const path = '/admin/treatment/edit';
+
+    const clinicTreatment = new ClinicTreatment({
+        ctId: req.params.ctId
+    });
+    const result = await clinicTreatment.get();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/clinicTreatment', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            treatmentData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
 };
 
 exports.viewTreatments = async (req, res, next) => {

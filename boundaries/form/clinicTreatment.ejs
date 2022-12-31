@@ -40,13 +40,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="tb_TreatmentName">Treatment Name<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_TreatmentName" name="ctName" pattern="[a-zA-Z\s]+" title="E.g. Impacted/Wisdom tooth surgery" placeholder="Impacted/Wisdom tooth surgery" value="<%= actionText === 'edit' ? treatmentData.ctName : '' %>" tabindex="1" required>
+                          <input type="text" class="form-control" id="tb_TreatmentName" name="ctName" pattern="[a-zA-Z\s_@./#&+-]+" title="E.g. Impacted/Wisdom tooth surgery" placeholder="Impacted/Wisdom tooth surgery" value="<%= actionText === 'edit' ? treatmentData.ctName : '' %>" tabindex="1" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="tb_TreatmentPrice">Treatment Price ($)<span style="color:red;">*</span></label>
-                          <input type="number" class="form-control" step="0.01" id="tb_TreatmentPrice" name="ctPrice" min="1" placeholder="1100.00" value="<%= actionText === 'edit' ? treatmentData.costPerUnit : '' %>" required>
+                          <input type="number" class="form-control" step="0.01" id="tb_TreatmentPrice" name="ctPrice" min="1" placeholder="1100.00" value="<%= actionText === 'edit' ? treatmentData.ctPrice : '' %>" required>
                         </div>
                       </div>
                     </div>
