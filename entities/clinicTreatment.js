@@ -8,6 +8,7 @@ class ClinicTreatment {
     ctName;
     ctPrice;
     clinicId;
+    isDeactivated;
 
     constructor(data) {
         Object.assign(this, data);
@@ -76,6 +77,46 @@ class ClinicTreatment {
             result = await db(tableName).update({
                 ctName: this.ctName,
                 ctPrice: this.ctPrice
+            }).where('ctId', this.ctId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `clinic_treatments` record `isDeactivated` to 1
+     * Can be used for account suspension
+     * Returns: Object
+     * */
+    async suspend() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                isDeactivated: 1
+            }).where('ctId', this.ctId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `clinic_treatments` record `isDeactivated` to 0
+     * Can be used for account reactivation
+     * Returns: Object
+     * */
+    async reactivate() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                isDeactivated: 0
             }).where('ctId', this.ctId);
         }
         catch (e) {

@@ -22,6 +22,30 @@ exports.createTreatment = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/admin/treatment/create?error=true'));
 };
 
+exports.suspendTreatment = async (req, res, next) => {
+    const clinicTreatment = new ClinicTreatment({
+        ctId: req.body.ctId
+    });
+    const result = await clinicTreatment.suspend();
+
+    if (result)
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?action=suspend&ctId=' + req.body.ctId));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
+};
+
+exports.reactivateTreatment = async (req, res, next) => {
+    const clinicTreatment = new ClinicTreatment({
+        ctId: req.body.ctId
+    });
+    const result = await clinicTreatment.reactivate();
+
+    if (result)
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?action=suspend&ctId=' + req.body.ctId));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
+};
+
 exports.viewCreateTreatment = async (req, res, next) => {
     const pageTitle = 'Treatment';
     const path = '/admin/treatment/create';

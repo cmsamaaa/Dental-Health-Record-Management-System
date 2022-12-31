@@ -33,6 +33,8 @@ router.post('/admin/appointment/edit', routeAuth.setSession, routeAuth.isAuth, r
 router.post('/admin/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
 
 router.post('/admin/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.createTreatment);
+router.post('/admin/treatment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.suspendTreatment);
+router.post('/admin/treatment/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.reactivateTreatment);
 
 router.post('/admin/inventory/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.createInventory);
 router.post('/admin/inventory/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.editInventory);
