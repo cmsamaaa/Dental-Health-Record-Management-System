@@ -1,0 +1,183 @@
+<%- include('../includes/head.ejs') %>
+<!-- DataTables -->
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Search</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <form method="get">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select id="ddl_FilterType" name="type" class="form-control" style="width: 100%;" required>
+                            <option selected="selected" value="" disabled>Find clinic by...</option>
+                            <option <% if (query.type === 'district') { %> selected="selected" <% } %> value="district">District</option>
+                            <option <% if (query.type === 'region') { %> selected="selected" <% } %>value="region">Region</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input id="tb_Postal" class="form-control" type="search" name="postal" pattern="[0-9]{6}" title="Please enter a 6-digit postal code." placeholder="Enter your postal code (e.g. 545078)" value="<%= query.postal ? query.postal : '' %>">
+                            <div class="input-group-append">
+                              <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                              </button>
+                              <a href="/clinic/search" class="btn btn-danger">
+                                <i class="fas fa-redo"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <% if (clinicsData) { %>
+                  <table id="tbl_Appointments" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < clinicsData.length; i++) { %>
+                      <tr>
+                        <td><%= i + 1 %></td>
+                        <td><%= clinicsData[i].clinicName %></td>
+                        <td>
+                          <a href="https://www.google.com/search?q=<%= clinicsData[i].clinicName %>" target="_blank">
+                            <%= clinicsData[i].clinicAddress + ', #' + clinicsData[i].clinicUnit + ', (S)' + clinicsData[i].clinicPostal %>
+                          </a>
+                        </td>
+                        <td>
+                          <a href="mailto:<%= clinicsData[i].clinicEmail %>"><%= clinicsData[i].clinicEmail %></a>
+                          <% if (clinicsData[i].clinicSubEmail) { %>
+                          <br />
+                          <a href="mailto:<%= clinicsData[i].clinicSubEmail %>"><%= clinicsData[i].clinicSubEmail %></a>
+                          <% } %>
+                        </td>
+                        <td>
+                          <%= '+65 ' + clinicsData[i].clinicPhone %>
+                          <% if (clinicsData[i].clinicSubPhone) { %>
+                          <br />
+                          <%= '+65 ' + clinicsData[i].clinicSubPhone %>
+                          <% } %>
+                        </td>
+                        <td class="d-flex">
+                          <a href="/admin/appointment/view/<%= clinicsData[i].clinicId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <% } %>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="/plugins/jszip/jszip.min.js"></script>
+  <script src="/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      $("#tbl_Appointments").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "columnDefs": [{
+            "width": "30%",
+            "targets": 2
+          },
+          {
+            "width": "20%",
+            "targets": 1
+          }
+        ],
+        "buttons": [
+          "colvis"
+        ]
+      }).buttons().container().appendTo('#tbl_Appointments_wrapper .col-md-6:eq(0)');
+    });
+  </script>
+</body>
+
+</html>

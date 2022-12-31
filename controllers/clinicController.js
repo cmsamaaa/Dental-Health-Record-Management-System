@@ -22,6 +22,42 @@ exports.edit = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/admin/clinic/edit/' + req.body.clinicId + '?error=true'));
 };
 
+exports.findClinicsByPostal = async (req, res, next) => {
+    const pageTitle = 'Find Clinics Near Me';
+    const path = '/clinic/search';
+
+    if (req.query.type === 'district' || req.query.type === 'region') {
+        const uri = parse_uri.parse(req, '/api/clinic/get/all/' + req.query.postal);
+        request.get({
+            url: uri
+        }, (err, response, body) => {
+            if (response.statusCode === HTTP_STATUS.OK) {
+                res.status(HTTP_STATUS.OK).render('table/clinics-nearby', {
+                    pageTitle: pageTitle,
+                    path: path,
+                    query: req.query,
+                    clinicsData: JSON.parse(response.body)
+                });
+            }
+            else {
+                res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                    pageTitle: pageTitle,
+                    path: path,
+                    clinicsData: null
+                });
+            }
+        });
+    }
+    else {
+        res.status(HTTP_STATUS.OK).render('table/clinics-nearby', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            clinicsData: null
+        });
+    }
+};
+
 exports.viewClinicInfo = async (req, res, next) => {
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId);

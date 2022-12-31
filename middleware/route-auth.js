@@ -1,4 +1,13 @@
 exports.isAuth = (req, res, next) => {
+    if (!req.session.isLoggedIn)
+        return res.redirect('/login');
+
+    next();
+};
+
+exports.setSession = (req, res, next) => {
+    res.locals._isLoggedIn = req.session.isLoggedIn ? true : false;
+
     if (req.session.isLoggedIn) {
         res.locals._userRole = req.session.userRole;
         res.locals._clinicId = req.session.userInfo.clinicId;
@@ -6,9 +15,7 @@ exports.isAuth = (req, res, next) => {
         res.locals._lastName = req.session.userInfo.lastName;
         res.locals._gender = req.session.userInfo.gender;
     }
-    else {
-        return res.redirect('/login');
-    }
+
     next();
 };
 
