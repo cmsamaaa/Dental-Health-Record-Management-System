@@ -36,8 +36,8 @@ router.get('/admin/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.is
 router.get('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewEditClinicInfo);
 
 //Profile
-router.get('/admin/profile', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewProfile);
-//router.get('/admin/profile/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditProfile);
+router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);
+//router.get('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, staffController.viewEditProfile);
 
 // Staff
 router.get('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);
@@ -78,8 +78,8 @@ router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, route
 /* Start of Patient Route */
 
 //Profile
-router.get('/patient/profile', routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
-router.get('/patient/profile/edit/:userId', routeAuth.isAuth, routeAuth.isPatient, patientController.viewEditProfile);
+router.get('/patient/profile', routeAuth.setSession, routeAuth.isPatient, patientController.viewProfile);
+router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.viewEditProfile);
 
 // Appointment
 router.get('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);
@@ -95,7 +95,7 @@ router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, rou
 /* Start of Dentist Route */
 
 //Profile
-router.get('/dentist/profile', routeAuth.isAuth, routeAuth.isDentist, staffController.viewProfile);
+router.get('/dentist/profile', routeAuth.setSession, routeAuth.isDentist, staffController.viewProfile);
 //router.get('/admin/profile/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditProfile);
 
 // Appointment
