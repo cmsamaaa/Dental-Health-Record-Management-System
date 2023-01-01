@@ -18,6 +18,7 @@ router.get('/logout', routeAuth.setSession, userController.logout);
 
 // Protected routes
 router.post('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
+router.post('/admin/clinic/edit/:clinicId', routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
 
 router.post('/admin/user/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.suspend);
 router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
@@ -44,5 +45,7 @@ router.post('/admin/inventory/edit', routeAuth.setSession, routeAuth.isAuth, rou
 router.post('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
 router.post('/patient/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);
 router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
+
+//router.post('/patient/profile/edit/:userId', routeAuth.isAuth, routeAuth.isPatient, patientController.editProfile);
 
 module.exports = router;

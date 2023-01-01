@@ -142,3 +142,43 @@ exports.viewPatient = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, '/admin/patient/view-all?error=true'));
 };
+
+exports.viewProfile = async (req, res, next) => {
+    const patient = new Patient({
+        userId: req.session.userInfo.userId
+    });
+    const result = await patient.getProfile();
+    
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('detail/profile', {
+            pageTitle: 'Profile',
+            path: '/patient/profile',
+            query: req.query,
+            profileData: result
+        });
+    }
+    else {
+        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+            pageTitle: 'Profile',
+            path: '/patient/profile'
+        });
+    }
+};
+
+exports.viewEditProfile = async (req, res, next) => {
+    const patient = new Patient({
+        userId: req.session.userInfo.userId
+    });
+    const result = await patient.getProfile();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/profile', {
+            pageTitle: 'Profile',
+            path: '/patient/profile/edit/:userId',
+            query: req.query,
+            profileData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/profile?error=true'));
+};

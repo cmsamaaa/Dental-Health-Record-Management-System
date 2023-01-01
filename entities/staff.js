@@ -86,6 +86,24 @@ class Staff extends User {
         return result[0];
     }
 
+    async getProfile() {
+        let result;
+        try {
+            result = await db(tableName).select('*').innerJoin('users', 'staffs.userId', 'users.userId').where('staffs.userId', this.userId);
+
+            result = _.map(result, (staff) => {
+                staff.DOB = moment(staff.DOB).format('YYYY-MM-DD');
+                return staff;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
     /**
      * Retrieves specific `staff` inner join `user` record by staffId
      * Returns: JSON Object

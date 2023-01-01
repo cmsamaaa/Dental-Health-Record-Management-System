@@ -19,7 +19,15 @@
         <% } %>
       </div>
       <div class="info">
-        <a href="#" class="d-block">
+        <% if (_userRole === "Administrator") { %>
+        <a href="/admin/profile" class="d-block">
+        <% } %>
+        <% if (_userRole === "Patient") { %>
+        <a href="/patient/profile" class="d-block">
+        <% } %>
+        <% if (_userRole === "Dentist") { %>
+        <a href="/dentist/profile" class="d-block">
+        <% } %>
           <% if (_userRole === 'Dentist') { %>
           Dr.
           <% } %>

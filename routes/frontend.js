@@ -35,6 +35,10 @@ router.get('/invoice-print', routeAuth.setSession, routeAuth.isAuth, billControl
 router.get('/admin/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewClinicInfo);
 router.get('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewEditClinicInfo);
 
+//Profile
+router.get('/admin/profile', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewProfile);
+//router.get('/admin/profile/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditProfile);
+
 // Staff
 router.get('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);
 router.get('/admin/staff/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditStaff);
@@ -73,6 +77,10 @@ router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, route
 
 /* Start of Patient Route */
 
+//Profile
+router.get('/patient/profile', routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
+router.get('/patient/profile/edit/:userId', routeAuth.isAuth, routeAuth.isPatient, patientController.viewEditProfile);
+
 // Appointment
 router.get('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);
 router.get('/patient/appointment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewEditAppointment);
@@ -85,6 +93,10 @@ router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, rou
 /* End of Patient Route */
 
 /* Start of Dentist Route */
+
+//Profile
+router.get('/dentist/profile', routeAuth.isAuth, routeAuth.isDentist, staffController.viewProfile);
+//router.get('/admin/profile/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditProfile);
 
 // Appointment
 router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicController.viewClinicInfo);

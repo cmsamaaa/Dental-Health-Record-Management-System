@@ -1,0 +1,140 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path.split('/')[3] %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize"><%= actionText %> Profile Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="<%= path %>" method="post">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">First Name<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_lastName" name="firstName" name="firstName" pattern="[a-zA-Z\s]+" title="E.g James Cameron" placeholder="Enter first name" tabindex="1" value="<%= actionText === 'edit' ? profileData.firstName : '' %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_nric">NRIC</label>
+                          <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" pattern="^[STFG]\d{7}[A-Z]$" title="E.g S1234567Z" placeholder="S1234567Z" tabindex="3" value="<%= actionText === 'edit' ? profileData.nric : '' %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
+                          <input type="email" class="form-control" id="tb_Email" name="email" title="E.g abc@xyz.com" placeholder="abc@xyz.com" tabindex="5" value="<%= actionText === 'edit' ? profileData.email : '' %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" value="<%= actionText === 'edit' ? profileData.address : '' %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Address">New Password<span style="color:red;">*</span></label>
+                          <input type="password" class="form-control" id="tb_Password" name="password" tabindex="9" placeholder="Enter new password" value="<%= actionText === 'edit' ? profileData.password : '' %>" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="tb_lastName">Last Name (Surname)<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_lastName" name="lastName" pattern="[a-zA-Z\s]+" title="E.g Tan" tabindex="2" placeholder="Enter last name" value="<%= actionText === 'edit' ? profileData.lastName : '' %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_Gender">Gender:</label>
+                          <input type="text" class="form-control-plaintext" id="tb_Gender" name="lastName" tabindex="6" value="<%= profileData.gender %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_DOB">Birthday<span style="color:red;">*</span></label>
+                          <input type="date" class="form-control" id="tb_DOB" name="DOB" min="1922-01-01" max="<%= new Date().toISOString().split('T')[0] %>" tabindex="4" placeholder="dd/mm/yyyy" value="<%= actionText === 'edit' ? profileData.DOB : '' %>" required>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Postal">Postal<span style="color:red;">*</span></label>
+                              <input type="text" class="form-control" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" placeholder="543210" value="<%= actionText === 'edit' ? profileData.postal : '' %>" required>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_Unit">Unit Number<span style="color:red;">*</span></label>
+                              <input type="text" class="form-control" id="tb_Unit" name="unit" tabindex="11" placeholder="01-01" value="<%= actionText === 'edit' ? profileData.unit : '' %>" required>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="form-group">
+                        <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
+                        <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" value="<%= actionText === 'edit' ? profileData.address : '' %>" required>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <% if (actionText === 'edit') { %>
+                    <input type="hidden" name="userId" value="<%= profileData.userId %>">
+                    <input type="hidden" name="patientId" value="<%= profileData.patientId %>">
+                    <% } %>
+                    <% if (actionText !== 'edit') { %>
+                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- bs-custom-file-input -->
+  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      bsCustomFileInput.init();
+    });
+  </script>
+</body>
+
+</html>

@@ -14,6 +14,7 @@ exports.setSession = (req, res, next) => {
         res.locals._firstName = req.session.userInfo.firstName;
         res.locals._lastName = req.session.userInfo.lastName;
         res.locals._gender = req.session.userInfo.gender;
+        res.locals._userId = req.session.userInfo.userId;
     }
 
     next();

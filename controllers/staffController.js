@@ -142,3 +142,25 @@ exports.viewStaff = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, '/admin/staff/view-all?error=true'));
 };
+
+exports.viewProfile = async (req, res, next) => {
+    const staff = new Staff({
+        userId: req.session.userInfo.userId
+    });
+    const result = await staff.getProfile();
+    
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('detail/profile', {
+            pageTitle: 'Profile',
+            path: '/admin/profile',
+            query: req.query,
+            profileData: result
+        });
+    }
+    else {
+        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+            pageTitle: 'Profile',
+            path: '/admin/profile'
+        });
+    }
+};

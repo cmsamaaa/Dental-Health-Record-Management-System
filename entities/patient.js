@@ -92,6 +92,24 @@ class Patient extends User {
         return result[0];
     }
 
+    async getProfile() {
+        let result;
+        try {
+            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('patients.userId', this.userId);
+
+            result = _.map(result, (patient) => {
+                patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
+                return patient;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
     /**
      * Retrieves a `patient` inner join `user` record and checks if password matches hash
      * Can be used for patient login authentication
