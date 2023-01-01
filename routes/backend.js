@@ -23,6 +23,9 @@ router.post('/admin/clinic/edit/:clinicId', routeAuth.isAuth, routeAuth.isAdmin,
 router.post('/admin/user/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.suspend);
 router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
 
+router.post('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, userController.editProfile);
+router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
+
 router.post('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.register);
 router.post('/admin/staff/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
 
@@ -46,6 +49,6 @@ router.post('/patient/appointment/create', routeAuth.setSession, routeAuth.isAut
 router.post('/patient/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);
 router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
 
-//router.post('/patient/profile/edit/:userId', routeAuth.isAuth, routeAuth.isPatient, patientController.editProfile);
+router.post('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
 
 module.exports = router;
