@@ -182,3 +182,17 @@ exports.viewEditProfile = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, '/profile?error=true'));
 };
+
+exports.editProfile = async (req, res, next) => {
+    if (!_.isEmpty(req.body)) {
+        const patient = new Patient(req.body);
+        const results = await patient.updateProfile();
+
+        if (results)
+            res.redirect(parse_uri.parse(req, '/patient/profile?action=edit&id=' + req.body.userId));
+        else
+            res.redirect(parse_uri.parse(req, '/patient/profile/edit/' + req.body.userId + '?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/patient/profile/edit/' + req.body.userId + '?error=true'));
+};

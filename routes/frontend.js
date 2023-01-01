@@ -37,7 +37,7 @@ router.get('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAut
 
 //Profile
 router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);
-//router.get('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, staffController.viewEditProfile);
+router.get('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, staffController.viewEditProfile);
 
 // Staff
 router.get('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);
@@ -96,7 +96,7 @@ router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, rou
 
 //Profile
 router.get('/dentist/profile', routeAuth.setSession, routeAuth.isDentist, staffController.viewProfile);
-//router.get('/admin/profile/edit/:userId', routeAuth.isAuth, routeAuth.isAdmin, staffController.viewEditProfile);
+router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, staffController.viewEditProfile);
 
 // Appointment
 router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicController.viewClinicInfo);

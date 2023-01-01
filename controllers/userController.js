@@ -36,3 +36,13 @@ exports.reactivate = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, path + '/view-all?error=true'));
 };
+
+exports.editProfile = async (req, res, next) => {
+        const user = new User(req.body);
+        const results = await user.updateUserProfile();
+
+        if (results)
+            res.redirect(parse_uri.parse(req, '/admin/profile?action=edit&id=' + req.body.userId));
+        else
+            res.redirect(parse_uri.parse(req, '/admin/profile/edit/' + req.body.userId + '?error=true'));
+};

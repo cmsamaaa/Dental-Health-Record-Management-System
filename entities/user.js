@@ -70,6 +70,26 @@ class User {
         return result;
     }
 
+    async updateUserProfile() {
+        let result;
+        try {
+            const hashedPassword = await bcrypt.hash(this.password, 12);
+            result = await db(tableName).update({
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: hashedPassword,
+                DOB: this.DOB
+            }).where('userId', this.userId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
     /**
      * Update a `user` record `isDeactivated` to 1
      * Can be used for account suspension

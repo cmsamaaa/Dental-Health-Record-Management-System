@@ -166,6 +166,24 @@ class Patient extends User {
 
         return result;
     }
+    async updateProfile() {
+        await this.updateUserProfile();
+
+        let result;
+        try {
+            result = await db(tableName).update({
+                address: this.address,
+                postal: this.postal,
+                unit: this.unit
+            }).where('patientId', this.patientId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
 }
 
 module.exports = Patient;

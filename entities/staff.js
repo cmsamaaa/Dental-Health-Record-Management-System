@@ -183,6 +183,7 @@ class Staff extends User {
 
         return result;
     }
+    
 }
 
 module.exports = Staff;

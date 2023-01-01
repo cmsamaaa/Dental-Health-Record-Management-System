@@ -50,10 +50,12 @@
                           <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
                           <input type="email" class="form-control" id="tb_Email" name="email" title="E.g abc@xyz.com" placeholder="abc@xyz.com" tabindex="5" value="<%= actionText === 'edit' ? profileData.email : '' %>" required>
                         </div>
+                        <% if (_userRole === "Patient") { %>
                         <div class="form-group">
                           <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
                           <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" value="<%= actionText === 'edit' ? profileData.address : '' %>" required>
                         </div>
+                        <% } %>
                         <div class="form-group">
                           <label for="tb_Address">New Password<span style="color:red;">*</span></label>
                           <input type="password" class="form-control" id="tb_Password" name="password" tabindex="9" placeholder="Enter new password" value="<%= actionText === 'edit' ? profileData.password : '' %>" required>
@@ -72,24 +74,23 @@
                           <label for="tb_DOB">Birthday<span style="color:red;">*</span></label>
                           <input type="date" class="form-control" id="tb_DOB" name="DOB" min="1922-01-01" max="<%= new Date().toISOString().split('T')[0] %>" tabindex="4" placeholder="dd/mm/yyyy" value="<%= actionText === 'edit' ? profileData.DOB : '' %>" required>
                         </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="tb_Postal">Postal<span style="color:red;">*</span></label>
-                              <input type="text" class="form-control" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" placeholder="543210" value="<%= actionText === 'edit' ? profileData.postal : '' %>" required>
+                        <% if (_userRole === "Patient") { %>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="tb_Postal">Postal:</label>
+                                <input type="text" class="form-control" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" value="<%= profileData.postal %>" required>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="tb_Postal">Unit Number:</label>
+                                <input type="text" class="form-control" id="tb_Postal" name="unit" tabindex="11" value="<%= profileData.unit %>" required>
+                              </div>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="tb_Unit">Unit Number<span style="color:red;">*</span></label>
-                              <input type="text" class="form-control" id="tb_Unit" name="unit" tabindex="11" placeholder="01-01" value="<%= actionText === 'edit' ? profileData.unit : '' %>" required>
-                            </div>
-                          </div>
-                        </div>
-                      <div class="form-group">
-                        <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
-                        <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" value="<%= actionText === 'edit' ? profileData.address : '' %>" required>
-                      </div>
+                          <% } %>
+
                       </div>
                     </div>
                   </div>

@@ -164,3 +164,21 @@ exports.viewProfile = async (req, res, next) => {
         });
     }
 };
+
+exports.viewEditProfile = async (req, res, next) => {
+    const staff = new Staff({
+        userId: req.session.userInfo.userId
+    });
+    const result = await staff.getProfile();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/profile', {
+            pageTitle: 'Profile',
+            path: '/admin/profile/edit/:userId',
+            query: req.query,
+            profileData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/profile?error=true'));
+};
