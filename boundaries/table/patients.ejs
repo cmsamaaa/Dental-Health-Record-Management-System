@@ -44,7 +44,6 @@
                         <th>Medicare ID</th>
                         <th>Email</th>
                         <th>Gender</th>
-                        <th>Email Verification</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -60,7 +59,6 @@
                         <td><%= patientData[i].medicareId ? patientData[i].medicareId : 'Not Applicable' %></td>
                         <td><%= patientData[i].email %></td>
                         <td><%= patientData[i].gender %></td>
-                        <td><%= patientData[i].verifiedEmail ? 'Verified' : 'Not verified' %></td>
                         <td><%= patientData[i].isDeactivated === 0 ? "Active" : "Suspended" %></td>
                         <td class="d-flex">
                           <% if(patientData[i].isDeactivated === 0) { %>
@@ -88,7 +86,6 @@
                         <th>Medicare ID</th>
                         <th>Email</th>
                         <th>Gender</th>
-                        <th>Email Verification</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
