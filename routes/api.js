@@ -18,7 +18,7 @@ router.get('/patient/get/:userId', patientAPIController.getPatient);
 router.get('/dentist/get/:staffId', staffAPIController.getDentist);
 
 router.post('/appointment/create', appointmentAPIController.createAppointment);
-router.get('/appointment/get/all/:userId', appointmentAPIController.getAllUserAppointments);
+router.get('/appointment/get/all/upcoming/:userId', appointmentAPIController.getAllUserUpcomingAppointments);
 router.get('/appointment/get/:apptId', appointmentAPIController.getAppointment);
 router.post('/appointment/edit', appointmentAPIController.editAppointment);
 router.post('/appointment/suspend', appointmentAPIController.suspendAppointment);

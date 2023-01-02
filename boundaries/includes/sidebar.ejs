@@ -21,24 +21,24 @@
       <div class="info">
         <% if (_userRole === "Administrator") { %>
         <a href="/admin/profile" class="d-block">
-        <% } %>
-        <% if (_userRole === "Patient") { %>
-        <a href="/patient/profile" class="d-block">
-        <% } %>
-        <% if (_userRole === "Dentist") { %>
-        <a href="/dentist/profile" class="d-block">
-        <% } %>
-          <% if (_userRole === 'Dentist') { %>
-          Dr.
           <% } %>
-          <% if (_gender === 'Male' && _userRole !== 'Dentist') { %>
-          Mr.
-          <% } %>
-          <% if (_gender === 'Female' && _userRole !== 'Dentist') { %>
-          Ms.
-          <% } %>
-          <%= _firstName %> <%= _lastName %>
-        </a>
+          <% if (_userRole === "Patient") { %>
+          <a href="/patient/profile" class="d-block">
+            <% } %>
+            <% if (_userRole === "Dentist") { %>
+            <a href="/dentist/profile" class="d-block">
+              <% } %>
+              <% if (_userRole === 'Dentist') { %>
+              Dr.
+              <% } %>
+              <% if (_gender === 'Male' && _userRole !== 'Dentist') { %>
+              Mr.
+              <% } %>
+              <% if (_gender === 'Female' && _userRole !== 'Dentist') { %>
+              Ms.
+              <% } %>
+              <%= _firstName %> <%= _lastName %>
+            </a>
       </div>
     </div>
     <% } %>
@@ -243,9 +243,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/patient/appointment/view-all" class="nav-link <% if(path === '/patient/appointment/view-all') { %>active<% } %>">
+              <a href="/patient/appointment/upcoming" class="nav-link <% if(path === '/patient/appointment/upcoming') { %>active<% } %>">
                 <i class="nav-icon fas fa-eye"></i>
-                <p>View All</p>
+                <p>View Upcoming</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/patient/appointment/past" class="nav-link <% if(path === '/patient/appointment/past') { %>active<% } %>">
+                <i class="nav-icon fas fa-history"></i>
+                <p>View Past</p>
               </a>
             </li>
           </ul>

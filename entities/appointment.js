@@ -55,6 +55,33 @@ class Appointment {
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .andWhere('staffId', this.staffId)
+                .orderBy('startDateTime', 'asc');
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `appointment` inner join `patient` and `user` records
+     * Returns: JSON[]
+     * */
+    async getAllClinicAppointmentsByClinic() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .where(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'asc');
 
             result = _.map(result, (patient) => {
@@ -96,17 +123,122 @@ class Appointment {
     }
 
     /**
+     * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime >= today
+     * Returns: JSON[]
+     * */
+    async getAllUpcomingAppointmentsByClinic() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('startDateTime', '>=', new Date())
+                .andWhere(tableName + '.clinicId', this.clinicId)
+                .orderBy('startDateTime', 'asc');
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime < today
+     * Returns: JSON[]
+     * */
+    async getAllPastAppointments() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('startDateTime', '<', new Date())
+                .andWhere('staffId', this.staffId)
+                .orderBy('startDateTime', 'desc');
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime < today
+     * Returns: JSON[]
+     * */
+    async getAllPastAppointmentsByClinic() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('startDateTime', '<', new Date())
+                .andWhere(tableName + '.clinicId', this.clinicId)
+                .orderBy('startDateTime', 'desc');
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves all `appointment` inner join `patient` and `user` records by `userId`
      * Returns: JSON[]
      * */
-    async getAllUserAppointments() {
+    async getAllUserUpcomingAppointments() {
         let result;
         try {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('patients.userId', this.userId)
+                .andWhere('startDateTime', '>=', new Date())
                 .orderBy('startDateTime', 'asc');
+
+            result = _.map(result, (patient) => {
+                return _.omit(patient, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `appointment` inner join `patient` and `user` records by `userId`
+     * Returns: JSON[]
+     * */
+    async getAllUserPastAppointments() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .where('patients.userId', this.userId)
+                .andWhere('startDateTime', '<', new Date())
+                .orderBy('startDateTime', 'desc');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');

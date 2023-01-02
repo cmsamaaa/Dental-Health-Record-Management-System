@@ -84,7 +84,8 @@ router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPa
 // Appointment
 router.get('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);
 router.get('/patient/appointment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewEditAppointment);
-router.get('/patient/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointments);
+router.get('/patient/appointment/upcoming', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointments);
+router.get('/patient/appointment/past', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewPastAppointments);
 router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointment);
 
 // Bill

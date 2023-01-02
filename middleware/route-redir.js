@@ -4,7 +4,7 @@ exports.defaultPage = (req, res, next) => {
     }
 
     if (req.session.userRole === 'Patient') {
-        return res.redirect('/patient/appointment/view-all');
+        return res.redirect('/patient/appointment/upcoming');
     }
 
     if (req.session.userRole === 'Dentist' || req.session.userRole === 'Dental Assistant') {

@@ -33,6 +33,29 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <% if (_userRole !== 'Patient') { %>
+                  <div class="row mb-4">
+                    <div class="col-md-12">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <% if (query.filter === 'all') { %>
+                        All Appointments
+                        <% } else if (query.filter === 'upcoming') { %>
+                        Upcoming Appointments
+                        <% } else if (query.filter === 'past') { %>
+                        Past Appointments
+                        <% } else { %>
+                        Filter display
+                        <% } %>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="?filter=all">All Appointments</a>
+                        <a class="dropdown-item" href="?filter=upcoming">Upcoming Appointments</a>
+                        <a class="dropdown-item" href="?filter=past">Past Appointments</a>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+
                   <table id="tbl_Appointments" class="table table-bordered table-striped">
                     <% if (path === '/admin/appointment/view-all' || path === '/dentist/appointment/view-all') { %>
                     <thead>
@@ -94,7 +117,7 @@
                     </tfoot>
                     <% } %>
 
-                    <% if (path === '/patient/appointment/view-all') { %>
+                    <% if (path === '/patient/appointment/upcoming' || path === '/patient/appointment/past') { %>
                     <thead>
                       <tr>
                         <th>Appt ID</th>

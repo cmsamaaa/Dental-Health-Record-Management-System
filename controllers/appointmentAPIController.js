@@ -15,11 +15,11 @@ exports.createAppointment = async (req, res, next) => {
         res.status(HTTP_STATUS.BAD_REQUEST).json({});
 };
 
-exports.getAllUserAppointments = async (req, res, next) => {
+exports.getAllUserUpcomingAppointments = async (req, res, next) => {
     const appointment = new Appointment({
         userId: req.params.userId
     });
-    const results = await appointment.getAllUserAppointments();
+    const results = await appointment.getAllUserUpcomingAppointments();
 
     if (!_.isEmpty(results))
         res.status(HTTP_STATUS.OK).json(results);

@@ -233,10 +233,10 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('18 | /GET /api/appointment/get/all/:userId 200 | Request with Valid UserId', () => {
+    describe('18 | /GET /api/appointment/get/all/upcoming/:userId 200 | Request with Valid UserId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)
-                .get('/api/appointment/get/all/37')
+                .get('/api/appointment/get/all/upcoming/37')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.not.be.null;
@@ -246,10 +246,10 @@ describe('Run all test units', () => {
         });
     });
 
-    describe('19 | /GET /api/appointment/get/all/:userId 404 | Request with Invalid UserId', () => {
+    describe('19 | /GET /api/appointment/get/all/upcoming/:userId 404 | Request with Invalid UserId', () => {
         it('it should return an empty JSON object with HTTP status code 404', (done) => {
             tester.request(app)
-                .get('/api/appointment/get/all/' + Number.MAX_SAFE_INTEGER)
+                .get('/api/appointment/get/all/upcoming/' + Number.MAX_SAFE_INTEGER)
                 .end((err, res) => {
                     res.should.have.status(404);
                     res.body.should.be.empty;

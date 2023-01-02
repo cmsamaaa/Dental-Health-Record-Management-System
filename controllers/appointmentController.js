@@ -197,13 +197,25 @@ exports.viewEditAppointment = async (req, res, next) => {
 
 exports.viewAppointments = async (req, res, next) => {
     const user = req.url.split('/')[1];
+    const filter = req.query.filter;
 
     const pageTitle = 'Appointment';
     const path = '/' + user + '/appointment/view-all';
 
     if (user === 'admin') {
-        const appointment = new Appointment();
-        const results = await appointment.getAllClinicAppointments();
+        const appointment = new Appointment({
+            clinicId: req.session.userInfo.clinicId
+        });
+        let results;
+
+        if (filter === 'all')
+            results = await appointment.getAllClinicAppointmentsByClinic();
+        else if (filter === 'upcoming')
+            results = await appointment.getAllUpcomingAppointmentsByClinic();
+        else if (filter === 'past')
+            results = await appointment.getAllPastAppointmentsByClinic();
+        else
+            results = await appointment.getAllClinicAppointmentsByClinic();
 
         if (!_.isEmpty(results)) {
             let apptData = results;
@@ -234,7 +246,16 @@ exports.viewAppointments = async (req, res, next) => {
         const appointment = new Appointment({
             staffId: req.session.userInfo.staffId
         });
-        const results = await appointment.getAllUpcomingAppointments();
+        let results;
+
+        if (filter === 'all')
+            results = await appointment.getAllClinicAppointments();
+        else if (filter === 'upcoming')
+            results = await appointment.getAllUpcomingAppointments();
+        else if (filter === 'past')
+            results = await appointment.getAllPastAppointments();
+        else
+            results = await appointment.getAllClinicAppointments();
 
         if (!_.isEmpty(results)) {
             let apptData = results;
@@ -262,8 +283,10 @@ exports.viewAppointments = async (req, res, next) => {
     }
 
     if (user === 'patient') {
+        let path = '/' + user + '/appointment/upcoming';
+
         // api endpoint uri
-        const uri = parse_uri.parse(req, '/api/appointment/get/all/' + req.session.userInfo.userId);
+        const uri = parse_uri.parse(req, '/api/appointment/get/all/upcoming/' + req.session.userInfo.userId);
 
         request.get({
             url: uri,
@@ -293,6 +316,41 @@ exports.viewAppointments = async (req, res, next) => {
                 });
         });
     }
+};
+
+exports.viewPastAppointments = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+    const pageTitle = 'Appointment';
+    const path = '/' + user + '/appointment/past';
+
+    const appointment = new Appointment({
+        userId: req.session.userInfo.userId
+    });
+    const results = await appointment.getAllUserPastAppointments();
+
+    if (!_.isEmpty(results)) {
+        let apptData = results;
+
+        apptData = _.map(apptData, (appt) => {
+            appt.startDateTime = moment(new Date(appt.startDateTime)).format('YYYY-MM-DD HH:mm');
+            appt.endDateTime = moment(new Date(appt.endDateTime)).format('YYYY-MM-DD HH:mm');
+            return appt;
+        });
+
+        res.status(HTTP_STATUS.OK).render('table/appointments', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            appointmentData: apptData
+        });
+    }
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).render('table/appointments', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            appointmentData: []
+        });
 };
 
 exports.viewAppointment = async (req, res, next) => {
