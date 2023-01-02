@@ -59,6 +59,20 @@
           </div>
         </form>
 
+        <div class="social-auth-links text-center mb-3">
+          <p>- OR -</p>
+          <% if (path === '/login') { %>
+          <a class="btn btn-block btn-outline-primary text-uppercase" href="/staff/login">
+            <i class="fas fa-link"></i> Staff Login
+          </a>
+          <% } %>
+          <% if (path === '/staff/login') { %>
+          <a class="btn btn-block btn-outline-primary text-uppercase" href="/login">
+            <i class="fas fa-link"></i> Patient Login
+          </a>
+          <% } %>
+        </div>
+
         <p class="mb-1">
           <a href="/forgot-password">I forgot my password</a>
         </p>
