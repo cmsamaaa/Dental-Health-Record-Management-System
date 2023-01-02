@@ -11,6 +11,7 @@ const clinicTreatmentController = require('../controllers/clinicTreatmentControl
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
+const appointmentMiddleware = require('../middleware/appointmentMiddleware');
 
 const router = express.Router();
 
@@ -54,8 +55,8 @@ router.get('/admin/patient/view/:userId', routeAuth.setSession, routeAuth.isAuth
 // Appointment
 router.get('/admin/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewCreateAppointment);
 router.get('/admin/appointment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewEditAppointment);
-router.get('/admin/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointments);
-router.get('/admin/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewAppointment);
+router.get('/admin/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentMiddleware.updateMissed, appointmentController.viewAppointments);
+router.get('/admin/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentMiddleware.updateMissed, appointmentController.viewAppointment);
 
 // Treatment
 router.get('/admin/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicTreatmentController.viewCreateTreatment);
@@ -84,9 +85,9 @@ router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPa
 // Appointment
 router.get('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);
 router.get('/patient/appointment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewEditAppointment);
-router.get('/patient/appointment/upcoming', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointments);
-router.get('/patient/appointment/past', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewPastAppointments);
-router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewAppointment);
+router.get('/patient/appointment/upcoming', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentMiddleware.updateMissed, appointmentController.viewAppointments);
+router.get('/patient/appointment/past', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentMiddleware.updateMissed, appointmentController.viewPastAppointments);
+router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentMiddleware.updateMissed, appointmentController.viewAppointment);
 
 // Bill
 router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewBills_Patient);
@@ -101,8 +102,8 @@ router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDe
 
 // Appointment
 router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicController.viewClinicInfo);
-router.get('/dentist/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointments);
-router.get('/dentist/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointment);
+router.get('/dentist/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentMiddleware.updateMissed, appointmentController.viewAppointments);
+router.get('/dentist/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentMiddleware.updateMissed, appointmentController.viewAppointment);
 
 /* End of Dentist Route */
 

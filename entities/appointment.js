@@ -298,6 +298,26 @@ class Appointment {
     }
 
     /**
+     * Update all `appointment` record status to `Missed` where endDateTime < today & status is `Upcoming`.
+     * Can be used to update appointment.
+     * Returns: Object
+     * */
+    async updateAllMissedAppointment() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                status: 'Missed'
+            }).where('endDateTime', '<', new Date()).andWhere('status', 'Upcoming');
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Update a `appointment` record status to 'Cancelled'.
      * Can be used to suspend appointment.
      * Returns: Object
