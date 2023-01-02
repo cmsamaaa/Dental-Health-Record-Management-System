@@ -94,7 +94,7 @@ exports.viewEditTreatment = async (req, res, next) => {
 
 exports.viewTreatments = async (req, res, next) => {
     const pageTitle = 'Treatment';
-    const path = '/admin/treatment/create';
+    const path = '/admin/treatment/view-all';
 
     const clinicTreatment = new ClinicTreatment({
         clinicId: req.session.userInfo.clinicId
