@@ -54,7 +54,8 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId');
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .orderBy('startDateTime', 'asc');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
@@ -79,7 +80,8 @@ class Appointment {
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
                 .where('startDateTime', '>=', new Date())
-                .andWhere('staffId', this.staffId);
+                .andWhere('staffId', this.staffId)
+                .orderBy('startDateTime', 'asc');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
@@ -103,7 +105,8 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
-                .where('patients.userId', this.userId);
+                .where('patients.userId', this.userId)
+                .orderBy('startDateTime', 'asc');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
