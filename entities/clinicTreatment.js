@@ -22,7 +22,11 @@ class ClinicTreatment {
     async add() {
         let result;
         try {
-            result = await db(tableName).insert(this);
+            result = await db(tableName).insert({
+                ctName: this.ctName,
+                ctPrice: this.ctPrice,
+                clinicId: this.clinicId
+            });
         }
         catch (e) {
             console.error(e);

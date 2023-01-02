@@ -50,12 +50,12 @@
                         <td><%= '$ ' + treatmentData[i].ctPrice %></td>
                         <td class="d-flex">
                           <% if(treatmentData[i].isDeactivated === 0) { %>
-                          <a href="/admin/treatment/view/<%= treatmentData[i].ctId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
-                          <a href="/admin/treatment/edit/<%= treatmentData[i].ctId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <a href="/<%= userRole %>/treatment/view/<%= treatmentData[i].ctId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <a href="/<%= userRole %>/treatment/edit/<%= treatmentData[i].ctId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
                           <% } %>
                           <% let actionText = 'suspend' %>
                           <% if(treatmentData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
-                          <form action="/admin/treatment/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> #<%= i + 1 %>?');">
+                          <form action="/<%= userRole %>/treatment/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> the treatment \'<%= treatmentData[i].ctName %>\'?');">
                             <input type="hidden" name="ctId" value="<%= treatmentData[i].ctId %>">
                             <button type="submit" class="btn <% if(treatmentData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(treatmentData[i].isDeactivated === 0) { %><i class="fas fa-user-times"></i><% } else { %><i class="fas fa-user-check"></i><% } %></button>
                           </form>

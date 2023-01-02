@@ -105,6 +105,12 @@ router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.
 router.get('/dentist/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentMiddleware.updateMissed, appointmentController.viewAppointments);
 router.get('/dentist/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentMiddleware.updateMissed, appointmentController.viewAppointment);
 
+// Treatment
+router.get('/dentist/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewCreateTreatment);
+router.get('/dentist/treatment/edit/:ctId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewEditTreatment);
+router.get('/dentist/treatment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewTreatments);
+router.get('/dentist/treatment/view/:ctId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewTreatment);
+
 /* End of Dentist Route */
 
 module.exports = router;
