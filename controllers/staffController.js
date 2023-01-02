@@ -148,11 +148,12 @@ exports.viewProfile = async (req, res, next) => {
         userId: req.session.userInfo.userId
     });
     const result = await staff.getProfile();
+    const userRole = req.url.split('/')[1];
     
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('detail/profile', {
             pageTitle: 'Profile',
-            path: '/admin/profile',
+            path: '/' + userRole + '/profile',
             query: req.query,
             profileData: result
         });
@@ -160,7 +161,7 @@ exports.viewProfile = async (req, res, next) => {
     else {
         res.status(HTTP_STATUS.NOT_FOUND).render('404', {
             pageTitle: 'Profile',
-            path: '/admin/profile'
+            path: '/' + userRole + '/profile'
         });
     }
 };
@@ -170,11 +171,12 @@ exports.viewEditProfile = async (req, res, next) => {
         userId: req.session.userInfo.userId
     });
     const result = await staff.getProfile();
+    const userRole = req.url.split('/')[1];
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/profile', {
             pageTitle: 'Profile',
-            path: '/admin/profile/edit/:userId',
+            path: '/' + userRole + '/profile/edit/:userId',
             query: req.query,
             profileData: result
         });

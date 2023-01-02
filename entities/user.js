@@ -73,14 +73,25 @@ class User {
     async updateUserProfile() {
         let result;
         try {
+
+            if (this.password) {
             const hashedPassword = await bcrypt.hash(this.password, 12);
-            result = await db(tableName).update({
+                result = await db(tableName).update({
                 firstName: this.firstName,
                 lastName: this.lastName,
                 email: this.email,
                 password: hashedPassword,
                 DOB: this.DOB
             }).where('userId', this.userId);
+            }else{
+                result = await db(tableName).update({
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    email: this.email,
+                    DOB: this.DOB
+                }).where('userId', this.userId);
+            }
+
         }
         catch (e) {
             console.error(e);
