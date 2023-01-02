@@ -49,33 +49,8 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
 
-        <!-- Start of Unregistered Users -->
-        <% if (!_isLoggedIn) { %>
-        <li class="nav-item">
-          <a href="/login" class="nav-link <% if(path === '/login') { %>active<% } %>">
-            <i class="fas fa-sign-in-alt nav-icon"></i>
-            <p>Login</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link <% if(path === '/register') { %>active<% } %>">
-            <i class="fas fa-user-plus nav-icon"></i>
-            <p>Register</p>
-          </a>
-        </li>
-        <% } %>
-
-        <li class="nav-header">CLINICS</li>
-        <li class="nav-item">
-          <a href="/clinic/search" class="nav-link <% if(path === '/clinic/search') { %>active<% } %>">
-            <i class="fas fa-search nav-icon"></i>
-            <p>Clinics Near Me</p>
-          </a>
-        </li>
-        <!-- Start of Unregistered Users -->
-
-        <% if (_isLoggedIn && _userRole === 'Administrator') { %>
         <!-- Start of Administration -->
+        <% if (_isLoggedIn && _userRole === 'Administrator') { %>
         <li class="nav-header">ADMINISTRATION</li>
         <li class="nav-item">
           <a href="/" class="nav-link <% if(arrPath[1] === '') { %>active<% } %>">
@@ -88,6 +63,23 @@
             <i class="nav-icon fas fa-info-circle"></i>
             <p>Clinic Information</p>
           </a>
+        </li>
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'bill') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'bill') { %>active<% } %>">
+            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <p>
+              Bills
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/bill/view-all" class="nav-link <% if(path === '/admin/bill/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-list"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'staff') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'staff') { %>active<% } %>">
@@ -135,6 +127,31 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'inventory') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'inventory') { %>active<% } %>">
+            <i class="nav-icon fas fa-boxes"></i>
+            <p>
+              Inventory
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/inventory/create" class="nav-link <% if(path === '/admin/inventory/create') { %>active<% } %>">
+                <i class="nav-icon fas fas fa-plus"></i>
+                <p>Add Inventory</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/inventory/view-all" class="nav-link <% if(path === '/admin/inventory/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-list"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-header">DENTAL</li>
         <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'appointment') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
@@ -152,6 +169,29 @@
             </li>
             <li class="nav-item">
               <a href="/admin/appointment/view-all" class="nav-link <% if(path === '/admin/appointment/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-list"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'service') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'service') { %>active<% } %>">
+            <i class="nav-icon fas fa-notes-medical"></i>
+            <p>
+              Services
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" class="nav-link <% if(path === '/admin/service/open') { %>active<% } %>">
+                <i class="nav-icon fas fa-plus"></i>
+                <p>Create</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link <% if(path === '/admin/service/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-list"></i>
                 <p>View All</p>
               </a>
@@ -181,51 +221,95 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'inventory') { %>menu-open<% } %>">
-          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'inventory') { %>active<% } %>">
-            <i class="nav-icon fas fa-boxes"></i>
-            <p>
-              Inventory
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="/admin/inventory/create" class="nav-link <% if(path === '/admin/inventory/create') { %>active<% } %>">
-                <i class="nav-icon fas fas fa-plus"></i>
-                <p>Add Inventory</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/admin/inventory/view-all" class="nav-link <% if(path === '/admin/inventory/view-all') { %>active<% } %>">
-                <i class="nav-icon fas fa-list"></i>
-                <p>View All</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'bill') { %>menu-open<% } %>">
-          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'bill') { %>active<% } %>">
-            <i class="nav-icon fas fa-file-invoice-dollar"></i>
-            <p>
-              Bills
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="/admin/bill/view-all" class="nav-link <% if(path === '/admin/bill/view-all') { %>active<% } %>">
-                <i class="nav-icon fas fa-list"></i>
-                <p>View All</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+        <% } %>
         <!-- End of Administration -->
+
+        <!-- Start of Dentist -->
+        <% if (_isLoggedIn && (_userRole === 'Dentist' || _userRole === 'Dental Assistant')) { %>
+        <li class="nav-header">INFORMATION</li>
+        <li class="nav-item">
+          <a href="/dentist/clinic" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'clinic') { %>active<% } %>">
+            <i class="nav-icon fas fa-info-circle"></i>
+            <p>Clinic Information</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/dentist/appointment/view-all" class="nav-link <% if(path === '/dentist/appointment/view-all') { %>active<% } %>">
+            <i class="nav-icon fas fa-calendar-check"></i>
+            <p>Appointments</p>
+          </a>
+        </li>
+        <li class="nav-header">DENTAL</li>
+        <li class="nav-item <% if(arrPath[1] === 'dentist' && arrPath[2] === 'service') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'service') { %>active<% } %>">
+            <i class="nav-icon fas fa-notes-medical"></i>
+            <p>
+              Services
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" class="nav-link <% if(path === '/dentist/service/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-list"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item <% if(arrPath[1] === 'dentist' && arrPath[2] === 'treatment') { %>menu-open<% } %>">
+          <a href="#" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'treatment') { %>active<% } %>">
+            <i class="nav-icon fas fa-tooth"></i>
+            <p>
+              Treatments
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" class="nav-link <% if(path === '/dentist/treatment/create') { %>active<% } %>">
+                <i class="nav-icon fas fa-plus"></i>
+                <p>Create</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link <% if(path === '/dentist/treatment/view-all') { %>active<% } %>">
+                <i class="nav-icon fas fa-list"></i>
+                <p>View All</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <% } %>
+        <!-- End of Dentist -->
+
+        <!-- Start of Unregistered Users -->
+        <% if (!_isLoggedIn) { %>
+        <li class="nav-item">
+          <a href="/login" class="nav-link <% if(path === '/login') { %>active<% } %>">
+            <i class="fas fa-sign-in-alt nav-icon"></i>
+            <p>Login</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link <% if(path === '/register') { %>active<% } %>">
+            <i class="fas fa-user-plus nav-icon"></i>
+            <p>Register</p>
+          </a>
+        </li>
         <% } %>
 
-        <% if (_isLoggedIn && _userRole === 'Patient') { %>
+        <li class="nav-header">GENERAL</li>
+        <li class="nav-item">
+          <a href="/clinic/search" class="nav-link <% if(path === '/clinic/search') { %>active<% } %>">
+            <i class="fas fa-search nav-icon"></i>
+            <p>Clinics Near Me</p>
+          </a>
+        </li>
+        <!-- Start of Unregistered Users -->
+
         <!-- Start of Patient -->
+        <% if (_isLoggedIn && _userRole === 'Patient') { %>
         <li class="nav-header">PATIENT</li>
         <li class="nav-item <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>active<% } %>">
@@ -273,49 +357,8 @@
             </li>
           </ul>
         </li>
+        <% } %>
         <!-- End of Patient -->
-        <% } %>
-
-        <% if (_isLoggedIn && (_userRole === 'Dentist' || _userRole === 'Dental Assistant')) { %>
-        <!-- Start of Dentist -->
-        <li class="nav-header">DENTAL</li>
-        <li class="nav-item">
-          <a href="/dentist/clinic" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'clinic') { %>active<% } %>">
-            <i class="nav-icon fas fa-info-circle"></i>
-            <p>Clinic Information</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/dentist/appointment/view-all" class="nav-link <% if(path === '/dentist/appointment/view-all') { %>active<% } %>">
-            <i class="nav-icon fas fa-calendar-check"></i>
-            <p>Appointments</p>
-          </a>
-        </li>
-        <li class="nav-item <% if(arrPath[1] === 'dentist' && arrPath[2] === 'treatment') { %>menu-open<% } %>">
-          <a href="#" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'treatment') { %>active<% } %>">
-            <i class="nav-icon fas fa-tooth"></i>
-            <p>
-              Treatments
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="/dentist/treatment/create" class="nav-link <% if(path === '/dentist/treatment/create') { %>active<% } %>">
-                <i class="nav-icon fas fa-plus"></i>
-                <p>Create</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/dentist/treatment/view-all" class="nav-link <% if(path === '/dentist/treatment/view-all') { %>active<% } %>">
-                <i class="nav-icon fas fa-list"></i>
-                <p>View All</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!-- End of Dentist -->
-        <% } %>
 
         <li class="nav-header">MISCELLANEOUS</li>
         <li class="nav-item">
