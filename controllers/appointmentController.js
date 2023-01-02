@@ -262,10 +262,8 @@ exports.viewAppointments = async (req, res, next) => {
     }
 
     if (user === 'patient') {
-        let path = '/api/appointment/get/all/' + req.session.userInfo.userId;
-
         // api endpoint uri
-        const uri = parse_uri.parse(req, path);
+        const uri = parse_uri.parse(req, '/api/appointment/get/all/' + req.session.userInfo.userId);
 
         request.get({
             url: uri,
