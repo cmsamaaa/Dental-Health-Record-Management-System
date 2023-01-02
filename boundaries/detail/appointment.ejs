@@ -1,10 +1,4 @@
 <%- include('../includes/head.ejs') %>
-<!-- Custom Input Date -->
-<!-- <link rel="stylesheet" href="/css/custom-input-date.css"> -->
-
-<!-- Select2 -->
-<link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -64,7 +58,7 @@
                         </div>
                         <div class="form-group">
                           <label for="tb_ApptDateTime">Appointment Date & Time:</label>
-                          <input type="text" class="form-control-plaintext" id="tb_ApptDateTime" name="nric" tabindex="6" value="<%= userData.startDateTime %>" disabled>
+                          <input type="text" class="form-control-plaintext" id="tb_ApptDateTime" name="startDateTime" tabindex="6" value="<%= userData.startDateTime %>" disabled>
                         </div>
                       </div>
                     </div>
@@ -96,34 +90,11 @@
   <!-- REQUIRED SCRIPTS -->
   <%- include('../includes/end-scripts.ejs') %>
 
-  <!-- Select2 -->
-  <script src="/plugins/select2/js/select2.full.min.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="/plugins/moment/moment.min.js"></script>
   <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/dist/js/demo.js"></script>
-
-  <!-- Page specific script -->
-  <script>
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    });
-
-    $('button[type=reset]').on('click', () => {
-      $('#tb_NRIC').val('Find NRIC...').trigger('change');
-    });
-
-    //Date and time picker
-    $('#tb_ApptDateTime').datetimepicker({
-      format: 'DD/MM/YYYY HH:mm',
-      minDate: new Date(),
-      icons: {
-        time: 'far fa-clock'
-      }
-    });
-  </script>
 </body>
 
 </html>
