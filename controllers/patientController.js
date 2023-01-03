@@ -174,7 +174,7 @@ exports.viewEditProfile = async (req, res, next) => {
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/profile', {
             pageTitle: 'Profile',
-            path: '/patient/profile/edit/:userId',
+            path: '/patient/profile/edit',
             query: req.query,
             profileData: result
         });
