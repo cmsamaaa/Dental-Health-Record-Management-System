@@ -15,6 +15,7 @@ exports.createInventory = async (req, res, next) => {
             SKU: req.body.SKU,
             UPC: req.body.UPC,
             note: req.body.note,
+            clinicId: req.session.userInfo.clinicId
         });
         const results = await inventory.createInventory();
 
@@ -33,7 +34,7 @@ exports.editInventory = async (req, res, next) => {
         const results = await inventory.updateInventory();
 
         if (results)
-            res.redirect(parse_uri.parse(req, '/admin/inventory/view-all?action=edit&id=' + req.body.inventoryId));
+            res.redirect(parse_uri.parse(req, '/admin/inventory/view-all?action=edit&inventoryId=' + req.body.inventoryId));
         else
             res.redirect(parse_uri.parse(req, '/admin/inventory/edit/' + req.body.inventoryId + '?error=true'));
     }
@@ -43,7 +44,7 @@ exports.editInventory = async (req, res, next) => {
 
 exports.viewInventories = async (req, res, next) => {
     const inventory = new Inventory({
-        inventoryId: req.params.inventoryId
+        clinicId: req.session.userInfo.clinicId
     });
     const result = await inventory.getAllInventories();
 
@@ -78,17 +79,27 @@ exports.viewInventory = async (req, res, next) => {
 };
 
 exports.suspendInventory = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/admin/inventory/suspend');
-    request.post({
-        url: uri,
-        form: req.body
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK)
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/inventory/view-all?action=cancel&id=' + req.body.inventoryId));
-        else
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/inventory/view-all?error=true'));
+    const inventory = new Inventory({
+        inventoryId: req.body.inventoryId
     });
+    const results = await inventory.suspendInventory();
+
+    if (results)
+        res.redirect(parse_uri.parse(req, '/admin/inventory/view-all?action=suspend&inventoryId=' + req.body.inventoryId));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/inventory/view-all?error=true'));
+};
+
+exports.reactivateInventory = async (req, res, next) => {
+    const inventory = new Inventory({
+        inventoryId: req.body.inventoryId
+    });
+    const results = await inventory.reactivateInventory();
+
+    if (results)
+        res.redirect(parse_uri.parse(req, '/admin/inventory/view-all?action=reactivate&inventoryId=' + req.body.inventoryId));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/inventory/view-all?error=true'));
 };
 
 exports.viewEditInventory = async (req, res, next) => {

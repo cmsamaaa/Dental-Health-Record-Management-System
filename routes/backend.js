@@ -43,7 +43,9 @@ router.post('/admin/treatment/reactivate', routeAuth.setSession, routeAuth.isAut
 
 router.post('/admin/inventory/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.createInventory);
 router.post('/admin/inventory/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.editInventory);
-//router.post('/admin/inventory/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.suspendInventory);
+router.post('/admin/inventory/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.suspendInventory);
+router.post('/admin/inventory/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.reactivateInventory);
+
 
 router.post('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
 router.post('/patient/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);

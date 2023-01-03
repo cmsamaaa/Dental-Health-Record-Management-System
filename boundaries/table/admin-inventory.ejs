@@ -44,6 +44,7 @@
                         <th>Inbound Date</th>
                         <th>SKU</th>
                         <th>UPC</th>
+                        <th>Status</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -59,9 +60,19 @@
                         <td><%= inventoryData[i].inboundDate %></td>
                         <td><%= inventoryData[i].SKU %></td>
                         <td><%= inventoryData[i].UPC %></td>
+                        <td><%= inventoryData[i].isDeactivated === 0 ? "Available" : "Not Available" %></td>
                         <td class="d-flex">
+                          <% if(inventoryData[i].isDeactivated === 0) { %>
                           <a href="/admin/inventory/view/<%= inventoryData[i].inventoryId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <a href="/admin/inventory/edit/<%= inventoryData[i].inventoryId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <% } %>
+                          <% let actionText = 'suspend' %>
+                          <% if(inventoryData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
+                          <form action="/admin/inventory/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> Inventory ID #<%= inventoryData[i].inventoryId %>?');">
+                            <input type="hidden" name="inventoryId" value="<%= inventoryData[i].inventoryId %>">
+                            <input type="hidden" name="for" value="inventory">
+                            <button type="submit" class="btn <% if(inventoryData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(inventoryData[i].isDeactivated === 0) { %><i class="fas fa-user-times"></i><% } else { %><i class="fas fa-user-check"></i><% } %></button>
+                          </form>
                         </td>
                       </tr>
                       <% } %>
@@ -76,6 +87,7 @@
                         <th>Inbound Date</th>
                         <th>SKU</th>
                         <th>UPC</th>
+                        <th>Status</th>
                         <th>Actions</th>
                       </tr>
                     </tfoot>

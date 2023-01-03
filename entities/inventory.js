@@ -14,6 +14,8 @@ class Inventory {
     SKU;
     UPC;
     note;
+    clinicId;
+    isDeactivated;
 
     constructor(data) {
         Object.assign(this, data);
@@ -28,7 +30,7 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).insert({
-                inventoryId: this.inventoryId  ? this.inventoryId : null,
+                inventoryId: this.inventoryId ? this.inventoryId : null,
                 name: this.name,
                 quantity: this.quantity,
                 costPerUnit: this.costPerUnit,
@@ -36,7 +38,8 @@ class Inventory {
                 inboundDate: this.inboundDate,
                 SKU: this.SKU,
                 UPC: this.UPC,
-                note: this.note
+                note: this.note,
+                clinicId: this.clinicId ? this.clinicId : null
             });
         }
         catch (e) {
@@ -54,7 +57,9 @@ class Inventory {
     async getAllInventories() {
         let result;
         try {
-            result = await db(tableName).select('*');
+            result = await db(tableName).select('*')
+                    .where('clinicId', this.clinicId);
+
             result = _.map(result, (inventory) => {
                 inventory.expiryDate = moment(inventory.expiryDate).format('DD-MM-YYYY');
                 inventory.inboundDate = moment(inventory.inboundDate).format('DD-MM-YYYY');
@@ -79,6 +84,7 @@ class Inventory {
         try {
             result = await db(tableName).select('*')
                 .where('inventoryId', this.inventoryId);
+
             result = _.map(result, (inventory) => {
                 inventory.expiryDate = moment(inventory.expiryDate).format('YYYY-MM-DD');
                 inventory.inboundDate = moment(inventory.inboundDate).format('YYYY-MM-DD');
@@ -102,7 +108,7 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).update({
-                name: this.name,
+                itemName: this.name,
                 quantity: this.quantity,
                 costPerUnit: this.costPerUnit,
                 expiryDate: this.expiryDate,
@@ -119,17 +125,27 @@ class Inventory {
         return result;
     }
 
-    /**
-     * Update a `appointment` record status to 'Cancelled'.
-     * Can be used to suspend appointment.
-     * Returns: Object
-     * */
-    async suspendAppointment() {
+    async suspendInventory() {
         let result;
         try {
             result = await db(tableName).update({
-                status: 'Cancelled'
-            }).where('apptId', this.apptId);
+                isDeactivated: 1
+            }).where('inventoryId', this.inventoryId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    async reactivateInventory() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                isDeactivated: 0
+            }).where('inventoryId', this.inventoryId);
         }
         catch (e) {
             console.error(e);
