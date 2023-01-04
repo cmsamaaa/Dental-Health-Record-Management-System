@@ -30,8 +30,6 @@
                   <h3 class="card-title text-capitalize">View Profile Details</h3>
                 </div>
                 <!-- /.card-header -->
-                <!-- form start -->
-                <form>
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6">
@@ -87,10 +85,17 @@
                     </div>
                   </div>
                   <!-- /.card-body -->
-
                   <div class="card-footer text-right">
                     <% if (_userRole === "Patient") { %>
-                    <a href="/patient/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
+                    <% if(profileData.isDeactivated === 0) {  let actionText = 'suspend' %>
+                    <form method="post" action="/patient/profile/<%= actionText %>" onsubmit="return confirm('Do you really want to <%= actionText %> your account?');">
+                      <button type="submit" class="btn btn-danger">Suspend My Account</button>
+                      <a href="/patient/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
+                    </form>
+                    <% } %>
+                    <% if(profileData.isDeactivated === 1) { %>
+                      <button type="submit" class="btn btn-danger">Please Contact Clinic Admin To Reactivate Your Account</button>
+                    <% } %>
                     <% } %>
                     <% if (_userRole === "Administrator") { %>
                       <a href="/admin/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
@@ -98,9 +103,7 @@
                     <% if (_userRole === "Dentist") { %>
                       <a href="/dentist/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
                     <% } %>
-
                   </div>
-                </form>
               </div>
               <!-- /.card -->
             </div>

@@ -30,7 +30,7 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).insert({
-                inventoryId: this.inventoryId ? this.inventoryId : null,
+                inventoryId: this.inventoryId,
                 name: this.name,
                 quantity: this.quantity,
                 costPerUnit: this.costPerUnit,
@@ -108,11 +108,11 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).update({
-                itemName: this.name,
+                name: this.itemName,
                 quantity: this.quantity,
                 costPerUnit: this.costPerUnit,
-                expiryDate: this.expiryDate,
-                inboundDate: this.inboundDate,
+                expiryDate: this.expiry,
+                inboundDate: this.inbound,
                 SKU: this.SKU,
                 UPC: this.UPC,
                 note: this.note

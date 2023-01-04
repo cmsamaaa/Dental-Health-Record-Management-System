@@ -39,11 +39,23 @@ exports.reactivate = async (req, res, next) => {
 
 exports.editProfile = async (req, res, next) => {
     const userRole = req.url.split('/')[1];
-        const user = new User(req.body);
-        const results = await user.updateUserProfile();
+    const user = new User(req.body);
+    const results = await user.updateUserProfile();
 
         if (results)
             res.redirect(parse_uri.parse(req, '/' + userRole + '/profile?action=edit&id=' + req.body.userId));
         else
             res.redirect(parse_uri.parse(req, '/' + userRole + '/profile/edit/' + req.body.userId + '?error=true'));
+};
+
+exports.suspendProfile = async (req, res, next) => {
+    const user = new User({
+        userId: req.session.userInfo.userId
+    });
+    const results = await user.suspendUser();
+
+    if (results)
+        res.redirect(parse_uri.parse(req, '/patient/profile'));
+    else
+        res.redirect(parse_uri.parse(req, '/patient/profile?error=true'));
 };

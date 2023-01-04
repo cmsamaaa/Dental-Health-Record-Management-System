@@ -24,7 +24,6 @@ router.post('/admin/user/suspend', routeAuth.setSession, routeAuth.isAuth, route
 router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
 
 router.post('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, userController.editProfile);
-router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
 
 router.post('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.register);
 router.post('/admin/staff/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
@@ -52,10 +51,14 @@ router.post('/patient/appointment/edit', routeAuth.setSession, routeAuth.isAuth,
 router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
 
 router.post('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
+router.post('/patient/profile/suspend', routeAuth.setSession, routeAuth.isPatient, userController.suspendProfile);
+
 
 router.post('/dentist/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.createTreatment);
 router.post('/dentist/treatment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.editTreatment);
 router.post('/dentist/treatment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.suspendTreatment);
 router.post('/dentist/treatment/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.reactivateTreatment);
+
+router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
 
 module.exports = router;
