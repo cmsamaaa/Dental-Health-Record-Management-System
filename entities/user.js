@@ -75,15 +75,15 @@ class User {
         try {
 
             if (this.password) {
-            const hashedPassword = await bcrypt.hash(this.password, 12);
+                const hashedPassword = await bcrypt.hash(this.password, 12);
                 result = await db(tableName).update({
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email,
-                password: hashedPassword,
-                DOB: this.DOB
-            }).where('userId', this.userId);
-            }else{
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    email: this.email,
+                    password: hashedPassword,
+                    DOB: this.DOB
+                }).where('userId', this.userId);
+            } else {
                 result = await db(tableName).update({
                     firstName: this.firstName,
                     lastName: this.lastName,
@@ -132,6 +132,26 @@ class User {
             result = await db(tableName).update({
                 isDeactivated: 0
             }).where('userId', this.userId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `user` password
+     * Can be used for update/reset password
+     * Returns: Object
+     * */
+    async resetPassword() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                password: this.password
+            }).where('email', this.email);
         }
         catch (e) {
             console.error(e);

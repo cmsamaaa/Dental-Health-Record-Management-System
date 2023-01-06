@@ -1,5 +1,11 @@
+const bcrypt = require('bcryptjs');
+
 const User = require('../entities/user');
-const parse_uri = require("../lib/parse_uri");
+const parse_uri = require('../lib/parse_uri');
+const emailer = require('../lib/emailService');
+const HTTP_STATUS = require('../constants/http_status');
+
+const from = process.env.EMAIL_USER;
 
 exports.logout = async (req, res, next) => {
     let path = '/login?logout=true';
@@ -8,6 +14,42 @@ exports.logout = async (req, res, next) => {
 
     req.session.destroy();
     res.redirect(parse_uri.parse(req, path));
+};
+
+exports.resetPassword = async (req, res, next) => {
+    const uri = parse_uri.parse(req, '/login');
+    const path = '/forgot-password';
+
+    const hashedPassword = await bcrypt.hash('123', 12); // encrypt password with bcrypt, salt length 12
+    const user = new User({
+        email: req.body.email,
+        password: hashedPassword
+    });
+    const results = await user.resetPassword();
+
+    if (results) {
+        const mailOptions = {
+            from: from,
+            to: req.body.email,
+            subject: 'HappySmile - Reset Password',
+            html: '<html>'
+                + '<body>'
+                + '<h1>HappySmile - Reset Password</h1>'
+                + '<h2><strong>Your new password:</strong> ' + '123' + '</h2>'
+                + '<p>Click <a href="' + uri + '">here</a> to login with the new password issued.</p>'
+                + '</body>'
+                + '</html>'
+        };
+
+        emailer.sendMail(mailOptions, (err, info) => {
+            if (!err)
+                res.redirect(parse_uri.parse(req, path + '?reset=success'));
+            else
+                res.redirect(parse_uri.parse(req, path + '?reset=error&type=service'));
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, path + '?reset=error&type=email'));
 };
 
 exports.suspend = async (req, res, next) => {
@@ -42,10 +84,10 @@ exports.editProfile = async (req, res, next) => {
     const user = new User(req.body);
     const results = await user.updateUserProfile();
 
-        if (results)
-            res.redirect(parse_uri.parse(req, '/' + userRole + '/profile?action=edit&id=' + req.body.userId));
-        else
-            res.redirect(parse_uri.parse(req, '/' + userRole + '/profile/edit/' + req.body.userId + '?error=true'));
+    if (results)
+        res.redirect(parse_uri.parse(req, '/' + userRole + '/profile?action=edit&id=' + req.body.userId));
+    else
+        res.redirect(parse_uri.parse(req, '/' + userRole + '/profile/edit/' + req.body.userId + '?error=true'));
 };
 
 exports.suspendProfile = async (req, res, next) => {
@@ -58,4 +100,12 @@ exports.suspendProfile = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/patient/profile'));
     else
         res.redirect(parse_uri.parse(req, '/patient/profile?error=true'));
+};
+
+exports.viewForgotPassword = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('auth/forgot-password', {
+        pageTitle: 'Forget Password',
+        path: '/forgot-password',
+        query: req.query,
+    });
 };

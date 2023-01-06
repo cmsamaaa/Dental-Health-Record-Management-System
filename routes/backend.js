@@ -16,6 +16,7 @@ router.post('/login', routeAuth.setSession, patientController.login);
 router.post('/register', routeAuth.setSession, patientController.register);
 router.post('/register-clinic', routeAuth.setSession, clinicController.register);
 router.post('/staff/login', routeAuth.setSession, staffController.login);
+router.post('/forgot-password', userController.resetPassword);
 router.get('/logout', routeAuth.setSession, userController.logout);
 
 // Protected routes

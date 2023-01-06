@@ -8,14 +8,6 @@ exports.viewIndex = async (req, res, next) => {
     });
 };
 
-exports.viewForgotPassword = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('auth/forgot-password', {
-        pageTitle: 'Forget Password',
-        path: '/forgot-password',
-        query: req.query,
-    });
-};
-
 exports.view404 = async (req, res, next) => {
     res.status(HTTP_STATUS.NOT_FOUND).render('404', {
         pageTitle: '404',

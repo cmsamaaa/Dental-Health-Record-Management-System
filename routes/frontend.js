@@ -7,6 +7,7 @@ const clinicController = require('../controllers/clinicController');
 const inventoryController = require('../controllers/inventoryController');
 const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
+const userController = require('../controllers/userController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 
 const routeAuth = require('../middleware/route-auth');
@@ -20,7 +21,7 @@ router.get('/login', patientController.viewLogin);
 router.get('/register', patientController.viewRegister);
 router.get('/register-clinic', clinicController.viewRegister);
 router.get('/staff/login', staffController.viewLogin);
-router.get('/forgot-password', defaultController.viewForgotPassword);
+router.get('/forgot-password', userController.viewForgotPassword);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);
 router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
 
