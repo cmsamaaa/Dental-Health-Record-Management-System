@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs');
+const randomstring = require("randomstring");
+
 
 const User = require('../entities/user');
 const parse_uri = require('../lib/parse_uri');
@@ -20,7 +22,12 @@ exports.resetPassword = async (req, res, next) => {
     const uri = parse_uri.parse(req, '/login');
     const path = '/forgot-password';
 
-    const hashedPassword = await bcrypt.hash('123', 12); // encrypt password with bcrypt, salt length 12
+    const password = randomstring.generate({
+        length: 12,
+        charset: 'alphanumeric'
+    });
+
+    const hashedPassword = await bcrypt.hash(password, 12); // encrypt password with bcrypt, salt length 12
     const user = new User({
         email: req.body.email,
         password: hashedPassword
@@ -35,7 +42,7 @@ exports.resetPassword = async (req, res, next) => {
             html: '<html>'
                 + '<body>'
                 + '<h1>HappySmile - Reset Password</h1>'
-                + '<h2><strong>Your new password:</strong> ' + '123' + '</h2>'
+                + '<h2><strong>Your new password:</strong> ' + password + '</h2>'
                 + '<p>Click <a href="' + uri + '">here</a> to login with the new password issued.</p>'
                 + '</body>'
                 + '</html>'
