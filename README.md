@@ -83,6 +83,8 @@ DB_DATABASE=dhrms
 | `DB_USER`         | `String` | **Required**. Set database username here.                                                                                                                                                         |
 | `DB_PASS`         | `String` | **Required**. Set database password here.                                                                                                                                                         |
 | `DB_DATABASE`     | `String` | **Required**. Set name of database here.                                                                                                                                                          |
+| `EMAIL_USER`      | `String` | **Required**. Set email username here.                                                                                                                                                            |
+| `EMAIL_PASS`      | `String` | **Required**. Set email password here.                                                                                                                                                            |
 
 ## npm Commands
 
@@ -137,8 +139,11 @@ summarised list taken from [package.json](./package.json):
     "jquery": "^3.6.1",
     "knex": "^2.3.0",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.8.0",
+    "randomstring": "^1.2.3",
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0"
   },
