@@ -36,6 +36,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.8.0",
+    "randomstring": "^1.2.3",
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0"
   },
