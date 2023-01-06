@@ -45,12 +45,16 @@ exports.register = async (req, res, next) => {
         const results = await patient.registerPatient();
 
         if (!_.isEmpty(results))
-            res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=create&id=' + results[0]));
+            if (req.session.userRole === 'Administrator')
+                res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=create&id=' + results[0]));
+            else
+                res.redirect(parse_uri.parse(req, '/login'));
         else
-            res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
+            if (req.session.userRole === 'Administrator')
+                res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
+            else
+                res.redirect(parse_uri.parse(req, '/register?error=true'));
     }
-    else
-        res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));
 };
 
 exports.edit = async (req, res, next) => {
@@ -71,6 +75,15 @@ exports.viewLogin = async (req, res, next) => {
     res.status(HTTP_STATUS.OK).render('auth/login', {
         pageTitle: 'Login',
         path: '/login',
+        query: req.query
+    });
+};
+
+exports.viewRegister = async (req, res, next) => {
+
+    res.status(HTTP_STATUS.OK).render('auth/register', {
+        pageTitle: 'Patient Register',
+        path: '/register',
         query: req.query
     });
 };

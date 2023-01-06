@@ -17,6 +17,7 @@ const router = express.Router();
 
 // Non-protected routes
 router.get('/login', patientController.viewLogin);
+router.get('/register', patientController.viewRegister);
 router.get('/staff/login', staffController.viewLogin);
 router.get('/forgot-password', defaultController.viewForgotPassword);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);

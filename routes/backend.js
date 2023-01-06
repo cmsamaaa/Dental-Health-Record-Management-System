@@ -13,6 +13,7 @@ const router = express.Router();
 
 // Non-protected routes
 router.post('/login', routeAuth.setSession, patientController.login);
+router.post('/register', routeAuth.setSession, patientController.register);
 router.post('/staff/login', routeAuth.setSession, staffController.login);
 router.get('/logout', routeAuth.setSession, userController.logout);
 
