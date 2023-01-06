@@ -22,6 +22,15 @@ exports.edit = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/admin/clinic/edit/' + req.body.clinicId + '?error=true'));
 };
 
+exports.viewRegister = async (req, res, next) => {
+
+    res.status(HTTP_STATUS.OK).render('auth/register-clinic', {
+        pageTitle: 'Register Clinic',
+        path: '/register-clinic',
+        query: req.query
+    });
+};
+
 exports.findClinicsByPostal = async (req, res, next) => {
     const pageTitle = 'Find Clinics Near Me';
     const path = '/clinic/search';

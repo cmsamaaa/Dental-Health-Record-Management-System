@@ -16,60 +16,60 @@
         </p>
         <% } else { %>
         <p class="login-box-msg">
-          Register your account
+          Register your clinic
         </p>
         <% } %>
 
         <form action="<%= path %>" method="post">
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_lastName" name="firstName" name="firstName" pattern="[a-zA-Z\s]+" title="E.g James Cameron" placeholder="Enter first name" tabindex="1" required>
+              <label for="tb_Name">Enter Clinic Name<span style="color:red;">*</span></label>
+              <input type="text" class="form-control" id="tb_Name" name="name" placeholder="Enter clinic name" tabindex="2" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_lastName" name="lastName" pattern="[a-zA-Z\s]+" title="E.g Tan" tabindex="2" placeholder="Enter last name" required>
+              <label for="tb_Name">Enter Clinic Address<span style="color:red;">*</span></label>
+              <input type="text" class="form-control" id="tb_Address" name="clinicAddress" placeholder="Enter clinic address" tabindex="9"required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_nric" name="nric" pattern="^[STFG]\d{7}[A-Z]$" title="E.g S1234567Z" placeholder="E.g S1234567Z" tabindex="3" required>
+              <label for="tb_Postal">Enter Clinic Postal<span style="color:red;" >*</span></label>
+              <input type="text" class="form-control" id="tb_Postal" name="clinicPostal" pattern="\b[0-9]{6}\b" placeholder="Enter clinic postal" title="E.g 543210" tabindex="10" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="date" class="form-control" id="tb_DOB" name="DOB" min="1922-01-01" max="<%= new Date().toISOString().split('T')[0] %>" tabindex="4" placeholder="dd/mm/yyyy" required>
+              <label for="tb_Unit">Enter Clinic Unit Number<span style="color:red;">*</span></label>
+              <input type="text" class="form-control" id="tb_Unit" name="clinicUnit" placeholder="Enter clinic unit number" tabindex="11" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <select class="form-control" id="ddl_Gender" name="gender" style="width: 100%;" tabindex="6" required>
-                <option disabled selected>Select Your Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+              <label for="tb_Email">Enter Clinic Email Address<span style="color:red;">*</span></label>
+              <input type="email" class="form-control" id="tb_Email" name="clinicEmail" placeholder="Enter clinic email address" tabindex="5" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="email" class="form-control" id="tb_Email" name="email" title="E.g abc@xyz.com" placeholder="E.g abc@xyz.com" tabindex="5" required>
+              <label for="tb_Email">Enter Clinic Sub Email Address (optional)</label>
+              <input type="email" class="form-control" id="tb_SubEmail" name="clinicSubEmail" placeholder="Enter clinic sub email address" tabindex="3">
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" required>
+              <label for="tb_Phone">Enter Clinic Phone Number<span style="color:red;">*</span></label>
+              <input type="text" class="form-control" id="tb_Phone" name="clinicPhone" pattern="^[0-9]{8}$" placeholder="Enter clinic phone number" title="E.g 98765432" tabindex="3" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" placeholder="E.g 543210" required>
+              <label for="tb_Phone">Enter Clinic Sub Phone Number (optional)</label>
+              <input type="text" class="form-control" id="tb_SubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" placeholder="Enter clinic sub phone number" tabindex="3">
             </div>
           </div>
-          <div class="col mb-3">
-            <div class="form-group">
-              <input type="text" class="form-control" id="tb_Unit" name="unit" tabindex="11" placeholder="E.g 01-01" required>
-            </div>
-          </div>
+
 
           <div class="row">
             <div class="col-8">
@@ -89,7 +89,7 @@
         </form>
 
         <p class="mb-1">
-          <a href="/login">I already have an account</a>
+          <a href="/staff/login">Login as Admin</a>
         </p>
       </div>
       <!-- /.login-card-body -->
