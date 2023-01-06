@@ -25,8 +25,12 @@
           <div class="row">
             <div class="col-md-12">
               <!-- Error Message -->
-              <%- include('../includes/flash-message.ejs') %>
-
+              <% if (query.error === 'true') { %>
+                <div class="callout callout-danger">
+                  <h5><i class="fas fa-exclamation-triangle"></i> Warning</h5>
+                  Duplicate SKU found.
+                </div>
+              <% } %>
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
