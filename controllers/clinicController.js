@@ -6,6 +6,26 @@ const HTTP_STATUS = require("../constants/http_status");
 
 exports.register = async (req, res, next) => {
     // TODO: register clinic
+    if (!_.isEmpty(req.body)) {
+        const clinic = new Clinic({
+            clinicName: req.body.clinicName,
+            clinicAddress: req.body.clinicAddress,
+            clinicPostal: req.body.clinicPostal,
+            clinicUnit: req.body.clinicUnit,
+            clinicEmail: req.body.clinicEmail,
+            clinicSubEmail: req.body.clinicSubEmail,
+            clinicPhone: req.body.clinicPhone,
+            clinicSubPhone: req.body.clinicSubPhone
+        });
+        const results = await clinic.registerClinic();
+        
+        if (!_.isEmpty(results))
+            res.redirect(parse_uri.parse(req, '/staff/login'));
+        else
+            res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
 };
 
 exports.edit = async (req, res, next) => {

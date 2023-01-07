@@ -28,8 +28,15 @@ class Staff extends User {
 
         let result;
         try {
+            if (req.session.userRole === 'Administrator')
             result = await db(tableName).insert({
                 role: this.role,
+                userId: this.userId,
+                clinicId: this.clinicId
+            });
+            else
+            result = await db(tableName).insert({
+                role: "Administrator",
                 userId: this.userId,
                 clinicId: this.clinicId
             });

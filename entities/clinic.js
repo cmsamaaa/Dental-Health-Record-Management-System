@@ -2,6 +2,7 @@ const db = require('./db');
 const tableName = 'clinics';
 
 const _ = require('lodash');
+const User = require('../entities/user');
 
 class Clinic {
     clinicId;
@@ -23,10 +24,22 @@ class Clinic {
      * Can be used to add a new clinic record.
      * Returns: Object
      * */
-    async add() {
+    async registerClinic() {
+        //const clinicId = await User.createUser();
+        //this.clinicId = clinicId;
+
         let result;
         try {
-            result = await db(tableName).insert(this);
+            result = await db(tableName).insert({
+                clinicName: this.clinicName,
+                clinicAddress: this.clinicAddress,
+                clinicPostal: this.clinicPostal,
+                clinicUnit: this.clinicUnit,
+                clinicEmail: this.clinicEmail,
+                clinicSubEmail: this.clinicSubEmail  ? this.clinicSubEmail : null,
+                clinicPhone: this.clinicPhone,
+                clinicSubPhone: this.clinicSubPhone ? this.clinicSubPhone : null
+            });
         }
         catch (e) {
             console.error(e);

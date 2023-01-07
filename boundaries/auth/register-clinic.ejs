@@ -12,7 +12,7 @@
       <div class="card-body login-card-body">
         <% if (query.error === 'true') { %>
         <p class="login-box-msg text-danger">
-          Duplicate NRIC and/or email found.
+          Something went wrong.
         </p>
         <% } else { %>
         <p class="login-box-msg">
@@ -24,7 +24,7 @@
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Name">Enter Clinic Name<span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="tb_Name" name="name" placeholder="Enter clinic name" tabindex="2" required>
+              <input type="text" class="form-control" id="tb_Name" name="clinicName" placeholder="Enter clinic name" tabindex="2" required>
             </div>
           </div>
           <div class="col mb-3">
