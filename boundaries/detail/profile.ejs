@@ -24,86 +24,89 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title text-capitalize">View Profile Details</h3>
                 </div>
                 <!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="tb_lastName">First Name:</label>
-                          <input type="text" class="form-control-plaintext" id="tb_lastName" pattern="[a-zA-Z\s]+" title="E.g James Cameron" name="firstName" tabindex="1" value="<%= profileData.firstName %>" disabled>
-                        </div>
-                        <div class="form-group">
-                          <label for="tb_nric">NRIC:</label>
-                          <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" pattern="^[STFG]\d{7}[A-Z]$" title="E.g S1234567Z" tabindex="3" value="<%= profileData.nric %>" disabled>
-                        </div>
-                        <div class="form-group">
-                          <label for="tb_Email">Email Address:</label>
-                          <input type="email" class="form-control-plaintext" id="tb_Email" name="email" tabindex="5" value="<%= profileData.email %>" disabled>
-                        </div>
-                        <% if (_userRole === "Patient") { %>
-                        <div class="form-group">
-                          <label for="tb_Address">Home Address:</label>
-                          <input type="text" class="form-control-plaintext" id="tb_Address" name="address" tabindex="9" value="<%= profileData.address %>" disabled>
-                        </div>
-                        <% } %>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="tb_lastName">First Name:</label>
+                        <input type="text" class="form-control-plaintext" id="tb_lastName" pattern="[a-zA-Z\s]+" title="E.g James Cameron" name="firstName" tabindex="1" value="<%= profileData.firstName %>" disabled>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="tb_lastName">Last Name (Surname):</label>
-                          <input type="text" class="form-control-plaintext" id="tb_lastName" name="lastName" pattern="[a-zA-Z\s]+" title="E.g Tan" tabindex="2" value="<%= profileData.lastName %>" disabled>
-                        </div>
-                        <div class="form-group">
-                          <label for="tb_Gender">Gender:</label>
-                          <input type="text" class="form-control-plaintext" id="tb_Gender" name="lastName" tabindex="6" value="<%= profileData.gender %>" disabled>
-                        </div>
-                        <div class="form-group">
-                          <label for="tb_DOB">Birthday:</label>
-                          <input type="date" class="form-control-plaintext" id="tb_DOB" name="DOB" min="1922-01-01" max="<%= new Date().toISOString().split('T')[0] %>" tabindex="4" value="<%= profileData.DOB %>" disabled>
-                        </div>
-                        <% if (_userRole === "Patient") { %>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="tb_Postal">Postal:</label>
-                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" value="<%= profileData.postal %>" disabled>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="tb_Postal">Unit Number:</label>
-                              <input type="text" class="form-control-plaintext" id="tb_Postal" name="unit" tabindex="11" value="<%= profileData.unit %>" disabled>
-                            </div>
+                      <div class="form-group">
+                        <label for="tb_nric">NRIC:</label>
+                        <input type="text" class="form-control-plaintext" id="tb_nric" name="nric" pattern="^[STFG]\d{7}[A-Z]$" title="E.g S1234567Z" tabindex="3" value="<%= profileData.nric %>" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="tb_Email">Email Address:</label>
+                        <input type="email" class="form-control-plaintext" id="tb_Email" name="email" tabindex="5" value="<%= profileData.email %>" disabled>
+                      </div>
+                      <% if (_userRole === "Patient") { %>
+                      <div class="form-group">
+                        <label for="tb_Address">Home Address:</label>
+                        <input type="text" class="form-control-plaintext" id="tb_Address" name="address" tabindex="9" value="<%= profileData.address %>" disabled>
+                      </div>
+                      <% } %>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="tb_lastName">Last Name (Surname):</label>
+                        <input type="text" class="form-control-plaintext" id="tb_lastName" name="lastName" pattern="[a-zA-Z\s]+" title="E.g Tan" tabindex="2" value="<%= profileData.lastName %>" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="tb_Gender">Gender:</label>
+                        <input type="text" class="form-control-plaintext" id="tb_Gender" name="lastName" tabindex="6" value="<%= profileData.gender %>" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="tb_DOB">Birthday:</label>
+                        <input type="date" class="form-control-plaintext" id="tb_DOB" name="DOB" min="1922-01-01" max="<%= new Date().toISOString().split('T')[0] %>" tabindex="4" value="<%= profileData.DOB %>" disabled>
+                      </div>
+                      <% if (_userRole === "Patient") { %>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="tb_Postal">Postal:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" value="<%= profileData.postal %>" disabled>
                           </div>
                         </div>
-                        <% } %>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="tb_Postal">Unit Number:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_Postal" name="unit" tabindex="11" value="<%= profileData.unit %>" disabled>
+                          </div>
+                        </div>
                       </div>
+                      <% } %>
                     </div>
                   </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer text-right">
-                    <% if (_userRole === "Patient") { %>
-                    <% if(profileData.isDeactivated === 0) {  let actionText = 'suspend' %>
-                    <form method="post" action="/patient/profile/<%= actionText %>" onsubmit="return confirm('Do you really want to <%= actionText %> your account?');">
-                      <button type="submit" class="btn btn-danger">Suspend My Account</button>
-                      <a href="/patient/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
-                    </form>
-                    <% } %>
-                    <% if(profileData.isDeactivated === 1) { %>
-                      <button type="submit" class="btn btn-danger">Please Contact Clinic Admin To Reactivate Your Account</button>
-                    <% } %>
-                    <% } %>
-                    <% if (_userRole === "Administrator") { %>
-                      <a href="/admin/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
-                    <% } %>
-                    <% if (_userRole === "Dentist") { %>
-                      <a href="/dentist/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
-                    <% } %>
-                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer text-right">
+                  <% if (_userRole === "Patient") { %>
+                  <% if(profileData.isDeactivated === 0) {  let actionText = 'suspend' %>
+                  <form method="post" action="/patient/profile/<%= actionText %>" onsubmit="return confirm('Do you really want to <%= actionText %> your account?');">
+                    <button type="submit" class="btn btn-danger">Suspend My Account</button>
+                    <a href="/patient/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
+                  </form>
+                  <% } %>
+                  <% if(profileData.isDeactivated === 1) { %>
+                  <button type="submit" class="btn btn-danger">Please Contact Clinic Admin To Reactivate Your Account</button>
+                  <% } %>
+                  <% } %>
+                  <% if (_userRole === "Administrator") { %>
+                  <a href="/admin/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
+                  <% } %>
+                  <% if (_userRole === "Dentist") { %>
+                  <a href="/dentist/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
+                  <% } %>
+                </div>
               </div>
               <!-- /.card -->
             </div>
