@@ -48,7 +48,7 @@
                           <input type="email" class="form-control-plaintext" id="tb_Email" name="email" tabindex="5" value="<%= patientData.email %>" disabled>
                         </div>
                         <div class="form-group">
-                          <label for="tb_medicareID">Medicare ID</label>
+                          <label for="tb_medicareID">Medicare ID:</label>
                           <input type="text" class="form-control-plaintext" id="tb_medicareID" name="medicareId" tabindex="7" value="<%= patientData.medicareId ? patientData.medicareId : 'Not Applicable' %>" disabled>
                         </div>
                         <div class="form-group">
@@ -70,7 +70,7 @@
                           <input type="text" class="form-control-plaintext" id="tb_Gender" name="lastName" tabindex="6" value="<%= patientData.gender %>" disabled>
                         </div>
                         <div class="form-group">
-                          <label for="tb_FamilyID">Family Group ID</label>
+                          <label for="tb_FamilyID">Family Group ID:</label>
                           <input type="text" class="form-control-plaintext" id="tb_FamilyID" name="familyId" tabindex="8" value="<%= patientData.familyId ? patientData.familyId : 'Not Applicable' %>" disabled>
                         </div>
                         <div class="row">
@@ -112,7 +112,7 @@
   </div>
   <!-- ./wrapper -->
 
-  <!-- disabled SCRIPTS -->
+  <!-- REQUIRED SCRIPTS -->
   <%- include('../includes/end-scripts.ejs') %>
 
   <!-- bs-custom-file-input -->
