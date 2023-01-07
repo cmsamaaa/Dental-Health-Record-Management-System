@@ -2,6 +2,7 @@ const db = require('./db');
 const tableName = 'appointments';
 
 const _ = require('lodash');
+const moment = require('moment');
 const dateTimeFormat = require("../lib/dateTimeFormat");
 
 class Appointment {
@@ -265,7 +266,9 @@ class Appointment {
                 .where('apptId', this.apptId);
 
             result = _.map(result, (patient) => {
-                return _.omit(patient, 'password');
+                patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
+                patient = _.omit(patient, 'password');
+                return patient;
             });
         }
         catch (e) {
