@@ -71,6 +71,8 @@ DB_PORT=3306
 DB_USER=root
 DB_PASS=
 DB_DATABASE=dhrms
+EMAIL_USER=
+EMAIL_PASS=dhrms
 ```
 
 | Parameters        | Type     | Description                                                                                                                                                                                       |
