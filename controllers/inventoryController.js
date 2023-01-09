@@ -57,7 +57,12 @@ exports.viewInventories = async (req, res, next) => {
         });
     }
     else
-        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+        res.status(HTTP_STATUS.NOT_FOUND).render('table/admin-inventory', {
+            pageTitle: 'Inventory',
+            path: '/admin/inventory/view-all',
+            query: req.query,
+            inventoryData: []
+        });
 };
 
 exports.viewInventory = async (req, res, next) => {
