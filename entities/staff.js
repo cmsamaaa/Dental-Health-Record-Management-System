@@ -28,15 +28,8 @@ class Staff extends User {
 
         let result;
         try {
-            if (req.session.userRole === 'Administrator')
             result = await db(tableName).insert({
                 role: this.role,
-                userId: this.userId,
-                clinicId: this.clinicId
-            });
-            else
-            result = await db(tableName).insert({
-                role: "Administrator",
                 userId: this.userId,
                 clinicId: this.clinicId
             });
@@ -157,7 +150,8 @@ class Staff extends User {
 
             result = _.map(result, (staff) => {
                 staff = _.omit(staff, 'password');
-                staff.nric = staff.nric[0] + "XXXX" + staff.nric.slice(5);
+                if (!_.isEmpty(staff.nric))
+                    staff.nric = staff.nric[0] + "XXXX" + staff.nric.slice(5);
                 return staff;
             });
         }

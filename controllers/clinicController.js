@@ -1,6 +1,8 @@
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
 const request = require('request');
 const Clinic = require('../entities/clinic');
+const Staff = require('../entities/staff');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
@@ -19,8 +21,23 @@ exports.register = async (req, res, next) => {
         });
         const results = await clinic.registerClinic();
         
-        if (!_.isEmpty(results))
+        if (results){
+            const hashedPassword = await bcrypt.hash(req.body.clinicPhone, 12);
+            const staff = new Staff({
+            firstName: "Super",
+            lastName: "Admin",
+            email: req.body.clinicEmail,
+            password: hashedPassword,
+            DOB: new Date().toISOString().split('T')[0],
+            gender: "Male",
+            role: "Administrator",
+            clinicId: results
+            });
+            const test = await staff.registerStaff();
+
+            if (!_.isEmpty(test))
             res.redirect(parse_uri.parse(req, '/staff/login'));
+        }
         else
             res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
     }

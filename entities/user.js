@@ -27,7 +27,6 @@ class User {
     async createUser() {
         let result;
         try {
-            if (req.session.userRole === 'Administrator')
             result = await db(tableName).insert({
                 firstName: this.firstName,
                 lastName: this.lastName,
@@ -36,16 +35,6 @@ class User {
                 nric: this.nric,
                 DOB: this.DOB,
                 gender: this.gender
-            });
-            else
-            result = await db(tableName).insert({
-                firstName: this.clinicName,
-                lastName: this.clinicAddress,
-                email: this.clinicEmail,
-                password: this.clinicPhone,
-                nric: "S9000000H",
-                DOB: "2001-11-11",
-                gender: "Male"
             });
         }
         catch (e) {

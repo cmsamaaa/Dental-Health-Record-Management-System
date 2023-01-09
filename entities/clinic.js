@@ -2,7 +2,6 @@ const db = require('./db');
 const tableName = 'clinics';
 
 const _ = require('lodash');
-const User = require('../entities/user');
 
 class Clinic {
     clinicId;
@@ -25,8 +24,6 @@ class Clinic {
      * Returns: Object
      * */
     async registerClinic() {
-        //const clinicId = await User.createUser();
-        //this.clinicId = clinicId;
 
         let result;
         try {
