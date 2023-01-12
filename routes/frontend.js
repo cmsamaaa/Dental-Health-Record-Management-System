@@ -24,6 +24,8 @@ router.get('/staff/login', staffController.viewLogin);
 router.get('/forgot-password', userController.viewForgotPassword);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);
 router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
+router.get('/clinic/view-all', routeAuth.setSession, clinicController.viewClinics);
+
 
 // Protected routes
 router.get('/', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);

@@ -168,3 +168,39 @@ exports.viewEditClinicInfo = async (req, res, next) => {
         }
     });
 };
+
+exports.viewClinics = async (req, res, next) => {
+    const clinic = new Clinic({
+        //clinicId: req.session.userInfo.clinicId
+    });
+    const result = await clinic.getAll();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('table/clinics', {
+            pageTitle: 'Clinic',
+            path: '/clinic/view-all',
+            query: req.query,
+            clinicsData: result
+        });
+    }
+    else
+        res.status(HTTP_STATUS.BAD_REQUEST).json({});
+};
+
+exports.viewClinic = async (req, res, next) => {
+    const clinic = new Clinic({
+        clinicId: req.params.clinicId
+    });
+    const result = await clinic.get();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('detail/clinic', {
+            pageTitle: 'Clinic',
+            path: '/clinic/view',
+            query: req.query,
+            clinicData: result
+        });
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/clinic/view?error=true'));
+};
