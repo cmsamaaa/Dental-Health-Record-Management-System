@@ -4,6 +4,7 @@ const patientAPIController = require('../controllers/patientAPIController');
 const staffAPIController = require('../controllers/staffAPIController');
 const appointmentAPIController = require('../controllers/appointmentAPIController');
 const clinicAPIController = require('../controllers/clinicAPIController');
+const queueAPIController = require('../controllers/queueAPIController');
 
 const router = express.Router();
 
@@ -22,5 +23,7 @@ router.get('/appointment/get/all/upcoming/:userId', appointmentAPIController.get
 router.get('/appointment/get/:apptId', appointmentAPIController.getAppointment);
 router.post('/appointment/edit', appointmentAPIController.editAppointment);
 router.post('/appointment/suspend', appointmentAPIController.suspendAppointment);
+
+router.get('/queue/get/:patientId', queueAPIController.getPatientQueue);
 
 module.exports = router;

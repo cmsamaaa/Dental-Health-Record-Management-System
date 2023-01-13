@@ -10,6 +10,7 @@ const staffController = require('../controllers/staffController');
 const userController = require('../controllers/userController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 const oralRecordController = require('../controllers/oralRecordController');
+const queueController = require('../controllers/queueController');
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
@@ -83,12 +84,13 @@ router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, route
 
 /* Start of Patient Route */
 
-// Queue
-router.get('/patient/queue', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
-
 //Profile
 router.get('/patient/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
 router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewEditProfile);
+
+// Queue
+router.get('/patient/queue/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, queueController.viewCreateQueue);
+router.get('/patient/queue', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, queueController.viewPatientQueueNumber);
 
 // Appointment
 router.get('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);

@@ -8,6 +8,7 @@ const appointmentController = require('../controllers/appointmentController');
 const inventoryController = require('../controllers/inventoryController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 const oralRecordController = require('../controllers/oralRecordController');
+const queueController = require('../controllers/queueController');
 const routeAuth = require('../middleware/route-auth');
 
 const router = express.Router();
@@ -48,13 +49,15 @@ router.post('/admin/inventory/edit', routeAuth.setSession, routeAuth.isAuth, rou
 router.post('/admin/inventory/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.suspendInventory);
 router.post('/admin/inventory/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.reactivateInventory);
 
+router.post('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
+router.post('/patient/profile/suspend', routeAuth.setSession, routeAuth.isPatient, userController.suspendProfile);
+
+router.post('/patient/queue/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, queueController.createQueue);
+router.post('/patient/queue/cancel', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, queueController.suspendQueue);
 
 router.post('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
 router.post('/patient/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);
 router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
-
-router.post('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
-router.post('/patient/profile/suspend', routeAuth.setSession, routeAuth.isPatient, userController.suspendProfile);
 
 router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
 

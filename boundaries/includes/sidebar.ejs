@@ -316,6 +316,12 @@
         <!-- Start of Patient -->
         <% if (_isLoggedIn && _userRole === 'Patient') { %>
         <li class="nav-header">PATIENT</li>
+        <li class="nav-item">
+          <a href="/patient/queue/create" class="nav-link <% if(arrPath[1] === 'patient' && arrPath[2] === 'queue') { %>active<% } %>">
+            <i class="nav-icon fas fa-ticket-alt"></i>
+            <p>Queue</p>
+          </a>
+        </li>
         <li class="nav-item <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'patient' && arrPath[2] === 'appointment') { %>active<% } %>">
             <i class="nav-icon fas fa-calendar-check"></i>
@@ -372,7 +378,7 @@
           </a>
         </li>
 
-        <li class="nav-header">MISCELLANEOUS</li>
+        <li class="nav-header">TEMPORARY REFERENCES</li>
         <li class="nav-item">
           <a href="/invoice" class="nav-link <% if(path === '/invoice') { %>active<% } %>">
             <i class="fas fa-receipt nav-icon"></i>

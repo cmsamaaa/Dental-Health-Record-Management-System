@@ -1,0 +1,123 @@
+<%- include('../includes/head.ejs') %>
+
+<!-- Select2 -->
+<link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path.split('/')[3] %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Queue Status</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="/patient/queue/cancel" method="post">
+                  <div class="card-body">
+                    <div class="row mb-2">
+                      <div class="col-md-6 offset-md-3 text-center">
+                        <strong><%= clinicData.clinicName %></strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 offset-md-3 text-center">
+                        <span>Your Queue No.</span>
+                      </div>
+                    </div>
+                    <div class="row mt-5 mb-5">
+                      <div class="col-md-6 offset-md-3 text-center">
+                        <h1><%= String(queueData.queueNo).padStart(3, '0') %></h1>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 offset-md-3 text-center">
+                        <strong>Started at:</strong>
+                        <span><%= queueData.queueDateTime %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <input type="hidden" name="clinicId" value="<%= queueData.clinicId %>">
+                    <input type="hidden" name="patientId" value="<%= queueData.patientId %>">
+                    <button type="submit" class="btn btn-primary">Cancel</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- Select2 -->
+  <script src="/plugins/select2/js/select2.full.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+
+  <!-- Page specific script -->
+  <script>
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+
+    $('button[type=reset]').on('click', () => {
+      $('#tb_NRIC').val('Find NRIC...').trigger('change');
+    });
+
+    //Date and time picker
+    $('#tb_ApptDateTime').datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+      minDate: new Date(),
+      icons: {
+        time: 'far fa-clock'
+      }
+    });
+  </script>
+</body>
+
+</html>
