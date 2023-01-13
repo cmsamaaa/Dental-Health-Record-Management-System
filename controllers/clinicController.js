@@ -20,23 +20,23 @@ exports.register = async (req, res, next) => {
             clinicSubPhone: req.body.clinicSubPhone
         });
         const results = await clinic.registerClinic();
-        
-        if (results){
+
+        if (results) {
             const hashedPassword = await bcrypt.hash(req.body.clinicPhone, 12);
             const staff = new Staff({
-            firstName: "Super",
-            lastName: "Admin",
-            email: req.body.clinicEmail,
-            password: hashedPassword,
-            DOB: new Date().toISOString().split('T')[0],
-            gender: "Male",
-            role: "Administrator",
-            clinicId: results
+                firstName: "Super",
+                lastName: "Admin",
+                email: req.body.clinicEmail,
+                password: hashedPassword,
+                DOB: new Date().toISOString().split('T')[0],
+                gender: "Male",
+                role: "Administrator",
+                clinicId: results
             });
             const test = await staff.registerStaff();
 
             if (!_.isEmpty(test))
-            res.redirect(parse_uri.parse(req, '/staff/login'));
+                res.redirect(parse_uri.parse(req, '/staff/login'));
         }
         else
             res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
@@ -147,6 +147,9 @@ exports.viewClinicInfo = async (req, res, next) => {
 };
 
 exports.viewEditClinicInfo = async (req, res, next) => {
+    const title = 'Clinic';
+    const path = '/admin/clinic/edit/' + req.params.clinicId;
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/clinic/get/' + req.params.clinicId);
     request.get({
@@ -154,16 +157,16 @@ exports.viewEditClinicInfo = async (req, res, next) => {
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             res.status(HTTP_STATUS.OK).render('form/clinic', {
-                pageTitle: 'Clinic',
-                path: '/admin/clinic/edit',
+                pageTitle: title,
+                path: path,
                 query: req.query,
                 clinicData: JSON.parse(response.body)
             });
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Clinic',
-                path: '/admin/clinic/edit'
+                pageTitle: title,
+                path: path
             });
         }
     });

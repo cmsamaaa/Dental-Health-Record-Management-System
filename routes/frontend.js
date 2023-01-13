@@ -38,7 +38,6 @@ router.get('/invoice-print', routeAuth.setSession, routeAuth.isAuth, billControl
 /* Start of Admin Route */
 
 // Clinic Info
-// router.get('/admin/clinic/add-information', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewAddClinicInfo);
 router.get('/admin/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewClinicInfo);
 router.get('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewEditClinicInfo);
 
@@ -84,9 +83,12 @@ router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, route
 
 /* Start of Patient Route */
 
+// Queue
+router.get('/patient/queue', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
+
 //Profile
-router.get('/patient/profile', routeAuth.setSession, routeAuth.isPatient, patientController.viewProfile);
-router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.viewEditProfile);
+router.get('/patient/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
+router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewEditProfile);
 
 // Appointment
 router.get('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.viewCreateAppointment);
@@ -103,8 +105,8 @@ router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, rou
 /* Start of Dentist Route */
 
 //Profile
-router.get('/dentist/profile', routeAuth.setSession, routeAuth.isDentist, staffController.viewProfile);
-router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, staffController.viewEditProfile);
+router.get('/dentist/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewProfile);
+router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewEditProfile);
 
 // Appointment
 router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicController.viewClinicInfo);

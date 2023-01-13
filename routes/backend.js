@@ -22,7 +22,6 @@ router.get('/logout', routeAuth.setSession, userController.logout);
 
 // Protected routes
 router.post('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
-router.post('/admin/clinic/edit/:clinicId', routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
 
 router.post('/admin/user/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.suspend);
 router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
