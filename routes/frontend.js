@@ -9,6 +9,7 @@ const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
 const userController = require('../controllers/userController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
+const oralRecordController = require('../controllers/oralRecordController');
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
@@ -115,6 +116,12 @@ router.get('/dentist/treatment/create', routeAuth.setSession, routeAuth.isAuth, 
 router.get('/dentist/treatment/edit/:ctId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewEditTreatment);
 router.get('/dentist/treatment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewTreatments);
 router.get('/dentist/treatment/view/:ctId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewTreatment);
+
+//Oral Record
+router.get('/dentist/oralrecord/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewCreate);
+router.get('/dentist/oralrecord/edit/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewEdit);
+router.get('/dentist/oralrecord/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecords);
+router.get('/dentist/oralrecord/view/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecord);
 
 /* End of Dentist Route */
 

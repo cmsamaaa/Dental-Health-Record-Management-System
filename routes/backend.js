@@ -7,6 +7,7 @@ const staffController = require('../controllers/staffController');
 const appointmentController = require('../controllers/appointmentController');
 const inventoryController = require('../controllers/inventoryController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
+const oralRecordController = require('../controllers/oralRecordController');
 const routeAuth = require('../middleware/route-auth');
 
 const router = express.Router();
@@ -56,12 +57,14 @@ router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAu
 router.post('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
 router.post('/patient/profile/suspend', routeAuth.setSession, routeAuth.isPatient, userController.suspendProfile);
 
+router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
 
 router.post('/dentist/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.createTreatment);
 router.post('/dentist/treatment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.editTreatment);
 router.post('/dentist/treatment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.suspendTreatment);
 router.post('/dentist/treatment/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.reactivateTreatment);
 
-router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
+router.post('/dentist/oralrecord/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.create);
+router.post('/dentist/oralrecord/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.edit);
 
 module.exports = router;
