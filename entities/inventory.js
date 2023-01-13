@@ -110,7 +110,7 @@ class Inventory {
             result = await db(tableName).update({
                 name: this.itemName,
                 quantity: this.quantity,
-                costPerUnit: this.costPerUnit,
+                costPerUnit: this.cost,
                 expiryDate: this.expiry,
                 inboundDate: this.inbound,
                 SKU: this.SKU,
