@@ -6,17 +6,23 @@ const should = tester.should();
 const generate_data = require('../lib/generate_data');
 
 const Appointment = require('../entities/appointment');
+const Queue = require('../entities/queue');
 
 tester.use(chaiHttp);
 
 describe('Run all test units', () => {
     before((done) => {
+        const queue = new Queue(generate_data.new_queue());
+        queue.add();
         done();
     });
 
     after((done) => {
         const appointment = new Appointment(generate_data.suspend_appointment());
         appointment.deleteAppointment();
+
+        const queue = new Queue(generate_data.new_queue());
+        queue.deleteQueue();
         done();
     });
 
@@ -331,6 +337,31 @@ describe('Run all test units', () => {
                 .send({})
                 .end((err, res) => {
                     res.should.have.status(400);
+                    res.body.should.be.empty;
+                    done();
+                });
+        });
+    });
+
+    describe('26 | /GET /api/queue/get/:clinicId 200 | Request with Valid ClinicId', () => {
+        it('it should return a JSON object with HTTP status code 200', (done) => {
+            tester.request(app)
+                .get('/api/queue/get/1')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.not.be.null;
+                    res.body.should.not.be.empty;
+                    done();
+                });
+        });
+    });
+
+    describe('27 | /GET /api/queue/get/:clinicId 200 | Request with Invalid ClinicId', () => {
+        it('it should return an empty JSON object with HTTP status code 404', (done) => {
+            tester.request(app)
+                .get('/api/queue/get/' + Number.MAX_SAFE_INTEGER)
+                .end((err, res) => {
+                    res.should.have.status(404);
                     res.body.should.be.empty;
                     done();
                 });
