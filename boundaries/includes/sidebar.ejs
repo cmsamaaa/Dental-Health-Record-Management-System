@@ -300,6 +300,12 @@
         <% } %>
         <li class="nav-header">GENERAL</li>
         <li class="nav-item">
+          <a href="/clinic/view-all" class="nav-link <% if(path === '/clinic/view-all') { %>active<% } %>">
+            <i class="nav-icon fas fa-list"></i>
+            <p>View All Clinics</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="/clinic/search" class="nav-link <% if(path === '/clinic/search') { %>active<% } %>">
             <i class="fas fa-search nav-icon"></i>
             <p>Clinics Near Me</p>
