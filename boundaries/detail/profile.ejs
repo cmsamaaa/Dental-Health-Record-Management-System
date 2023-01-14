@@ -103,7 +103,7 @@
                   <% if (_userRole === "Administrator") { %>
                   <a href="/admin/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
                   <% } %>
-                  <% if (_userRole === "Dentist") { %>
+                  <% if (_userRole === "Dentist" || _userRole === "Dental Assistant") { %>
                   <a href="/dentist/profile/edit/<%= profileData.userId %>" class="btn btn-primary">Edit</a>
                   <% } %>
                 </div>
