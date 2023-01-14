@@ -146,6 +146,26 @@ class Queue {
     }
 
     /**
+     * Update a `queue` record status to 'Cancelled' by queueId.
+     * Can be used to cancel queue for admins.
+     * Returns: Object
+     * */
+    async suspendQueueById() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: 'Cancelled'
+            }).where('queueId', this.queueId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Delete a `queue` record.
      * Can be used to clear record after unit testing.
      * Returns: Object

@@ -31,10 +31,22 @@ exports.suspendQueue = async (req, res, next) => {
     });
     const results = await queue.suspendQueue();
 
-    if (!_.isEmpty(results))
+    if (results)
         res.redirect(parse_uri.parse(req, '/patient/queue'));
     else
         res.redirect(parse_uri.parse(req, '/patient/queue?action=cancel&error=true'));
+};
+
+exports.suspendQueueById = async (req, res, next) => {
+    const queue = new Queue({
+        queueId: req.body.queueId
+    });
+    const results = await queue.suspendQueueById();
+
+    if (results)
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?action=suspend'));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
 };
 
 exports.viewCreateQueue = async (req, res, next) => {
