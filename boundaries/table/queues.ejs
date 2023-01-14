@@ -108,7 +108,18 @@
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-warning mr-2" title="Skip Queue Number"><i class="fas fa-bell-slash"></i></button>
                           </form>
-                          <a href="#" class="btn btn-primary mr-2" title="Start Session"><i class="fas fa-hand-holding-medical"></i></a>
+                          <% if (_userRole === 'Dentist') { %>
+                          <% let confirmationMsg = "" %>
+                          <% if (_staffId === queueData[i].staffId) { %>
+                          <% confirmationMsg = "Do you want to begin treatment session for queue no." + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
+                          <% } else { %>
+                          <% confirmationMsg = "WARNING: You are not the assigned doctor. \\n\\nDo you want to begin treatment session for queue no. " + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
+                          <% } %>
+                          <form action="#" method="post" onsubmit="return confirm('<%= confirmationMsg %>');">
+                            <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
+                            <button type="submit" class="btn btn-primary mr-2" title="Start Session"><i class="fas fa-hand-holding-medical"></i></button>
+                          </form>
+                          <% } %>
                         </td>
                       </tr>
                       <% } %>
