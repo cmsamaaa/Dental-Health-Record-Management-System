@@ -262,23 +262,12 @@
             <p>Appointments</p>
           </a>
         </li>
-        <li class="nav-header">DENTAL</li>
-        <li class="nav-item <% if(arrPath[1] === 'dentist' && arrPath[2] === 'service') { %>menu-open<% } %>">
-          <a href="#" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'service') { %>active<% } %>">
-            <i class="nav-icon fas fa-notes-medical"></i>
-            <p>
-              Services
-              <i class="right fas fa-angle-left"></i>
-            </p>
+        <li class="nav-header">CLINIC</li>
+        <li class="nav-item">
+          <a href="/dentist/queue/view-all" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'queue') { %>active<% } %>">
+            <i class="nav-icon fas fa-ticket-alt"></i>
+            <p>Queue</p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link <% if(path === '/dentist/service/view-all') { %>active<% } %>">
-                <i class="nav-icon fas fa-list"></i>
-                <p>View All</p>
-              </a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item <% if(arrPath[1] === 'dentist' && arrPath[2] === 'treatment') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'treatment') { %>active<% } %>">

@@ -147,15 +147,16 @@ exports.viewClinicQueues = async (req, res, next) => {
     const user = req.url.split('/')[1];
 
     const pageTitle = 'Queue';
-    const path = '/admin/queue/view-all';
+    const path = '/' + user + '/queue/view-all';
 
     let results;
-    if (user === 'admin') {
-        const queue = new Queue({
-            clinicId: req.session.userInfo.clinicId
-        });
+    const queue = new Queue({
+        clinicId: req.session.userInfo.clinicId
+    });
+    if (user === 'admin')
         results = await queue.getClinicQueue();
-    }
+    else if (user === 'dentist')
+        results = await queue.getDentistQueue();
 
     if (!_.isEmpty(results)) {
         res.status(HTTP_STATUS.OK).render('table/queues', {

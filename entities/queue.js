@@ -123,6 +123,36 @@ class Queue {
     }
 
     /**
+     * Retrieves all `queue` with appointments of a specific dentist
+     * Returns: Object
+     * */
+    async getDentistQueue() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                .andWhere(tableName + '.clinicId', this.clinicId)
+                .andWhere('queueStatus', 'Waiting')
+                .innerJoin('appointments', 'queues.apptId', 'appointments.apptId')
+                .innerJoin('staffs', 'appointments.staffId', 'staffs.staffId')
+                .innerJoin('users', 'staffs.userId', 'users.userId');
+
+            result = _.map(result, (queue) => {
+                queue.queueDateTime = moment(queue.queueDateTime).format('YYYY-MM-DD HH:mm:ss');
+                queue.startDateTime = moment(queue.startDateTime).format('YYYY-MM-DD HH:mm:ss');
+                queue.endDateTime = moment(queue.endDateTime).format('YYYY-MM-DD HH:mm:ss');
+                return queue;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves current count of `queue` where queueDate = today & queueStatus = Waiting
      * Returns: Integer
      * */
