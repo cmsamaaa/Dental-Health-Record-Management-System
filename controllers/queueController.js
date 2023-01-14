@@ -190,7 +190,6 @@ exports.viewEditQueue_Admin = async (req, res, next) => {
             patientId: queueData.patientId
         });
         const appointmentData = await appointment.getUpcomingApptByClinicAndPatient();
-        console.log(appointmentData);
 
         if (!_.isEmpty(appointmentData))
             res.status(HTTP_STATUS.OK).render('form/queue', {
