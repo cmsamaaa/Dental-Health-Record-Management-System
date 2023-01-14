@@ -59,7 +59,7 @@
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-warning mr-2" title="Skip Queue Number"><i class="fas fa-bell-slash"></i></button>
                           </form>
-                          <a href="/admin/queue/edit/<%= queueData[i].queueId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <a href="/admin/queue/edit/<%= queueData[i].queueId %>" class="btn btn-primary mr-2" title="Link Appointment"><i class="fas fa-calendar-alt"></i></a>
                           <form action="/admin/queue/suspend" method="post" onsubmit="return confirm('Are you sure you want to cancel queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %>?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-danger mr-2" title="Cancel Queue Number"><i class="fas fa-times"></i></button>

@@ -37,7 +37,7 @@
                 <div class="card-header">
                   <h3 class="card-title text-capitalize">
                     <%= actionText === 'create' ? 'Get Queue Number' : '' %>
-                    <%= actionText === 'edit' ? 'Update Queue Record' : '' %>
+                    <%= actionText === 'edit' ? 'Link Appointment' : '' %>
                   </h3>
                 </div>
                 <!-- /.card-header -->
@@ -47,6 +47,8 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
+
+                          <% if (_userRole === 'Patient') { %>
                           <label for="ddl_Clinic">List of Clinics<span style="color:red;">*</span></label>
                           <select id="ddl_Clinic" name="clinicId" class="form-control select2bs4" style="width: 100%;" required>
                             <option selected="selected" disabled>Find clinic...</option>
@@ -54,6 +56,27 @@
                             <option value="<%= clinicData[i].clinicId %>"><%= clinicData[i].clinicId %>. <%= clinicData[i].clinicName %> | <%= clinicData[i].clinicAddress + ' #' +  clinicData[i].clinicUnit + ' (S)' + clinicData[i].clinicPostal %></option>
                             <% } %>
                           </select>
+                          <% } %>
+
+                          <% if (_userRole === 'Administrator') { %>
+                          <label for="ddl_Appointment">Select an appointment<span style="color:red;">*</span></label>
+                          <select id="ddl_Appointment" name="apptId" class="form-control select2bs4" style="width: 100%;" required>
+                            <option selected="selected" disabled>Find appointment...</option>
+                            <% for (let i = 0; i < appointmentData.length; i++) { %>
+                            <option value="<%= appointmentData[i].apptId %>"><%= appointmentData[i].startDateTime %> | <%= appointmentData[i].status %></option>
+                            <% } %>
+                          </select>
+                          <% if (_userRole === 'Administrator') { %>
+                          <div class="mt-4 text-center">
+                            <h5>- OR -</h5>
+                            <a href="/admin/appointment/create" class="btn btn-outline-primary mt-2">
+                              <i class="fas fa-plus mr-2"></i>
+                              New Appointment
+                            </a>
+                          </div>
+                          <% } %>
+                          <% } %>
+
                         </div>
                       </div>
                     </div>
@@ -61,7 +84,12 @@
                   <!-- /.card-body -->
 
                   <div class="card-footer text-right">
+                    <% if (_userRole === 'Patient') { %>
                     <input type="hidden" name="patientId" value="<%= profileData.patientId %>">
+                    <% } %>
+                    <% if (_userRole === 'Administrator') { %>
+                    <input type="hidden" name="queueId" value="<%= queueData.queueId %>">
+                    <% } %>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>

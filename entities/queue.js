@@ -49,7 +49,28 @@ class Queue {
     }
 
     /**
-     * Retrieves existing patient `queue`
+     * Retrieves existing patient `queue` info
+     * Returns: Object
+     * */
+    async getPatientQueueInformation() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('queueId', this.queueId)
+                .innerJoin('patients', 'patients.patientId', 'queues.patientId')
+                .innerJoin('users', 'users.userId', 'patients.userId')
+                .first();
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves existing patient `queue` by patientId
      * Returns: Object
      * */
     async getPatientQueue() {
@@ -121,6 +142,26 @@ class Queue {
 
     //     return result.inQueue;
     // }
+
+    /**
+     * Update a `queue` apptId.
+     * Used by administrators to link appt with queue no.
+     * Returns: Object
+     * */
+    async linkQueueWithApptId() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                apptId: this.apptId
+            }).where('queueId', this.queueId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
 
     /**
      * Update a `queue` record status to 'Cancelled'.

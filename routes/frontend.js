@@ -60,6 +60,7 @@ router.get('/admin/patient/view/:userId', routeAuth.setSession, routeAuth.isAuth
 
 // Queue
 router.get('/admin/queue/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.viewClinicQueues);
+router.get('/admin/queue/edit/:queueId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.viewEditQueue_Admin);
 
 // Appointment
 router.get('/admin/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewCreateAppointment);

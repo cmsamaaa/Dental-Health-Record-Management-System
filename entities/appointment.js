@@ -150,6 +150,33 @@ class Appointment {
     }
 
     /**
+     * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime >= today
+     * Returns: JSON[]
+     * */
+    async getUpcomingApptByClinicAndPatient() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('startDateTime', '>=', new Date())
+                .andWhere('clinicId', this.clinicId)
+                .andWhere('patientId', this.patientId)
+                .orderBy('startDateTime', 'asc');
+
+            result = _.map(result, (appt) => {
+                appt.startDateTime = moment(appt.startDateTime).format('YYYY-MM-DD HH:mm:ss');
+                appt.endDateTime = moment(appt.endDateTime).format('YYYY-MM-DD HH:mm:ss');
+                return appt;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime < today
      * Returns: JSON[]
      * */

@@ -4,6 +4,7 @@ const request = require('async-request');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 const Queue = require("../entities/queue");
+const Appointment = require('../entities/appointment');
 
 exports.createQueue = async (req, res, next) => {
     const user = req.url.split('/')[1];
@@ -22,6 +23,19 @@ exports.createQueue = async (req, res, next) => {
     }
     else
         res.redirect(parse_uri.parse(req, '/' + user + '/queue/create?error=true'));
+};
+
+exports.editQueue_Admin = async (req, res, next) => {
+    const queue = new Queue({
+        queueId: req.body.queueId,
+        apptId: req.body.apptId
+    });
+    const results = await queue.linkQueueWithApptId();
+
+    if (results)
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?action=edit'));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
 };
 
 exports.suspendQueue = async (req, res, next) => {
@@ -157,5 +171,48 @@ exports.viewClinicQueues = async (req, res, next) => {
             path: path,
             query: req.query,
             queueData: []
+        });
+};
+
+exports.viewEditQueue_Admin = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+    const title = 'Queue';
+    const path = '/' + user + '/queue/edit';
+
+    const queue = new Queue({
+        queueId: req.params.queueId
+    });
+    const queueData = await queue.getPatientQueueInformation();
+
+    if (!_.isEmpty(queueData)) {
+        const appointment = new Appointment({
+            clinicId: queueData.clinicId,
+            patientId: queueData.patientId
+        });
+        const appointmentData = await appointment.getUpcomingApptByClinicAndPatient();
+        console.log(appointmentData);
+
+        if (!_.isEmpty(appointmentData))
+            res.status(HTTP_STATUS.OK).render('form/queue', {
+                pageTitle: title,
+                path: path,
+                query: req.query,
+                queueData: queueData,
+                appointmentData: appointmentData
+            });
+        else
+            res.status(HTTP_STATUS.NOT_FOUND).render('form/queue', {
+                pageTitle: title,
+                path: path,
+                query: req.query,
+                queueData: queueData,
+                appointmentData: []
+            });
+    }
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+            pageTitle: title,
+            path: path,
+            query: req.query
         });
 };
