@@ -116,3 +116,34 @@ exports.viewPatientQueueNumber = async (req, res, next) => {
             query: req.query
         });
 };
+
+exports.viewClinicQueues = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+
+    const pageTitle = 'Queue';
+    const path = '/admin/queue/view-all';
+
+    let results;
+    if (user === 'admin') {
+        const queue = new Queue({
+            clinicId: req.session.userInfo.clinicId
+        });
+        results = await queue.getClinicQueue();
+    }
+
+    if (!_.isEmpty(results)) {
+        res.status(HTTP_STATUS.OK).render('table/queues', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            queueData: results
+        });
+    }
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).render('table/queues', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            queueData: []
+        });
+};

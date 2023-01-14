@@ -1,6 +1,7 @@
 const db = require('./db');
-const tableName = 'queue';
+const tableName = 'queues';
 
+const _ = require('lodash');
 const moment = require('moment');
 
 class Queue {
@@ -60,6 +61,37 @@ class Queue {
                 .andWhere('queueStatus', 'Waiting')
                 .count('queueNo', { as: 'inQueue' })
                 .first();
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `queue` of a specific clinic
+     * Returns: Object
+     * */
+    async getClinicQueue() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                .andWhere('queues.clinicId', this.clinicId)
+                .andWhere('queueStatus', 'Waiting')
+                .innerJoin('clinics', 'queues.clinicId', 'clinics.clinicId')
+                .innerJoin('patients', 'queues.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .leftJoin('appointments', 'queues.apptId', 'appointments.apptId');
+
+            result = _.map(result, (queue) => {
+                queue.queueDateTime = moment(queue.queueDateTime).format('YYYY-MM-DD HH:mm:ss');
+                queue.startDateTime = moment(queue.startDateTime).format('YYYY-MM-DD HH:mm:ss');
+                queue.endDateTime = moment(queue.endDateTime).format('YYYY-MM-DD HH:mm:ss');
+                return queue;
+            });
         }
         catch (e) {
             console.error(e);

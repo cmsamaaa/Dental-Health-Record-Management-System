@@ -58,6 +58,9 @@ router.get('/admin/patient/edit/:userId', routeAuth.setSession, routeAuth.isAuth
 router.get('/admin/patient/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, patientController.viewPatients);
 router.get('/admin/patient/view/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, patientController.viewPatient);
 
+// Queue
+router.get('/admin/queue/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.viewClinicQueues);
+
 // Appointment
 router.get('/admin/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewCreateAppointment);
 router.get('/admin/appointment/edit/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.viewEditAppointment);
