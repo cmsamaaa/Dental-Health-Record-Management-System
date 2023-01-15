@@ -7,7 +7,7 @@ const moment = require('moment');
 class Queue {
     queueId;
     queueNo;
-    queueStatus; // Waiting, In Session, Payment, Completed, Missed, Cancelled
+    queueStatus; // Waiting, Skipped, In Session, Payment, Completed, Missed, Cancelled
     queueDateTime;
     clinicId;
     patientId;
@@ -204,6 +204,26 @@ class Queue {
             result = await db(tableName).update({
                 queueStatus: this.queueStatus
             }).where('queueId', this.queueId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update all `queue` record status to `Missed` where endDateTime < today & status is `Upcoming`.
+     * Can be used to update queue status.
+     * Returns: Object
+     * */
+    async updateAllMissedQueue() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: 'Missed'
+            }).where('queueDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00')).andWhere('queueStatus', ['Waiting', 'Skipped']);
         }
         catch (e) {
             console.error(e);
