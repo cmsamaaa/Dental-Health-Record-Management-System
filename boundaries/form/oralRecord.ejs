@@ -1,0 +1,101 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path === '/dentist/oralrecord/create' ? 'create' : 'edit' %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Flash Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize"><%= actionText %> Oral Record</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="<%= path %>" method="post">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="tb_teethrecord">Select Teeth </label>
+                          <% for(let i = 1; i < 33; i++) { %>
+                          <input type="checkbox" name="recordTeeth" value="<%= i %>"> <%= i %>
+                          <% } %>
+                        </div>
+                      </div>
+                    </div>
+                        <div class="form-group">
+                          <label for="tb_TeethDesc">Teeth Description</label>
+                          <textarea class="form-control" name="recordDescription" placeholder="Add description here" rows="4" required></textarea>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tb_CreatedAt">Created At</label>
+                              <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="<%= new Date().toISOString().slice(0,10) %>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer text-right">
+                    <input type="hidden" name="patientId" value="<%= patientId %>">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- disabled SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- bs-custom-file-input -->
+  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      bsCustomFileInput.init();
+    });
+  </script>
+</body>
+
+</html>

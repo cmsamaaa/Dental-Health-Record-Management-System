@@ -33,10 +33,12 @@ exports.register = async (req, res, next) => {
                 role: "Administrator",
                 clinicId: results
             });
-            const test = await staff.registerStaff();
+            const addSuperAdmin = await staff.registerStaff();
 
-            if (!_.isEmpty(test))
+            if (!_.isEmpty(addSuperAdmin))
                 res.redirect(parse_uri.parse(req, '/staff/login'));
+            else
+                res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
         }
         else
             res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));

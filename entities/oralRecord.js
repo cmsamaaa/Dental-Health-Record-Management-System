@@ -28,7 +28,7 @@ class oralRecord {
                 recordTeeth: this.recordTeeth,
                 recordDescription: this.recordDescription,
                 recordCreatedAt: this.recordCreatedAt,
-                patientId: this.patientId
+                patientId: this.patientId ? this.patientId : null
             });
         }
         catch (e) {
