@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const moment = require('moment');
 const request = require('request');
+const async_request = require('async-request');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 const Appointment = require("../entities/appointment");
@@ -397,4 +398,35 @@ exports.viewAppointment = async (req, res, next) => {
             });
         }
     });
+};
+
+exports.viewInSessionAppointment = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+
+    const title = 'Appointment';
+    const path = '/' + user + '/appointment/in-session';
+
+    let appointment = new Appointment({
+        staffId: req.session.userInfo.staffId
+    });
+    const appointmentData = await appointment.getDentistCurrentAppointment();
+
+    if (!_.isEmpty(appointmentData)) {
+        const dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + appointmentData.staffId));
+
+        if (dentistResponse.statusCode === HTTP_STATUS.OK) {
+            res.status(HTTP_STATUS.OK).render('detail/appointment_in_session', {
+                pageTitle: title,
+                path: path,
+                query: req.query,
+                appointmentData: appointmentData,
+                userData: appointmentData,
+                dentistData: JSON.parse(dentistResponse.body)
+            });
+        }
+        else
+            res.redirect(parse_uri.parse(req, '/' + user + '/appointment/view-all'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/' + user + '/appointment/view-all'));
 };

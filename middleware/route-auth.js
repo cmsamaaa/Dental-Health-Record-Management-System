@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const Appointment = require("../entities/appointment");
+
 exports.isAuth = (req, res, next) => {
     if (!req.session.isLoggedIn)
         return res.redirect('/login');
@@ -37,9 +40,21 @@ exports.isAdmin = (req, res, next) => {
     next();
 };
 
-exports.isDentist = (req, res, next) => {
+exports.isDentist = async (req, res, next) => {
     if (req.session.userRole !== 'Dentist' && req.session.userRole !== 'Dental Assistant') {
         return res.redirect('/');
     }
+    else {
+        let appointment = new Appointment({
+            staffId: req.session.userInfo.staffId
+        });
+        const check = await appointment.getDentistCurrentAppointment();
+
+        if (!_.isEmpty(check))
+            res.locals._inSession = true;
+        else
+            res.locals._inSession = false;
+    }
+
     next();
 };

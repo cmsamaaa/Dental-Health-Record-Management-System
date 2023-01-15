@@ -1,0 +1,4 @@
+.nav-link.active.inSession {
+    background-color: #FFD700 !important;
+    color: #343a40 !important;
+}

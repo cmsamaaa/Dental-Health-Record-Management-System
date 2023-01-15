@@ -118,7 +118,7 @@ router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isAu
 router.get('/dentist/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicController.viewClinicInfo);
 router.get('/dentist/appointment/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, statusMiddleware.updateMissedAppt, appointmentController.viewAppointments);
 router.get('/dentist/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, statusMiddleware.updateMissedAppt, appointmentController.viewAppointment);
-router.get('/dentist/appointment/session', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewAppointment);
+router.get('/dentist/appointment/in-session', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, appointmentController.viewInSessionAppointment);
 
 // Queue
 router.get('/dentist/queue/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, statusMiddleware.updateMissedQueue, queueController.viewClinicQueues);

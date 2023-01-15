@@ -263,6 +263,14 @@
           </a>
         </li>
         <li class="nav-header">CLINIC</li>
+        <% if (_inSession) { %>
+        <li class="nav-item">
+          <a href="/dentist/appointment/in-session" class="nav-link active <% if(path !== '/dentist/appointment/in-session') { %>inSession<% } %>">
+            <i class="nav-icon fas fa-hand-holding-medical"></i>
+            <p>Appointment In-Session</p>
+          </a>
+        </li>
+        <% } %>
         <li class="nav-item">
           <a href="/dentist/queue/view-all" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'queue') { %>active<% } %>">
             <i class="nav-icon fas fa-ticket-alt"></i>

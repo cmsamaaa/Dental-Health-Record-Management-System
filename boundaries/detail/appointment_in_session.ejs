@@ -1,0 +1,139 @@
+<%- include('../includes/head.ejs') %>
+
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Treatments</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4>Under development...</h4>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row mt-4 mb-4">
+            <div class="col-md-12">
+              <button id="btnAppointmentSummary" class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#divAppointmentSummary" aria-expanded="false" aria-controls="divAppointmentSummary">
+                <i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;
+                Appointment Summary
+              </button>
+            </div>
+          </div>
+
+          <div id="divAppointmentSummary" class="collapse">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Appointment Summary</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- form start -->
+                  <form>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="tb_firstName">First Name:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_firstName" name="firstName" tabindex="1" value="<%= appointmentData.firstName %>" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="tb_NRIC">Patient's NRIC:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_NRIC" name="nric" tabindex="3" value="<%= appointmentData.nric %>" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="tb_Dentist">Dentist:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_Dentist" name="name" tabindex="5" value="Dr. <%= dentistData.firstName + ' ' + dentistData.lastName %>" disabled>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="tb_lastName">Last Name (Surname):</label>
+                            <input type="text" class="form-control-plaintext" id="tb_lastName" name="lastName" tabindex="2" value="<%= appointmentData.lastName %>" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="tb_ClinicName">Clinic Name:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="clinicName" tabindex="4" value="<%= dentistData.clinicName %>" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="tb_ApptDateTime">Appointment Date & Time:</label>
+                            <input type="text" class="form-control-plaintext" id="tb_ApptDateTime" name="startDateTime" tabindex="6" value="<%= appointmentData.startDateTime %>" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </form>
+                </div>
+                <!-- /.card -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+
+          <!-- Patient Details Card -->
+          <%- include('../includes/patient-card.ejs') %>
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+
+  <script>
+    $('#btnAppointmentSummary').click(function() {
+      $(this).toggleClass('btn-outline-primary').toggleClass('btn-primary');
+      $(this).find('i').toggleClass('fa-plus').toggleClass('fa-minus');
+    });
+  </script>
+</body>
+
+</html>

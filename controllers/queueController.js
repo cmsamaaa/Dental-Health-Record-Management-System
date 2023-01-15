@@ -138,7 +138,7 @@ exports.startSession = async (req, res, next) => {
             const queueResult = await queue.updateQueueStatus();
 
             if (queueResult)
-                res.redirect(parse_uri.parse(req, '/dentist/appointment/session/' + req.body.apptId));
+                res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session'));
             else
                 res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));
         }

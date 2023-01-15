@@ -320,14 +320,12 @@ class Appointment {
                 .andWhere('status', 'In Session')
                 .first();
 
-            if (!_.isEmpty)
-                result = _.map(result, (appointment) => {
-                    appointment.DOB = moment(appointment.DOB).format('YYYY-MM-DD');
-                    appointment.startDateTime = moment(appointment.startDateTime).format('YYYY-MM-DD HH:mm');
-                    appointment.endDateTime = moment(appointment.endDateTime).format('YYYY-MM-DD HH:mm');
-                    appointment = _.omit(appointment, 'password');
-                    return appointment;
-                });
+            if (!_.isEmpty(result)) {
+                result.DOB = moment(result.DOB).format('YYYY-MM-DD');
+                result.startDateTime = moment(result.startDateTime).format('YYYY-MM-DD HH:mm');
+                result.endDateTime = moment(result.endDateTime).format('YYYY-MM-DD HH:mm');
+                result = _.omit(result, 'password');
+            }
         }
         catch (e) {
             console.error(e);
