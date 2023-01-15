@@ -123,7 +123,7 @@ class Queue {
     }
 
     /**
-     * Retrieves all `queue` with appointments of a specific dentist
+     * Retrieves all `queue` with appointments for dentists
      * Returns: Object
      * */
     async getDentistQueue() {
