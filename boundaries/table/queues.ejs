@@ -52,15 +52,17 @@
                         <td><%= queueData[i].startDateTime === 'Invalid date' ? 'No appointment linked yet' : queueData[i].startDateTime %></td>
                         <td><%= queueData[i].queueStatus %></td>
                         <td class="d-flex">
-                          <form action="#" method="post" onsubmit="return confirm('Do you want to call queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> next?');">
+                          <form action="/admin/queue/call" method="post" onsubmit="return confirm('Do you want to call queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> next?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-success mr-2" title="Call Queue Number"><i class="fas fa-bell"></i></button>
                           </form>
-                          <form action="#" method="post" onsubmit="return confirm('Do you want to add queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> to the missed list?');">
+                          <% if (queueData[i].queueStatus !== 'Skipped') { %>
+                          <form action="/admin/queue/skip" method="post" onsubmit="return confirm('Do you want to add queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> to the skipped list?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-warning mr-2" title="Skip Queue Number"><i class="fas fa-bell-slash"></i></button>
                           </form>
                           <a href="/admin/queue/edit/<%= queueData[i].queueId %>" class="btn btn-primary mr-2" title="Link Appointment"><i class="fas fa-calendar-alt"></i></a>
+                          <% } %>
                           <form action="/admin/queue/suspend" method="post" onsubmit="return confirm('Are you sure you want to cancel queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %>?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-danger mr-2" title="Cancel Queue Number"><i class="fas fa-times"></i></button>

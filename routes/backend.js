@@ -39,6 +39,8 @@ router.post('/admin/appointment/create', routeAuth.setSession, routeAuth.isAuth,
 router.post('/admin/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.editAppointment);
 router.post('/admin/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, appointmentController.suspendAppointment);
 
+router.post('/admin/queue/call', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.callQueue);
+router.post('/admin/queue/skip', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.skipQueue);
 router.post('/admin/queue/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.editQueue_Admin);
 router.post('/admin/queue/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, queueController.suspendQueueById);
 

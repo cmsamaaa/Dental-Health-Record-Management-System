@@ -7,7 +7,7 @@ const moment = require('moment');
 class Queue {
     queueId;
     queueNo;
-    queueStatus; // Waiting, Skipped, In Session, Payment, Completed, Missed, Cancelled
+    queueStatus; // Waiting, In Session, Payment, Completed, Skipped, Missed, Cancelled
     queueDateTime;
     clinicId;
     patientId;
@@ -101,7 +101,7 @@ class Queue {
             result = await db(tableName).select('*')
                 .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .andWhere('queues.clinicId', this.clinicId)
-                .andWhere('queueStatus', 'Waiting')
+                .andWhere((builder) => builder.whereIn('queueStatus', ['Waiting', 'Skipped']))
                 .innerJoin('clinics', 'queues.clinicId', 'clinics.clinicId')
                 .innerJoin('patients', 'queues.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
@@ -223,7 +223,48 @@ class Queue {
         try {
             result = await db(tableName).update({
                 queueStatus: 'Missed'
-            }).where('queueDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00')).andWhere('queueStatus', ['Waiting', 'Skipped']);
+            }).where('queueDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                .andWhere((builder) => builder.whereIn('queueStatus', ['Waiting', 'Skipped']));
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `queue` record status to 'Waiting'.
+     * Can be used to undo a skipped queue.
+     * Returns: Object
+     * */
+    async callQueue() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: 'Waiting'
+            }).where('queueId', this.queueId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `queue` record status to 'Skipped'.
+     * Can be used to skip queue.
+     * Returns: Object
+     * */
+    async skipQueue() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: 'Skipped'
+            }).where('queueId', this.queueId);
         }
         catch (e) {
             console.error(e);

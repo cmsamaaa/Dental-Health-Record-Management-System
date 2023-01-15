@@ -51,6 +51,33 @@ exports.suspendQueue = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/patient/queue?action=cancel&error=true'));
 };
 
+exports.callQueue = async (req, res, next) => {
+    const queue = new Queue({
+        queueId: req.body.queueId
+    });
+    const results = await queue.callQueue();
+
+    if (results) {
+        //TODO: Flash number on display queue number page
+
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?action=call-queue'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
+};
+
+exports.skipQueue = async (req, res, next) => {
+    const queue = new Queue({
+        queueId: req.body.queueId
+    });
+    const results = await queue.skipQueue();
+
+    if (results)
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?action=skip-queue'));
+    else
+        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
+};
+
 exports.suspendQueueById = async (req, res, next) => {
     const queue = new Queue({
         queueId: req.body.queueId
