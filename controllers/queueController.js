@@ -52,6 +52,8 @@ exports.suspendQueue = async (req, res, next) => {
 };
 
 exports.callQueue = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+
     const queue = new Queue({
         queueId: req.body.queueId
     });
@@ -60,22 +62,24 @@ exports.callQueue = async (req, res, next) => {
     if (results) {
         //TODO: Flash number on display queue number page
 
-        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?action=call-queue'));
+        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?action=call-queue'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
+        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?error=true'));
 };
 
 exports.skipQueue = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+
     const queue = new Queue({
         queueId: req.body.queueId
     });
     const results = await queue.skipQueue();
 
     if (results)
-        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?action=skip-queue'));
+        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?action=skip-queue'));
     else
-        res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
+        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?error=true'));
 };
 
 exports.suspendQueueById = async (req, res, next) => {

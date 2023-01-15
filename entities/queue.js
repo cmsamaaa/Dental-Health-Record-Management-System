@@ -132,7 +132,7 @@ class Queue {
             result = await db(tableName).select('*')
                 .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .andWhere(tableName + '.clinicId', this.clinicId)
-                .andWhere('queueStatus', 'Waiting')
+                .andWhere((builder) => builder.whereIn('queueStatus', ['Waiting', 'Skipped']))
                 .innerJoin('appointments', 'queues.apptId', 'appointments.apptId')
                 .innerJoin('staffs', 'appointments.staffId', 'staffs.staffId')
                 .innerJoin('users', 'staffs.userId', 'users.userId');

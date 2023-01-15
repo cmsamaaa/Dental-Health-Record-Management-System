@@ -102,18 +102,19 @@
                         <td><%= 'Dr. ' + queueData[i].firstName + ' ' + queueData[i].lastName %></td>
                         <td><%= queueData[i].queueStatus %></td>
                         <td class="d-flex">
-                          <form action="#" method="post" onsubmit="return confirm('Do you want to call queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> next?');">
+                          <form action="/dentist/queue/call" method="post" onsubmit="return confirm('Do you want to call queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> next?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-success mr-2" title="Call Queue Number"><i class="fas fa-bell"></i></button>
                           </form>
-                          <form action="#" method="post" onsubmit="return confirm('Do you want to add queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> to the missed list?');">
+                          <% if (queueData[i].queueStatus !== 'Skipped') { %>
+                          <form action="/dentist/queue/skip" method="post" onsubmit="return confirm('Do you want to add queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> to the skipped list?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
                             <button type="submit" class="btn btn-warning mr-2" title="Skip Queue Number"><i class="fas fa-bell-slash"></i></button>
                           </form>
                           <% if (_userRole === 'Dentist') { %>
                           <% let confirmationMsg = "" %>
                           <% if (_staffId === queueData[i].staffId) { %>
-                          <% confirmationMsg = "Do you want to begin treatment session for queue no." + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
+                          <% confirmationMsg = "Do you want to begin session for queue no." + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
                           <% } else { %>
                           <% confirmationMsg = "WARNING: You are not the assigned doctor. \\n\\nDo you want to begin treatment session for queue no. " + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
                           <% } %>
@@ -123,6 +124,7 @@
                             <input type="hidden" name="staffId" value="<%= queueData[i].staffId %>">
                             <button type="submit" class="btn btn-primary mr-2" title="Start Session"><i class="fas fa-hand-holding-medical"></i></button>
                           </form>
+                          <% } %>
                           <% } %>
                         </td>
                       </tr>
