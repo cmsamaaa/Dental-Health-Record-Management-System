@@ -10,7 +10,7 @@ class Appointment {
     startDateTime;
     endDateTime;
     followUpApptId;
-    status;
+    status;     // Upcoming, In Session, Payment, Completed, Missed, Cancelled
     patientId;
     staffId;
     clinicId;
@@ -317,6 +317,27 @@ class Appointment {
             result = await db(tableName).update({
                 startDateTime: dateTimeFormat.parse(this.startDateTime),
                 endDateTime: dateTimeFormat.parseWithAddition(this.startDateTime, 1, 30)
+            }).where('apptId', this.apptId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `appointment` record status & staffId (if not null)
+     * Can be used to update appointment.
+     * Returns: Object
+     * */
+    async updateAppointmentStatus() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                status: this.status,
+                staffId: this.staffId > 0 ? this.staffId : null
             }).where('apptId', this.apptId);
         }
         catch (e) {

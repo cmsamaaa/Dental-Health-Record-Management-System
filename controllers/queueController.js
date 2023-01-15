@@ -63,6 +63,32 @@ exports.suspendQueueById = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/admin/queue/view-all?error=true'));
 };
 
+exports.startSession = async (req, res, next) => {
+    const status = 'In Session';
+
+    const appointment = new Appointment({
+        apptId: req.body.apptId,
+        status: status,
+        staffId: req.body.staffId !== req.session.userInfo.staffId ? req.session.userInfo.staffId : 0
+    });
+    const apptResult = await appointment.updateAppointmentStatus();
+
+    if (apptResult) {
+        const queue = new Queue({
+            queueId: req.body.queueId,
+            queueStatus: status
+        });
+        const queueResult = await queue.updateQueueStatus();
+
+        if (queueResult)
+            res.redirect(parse_uri.parse(req, '/dentist/appointment/session/' + req.body.apptId));
+        else
+            res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));
+};
+
 exports.viewCreateQueue = async (req, res, next) => {
     const user = req.url.split('/')[1];
     const title = 'Queue';

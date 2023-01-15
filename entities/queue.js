@@ -7,7 +7,7 @@ const moment = require('moment');
 class Queue {
     queueId;
     queueNo;
-    queueStatus; // Waiting, Treatment, Payment, Completed, Missed, Cancelled
+    queueStatus; // Waiting, In Session, Payment, Completed, Missed, Cancelled
     queueDateTime;
     clinicId;
     patientId;
@@ -183,6 +183,26 @@ class Queue {
         try {
             result = await db(tableName).update({
                 apptId: this.apptId
+            }).where('queueId', this.queueId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `queue` record status.
+     * Can be used to change status of queue.
+     * Returns: Object
+     * */
+    async updateQueueStatus() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: this.queueStatus
             }).where('queueId', this.queueId);
         }
         catch (e) {

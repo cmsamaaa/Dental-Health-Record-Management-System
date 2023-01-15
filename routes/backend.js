@@ -64,6 +64,8 @@ router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAu
 
 router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
 
+router.post('/dentist/queue/start-session', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, queueController.startSession);
+
 router.post('/dentist/treatment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.createTreatment);
 router.post('/dentist/treatment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.editTreatment);
 router.post('/dentist/treatment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.suspendTreatment);
