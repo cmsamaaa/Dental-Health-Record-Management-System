@@ -54,32 +54,50 @@ exports.suspendQueue = async (req, res, next) => {
 exports.callQueue = async (req, res, next) => {
     const user = req.url.split('/')[1];
 
-    const queue = new Queue({
-        queueId: req.body.queueId
+    const appointment = new Appointment({
+        staffId: req.session.userInfo.staffId
     });
-    const results = await queue.callQueue();
+    const check = await appointment.getDentistCurrentAppointment();
 
-    if (results) {
-        //TODO: Flash number on display queue number page
+    if (!_.isEmpty(check))
+        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?queue=in-session'));
+    else {
+        const queue = new Queue({
+            queueId: req.body.queueId
+        });
+        const results = await queue.callQueue();
 
-        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?action=call-queue'));
+        if (results) {
+            //TODO: Flash number on display queue number page
+
+            res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?action=call-queue'));
+        }
+        else
+            res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?error=true'));
     }
-    else
-        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?error=true'));
 };
 
 exports.skipQueue = async (req, res, next) => {
     const user = req.url.split('/')[1];
 
-    const queue = new Queue({
-        queueId: req.body.queueId
+    const appointment = new Appointment({
+        staffId: req.session.userInfo.staffId
     });
-    const results = await queue.skipQueue();
+    const check = await appointment.getDentistCurrentAppointment();
 
-    if (results)
-        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?action=skip-queue'));
-    else
-        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?error=true'));
+    if (!_.isEmpty(check))
+        res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?queue=in-session'));
+    else {
+        const queue = new Queue({
+            queueId: req.body.queueId
+        });
+        const results = await queue.skipQueue();
+
+        if (results)
+            res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?action=skip-queue'));
+        else
+            res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?error=true'));
+    }
 };
 
 exports.suspendQueueById = async (req, res, next) => {
@@ -97,27 +115,36 @@ exports.suspendQueueById = async (req, res, next) => {
 exports.startSession = async (req, res, next) => {
     const status = 'In Session';
 
-    const appointment = new Appointment({
-        apptId: req.body.apptId,
-        status: status,
-        staffId: req.body.staffId !== req.session.userInfo.staffId ? req.session.userInfo.staffId : 0
+    let appointment = new Appointment({
+        staffId: req.session.userInfo.staffId
     });
-    const apptResult = await appointment.updateAppointmentStatus();
+    const check = await appointment.getDentistCurrentAppointment();
 
-    if (apptResult) {
-        const queue = new Queue({
-            queueId: req.body.queueId,
-            queueStatus: status
+    if (!_.isEmpty(check))
+        res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?queue=in-session'));
+    else {
+        appointment = new Appointment({
+            apptId: req.body.apptId,
+            status: status,
+            staffId: req.body.staffId !== req.session.userInfo.staffId ? req.session.userInfo.staffId : 0
         });
-        const queueResult = await queue.updateQueueStatus();
+        const apptResult = await appointment.updateAppointmentStatus();
 
-        if (queueResult)
-            res.redirect(parse_uri.parse(req, '/dentist/appointment/session/' + req.body.apptId));
+        if (apptResult) {
+            const queue = new Queue({
+                queueId: req.body.queueId,
+                queueStatus: status
+            });
+            const queueResult = await queue.updateQueueStatus();
+
+            if (queueResult)
+                res.redirect(parse_uri.parse(req, '/dentist/appointment/session/' + req.body.apptId));
+            else
+                res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));
+        }
         else
             res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));
     }
-    else
-        res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));
 };
 
 exports.viewCreateQueue = async (req, res, next) => {

@@ -307,6 +307,37 @@ class Appointment {
     }
 
     /**
+     * Retrieves one `appointment` inner join `patient` and `user` record with
+     * Returns: JSON Object
+     * */
+    async getDentistCurrentAppointment() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('staffId', this.staffId)
+                .andWhere('status', 'In Session')
+                .first();
+
+            if (!_.isEmpty)
+                result = _.map(result, (appointment) => {
+                    appointment.DOB = moment(appointment.DOB).format('YYYY-MM-DD');
+                    appointment.startDateTime = moment(appointment.startDateTime).format('YYYY-MM-DD HH:mm');
+                    appointment.endDateTime = moment(appointment.endDateTime).format('YYYY-MM-DD HH:mm');
+                    appointment = _.omit(appointment, 'password');
+                    return appointment;
+                });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Update a `appointment` record.
      * Can be used to update appointment.
      * Returns: Object

@@ -47,6 +47,13 @@
 </div>
 <% } %>
 
+<% if (query.queue === 'in-session') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  You have an appointment in-session! Please end that session before calling the next queue.
+</div>
+<% } %>
+
 <% if (query.error === 'true') { %>
 <div class="callout callout-danger">
   <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
