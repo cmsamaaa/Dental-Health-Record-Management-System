@@ -114,7 +114,7 @@
                           <% if (_userRole === 'Dentist') { %>
                           <% let confirmationMsg = "" %>
                           <% if (_staffId === queueData[i].staffId) { %>
-                          <% confirmationMsg = "Do you want to begin session for queue no." + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
+                          <% confirmationMsg = "Do you want to begin session for queue no. " + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
                           <% } else { %>
                           <% confirmationMsg = "WARNING: You are not the assigned doctor. \\n\\nDo you want to begin treatment session for queue no. " + String(queueData[i].queueNo).padStart(3, `0`) + "?" %>
                           <% } %>
