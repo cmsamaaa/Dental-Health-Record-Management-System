@@ -8,7 +8,7 @@ exports.isAuth = (req, res, next) => {
     next();
 };
 
-exports.setSession = (req, res, next) => {
+exports.setSession = async (req, res, next) => {
     res.locals._isLoggedIn = req.session.isLoggedIn ? true : false;
 
     if (req.session.isLoggedIn) {
@@ -21,6 +21,18 @@ exports.setSession = (req, res, next) => {
 
         if (req.session.userRole !== 'Patient')
             res.locals._staffId = req.session.userInfo.staffId;
+
+        if (req.session.userRole === 'Dentist' && req.session.userRole !== 'Dental Assistant') {
+            let appointment = new Appointment({
+                staffId: req.session.userInfo.staffId
+            });
+            const check = await appointment.getDentistCurrentAppointment();
+
+            if (!_.isEmpty(check))
+                res.locals._inSession = true;
+            else
+                res.locals._inSession = false;
+        }
     }
 
     next();
@@ -40,21 +52,9 @@ exports.isAdmin = (req, res, next) => {
     next();
 };
 
-exports.isDentist = async (req, res, next) => {
-    if (req.session.userRole !== 'Dentist' && req.session.userRole !== 'Dental Assistant') {
+exports.isDentist = (req, res, next) => {
+    if (req.session.userRole !== 'Dentist' && req.session.userRole !== 'Dental Assistant')
         return res.redirect('/');
-    }
-    else {
-        let appointment = new Appointment({
-            staffId: req.session.userInfo.staffId
-        });
-        const check = await appointment.getDentistCurrentAppointment();
-
-        if (!_.isEmpty(check))
-            res.locals._inSession = true;
-        else
-            res.locals._inSession = false;
-    }
 
     next();
 };
