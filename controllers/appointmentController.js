@@ -5,6 +5,8 @@ const async_request = require('async-request');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 const Appointment = require("../entities/appointment");
+const ClinicTreatment = require("../entities/clinicTreatment");
+const Treatment = require("../entities/treatment");
 
 exports.createAppointment = async (req, res, next) => {
     // api endpoint uri
@@ -406,22 +408,34 @@ exports.viewInSessionAppointment = async (req, res, next) => {
     const title = 'Appointment';
     const path = '/' + user + '/appointment/in-session';
 
+    // Get appointment in-session by staffId
     let appointment = new Appointment({
         staffId: req.session.userInfo.staffId
     });
     const appointmentData = await appointment.getDentistCurrentAppointment();
 
     if (!_.isEmpty(appointmentData)) {
+        // Get dentist info
         const dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + appointmentData.staffId));
 
         if (dentistResponse.statusCode === HTTP_STATUS.OK) {
+            // Get clinic's treatment data
+            const clinicTreatment = new ClinicTreatment({ clinicId: appointmentData.clinicId });
+            const clinicTreatmentData = await clinicTreatment.getAllActive();
+
+            // Get current appointment's treatment data
+            const treatment = new Treatment({ apptId: appointmentData.apptId });
+            const treatmentData = await treatment.getAllTreatments();
+
             res.status(HTTP_STATUS.OK).render('detail/appointment_in_session', {
                 pageTitle: title,
                 path: path,
                 query: req.query,
                 appointmentData: appointmentData,
                 userData: appointmentData,
-                dentistData: JSON.parse(dentistResponse.body)
+                dentistData: JSON.parse(dentistResponse.body),
+                clinicTreatmentData: !_.isEmpty(clinicTreatmentData) ? clinicTreatmentData : [],
+                treatmentData: !_.isEmpty(treatmentData) ? treatmentData : []
             });
         }
         else

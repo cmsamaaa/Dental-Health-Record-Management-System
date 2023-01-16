@@ -54,6 +54,25 @@ class ClinicTreatment {
     }
 
     /**
+     * Retrieves all `clinic_treatments` records by `clinicId`
+     * Returns: JSON[]
+     * */
+    async getAllActive() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('clinicId', this.clinicId)
+                .andWhere('isDeactivated', 0);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves a specific `clinic_treatments` value by `ctId`
      * Returns: JSON[]
      * */

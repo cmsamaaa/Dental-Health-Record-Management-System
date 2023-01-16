@@ -2,6 +2,11 @@
 
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+<!-- DataTables -->
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -24,24 +29,267 @@
 
           <div class="row">
             <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
               <!-- general form elements -->
-              <div class="card card-primary">
+              <div class="card">
                 <div class="card-header">
                   <h3 class="card-title text-capitalize">Treatments</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <h4>Under development...</h4>
-                    </div>
-                  </div>
+                  <table id="tbl_Treatments" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Treatment</th>
+                        <th>Price</th>
+                        <th>Treated Tooth(s)</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < treatmentData.length; i++) { %>
+                      <tr>
+                        <td><%= i + 1 %></td>
+                        <td><%= treatmentData[i].treatmentName %></td>
+                        <td><%= treatmentData[i].treatmentPrice %></td>
+                        <td><%= treatmentData[i].treatmentTeeth %></td>
+                        <td><%= treatmentData[i].treatmentStart %></td>
+                        <td><%= treatmentData[i].treatmentEnd !== 'Invalid date' ? treatmentData[i].treatmentEnd : 'In progress' %></td>
+                        <td class="d-flex">
+                          <a href="#" class="btn btn-primary mr-2" title="Update"><i class="fas fa-edit"></i></a>
+                          <a href="#" class="btn btn-success mr-2" title="Mark as Done"><i class="fas fa-check"></i></a>
+                          <% if (treatmentData[i].treatmentEnd === 'Invalid date') { %>
+                          <form action="#" method="post" onsubmit="return confirm('Do you really want to delete record #<%= i + 1 %>? This action is irreversible.');">
+                            <input type="hidden" name="treatmentId" value="<%= treatmentData[i].treatmentId %>">
+                            <button type="submit" class="btn btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                          </form>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Treatment</th>
+                        <th>Price</th>
+                        <th>Treated Tooth(s)</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Actions</th>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
                 <!-- /.card-body -->
+
+                <div class="card-footer text-right">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treatmentModal">
+                    Add Record
+                  </button>
+                </div>
               </div>
               <!-- /.card -->
             </div>
           </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="treatmentModal" tabindex="-1" aria-labelledby="treatmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <form action="/dentist/appointment/in-session/treatment/add" method="post" onsubmit="return ($('input.form-check-input:checkbox:checked').length > 0)">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="treatmentModalLabel">Add Treatment Record</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="ddl_Treatment">Treatment<span style="color:red;">*</span></label>
+                          <select id="ddl_Treatment" name="ctId" class="custom-select" required>
+                            <option selected="selected" value="" disabled>Select treatment...</option>
+                            <% for (let i = 0; i < clinicTreatmentData.length; i++) { %>
+                            <option value="<%= clinicTreatmentData[i].ctId %>"><%= clinicTreatmentData[i].ctName %> | <%= 'S$ ' + clinicTreatmentData[i].ctPrice %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <label>Treated Tooth(s)<span style="color:red;">*</span></label>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_1" value="1">
+                            <label class="form-check-label" for="cb_1">01</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_2" value="2">
+                            <label class="form-check-label" for="cb_2">02</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_3" value="3">
+                            <label class="form-check-label" for="cb_3">03</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_4" value="4">
+                            <label class="form-check-label" for="cb_4">04</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_5" value="5">
+                            <label class="form-check-label" for="cb_5">05</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_6" value="6">
+                            <label class="form-check-label" for="cb_6">06</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_7" value="7">
+                            <label class="form-check-label" for="cb_7">07</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_8" value="8">
+                            <label class="form-check-label" for="cb_8">08</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_9" value="9">
+                            <label class="form-check-label" for="cb_9">09</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_10" value="10">
+                            <label class="form-check-label" for="cb_10">10</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_11" value="11">
+                            <label class="form-check-label" for="cb_11">11</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_12" value="12">
+                            <label class="form-check-label" for="cb_12">12</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_13" value="13">
+                            <label class="form-check-label" for="cb_13">13</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_14" value="14">
+                            <label class="form-check-label" for="cb_14">14</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_15" value="15">
+                            <label class="form-check-label" for="cb_15">15</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_16" value="16">
+                            <label class="form-check-label" for="cb_16">16</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_17" value="17">
+                            <label class="form-check-label" for="cb_17">17</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_18" value="18">
+                            <label class="form-check-label" for="cb_18">18</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_19" value="19">
+                            <label class="form-check-label" for="cb_19">19</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_20" value="20">
+                            <label class="form-check-label" for="cb_20">20</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_21" value="21">
+                            <label class="form-check-label" for="cb_21">21</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_22" value="22">
+                            <label class="form-check-label" for="cb_22">22</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_23" value="23">
+                            <label class="form-check-label" for="cb_23">23</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_24" value="24">
+                            <label class="form-check-label" for="cb_24">24</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_25" value="25">
+                            <label class="form-check-label" for="cb_25">25</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_26" value="26">
+                            <label class="form-check-label" for="cb_26">26</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_27" value="27">
+                            <label class="form-check-label" for="cb_27">27</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_28" value="28">
+                            <label class="form-check-label" for="cb_28">28</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_29" value="29">
+                            <label class="form-check-label" for="cb_29">29</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_30" value="30">
+                            <label class="form-check-label" for="cb_30">30</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_31" value="31">
+                            <label class="form-check-label" for="cb_31">31</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="treatmentTeeth" type="checkbox" id="cb_32" value="32">
+                            <label class="form-check-label" for="cb_32">32</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="cb_All" value="All">
+                            <label class="form-check-label" for="cb_All">ALL</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="hidden" name="apptId" value="<%= appointmentData.apptId %>">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="btnSaveTreatment" type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- /Modal -->
 
           <hr>
 
@@ -122,6 +370,20 @@
   <!-- REQUIRED SCRIPTS -->
   <%- include('../includes/end-scripts.ejs') %>
 
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="/plugins/jszip/jszip.min.js"></script>
+  <script src="/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="/plugins/moment/moment.min.js"></script>
   <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
@@ -129,10 +391,76 @@
   <script src="/dist/js/demo.js"></script>
 
   <script>
+    $(function() {
+      $("#tbl_Treatments").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": [{
+            extend: 'copy',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'excel',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          "colvis"
+        ]
+      }).buttons().container().appendTo('#tbl_Treatments_wrapper .col-md-6:eq(0)');
+    });
+
+    // Expand & Collapse Appointment Summary
     $('#btnAppointmentSummary').click(function() {
       $(this).toggleClass('btn-outline-primary').toggleClass('btn-primary');
       $(this).find('i').toggleClass('fa-plus').toggleClass('fa-minus');
     });
+
+    // Toggle all tooth checkboxes
+    $('#cb_All').change(function() {
+      if (this.checked) {
+        for (let i = 1; i <= 32; i++) {
+          $('#cb_' + i).prop('checked', true);
+        }
+      } else {
+        for (let i = 1; i <= 32; i++) {
+          $('#cb_' + i).prop('checked', false);
+        }
+      }
+    });
+
+    // Toggle `all` checkbox off when other checkboxes changes
+    $('input.form-check-input:checkbox').change(function() {
+      if (this.id !== 'cb_All')
+        $('#cb_All').prop('checked', false);
+    })
+
+    // Custom Validation for "Add Treatment" form
+    $('#btnSaveTreatment').click(function() {
+      $('#ddl_Treatment')[0].setCustomValidity($('#ddl_Treatment').val() === null ? 'Please select a treatment in this list.' : '');
+      $('#cb_1')[0].setCustomValidity($('input.form-check-input:checkbox:checked').length === 0 ? 'Please select an item in this group.' : '');
+    })
   </script>
 </body>
 
