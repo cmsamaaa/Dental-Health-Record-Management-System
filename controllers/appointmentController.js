@@ -8,6 +8,7 @@ const Appointment = require("../entities/appointment");
 const ClinicTreatment = require("../entities/clinicTreatment");
 const Treatment = require("../entities/treatment");
 const Queue = require('../entities/queue');
+const Bill = require('../entities/bill');
 
 exports.createAppointment = async (req, res, next) => {
     // api endpoint uri
@@ -40,28 +41,57 @@ exports.editAppointment = async (req, res, next) => {
 exports.endInSessionAppointment = async (req, res, next) => {
     const status = 'Payment';
 
-    // Update queue record to payment phase
-    const queue = new Queue({
-        apptId: req.body.apptId,
-        queueStatus: status
+    const treatment = new Treatment({
+        apptId: req.body.apptId
     });
-    const queueData = await queue.endInSessionQueue();
 
-    if (queueData) {
-        // Update appointment record to payment phase
-        const appointment = new Appointment({
-            apptId: req.body.apptId,
-            status: status
-        });
-        const appointmentData = await appointment.updateAppointmentStatus();
+    // Check if all treatments are marked as done
+    const isInProgress = await treatment.checkInProgressTreatments();
 
-        if (appointmentData)
-            res.redirect(parse_uri.parse(req, '/dentist/queue/view-all'));
+    if (!isInProgress) {
+        // Get treatment price sum
+        const treatmentData = await treatment.getSumTreatmentPrice();
+
+        if (!_.isEmpty(treatmentData)) {
+            // Create bill record
+            const bill = new Bill({
+                billAmount: treatmentData.totalPrice,
+                apptId: req.body.apptId
+            });
+            const billData = await bill.createBill();
+
+            if (!_.isEmpty(billData)) {
+                // Update queue record to payment phase
+                const queue = new Queue({
+                    apptId: req.body.apptId,
+                    queueStatus: status
+                });
+                const queueData = await queue.endInSessionQueue();
+
+                if (queueData) {
+                    // Update appointment record to payment phase
+                    const appointment = new Appointment({
+                        apptId: req.body.apptId,
+                        status: status
+                    });
+                    const appointmentData = await appointment.updateAppointmentStatus();
+
+                    if (appointmentData)
+                        res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?apptStatus=payment'));
+                    else
+                        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=appointment&error=true'));
+                }
+                else
+                    res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=queue&error=true'));
+            }
+            else
+                res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=bill&error=true'));
+        }
         else
-            res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
+            res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=treatment&error=true'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?treatment=in-progress'));
 };
 
 exports.suspendAppointment = async (req, res, next) => {

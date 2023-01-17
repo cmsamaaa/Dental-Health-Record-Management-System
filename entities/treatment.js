@@ -69,6 +69,44 @@ class Treatment {
     }
 
     /**
+     * Retrieves sum of `treatment` prices
+     * Returns: JSON
+     * */
+    async getSumTreatmentPrice() {
+        let result;
+        try {
+            result = await db(tableName).select('apptId')
+                .sum('treatmentPrice', { as: 'totalPrice' })
+                .where('apptId', this.apptId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
+    /**
+     * Check if any `treatment` records are not completed yet
+     * Returns: Boolean
+     * */
+    async checkInProgressTreatments() {
+        let result;
+        try {
+            result = await db(tableName).select('*').
+                where('apptId', this.apptId)
+                .whereNull('treatmentEnd');
+        }
+        catch (e) {
+            console.error(e);
+            result = [];
+        }
+
+        return result.length > 0;
+    }
+
+    /**
      * Update a `treatment` record.
      * Can be used to update treatment record.
      * Returns: 0 or 1
