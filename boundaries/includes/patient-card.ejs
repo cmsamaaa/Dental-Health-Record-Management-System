@@ -116,14 +116,13 @@
               </div>            
             </div>
           </div>
-          <div class="card-footer text-right">
-          <form method="post" action="#">
-            <a href="#" class="btn btn-primary">Edit</a>
-          </form>
-          </div>
         </div>
-
-        <% }else{ %>
+        <div class="card-footer text-right">
+          <form method="post" action="#">
+            <a href="#" class="btn btn-primary">Edit Record</a>
+          </form>
+        </div>
+        <% } if (userData.status === 'Upcoming') { %>
         <div class="card-body">
           <div class="row">
             <div class="col-md-12">
@@ -141,6 +140,15 @@
               </div>            
             </div>
           </div>
+        </div>
+        <div class="card-footer text-right">
+          <form method="post" action="#">
+            <a href="/dentist/oralrecord/create/<%= oralrecordData.patientId %>" class="btn btn-primary">Create Record</a>
+          </form>
+        </div>
+        <% } if (userData.status === 'Missed') { %>
+        <div class="card-body">
+          <label>Not Recorded</label>
         </div>
         <% } %>
         <!-- /.card-body -->
