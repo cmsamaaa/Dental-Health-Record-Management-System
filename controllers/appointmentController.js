@@ -176,6 +176,7 @@ exports.viewEditAppointment = async (req, res, next) => {
                         path: '/' + user + '/appointment/edit',
                         query: req.query,
                         dentistData: JSON.parse(response.body),
+                        oralrecordData: userData,
                         userData: userData
                     });
                 }
@@ -233,6 +234,7 @@ exports.viewAppointments = async (req, res, next) => {
                 pageTitle: pageTitle,
                 path: path,
                 query: req.query,
+                oralrecordData: apptData,
                 appointmentData: apptData
             });
         }
@@ -273,6 +275,7 @@ exports.viewAppointments = async (req, res, next) => {
                 pageTitle: pageTitle,
                 path: path,
                 query: req.query,
+                oralrecordData: apptData,
                 appointmentData: apptData
             });
         }
@@ -379,6 +382,7 @@ exports.viewAppointment = async (req, res, next) => {
                         path: '/' + user + '/appointment/edit',
                         query: req.query,
                         dentistData: JSON.parse(response.body),
+                        oralrecordData: userData,
                         userData: userData,
                         userRole: user
                     });
@@ -433,6 +437,7 @@ exports.viewInSessionAppointment = async (req, res, next) => {
                 query: req.query,
                 appointmentData: appointmentData,
                 userData: appointmentData,
+                oralrecordData: appointmentData,
                 dentistData: JSON.parse(dentistResponse.body),
                 clinicTreatmentData: !_.isEmpty(clinicTreatmentData) ? clinicTreatmentData : [],
                 treatmentData: !_.isEmpty(treatmentData) ? treatmentData : []

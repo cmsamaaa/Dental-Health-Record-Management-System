@@ -55,6 +55,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .andWhere('staffId', this.staffId)
                 .orderBy('startDateTime', 'asc');
@@ -81,6 +82,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'asc');
@@ -107,6 +109,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('startDateTime', '>=', new Date())
                 .andWhere('staffId', this.staffId)
                 .orderBy('startDateTime', 'asc');
@@ -133,6 +136,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('startDateTime', '>=', new Date())
                 .andWhere(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'asc');
@@ -186,6 +190,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('startDateTime', '<', new Date())
                 .andWhere('staffId', this.staffId)
                 .orderBy('startDateTime', 'desc');
@@ -212,6 +217,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('startDateTime', '<', new Date())
                 .andWhere(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'desc');
@@ -238,6 +244,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('patients.userId', this.userId)
                 .andWhere('startDateTime', '>=', new Date())
                 .orderBy('startDateTime', 'asc');
@@ -290,10 +297,12 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('apptId', this.apptId);
 
             result = _.map(result, (patient) => {
                 patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
+                patient.recordCreatedAt = moment(patient.recordCreatedAt).format('DD-MM-YYYY');
                 patient = _.omit(patient, 'password');
                 return patient;
             });
@@ -316,6 +325,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
                 .where('staffId', this.staffId)
                 .andWhere('status', 'In Session')
                 .first();
@@ -324,6 +334,7 @@ class Appointment {
                 result.DOB = moment(result.DOB).format('YYYY-MM-DD');
                 result.startDateTime = moment(result.startDateTime).format('YYYY-MM-DD HH:mm');
                 result.endDateTime = moment(result.endDateTime).format('YYYY-MM-DD HH:mm');
+                result.recordCreatedAt = moment(result.recordCreatedAt).format('DD-MM-YYYY');
                 result = _.omit(result, 'password');
             }
         }
