@@ -69,14 +69,16 @@ class Treatment {
     }
 
     /**
-     * Update a `treatment` teeth record.
-     * Can be used to update treatment teeth record.
+     * Update a `treatment` record.
+     * Can be used to update treatment record.
      * Returns: Object
      * */
-    async updateTreatmentTeeth() {
+    async updateTreatment() {
         let result;
         try {
             result = await db(tableName).update({
+                treatmentName: this.treatmentName,
+                treatmentPrice: this.treatmentPrice,
                 treatmentTeeth: this.treatmentTeeth
             }).where('treatmentId', this.treatmentId);
         }
