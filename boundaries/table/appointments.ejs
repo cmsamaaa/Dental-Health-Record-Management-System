@@ -97,9 +97,6 @@
                         <% } else { %>
                         <td class="d-flex">
                           <a href="/dentist/appointment/view/<%= appointmentData[i].apptId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
-                          <% if(appointmentData[i].status === 'Upcoming') { %>
-                          <a href="/dentist/oralrecord/create/<%= appointmentData[i].patientId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
-                          <% } %>
                         </td>
                         <% } %>
                       </tr>
