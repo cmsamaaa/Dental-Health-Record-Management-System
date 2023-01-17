@@ -449,7 +449,7 @@
       const action = $(this).data('action');
       const treatmentId = $(this).data('id') ? $(this).data('id') : '';
       const treatmentName = $(this).data('treatment') ? $(this).data('treatment') : '';
-      const treatmentTeeth = $(this).data('teeth') ? $(this).data('teeth').split(',') : '';
+      const treatmentTeeth = $(this).data('teeth') ? JSON.parse('[' + $(this).data('teeth') + ']') : '';
 
       if (action === 'Add')
         $('#form_TreatmentRecord').attr('action', '/dentist/appointment/in-session/treatment/add');
