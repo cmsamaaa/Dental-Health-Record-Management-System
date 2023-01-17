@@ -95,7 +95,7 @@ class Treatment {
      * Can be used to end treatment.
      * Returns: 0 or 1
      * */
-    async endTreatment() {
+    async completeTreatment() {
         let result;
         try {
             result = await db(tableName).update({

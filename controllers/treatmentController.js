@@ -53,6 +53,19 @@ exports.editTreatment = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
 };
 
+exports.completeTreatment = async (req, res, next) => {
+    // Update treatment record as completed
+    const treatment = new Treatment({
+        treatmentId: req.body.treatmentId
+    });
+    const treatmentData = await treatment.completeTreatment();
+
+    if (treatmentData)
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=treatment&action=complete'));
+    else
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
+};
+
 exports.deleteTreatment = async (req, res, next) => {
     // Delete treatment record
     const treatment = new Treatment({

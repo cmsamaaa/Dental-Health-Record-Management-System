@@ -65,7 +65,7 @@
                           <button type="button" class="btn btn-primary mr-2" title="Update" data-toggle="modal" data-target="#treatmentModal" data-id="<%= treatmentData[i].treatmentId %>" data-action="Update" data-treatment="<%= treatmentData[i].treatmentName + ' | S$ ' + treatmentData[i].treatmentPrice %>" data-teeth="<%= treatmentData[i].treatmentTeeth %>">
                             <i class="fas fa-edit"></i>
                           </button>
-                          <form action="#" method="post" onsubmit="return confirm('Do you want to mark `<%= treatmentData[i].treatmentName %>` as done? This action is irreversible.');">
+                          <form action="/dentist/appointment/in-session/treatment/complete" method="post" onsubmit="return confirm('Do you want to mark `<%= treatmentData[i].treatmentName %>` as done? This action is irreversible.');">
                             <input type="hidden" name="treatmentId" value="<%= treatmentData[i].treatmentId %>">
                             <button type="submit" class="btn btn-success mr-2" title="Mark as Done"><i class="fas fa-check"></i></button>
                           </form>
