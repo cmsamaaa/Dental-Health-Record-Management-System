@@ -7,6 +7,7 @@ const HTTP_STATUS = require("../constants/http_status");
 const Appointment = require("../entities/appointment");
 const ClinicTreatment = require("../entities/clinicTreatment");
 const Treatment = require("../entities/treatment");
+const Queue = require('../entities/queue');
 
 exports.createAppointment = async (req, res, next) => {
     // api endpoint uri
@@ -34,6 +35,33 @@ exports.editAppointment = async (req, res, next) => {
         else
             res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
     });
+};
+
+exports.endInSessionAppointment = async (req, res, next) => {
+    const status = 'Payment';
+
+    // Update queue record to payment phase
+    const queue = new Queue({
+        apptId: req.body.apptId,
+        queueStatus: status
+    });
+    const queueData = await queue.endInSessionQueue();
+
+    if (queueData) {
+        // Update appointment record to payment phase
+        const appointment = new Appointment({
+            apptId: req.body.apptId,
+            status: status
+        });
+        const appointmentData = await appointment.updateAppointmentStatus();
+
+        if (appointmentData)
+            res.redirect(parse_uri.parse(req, '/dentist/queue/view-all'));
+        else
+            res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
 };
 
 exports.suspendAppointment = async (req, res, next) => {

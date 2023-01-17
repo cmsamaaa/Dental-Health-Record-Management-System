@@ -92,12 +92,25 @@
                       </tr>
                     </tfoot>
                   </table>
+                  <div class="row">
+                    <div class="col-md-12 text-right">
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#treatmentModal" data-action="Add">
+                        <i class="fas fa-file-medical"></i>
+                        &nbsp;&nbsp;
+                        Add Record
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <!-- /.card-body -->
 
+
                 <div class="card-footer text-right">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treatmentModal" data-action="Add">Add Record</button>
+                  <form action="/dentist/appointment/in-session/end" method="post" onsubmit="return confirm('Are you finished with this session? This action is irreversible.');">
+                    <input type="hidden" name="apptId" value="<%= appointmentData.apptId %>">
+                    <button type="submit" class="btn btn-success">End Session</button>
+                  </form>
                 </div>
               </div>
               <!-- /.card -->
@@ -298,17 +311,6 @@
           </div>
           <!-- /Modal -->
 
-          <hr>
-
-          <div class="row mt-4 mb-4">
-            <div class="col-md-12">
-              <button id="btnAppointmentSummary" class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#divAppointmentSummary" aria-expanded="false" aria-controls="divAppointmentSummary">
-                <i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;
-                Appointment Summary
-              </button>
-            </div>
-          </div>
-
           <div id="divAppointmentSummary" class="collapse">
             <div class="row">
               <div class="col-md-12">
@@ -359,6 +361,15 @@
               </div>
             </div>
             <!-- /.row -->
+          </div>
+
+          <div class="row mt-4 mb-4">
+            <div class="col-md-12">
+              <button id="btnAppointmentSummary" class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#divAppointmentSummary" aria-expanded="false" aria-controls="divAppointmentSummary">
+                <i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;
+                Appointment Summary
+              </button>
+            </div>
           </div>
 
           <!-- Patient Details Card -->

@@ -101,7 +101,7 @@ class Queue {
             result = await db(tableName).select('*')
                 .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .andWhere('queues.clinicId', this.clinicId)
-                .andWhere((builder) => builder.whereIn('queueStatus', ['Waiting', 'Skipped']))
+                .andWhere((builder) => builder.whereIn('queueStatus', ['Waiting', 'Skipped', 'Payment']))
                 .innerJoin('clinics', 'queues.clinicId', 'clinics.clinicId')
                 .innerJoin('patients', 'queues.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
@@ -312,6 +312,28 @@ class Queue {
         catch (e) {
             console.error(e);
             result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `queue` record in-session by apptId and queueStatus.
+     * Can be used to change status of queue.
+     * Returns: Object
+     * */
+    async endInSessionQueue() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: this.queueStatus
+            })
+                .where('apptId', this.apptId)
+                .andWhere('queueStatus', 'In Session');
+        }
+        catch (e) {
+            console.error(e);
+            result = 0;
         }
 
         return result;

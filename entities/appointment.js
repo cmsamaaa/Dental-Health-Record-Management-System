@@ -55,7 +55,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .andWhere('staffId', this.staffId)
                 .orderBy('startDateTime', 'asc');
@@ -82,7 +82,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'asc');
@@ -109,7 +109,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('startDateTime', '>=', new Date())
                 .andWhere('staffId', this.staffId)
                 .orderBy('startDateTime', 'asc');
@@ -136,7 +136,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('startDateTime', '>=', new Date())
                 .andWhere(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'asc');
@@ -190,7 +190,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('startDateTime', '<', new Date())
                 .andWhere('staffId', this.staffId)
                 .orderBy('startDateTime', 'desc');
@@ -217,7 +217,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('startDateTime', '<', new Date())
                 .andWhere(tableName + '.clinicId', this.clinicId)
                 .orderBy('startDateTime', 'desc');
@@ -244,7 +244,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('patients.userId', this.userId)
                 .andWhere('startDateTime', '>=', new Date())
                 .orderBy('startDateTime', 'asc');
@@ -297,7 +297,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('apptId', this.apptId);
 
             result = _.map(result, (patient) => {
@@ -325,7 +325,7 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .innerJoin('oral_health_records','patients.patientId','oral_health_records.patientId')
+                .innerJoin('oral_health_records', 'patients.patientId', 'oral_health_records.patientId')
                 .where('staffId', this.staffId)
                 .andWhere('status', 'In Session')
                 .first();
@@ -370,19 +370,24 @@ class Appointment {
     /**
      * Update a `appointment` record status & staffId (if not null)
      * Can be used to update appointment.
-     * Returns: Object
+     * Returns: 0 or 1
      * */
     async updateAppointmentStatus() {
         let result;
         try {
-            result = await db(tableName).update({
-                status: this.status,
-                staffId: this.staffId > 0 ? this.staffId : null
-            }).where('apptId', this.apptId);
+            if (this.staffId > 0)
+                result = await db(tableName).update({
+                    status: this.status,
+                    staffId: this.staffId
+                }).where('apptId', this.apptId);
+            else
+                result = await db(tableName).update({
+                    status: this.status
+                }).where('apptId', this.apptId);
         }
         catch (e) {
             console.error(e);
-            result = {};
+            result = 0;
         }
 
         return result;
