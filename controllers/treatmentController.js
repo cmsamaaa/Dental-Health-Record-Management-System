@@ -43,13 +43,25 @@ exports.editTreatment = async (req, res, next) => {
             treatmentTeeth: req.body.treatmentTeeth.constructor === Array ? req.body.treatmentTeeth.join(',') : req.body.treatmentTeeth
         });
         const treatmentData = await treatment.updateTreatment();
-        console.log(treatmentData);
 
         if (treatmentData)
             res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?action=edit'));
         else
             res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
     }
+    else
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
+};
+
+exports.deleteTreatment = async (req, res, next) => {
+    // Delete treatment record
+    const treatment = new Treatment({
+        treatmentId: req.body.treatmentId
+    });
+    const treatmentData = await treatment.deleteTreatment();
+
+    if (treatmentData)
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?action=delete'));
     else
         res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?error=true'));
 };

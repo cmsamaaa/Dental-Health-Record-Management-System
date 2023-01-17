@@ -26,6 +26,13 @@
 </div>
 <% } %>
 
+<% if (query.action === 'delete') { %>
+<div class="callout callout-success">
+  <h5><i class="fas fa-check-circle"></i> Success</h5>
+  You have successfully deleted the record!
+</div>
+<% } %>
+
 <% if (query.action === 'reactivate') { %>
 <div class="callout callout-success">
   <h5><i class="fas fa-check-circle"></i> Success</h5>

@@ -71,7 +71,7 @@ class Treatment {
     /**
      * Update a `treatment` record.
      * Can be used to update treatment record.
-     * Returns: Object
+     * Returns: 0 or 1
      * */
     async updateTreatment() {
         let result;
@@ -91,9 +91,9 @@ class Treatment {
     }
 
     /**
-     * End a `treatment` record.
-     * Can be used to update treatmentEnd.
-     * Returns: Object
+     * Update a `treatment` record treatmentEnd.
+     * Can be used to end treatment.
+     * Returns: 0 or 1
      * */
     async endTreatment() {
         let result;
@@ -101,6 +101,24 @@ class Treatment {
             result = await db(tableName).update({
                 treatmentEnd: new Date()
             }).where('treatmentId', this.treatmentId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Delete a `treatment` record.
+     * Can be used to delete treatment from database.
+     * Returns: 0 or 1
+     * */
+    async deleteTreatment() {
+        let result;
+        try {
+            result = await db(tableName).where('treatmentId', this.treatmentId).del();
         }
         catch (e) {
             console.error(e);

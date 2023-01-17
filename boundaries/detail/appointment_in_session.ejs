@@ -69,7 +69,7 @@
                             <input type="hidden" name="treatmentId" value="<%= treatmentData[i].treatmentId %>">
                             <button type="submit" class="btn btn-success mr-2" title="Mark as Done"><i class="fas fa-check"></i></button>
                           </form>
-                          <form action="#" method="post" onsubmit="return confirm('Do you really want to delete record #<%= i + 1 %>? This action is irreversible.');">
+                          <form action="/dentist/appointment/in-session/treatment/delete" method="post" onsubmit="return confirm('Do you really want to delete record #<%= i + 1 %>? This action is irreversible.');">
                             <input type="hidden" name="treatmentId" value="<%= treatmentData[i].treatmentId %>">
                             <button type="submit" class="btn btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
                           </form>
