@@ -9,7 +9,8 @@ class oralRecord {
     recordTeeth;
     recordDescription;
     recordCreatedAt;
-    patientId
+    patientId;
+    apptId
 
     constructor(data) {
         Object.assign(this, data);
@@ -28,7 +29,8 @@ class oralRecord {
                 recordTeeth: this.recordTeeth,
                 recordDescription: this.recordDescription,
                 recordCreatedAt: this.recordCreatedAt,
-                patientId: this.patientId ? this.patientId : null
+                patientId: this.patientId ? this.patientId : null,
+                apptId: this.apptId
             });
         }
         catch (e) {
@@ -96,8 +98,7 @@ class oralRecord {
         try {
             result = await db(tableName).update({
                 recordTeeth: this.recordTeeth,
-                recordDescription: this.recordDescription,
-                recordCreatedAt: this.recordCreatedAt
+                recordDescription: this.recordDescription
             }).where('recordId', this.recordId);
         }
         catch (e) {

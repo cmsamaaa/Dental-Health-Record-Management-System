@@ -1,7 +1,9 @@
 const _ = require('lodash');
 const oralRecord = require('../entities/oralRecord');
+const appointment = require('../entities/appointment');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
+const Appointment = require('../entities/appointment');
 
 exports.create = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
@@ -25,16 +27,19 @@ exports.create = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const oralrecord = new oralRecord(req.body);
+        const oralrecord = new oralRecord({ 
+            recordId: req.body.recordId,
+            recordTeeth: req.body.recordTeeth,
+            recordDescription: req.body.recordDescription
+        });
         const results = await oralrecord.update();
-
-        if (results)
-            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view-all?action=edit&inventoryId=' + req.body.inventoryId));
+        if (!_.isEmpty(results))
+            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view/' + req.body.recordId));
         else
-            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.inventoryId + '?error=true'));
+            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.recordId + '?error=true'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.inventoryId + '?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.recordId + '?error=true'));
 };
 
 exports.viewRecords = async (req, res, next) => {
@@ -48,7 +53,7 @@ exports.viewRecords = async (req, res, next) => {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oralrecord/view-all',
             query: req.query,
-            inventoryData: result
+            userData: result
         });
     }
     else
@@ -56,7 +61,7 @@ exports.viewRecords = async (req, res, next) => {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oralrecord/view-all',
             query: req.query,
-            inventoryData: []
+            userData: []
         });
 };
 
@@ -89,7 +94,7 @@ exports.viewEdit = async (req, res, next) => {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oralrecord/edit',
             query: req.query,
-            inventoryData: result
+            userData: result
         });
     }
     else
@@ -97,17 +102,20 @@ exports.viewEdit = async (req, res, next) => {
 };
 
 exports.viewCreate = async (req, res, next) => {
-    const oralrecord = new oralRecord({
-        patientId: req.params.patientId
+    const appointment = new Appointment({
+            apptId: req.params.apptId
     });
-    if (oralrecord.patientId) {
+    const result = await appointment.getAppointment();
+
+    if (result) {
         res.status(HTTP_STATUS.OK).render('form/oralRecord', {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oralrecord/create',
             query: req.query,
-            patientId: oralrecord.patientId
+            userData: result
+            //apptId: oralrecord.apptId
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/create?error=true'));
-}  
+        res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all'));
+}

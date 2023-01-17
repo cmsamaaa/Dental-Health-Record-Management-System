@@ -130,7 +130,7 @@ router.get('/dentist/treatment/view-all', routeAuth.setSession, routeAuth.isAuth
 router.get('/dentist/treatment/view/:ctId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewTreatment);
 
 //Oral Record
-router.get('/dentist/oralrecord/create/:patientId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewCreate);
+router.get('/dentist/oralrecord/create/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewCreate);
 router.get('/dentist/oralrecord/edit/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewEdit);
 router.get('/dentist/oralrecord/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecords);
 router.get('/dentist/oralrecord/view/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecord);

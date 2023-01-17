@@ -440,7 +440,6 @@ exports.viewAppointment = async (req, res, next) => {
                         path: '/' + user + '/appointment/edit',
                         query: req.query,
                         dentistData: JSON.parse(response.body),
-                        oralrecordData: userData,
                         userData: userData,
                         userRole: user
                     });
