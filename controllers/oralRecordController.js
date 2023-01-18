@@ -40,25 +40,20 @@ exports.edit = async (req, res, next) => {
 
 exports.viewRecords = async (req, res, next) => {
     const oralrecord = new oralRecord({
-        recordId: req.params.recordId
+        patientId: req.params.patientId
     });
     const result = await oralrecord.getAll();
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('table/dentist-oralrecord', {
             pageTitle: 'Oral Health Record',
-            path: '/dentist/oralrecord/view-all',
+            path: '/dentist/oral-record/view-all',
             query: req.query,
-            userData: result
+            oralrecordData: result
         });
     }
     else
-        res.status(HTTP_STATUS.NOT_FOUND).render('dentist-oralrecord', {
-            pageTitle: 'Oral Health Record',
-            path: '/dentist/oralrecord/view-all',
-            query: req.query,
-            userData: []
-        });
+        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view-all'));
 };
 
 exports.viewRecord = async (req, res, next) => {
@@ -70,7 +65,7 @@ exports.viewRecord = async (req, res, next) => {
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('detail/oralRecord', {
             pageTitle: 'Oral Health Record',
-            path: '/dentist/oralrecord/view',
+            path: '/dentist/oral-record/view',
             query: req.query,
             oralrecordData: result
         });
@@ -88,7 +83,7 @@ exports.viewEdit = async (req, res, next) => {
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/oralrecord', {
             pageTitle: 'Oral Health Record',
-            path: '/dentist/oralrecord/edit',
+            path: '/dentist/oral-record/edit',
             query: req.query,
             oralrecordData: result
         });
@@ -106,7 +101,7 @@ exports.viewCreate = async (req, res, next) => {
     if (result) {
         res.status(HTTP_STATUS.OK).render('form/oralRecord', {
             pageTitle: 'Oral Health Record',
-            path: '/dentist/oralrecord/create',
+            path: '/dentist/oral-record/create',
             query: req.query,
             oralrecordData: result
         });

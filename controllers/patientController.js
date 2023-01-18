@@ -115,6 +115,7 @@ exports.viewEditPatient = async (req, res, next) => {
 };
 
 exports.viewPatients = async (req, res, next) => {
+    const userRole = req.url.split('/')[1];
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/patient/get/all');
     request.get({
@@ -123,7 +124,7 @@ exports.viewPatients = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             res.status(HTTP_STATUS.OK).render('table/patients', {
                 pageTitle: 'Patient',
-                path: '/admin/patient/view-all',
+                path: '/' + userRole + '/patient/view-all',
                 query: req.query,
                 patientData: JSON.parse(response.body)
             });
@@ -131,7 +132,7 @@ exports.viewPatients = async (req, res, next) => {
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: 'Patient',
-                path: '/admin/patient/view-all',
+                path: '/' + userRole + '/patient/view-all',
                 query: req.query
             });
         }

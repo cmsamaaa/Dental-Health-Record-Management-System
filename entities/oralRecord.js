@@ -87,10 +87,31 @@ class oralRecord {
 
         return result[0];
     }
+
+    async getMyOralRecord() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('patientId', this.patientId);
+
+            result = _.map(result, (oralRecords) => {
+                oralRecords.recordCreatedAt = moment(oralRecords.recordCreatedAt).format('DD-MM-YYYY');
+                return oralRecords;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
     async getApptOralRecord() {
         let result;
         try {
             result = await db(tableName).select('*')
+                .innerJoin('patients', 'oral_health_records.patientId', 'patients.patientId')
                 .where('apptId', this.apptId);
 
             result = _.map(result, (oralRecords) => {
