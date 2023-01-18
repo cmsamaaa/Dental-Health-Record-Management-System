@@ -48,7 +48,7 @@
                     </div>
                         <div class="form-group">
                           <label for="tb_TeethDesc">Teeth Description</label>
-                          <textarea class="form-control" name="recordDescription" placeholder="Add description here" rows="4" required><%= actionText === 'edit' ? userData.recordDescription : '' %></textarea>
+                          <textarea class="form-control" name="recordDescription" placeholder="Add description here" rows="4" required><%= actionText === 'edit' ? oralrecordData.recordDescription : '' %></textarea>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
@@ -60,9 +60,9 @@
                         </div>
                       </div>
                       <div class="card-footer text-right">
-                        <input type="hidden" name="patientId" value="<%= userData.patientId %>">
-                        <input type="hidden" name="apptId" value="<%= userData.apptId %>">
-                        <input type="hidden" name="recordId" value="<%= userData.recordId %>">
+                        <input type="hidden" name="patientId" value="<%= oralrecordData.patientId %>">
+                        <input type="hidden" name="apptId" value="<%= oralrecordData.apptId %>">
+                        <input type="hidden" name="recordId" value="<%= oralrecordData.recordId %>">
                         <button type="submit" class="btn btn-primary">Submit</button>
                       </div>
                     </form>

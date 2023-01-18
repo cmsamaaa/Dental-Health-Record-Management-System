@@ -1,9 +1,8 @@
 const _ = require('lodash');
 const oralRecord = require('../entities/oralRecord');
-const appointment = require('../entities/appointment');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
-const Appointment = require('../entities/appointment');
+const Appointment = require("../entities/appointment");
 
 exports.create = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
@@ -16,7 +15,7 @@ exports.create = async (req, res, next) => {
         });
         const results = await oralrecord.add();
 
-        if (!_.isEmpty(results))
+        if (results)
             res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view/' + results[0]));
         else
             res.redirect(parse_uri.parse(req, '/dentist/oralrecord/create?error=true'));
@@ -27,13 +26,10 @@ exports.create = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const oralrecord = new oralRecord({ 
-            recordId: req.body.recordId,
-            recordTeeth: req.body.recordTeeth,
-            recordDescription: req.body.recordDescription
-        });
+        const oralrecord = new oralRecord(req.body);
         const results = await oralrecord.update();
-        if (!_.isEmpty(results))
+        
+        if (results)
             res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view/' + req.body.recordId));
         else
             res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.recordId + '?error=true'));
@@ -94,7 +90,7 @@ exports.viewEdit = async (req, res, next) => {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oralrecord/edit',
             query: req.query,
-            userData: result
+            oralrecordData: result
         });
     }
     else
@@ -112,10 +108,9 @@ exports.viewCreate = async (req, res, next) => {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oralrecord/create',
             query: req.query,
-            userData: result
-            //apptId: oralrecord.apptId
+            oralrecordData: result
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all'));
+        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/create?error=true'));
 }

@@ -87,6 +87,24 @@ class oralRecord {
 
         return result[0];
     }
+    async getApptOralRecord() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('apptId', this.apptId);
+
+            result = _.map(result, (oralRecords) => {
+                oralRecords.recordCreatedAt = moment(oralRecords.recordCreatedAt).format('DD-MM-YYYY');
+                return oralRecords;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
     
     /**
      * Update a `oral` record.

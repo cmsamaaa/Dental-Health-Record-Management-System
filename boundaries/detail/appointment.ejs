@@ -81,6 +81,10 @@
           <!-- Patient Details Card -->
           <%- include('../includes/patient-card.ejs') %>
           <% } %>
+          <% if (userRole === 'patient' ) { %>
+            <!-- Patient Details Card -->
+            <%- include('../includes/my-card.ejs') %>
+            <% } %>
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->

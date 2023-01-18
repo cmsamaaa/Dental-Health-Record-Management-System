@@ -290,12 +290,10 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                //.innerJoin('oral_health_records', 'appointments.apptId', 'oral_health_records.apptId')
                 .where('appointments.apptId', this.apptId);
 
             result = _.map(result, (patient) => {
                 patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
-                patient.recordCreatedAt = moment(patient.recordCreatedAt).format('DD-MM-YYYY');
                 patient = _.omit(patient, 'password');
                 return patient;
             });
@@ -326,7 +324,6 @@ class Appointment {
                 result.DOB = moment(result.DOB).format('YYYY-MM-DD');
                 result.startDateTime = moment(result.startDateTime).format('YYYY-MM-DD HH:mm');
                 result.endDateTime = moment(result.endDateTime).format('YYYY-MM-DD HH:mm');
-                //result.recordCreatedAt = moment(result.recordCreatedAt).format('DD-MM-YYYY');
                 result = _.omit(result, 'password');
             }
         }

@@ -7,6 +7,7 @@ const HTTP_STATUS = require("../constants/http_status");
 const Appointment = require("../entities/appointment");
 const ClinicTreatment = require("../entities/clinicTreatment");
 const Treatment = require("../entities/treatment");
+const oralRecord = require("../entities/oralRecord");
 const Queue = require('../entities/queue');
 const Bill = require('../entities/bill');
 
@@ -292,7 +293,6 @@ exports.viewAppointments = async (req, res, next) => {
                 pageTitle: pageTitle,
                 path: path,
                 query: req.query,
-                oralrecordData: apptData,
                 appointmentData: apptData
             });
         }
@@ -422,6 +422,10 @@ exports.viewAppointment = async (req, res, next) => {
 
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
+
+    const oralrecord = new oralRecord({ apptId: req.params.apptId });
+    const oralrecordData = await oralrecord.getApptOralRecord();
+
     request.get({
         url: uri,
     }, (err, response, body) => {
@@ -440,6 +444,7 @@ exports.viewAppointment = async (req, res, next) => {
                         path: '/' + user + '/appointment/edit',
                         query: req.query,
                         dentistData: JSON.parse(response.body),
+                        oralrecordData: oralrecordData,
                         userData: userData,
                         userRole: user
                     });
@@ -488,13 +493,16 @@ exports.viewInSessionAppointment = async (req, res, next) => {
             const treatment = new Treatment({ apptId: appointmentData.apptId });
             const treatmentData = await treatment.getAllTreatments();
 
+            const oralrecord = new oralRecord({ apptId: appointmentData.apptId });
+            const oralrecordData = await oralrecord.getApptOralRecord();
+
             res.status(HTTP_STATUS.OK).render('detail/appointment_in_session', {
                 pageTitle: title,
                 path: path,
                 query: req.query,
                 appointmentData: appointmentData,
                 userData: appointmentData,
-                oralrecordData: appointmentData,
+                oralrecordData: oralrecordData,
                 dentistData: JSON.parse(dentistResponse.body),
                 clinicTreatmentData: !_.isEmpty(clinicTreatmentData) ? clinicTreatmentData : [],
                 treatmentData: !_.isEmpty(treatmentData) ? treatmentData : []
