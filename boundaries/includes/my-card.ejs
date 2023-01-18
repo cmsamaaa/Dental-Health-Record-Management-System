@@ -22,22 +22,34 @@
           <div class="card-body">
             <label>Not Recorded</label>
           </div>
-        <% } if (userData.status !== 'Missed'){ %>
+        <% } else { %>
         <div class="card-body">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                 <label for="tb_recordTeeth">Tooth(s) Recorded</label>
-                <input type="text" class="form-control-plaintext" name="recordTeeth" value="<%= oralrecordData.recordTeeth ? oralrecordData.recordTeeth : 'Not provided' %>" disabled>
-              </div>
+                <% if (oralrecordData) {  %>
+                <input type="text" class="form-control-plaintext" name="recordTeeth" value="<%= oralrecordData.recordTeeth ? oralrecordData.recordTeeth : 'Not recorded' %>" disabled>
+                <% } else {  %>
+                <input type="text" class="form-control-plaintext" name="recordTeeth" value="Not recorded" disabled>
+                <% } %>
+                </div>
               <div class="form-group">
                 <label for="tb_TeethDesc">Teeth Description</label>
-                <textarea class="form-control-plaintext" name="recordDescription" disabled><%= oralrecordData.recordDescription ? oralrecordData.recordDescription : 'Not provided' %></textarea>
+                <% if (oralrecordData) {  %>
+                <textarea class="form-control-plaintext" name="recordDescription" disabled><%= oralrecordData.recordDescription ? oralrecordData.recordDescription : 'Not recorded' %></textarea>
+                <% } else {  %>
+                <textarea class="form-control-plaintext" name="recordDescription" disabled>Not recorded</textarea>
+                <% } %>
               </div>
               <div class="form-group">
                 <label for="tb_CreatedAt">Created At</label>
-                <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="<%= oralrecordData.recordCreatedAt ? oralrecordData.recordCreatedAt : 'Not provided' %>" disabled>
-              </div>            
+                <% if (oralrecordData) {  %>
+                <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="<%= oralrecordData.recordCreatedAt ? oralrecordData.recordCreatedAt : 'Not recorded' %>" disabled>
+                <% } else {  %>
+                <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="Not recorded" disabled>
+                <% } %>
+              </div>         
             </div>
           </div>
         </div>           
