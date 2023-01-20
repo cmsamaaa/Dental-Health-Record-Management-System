@@ -17,7 +17,7 @@
       <!-- Content Header (Page header) -->
       <%- include('../includes/content-header.ejs') %>
 
-      <% let actionText = path === '/admin/patient/create' ? 'create' : 'edit' %>
+      <% let actionText = path === '/admin/clinic/create' ? 'create' : 'edit' %>
 
       <!-- Main content -->
       <section class="content">
@@ -93,8 +93,13 @@
                     <a href="/admin/clinic/edit/<%= clinicData.clinicId %>" class="btn btn-primary">Edit</a>
                   </div>
                   <% } %>
-                  <% } %>
                 </form>
+                <div class="card-footer text-right">
+                <% if (_userRole === 'Patient'){ %>
+                  <a href="/patient/review/create/<%= clinicData.clinicId %>" class="btn btn-primary">Create Review</a>
+                <% } %>
+                </div>
+                <% } %>
               </div>
               <!-- /.card -->
             </div>

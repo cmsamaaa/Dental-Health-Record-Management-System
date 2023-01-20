@@ -11,6 +11,7 @@ const userController = require('../controllers/userController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 const oralRecordController = require('../controllers/oralRecordController');
 const queueController = require('../controllers/queueController');
+const reviewController = require('../controllers/reviewController');
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
@@ -105,6 +106,9 @@ router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.
 
 // Oral Record
 router.get('/patient/oralrecord/view', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewMyRecords);
+
+//Review
+router.get('/patient/review/create/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewCreate);
 
 // Bill
 router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewBills_Patient);

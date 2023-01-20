@@ -1,0 +1,118 @@
+<%- include('../includes/head.ejs') %>
+<!-- Custom Input Date -->
+<link rel="stylesheet" href="/css/custom-input-date.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path.split('/')[3] %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Error Message -->
+              <% if (query.error === 'true') { %>
+                <div class="callout callout-danger">
+                  <h5><i class="fas fa-exclamation-triangle"></i> Warning</h5>
+                  Duplicate NRIC and/or email found.
+                </div>
+              <% } %>
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize"><%= actionText %> Review Form</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="<%= path %>" method="post">
+                  <div class="card-body">
+                        <div class="form-group">
+                          <label for="tb_reviewTitle">Review Title<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_reviewTitle" name="reviewTitle" pattern="[a-zA-Z\s]+" title="E.g Tan" tabindex="2" placeholder="Enter review title" value="<%= actionText === 'edit' ? staffData.lastName : '' %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="tb_reviewDescription">Review Description<span style="color:red;">*</span></label>
+                          <textarea class="form-control" name="reviewDescription" placeholder="Add description here" rows="4" required><%= actionText === 'edit' ? staffData.reviewDescription : '' %></textarea>
+                        </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="ddl_Staff">Select Staff<span style="color:red;">*</span></label>
+                              <select class="form-control" id="ddl_Staff" name="staffId" style="width: 100%;" tabindex="6" required>
+                                <option <% if (actionText === 'create') { %>selected<% } %> disabled>Select one...</option>
+                                <% for(let i = 0; i < staffData.length; i++) { %>
+                                <% if (actionText === 'create' && staffData[i].firstName !== 'Super' && staffData[i].lastName !== 'Admin') { %>
+                                <option value="<%= staffData[i].staffId %>"><%= staffData[i].firstName %> <%= staffData[i].lastName %></option>
+                                <% } %>
+                                <% if (actionText === 'edit') { %>
+                                <option <% if (staffData.gender === 'Male') { %>selected<% } %> value="Male">Male</option>
+                                <% } %>
+                                <% } %>
+                              </select>
+                            </div>
+                          </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="ddl_Staff">Review Rating<span style="color:red;">*</span></label>
+                                  <div class="rating">
+                                    <input type="radio" name="reviewScore" value="5" id="5"><label for="5">☆</label>
+                                    <input type="radio" name="reviewScore" value="4" id="4"><label for="4">☆</label>
+                                    <input type="radio" name="reviewScore" value="3" id="3"><label for="3">☆</label>
+                                    <input type="radio" name="reviewScore" value="2" id="2"><label for="2">☆</label>
+                                    <input type="radio" name="reviewScore" value="1" id="1"><label for="1">☆</label>
+                                  </div>                               
+                            </div>
+                        </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <input type="hidden" name="clinicId" value="<%= clinicId %>">
+                    <input type="hidden" name="patientId" value="<%= _patientId %>">
+                    <% if (actionText === 'edit') { %>
+                    <input type="hidden" name="userId" value="<%= staffData.userId %>">
+                    <input type="hidden" name="staffId" value="<%= staffData.staffId %>">
+                    <% } %>
+                    <% if (actionText !== 'edit') { %>
+                    <button type="reset" class="btn btn-outline-danger mr-1">Clear</button>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+</body>
+
+</html>
