@@ -104,7 +104,7 @@ class oralRecord {
             result = {};
         }
 
-        return result[0];
+        return result;
     }
 
     async getApptOralRecord() {

@@ -19,6 +19,9 @@ exports.setSession = async (req, res, next) => {
         res.locals._gender = req.session.userInfo.gender;
         res.locals._userId = req.session.userInfo.userId;
 
+        if (req.session.userRole === 'Patient')
+            res.locals._patientId = req.session.userInfo.patientId;
+
         if (req.session.userRole !== 'Patient')
             res.locals._staffId = req.session.userInfo.staffId;
 

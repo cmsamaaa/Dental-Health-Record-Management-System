@@ -21,24 +21,21 @@
 
       <!-- Main content -->
       <section class="content">
+        <% if (oralrecordData) { %>
+        <% for(let i = 0; i < oralrecordData.length; i++) { %>
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-              <!-- Error Message -->
-              <%- include('../includes/flash-message.ejs') %>
               <div id="divOralHealthRecord">
                 <div class="row">
                   <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="card card-primary">
                       <div class="card-header">
-                        <h3 class="card-title text-capitalize">Oral Health Records</h3>
+                        <h3 class="card-title text-capitalize">Oral Health Record</h3>
                       </div>
                       <!-- /.card-header -->
-
                       <div class="card-body">
-                      <% if (oralrecordData) { %>
-                      <% for(let i = 0; i < oralrecordData.length; i++) { %>
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
@@ -55,18 +52,24 @@
                             </div>            
                           </div>
                         </div>
-                        <hr>
-                      <% } %>
-                      <% } %>
-                    </div>
+                      </div>
+                      <div class="card-footer text-right">
+                        <form method="post">
+                          <input type="hidden" name="patientId" value="<%= oralrecordData[i].patientId %>">
+                          <input type="hidden" name="apptId" value="<%= oralrecordData[i].apptId %>">
+                          <a href="/dentist/oralrecord/edit/<%= oralrecordData[i].recordId %>" class="btn btn-primary">Edit Record</a>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 <!-- /.card-body -->
-            </div>
+              </div>
             <!-- /.col -->
           </div>
           <!-- /.row -->
         </div>
+        <% } %>
+        <% } %>
         <!-- /.container-fluid -->
       </section>
       <!-- /.content -->

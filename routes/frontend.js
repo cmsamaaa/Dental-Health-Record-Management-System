@@ -103,6 +103,9 @@ router.get('/patient/appointment/upcoming', routeAuth.setSession, routeAuth.isAu
 router.get('/patient/appointment/past', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, statusMiddleware.updateMissedAppt, appointmentController.viewPastAppointments);
 router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, statusMiddleware.updateMissedAppt, appointmentController.viewAppointment);
 
+// Oral Record
+router.get('/patient/oralrecord/view', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewMyRecords);
+
 // Bill
 router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewBills_Patient);
 

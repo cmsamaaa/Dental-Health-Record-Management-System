@@ -46,7 +46,7 @@ exports.viewRecords = async (req, res, next) => {
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('table/dentist-oralrecord', {
-            pageTitle: 'Oral Health Record',
+            pageTitle: 'Patient Health Card(s)',
             path: '/dentist/oral-record/view-all',
             query: req.query,
             oralrecordData: result
@@ -54,6 +54,29 @@ exports.viewRecords = async (req, res, next) => {
     }
     else
         res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view-all'));
+};
+
+exports.viewMyRecords = async (req, res, next) => {
+    const oralrecord = new oralRecord({
+        patientId: req.session.userInfo.patientId
+    });
+    const result = await oralrecord.getMyOralRecord();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('table/oralrecord', {
+            pageTitle: 'Patient Health Card(s)',
+            path: '/patient/oral-record/view',
+            query: req.query,
+            oralrecordData: result
+        });
+    }
+    else {
+        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+            pageTitle: 'Patient Health Card(s)',
+            path: '/patient/oralrecord/view',
+            query: req.query
+        });
+    }
 };
 
 exports.viewRecord = async (req, res, next) => {
