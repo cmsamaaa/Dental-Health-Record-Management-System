@@ -50,8 +50,9 @@ exports.viewReviews = async (req, res, next) => {
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('table/review', {
             pageTitle: 'Patient Review(s)',
-            path: '/patient/review/view-all',
+            path: '/review/view-all',
             query: req.query,
+            clinicId: req.params.clinicId,
             reviewData: result
         });
     }
@@ -61,14 +62,15 @@ exports.viewReviews = async (req, res, next) => {
 
 exports.viewMyReviews = async (req, res, next) => {
     const review = new Review({
-        patientId: req.session.userInfo.patientId
+        patientId: req.session.userInfo.patientId,
+        clinicId: req.params.clinicId
     });
     const result = await review.getMyReviews();
 
     if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('table/review', {
+        res.status(HTTP_STATUS.OK).render('table/my-review', {
             pageTitle: 'My Review(s)',
-            path: '/patient/review/view',
+            path: '/patient/review/view-all/:clinicId',
             query: req.query,
             reviewData: result
         });
@@ -82,7 +84,7 @@ exports.viewMyReviews = async (req, res, next) => {
     }
 };
 
-exports.viewRecord = async (req, res, next) => {
+exports.viewReview = async (req, res, next) => {
     const review = new Review({
         reviewId: req.params.reviewId
     });
@@ -127,7 +129,7 @@ exports.viewCreate = async (req, res, next) => {
     if (result) {
         res.status(HTTP_STATUS.OK).render('form/review', {
             pageTitle: 'My Review',
-            path: '/patient/review/create',
+            path: '/patient/review/create/:clinicId',
             query: req.query,
             clinicId: req.params.clinicId,
             staffData: result

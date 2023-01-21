@@ -48,6 +48,8 @@ class Review {
         let result;
         try {
             result = await db(tableName).select('*')
+                    .innerJoin('patients', 'patients.patientId', 'reviews.patientId')
+                    .innerJoin('users', 'users.userId', 'patients.userId')
                     .where('clinicId', this.clinicId);
         }
         catch (e) {
@@ -77,7 +79,6 @@ class Review {
         let result;
         try {
             result = await db(tableName).select('*')
-                //.innerJoin('patients', 'oral_health_records.patientId', 'patients.patientId')
                 .where('patientId', this.patientId);
         }
         catch (e) {
@@ -92,14 +93,16 @@ class Review {
         let result;
         try {
             result = await db(tableName).select('*')
-                .where('patientId', this.patientId);
+                .where('patientId', this.patientId)
+                .andWhere('clinicId', this.clinicId);
+                
         }
         catch (e) {
             console.error(e);
             result = {};
         }
 
-        return result[0];
+        return result;
     }
     
     /**

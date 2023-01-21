@@ -28,7 +28,7 @@ router.get('/forgot-password', userController.viewForgotPassword);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);
 router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
 router.get('/clinic/view-all', routeAuth.setSession, clinicController.viewClinics);
-
+router.get('/review/view-all/:clinicId', routeAuth.setSession, reviewController.viewReviews);
 
 // Protected routes
 router.get('/', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
@@ -109,6 +109,9 @@ router.get('/patient/oralrecord/view', routeAuth.setSession, routeAuth.isAuth, r
 
 //Review
 router.get('/patient/review/create/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewCreate);
+router.get('/patient/review/edit/:reviewId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewEdit);
+router.get('/patient/review/view-all/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewMyReviews);
+router.get('/patient/review/view/:reviewId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewReview);
 
 // Bill
 router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewBills_Patient);

@@ -56,8 +56,9 @@
                         <td><%= clinicsData[i].clinicSubEmail === null ? "None" : clinicsData[i].clinicSubEmail %></td>
                         <td><%= clinicsData[i].clinicPhone %></td>
                         <td><%= clinicsData[i].clinicSubPhone === null ? "None" : clinicsData[i].clinicSubPhone %></td>
-                        <td>
+                        <td class="d-flex">
                           <a href="/clinic/view/<%= clinicsData[i].clinicId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <a href="/review/view-all/<%= clinicsData[i].clinicId %>" class="btn btn-primary mr-2" title="Reviews"><i class="fas fa-comment-alt"></i></a>
                         </td>
                       </tr>
                       <% } %>
