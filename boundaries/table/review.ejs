@@ -31,10 +31,10 @@
                 <div class="col-md-6">
                     <div class="card">
                     <div class="card-header">
-                    <%= reviewData[i].reviewTitle %>                      
+                      <label><%= reviewData[i].reviewTitle %></label>                     
                     </div>
                       <div class="card-body">
-                        <label><%= reviewData[i].reviewDescription %></label>
+                        <%= reviewData[i].reviewDescription %>
                         <blockquote class="blockquote mb-3">
                           Rating: <%= reviewData[i].reviewScore %>  <span class="fa fa-star checked"></span>
                           <footer class="blockquote-footer">Patient: <%= reviewData[i].firstName %><cite title="Last Name"> <%= reviewData[i].lastName %></cite></footer>
@@ -50,8 +50,9 @@
                       <a href="/patient/review/view-all/<%= clinicId %>" class="btn btn-secondary">My Review(s)</a>
                       <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
                     <% } %>
+                    <% }else{ %>
+                      <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
                     <% } %>
-
                   </div>
                 </div>
 

@@ -19,7 +19,7 @@ exports.create = async (req, res, next) => {
         const results = await review.add();
 
         if (results)
-            res.redirect(parse_uri.parse(req, '/patient/review/view/' + results[0]));
+            res.redirect(parse_uri.parse(req, '/review/view-all/' + req.body.clinicId));
         else
             res.redirect(parse_uri.parse(req, '/patient/review/create?error=true'));
     }
@@ -33,7 +33,7 @@ exports.edit = async (req, res, next) => {
         const results = await review.update();
         
         if (results)
-            res.redirect(parse_uri.parse(req, '/patient/review/view/' + req.body.reviewId));
+            res.redirect(parse_uri.parse(req,  '/review/view-all/' + req.body.clinicId));
         else
             res.redirect(parse_uri.parse(req, '/patient/review/edit/' + req.body.reviewId + '?error=true'));
     }
@@ -47,17 +47,14 @@ exports.viewReviews = async (req, res, next) => {
     });
     const result = await review.getAll();
 
-    if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('table/review', {
-            pageTitle: 'Patient Review(s)',
-            path: '/review/view-all',
-            query: req.query,
-            clinicId: req.params.clinicId,
-            reviewData: result
-        });
-    }
-    else
-        res.redirect(parse_uri.parse(req, '/patient/review/view-all?error=true'));
+    res.status(HTTP_STATUS.OK).render('table/review', {
+        pageTitle: 'Patient Review(s)',
+        path: '/review/view-all',
+        query: req.query,
+        clinicId: req.params.clinicId,
+        reviewData: result
+    });
+
 };
 
 exports.viewMyReviews = async (req, res, next) => {
@@ -84,23 +81,23 @@ exports.viewMyReviews = async (req, res, next) => {
     }
 };
 
-exports.viewReview = async (req, res, next) => {
+ exports.viewReview = async (req, res, next) => {
     const review = new Review({
-        reviewId: req.params.reviewId
+        clinicId: req.params.clinicId
     });
-    const result = await review.get();
+    const result = await review.getClinic();
 
     if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('detail/review', {
+        res.status(HTTP_STATUS.OK).render('table/review', {
             pageTitle: 'My Review',
-            path: '/patient/review/view',
+            path: '/patient/review/view-all',
             query: req.query,
             reviewData: result
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/patient/review/view?error=true'));
-};
+        res.redirect(parse_uri.parse(req, '/patient/review/view-all?error=true'));
+}; 
 
 exports.viewEdit = async (req, res, next) => {
     const review = new Review({
@@ -113,7 +110,8 @@ exports.viewEdit = async (req, res, next) => {
             pageTitle: 'My Review',
             path: '/patient/review/edit',
             query: req.query,
-            reviewData: result
+            clinicId: req.params.clinicId,
+            staffData: result
         });
     }
     else

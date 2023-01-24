@@ -62,21 +62,14 @@ exports.viewMyRecords = async (req, res, next) => {
     });
     const result = await oralrecord.getMyOralRecord();
 
-    if (!_.isEmpty(result)) {
+    //if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('table/oralrecord', {
             pageTitle: 'Patient Health Card(s)',
             path: '/patient/oral-record/view',
             query: req.query,
             oralrecordData: result
         });
-    }
-    else {
-        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-            pageTitle: 'Patient Health Card(s)',
-            path: '/patient/oralrecord/view',
-            query: req.query
-        });
-    }
+    //}
 };
 
 exports.viewRecord = async (req, res, next) => {

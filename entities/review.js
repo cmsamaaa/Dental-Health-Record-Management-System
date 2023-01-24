@@ -60,12 +60,27 @@ class Review {
         return result;
     }
 
+    async getClinic() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('clinicId', this.clinicId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
     async get() {
         let result;
         try {
             result = await db(tableName).select('*')
-                .innerJoin('staffs', 'staffs.clinicId', 'reviews.clinicId')
-                .where('clinicId', this.clinicId);
+                .innerJoin('staffs', 'staffs.staffId', 'reviews.staffId')
+                .innerJoin('users', 'users.userId', 'staffs.userId')
+                .where('reviewId', this.reviewId);
         }
         catch (e) {
             console.error(e);
