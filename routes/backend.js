@@ -84,7 +84,7 @@ router.post('/dentist/treatment/edit', routeAuth.setSession, routeAuth.isAuth, r
 router.post('/dentist/treatment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.suspendTreatment);
 router.post('/dentist/treatment/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.reactivateTreatment);
 
-router.post('/dentist/oralrecord/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.create);
-router.post('/dentist/oralrecord/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.edit);
+router.post('/dentist/oral-record/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.create);
+router.post('/dentist/oral-record/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.edit);
 
 module.exports = router;

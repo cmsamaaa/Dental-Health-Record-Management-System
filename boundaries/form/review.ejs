@@ -80,8 +80,10 @@
                   <!-- /.card-body -->
 
                   <div class="card-footer text-right">
+                    <% if (actionText === 'create') { %>
                     <input type="hidden" name="clinicId" value="<%= clinicId %>">
                     <input type="hidden" name="patientId" value="<%= _patientId %>">
+                    <% } %>
                     <% if (actionText === 'edit') { %>
                     <input type="hidden" name="clinicId" value="<%= staffData.clinicId %>">
                     <input type="hidden" name="reviewId" value="<%= staffData.reviewId %>">

@@ -136,11 +136,11 @@
         <div class="card-footer text-right">
           <form method="post">
             <% if (oralrecordData) {  %>
-            <a href="/dentist/oralrecord/edit/<%= oralrecordData.recordId %>" class="btn btn-primary">Edit Record</a>
+            <a href="/dentist/oral-record/edit/<%= oralrecordData.recordId %>" class="btn btn-primary">Edit Record</a>
             <% } else {  %>
               <input type="hidden" name="patientId" value="<%= userData.patientId %>">
               <input type="hidden" name="apptId" value="<%= userData.apptId %>">
-              <a href="/dentist/oralrecord/create/<%= userData.apptId %>" class="btn btn-primary">Create Record</a>
+              <a href="/dentist/oral-record/create/<%= userData.apptId %>" class="btn btn-primary">Create Record</a>
             <% } %>
           </form>
         </div>

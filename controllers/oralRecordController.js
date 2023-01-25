@@ -16,12 +16,12 @@ exports.create = async (req, res, next) => {
         const results = await oralrecord.add();
 
         if (results)
-            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view/' + results[0]));
+            res.redirect(parse_uri.parse(req, '/dentist/oral-record/view/' + results[0]));
         else
-            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/create?error=true'));
+            res.redirect(parse_uri.parse(req, '/dentist/oral-record/create?error=true'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/create?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/create?error=true'));
 };
 
 exports.edit = async (req, res, next) => {
@@ -30,12 +30,12 @@ exports.edit = async (req, res, next) => {
         const results = await oralrecord.update();
         
         if (results)
-            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view/' + req.body.recordId));
+            res.redirect(parse_uri.parse(req, '/dentist/oral-record/view/' + req.body.recordId));
         else
-            res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.recordId + '?error=true'));
+            res.redirect(parse_uri.parse(req, '/dentist/oral-record/edit/' + req.body.recordId + '?error=true'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/edit/' + req.body.recordId + '?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/edit/' + req.body.recordId + '?error=true'));
 };
 
 exports.viewRecords = async (req, res, next) => {
@@ -53,7 +53,7 @@ exports.viewRecords = async (req, res, next) => {
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view-all'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/view-all'));
 };
 
 exports.viewMyRecords = async (req, res, next) => {
@@ -67,7 +67,7 @@ exports.viewMyRecords = async (req, res, next) => {
             pageTitle: 'Patient Health Card(s)',
             path: '/patient/oral-record/view',
             query: req.query,
-            oralrecordData: result
+            oralrecordData: !_.isEmpty(result) ? result : []
         });
     //}
 };
@@ -87,7 +87,7 @@ exports.viewRecord = async (req, res, next) => {
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view-all?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/view-all?error=true'));
 };
 
 exports.viewEdit = async (req, res, next) => {
@@ -105,7 +105,7 @@ exports.viewEdit = async (req, res, next) => {
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/view-all?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/view-all?error=true'));
 };
 
 exports.viewCreate = async (req, res, next) => {
@@ -123,5 +123,5 @@ exports.viewCreate = async (req, res, next) => {
         });
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oralrecord/create?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/create?error=true'));
 }

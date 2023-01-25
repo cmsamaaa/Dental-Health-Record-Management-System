@@ -42,7 +42,7 @@ class User {
             result = {};
         }
 
-        return result;
+        return result[0];
     }
 
     /**
@@ -158,6 +158,21 @@ class User {
         }
 
         return result;
+    }
+
+    async getEmail() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                    .where('email', this.email);
+
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
     }
 }
 

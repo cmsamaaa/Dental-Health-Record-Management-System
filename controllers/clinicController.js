@@ -2,46 +2,54 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const request = require('request');
 const Clinic = require('../entities/clinic');
+const User = require('../entities/user');
 const Staff = require('../entities/staff');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
 exports.register = async (req, res, next) => {
-    // TODO: register clinic
+
     if (!_.isEmpty(req.body)) {
-        const clinic = new Clinic({
-            clinicName: req.body.clinicName,
-            clinicAddress: req.body.clinicAddress,
-            clinicPostal: req.body.clinicPostal,
-            clinicUnit: req.body.clinicUnit,
-            clinicEmail: req.body.clinicEmail,
-            clinicSubEmail: req.body.clinicSubEmail,
-            clinicPhone: req.body.clinicPhone,
-            clinicSubPhone: req.body.clinicSubPhone
-        });
-        const results = await clinic.registerClinic();
-
-        if (results) {
-            const hashedPassword = await bcrypt.hash(req.body.clinicPhone, 12);
-            const staff = new Staff({
-                firstName: "Super",
-                lastName: "Admin",
-                email: req.body.clinicEmail,
-                password: hashedPassword,
-                DOB: new Date().toISOString().split('T')[0],
-                gender: "Male",
-                role: "Administrator",
-                clinicId: results
+        const user = new User ({ email : req.body.clinicEmail});
+        const emailExist = await user.getEmail();
+        if (_.isEmpty(emailExist)){
+            const clinic = new Clinic({
+                clinicName: req.body.clinicName,
+                clinicAddress: req.body.clinicAddress,
+                clinicPostal: req.body.clinicPostal,
+                clinicUnit: req.body.clinicUnit,
+                clinicEmail: req.body.clinicEmail,
+                clinicSubEmail: req.body.clinicSubEmail,
+                clinicPhone: req.body.clinicPhone,
+                clinicSubPhone: req.body.clinicSubPhone
             });
-            const addSuperAdmin = await staff.registerStaff();
+            const results = await clinic.registerClinic();
 
-            if (!_.isEmpty(addSuperAdmin))
-                res.redirect(parse_uri.parse(req, '/staff/login'));
+            if (results) {
+                const hashedPassword = await bcrypt.hash(req.body.clinicPhone, 12);
+                const staff = new Staff({
+                    firstName: "Super",
+                    lastName: "Admin",
+                    email: req.body.clinicEmail,
+                    password: hashedPassword,
+                    DOB: new Date().toISOString().split('T')[0],
+                    gender: "Male",
+                    role: "Administrator",
+                    clinicId: results
+                });
+                const addSuperAdmin = await staff.registerStaff();
+
+                if (!_.isEmpty(addSuperAdmin))
+                    res.redirect(parse_uri.parse(req, '/staff/login'));
+                else
+                    res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
+            }
             else
                 res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
         }
         else
             res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
+        
     }
     else
         res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
@@ -62,7 +70,6 @@ exports.edit = async (req, res, next) => {
 };
 
 exports.viewRegister = async (req, res, next) => {
-
     res.status(HTTP_STATUS.OK).render('auth/register-clinic', {
         pageTitle: 'Register Clinic',
         path: '/register-clinic',

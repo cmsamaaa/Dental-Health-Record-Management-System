@@ -67,7 +67,7 @@ exports.viewMyReviews = async (req, res, next) => {
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('table/my-review', {
             pageTitle: 'My Review(s)',
-            path: '/patient/review/view-all/:clinicId',
+            path: '/patient/review/view-all/' + req.params.clinicId,
             query: req.query,
             reviewData: result
         });
@@ -127,7 +127,7 @@ exports.viewCreate = async (req, res, next) => {
     if (result) {
         res.status(HTTP_STATUS.OK).render('form/review', {
             pageTitle: 'My Review',
-            path: '/patient/review/create/:clinicId',
+            path: '/patient/review/create/' + req.params.clinicId,
             query: req.query,
             clinicId: req.params.clinicId,
             staffData: result

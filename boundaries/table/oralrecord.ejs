@@ -21,6 +21,7 @@
 
       <!-- Main content -->
       <section class="content">
+        <% if (oralrecordData.length > 0){ %>
         <% for(let i = 0; i < oralrecordData.length; i++) { %>
         <div class="container-fluid">
           <div class="row">
@@ -59,6 +60,9 @@
         </div>
         <!-- /.row -->
       </div>
+      <% } %>
+      <% }else{ %>
+        No record found!
       <% } %>
         <!-- /.container-fluid -->
       </section>
