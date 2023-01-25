@@ -12,6 +12,8 @@ const Queue = require('../entities/queue');
 const Bill = require('../entities/bill');
 
 exports.createAppointment = async (req, res, next) => {
+    const path = req.session.userRole === 'Patient' ? '/appointment/upcoming' : '/appointment/view-all';
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/create');
     request.post({
@@ -19,7 +21,7 @@ exports.createAppointment = async (req, res, next) => {
         form: req.body
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/view-all?action=create&id=' + JSON.parse(body).apptId));
+            res.redirect(parse_uri.parse(req, '/' + req.body.userType + path + '?action=create&id=' + JSON.parse(body).apptId));
         else
             res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/create?error=true'));
     });
