@@ -7,7 +7,7 @@ const Appointment = require("../entities/appointment");
 exports.create = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const oralrecord = new oralRecord({ 
-            recordTeeth: req.body.recordTeeth,
+            recordTeeth: req.body.recordTeeth.constructor === Array ? req.body.recordTeeth.join(',') : req.body.recordTeeth,
             recordDescription: req.body.recordDescription,
             recordCreatedAt: new Date().toISOString().slice(0,10),
             patientId: req.body.patientId,
@@ -26,7 +26,11 @@ exports.create = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const oralrecord = new oralRecord(req.body);
+        const oralrecord = new oralRecord({ 
+            recordId: req.body.recordId,
+            recordTeeth: req.body.recordTeeth.constructor === Array ? req.body.recordTeeth.join(',') : req.body.recordTeeth,
+            recordDescription: req.body.recordDescription
+        });
         const results = await oralrecord.update();
         
         if (results)
