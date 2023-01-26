@@ -105,7 +105,7 @@ router.get('/patient/appointment/past', routeAuth.setSession, routeAuth.isAuth, 
 router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, statusMiddleware.updateMissedAppt, appointmentController.viewAppointment);
 
 // Oral Record
-router.get('/patient/oralrecord/view', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewMyRecords);
+router.get('/patient/oral-record/view', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewMyRecords);
 
 //Review
 router.get('/patient/review/create/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewCreate);

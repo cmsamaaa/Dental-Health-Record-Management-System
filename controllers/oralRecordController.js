@@ -62,14 +62,12 @@ exports.viewMyRecords = async (req, res, next) => {
     });
     const result = await oralrecord.getMyOralRecord();
 
-    //if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('table/oralrecord', {
-            pageTitle: 'Patient Health Card(s)',
-            path: '/patient/oral-record/view',
-            query: req.query,
-            oralrecordData: !_.isEmpty(result) ? result : []
-        });
-    //}
+    res.status(HTTP_STATUS.OK).render('table/oralrecord', {
+        pageTitle: 'Patient Health Card(s)',
+        path: '/patient/oral-record/view',
+        query: req.query,
+        oralrecordData: !_.isEmpty(result) ? result : []
+    });
 };
 
 exports.viewRecord = async (req, res, next) => {
