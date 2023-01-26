@@ -21,7 +21,7 @@
 
       <!-- Main content -->
       <section class="content">
-        <% if (oralrecordData) { %>
+        <% if (oralrecordData.length > 0){ %>
         <% for(let i = 0; i < oralrecordData.length; i++) { %>
         <div class="container-fluid">
           <div class="row">
@@ -69,7 +69,11 @@
           <!-- /.row -->
         </div>
         <% } %>
-        <% } %>
+        <% }else{ %>
+          <div class="card-body">
+          <h5 class="login-box-msg">No record found!</h5>
+          </div>
+        <% } %>        
         <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
