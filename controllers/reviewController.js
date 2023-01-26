@@ -52,7 +52,7 @@ exports.viewReviews = async (req, res, next) => {
         path: '/review/view-all',
         query: req.query,
         clinicId: req.params.clinicId,
-        reviewData: result
+        reviewData: !_.isEmpty(result) ? result : []
     });
 
 };
@@ -64,21 +64,12 @@ exports.viewMyReviews = async (req, res, next) => {
     });
     const result = await review.getMyReviews();
 
-    if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('table/my-review', {
-            pageTitle: 'My Review(s)',
-            path: '/patient/review/view-all/' + req.params.clinicId,
-            query: req.query,
-            reviewData: result
-        });
-    }
-    else {
-        res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-            pageTitle: 'My Review(s)',
-            path: '/patient/review/view',
-            query: req.query
-        });
-    }
+    res.status(HTTP_STATUS.OK).render('table/my-review', {
+        pageTitle: 'My Review(s)',
+        path: '/patient/review/view-all/' + req.params.clinicId,
+        query: req.query,
+        reviewData: !_.isEmpty(result) ? result : []
+    });
 };
 
  exports.viewReview = async (req, res, next) => {

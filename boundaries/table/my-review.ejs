@@ -27,6 +27,7 @@
               <!-- Error Message -->
               <%- include('../includes/flash-message.ejs') %>
               <div class="row">
+                <% if (reviewData.length > 0){ %>
                 <% for(let i = 0; i < reviewData.length; i++) { %>
                 <div class="col-md-6">
                     <div class="card">
@@ -45,7 +46,11 @@
                     </div>
                   </div>
                   <% } %>
-                  </div>
+                  <% }else{ %>
+                    <div class="card-body">
+                    <h5 class="login-box-msg">No review found!</h5>
+                    </div>
+                  <% } %>
                 </div>
 
                 <!-- /.card-body -->

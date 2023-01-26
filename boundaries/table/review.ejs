@@ -27,6 +27,7 @@
               <!-- Error Message -->
               <%- include('../includes/flash-message.ejs') %>
               <div class="row">
+                <% if (reviewData.length > 0){ %>
                 <% for(let i = 0; i < reviewData.length; i++) { %>
                 <div class="col-md-6">
                     <div class="card">
@@ -43,8 +44,13 @@
                     </div>
                   </div>
                   <% } %>
+                  <% }else{ %>
+                    <div class="card-body">
+                    <h5 class="login-box-msg">No review found!</h5>
+                    </div>
+                  <% } %>
                   </div>
-                  <div class=" text-right">
+                  <div class="text-right">
                     <% if (_isLoggedIn) { %>
                     <% if (_userRole === 'Patient'){ %>
                       <a href="/patient/review/view-all/<%= clinicId %>" class="btn btn-secondary">My Review(s)</a>
