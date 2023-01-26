@@ -13,7 +13,6 @@ exports.create = async (req, res, next) => {
             reviewDescription: req.body.reviewDescription,
             reviewTitle: req.body.reviewTitle,
             clinicId: req.body.clinicId,
-            staffId: req.body.staffId,
             patientId: req.body.patientId
         });
         const results = await review.add();

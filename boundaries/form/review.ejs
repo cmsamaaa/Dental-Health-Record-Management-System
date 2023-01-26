@@ -48,22 +48,6 @@
                           <label for="tb_reviewDescription">Review Description<span style="color:red;">*</span></label>
                           <textarea class="form-control" name="reviewDescription" placeholder="Add description here" rows="4" required><%= actionText === 'edit' ? staffData.reviewDescription : '' %></textarea>
                         </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="ddl_Staff">Select Staff<span style="color:red;">*</span></label>
-                              <select class="form-control" id="ddl_Staff" name="staffId" style="width: 100%;" tabindex="6" required>
-                                <option <% if (actionText === 'create') { %>selected<% } %> disabled>Select one...</option>
-                                <% for(let i = 0; i < staffData.length; i++) { %>
-                                <% if (actionText === 'create' && staffData[i].firstName !== 'Super' && staffData[i].lastName !== 'Admin') { %>
-                                <option value="<%= staffData[i].staffId %>"><%= staffData[i].firstName %> <%= staffData[i].lastName %></option>
-                                <% } %>
-                                <% } %>
-                                <% if (actionText === 'edit') { %>
-                                <option><%= staffData.firstName %> <%= staffData.lastName %></option>
-                                <% } %>
-                              </select>
-                            </div>
-                          </div>
                         <div class="col-md-6">
                             <div class="form-group">
                               <label for="ddl_Staff">Review Rating<span style="color:red;">*</span></label>

@@ -8,7 +8,6 @@ class Review {
     reviewDescription;
     reviewTitle;
     clinicId;
-    staffId;
     patientId 
 
     constructor(data) {
@@ -28,7 +27,6 @@ class Review {
                 reviewDescription: this.reviewDescription,
                 reviewTitle: this.reviewTitle,
                 clinicId: this.clinicId,
-                staffId: this.staffId,
                 patientId: this.patientId
             });
         }
@@ -78,8 +76,6 @@ class Review {
         let result;
         try {
             result = await db(tableName).select('*')
-                .innerJoin('staffs', 'staffs.staffId', 'reviews.staffId')
-                .innerJoin('users', 'users.userId', 'staffs.userId')
                 .where('reviewId', this.reviewId);
         }
         catch (e) {
