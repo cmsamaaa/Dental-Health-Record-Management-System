@@ -34,7 +34,7 @@ router.get('/review/view-all/:clinicId', routeAuth.setSession, reviewController.
 router.get('/', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
 router.get('/home', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
 router.get('/index', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
-router.get('/invoice', routeAuth.setSession, routeAuth.isAuth, billController.viewInvoice);
+// router.get('/invoice', routeAuth.setSession, routeAuth.isAuth, billController.viewInvoice);
 router.get('/invoice-print', routeAuth.setSession, routeAuth.isAuth, billController.viewInvoicePrint);
 
 /* Start of Admin Route */
@@ -83,6 +83,7 @@ router.get('/admin/inventory/view/:inventoryId', routeAuth.setSession, routeAuth
 
 // Bill
 router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewBills_Admin);
+router.get('/admin/bill/invoice', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
 
 /* End of Admin Route */
 

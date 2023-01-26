@@ -37,6 +37,33 @@ class Bill {
 
         return result;
     }
+
+    /**
+     * Retrieves one `bill` inner join `patient` and `user` record
+     * Returns: JSON Object
+     * */
+    async getBillByApptId() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where(tableName + '.apptId', this.apptId);
+
+            result = _.map(result, (bill) => {
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
 }
 
 module.exports = Bill;

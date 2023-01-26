@@ -59,11 +59,13 @@ exports.callQueue = async (req, res, next) => {
     });
     const check = await appointment.getDentistCurrentAppointment();
 
+    // Prevent dentist from calling another queue while he/she has a current session
     if (!_.isEmpty(check))
         res.redirect(parse_uri.parse(req, '/' + user + '/queue/view-all?queue=in-session'));
     else {
         const queue = new Queue({
-            queueId: req.body.queueId
+            queueId: req.body.queueId,
+            queueStatus: req.body.status === 'Upcoming' ? 'Waiting' : req.body.status
         });
         const results = await queue.callQueue();
 

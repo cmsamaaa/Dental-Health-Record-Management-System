@@ -235,7 +235,7 @@ class Queue {
     }
 
     /**
-     * Update a `queue` record status to 'Waiting'.
+     * Update a `queue` record status to 'Waiting' or 'Payment'.
      * Can be used to undo a skipped queue.
      * Returns: Object
      * */
@@ -243,7 +243,7 @@ class Queue {
         let result;
         try {
             result = await db(tableName).update({
-                queueStatus: 'Waiting'
+                queueStatus: this.queueStatus
             }).where('queueId', this.queueId);
         }
         catch (e) {
