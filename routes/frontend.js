@@ -105,7 +105,8 @@ router.get('/patient/appointment/past', routeAuth.setSession, routeAuth.isAuth, 
 router.get('/patient/appointment/view/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, statusMiddleware.updateMissedAppt, appointmentController.viewAppointment);
 
 // Oral Record
-router.get('/patient/oral-record/view', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewMyRecords);
+router.get('/patient/oral-record/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewMyRecords);
+router.get('/patient/oral-record/view/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, oralRecordController.viewRecord);
 
 //Review
 router.get('/patient/review/create/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewCreate);
@@ -140,10 +141,12 @@ router.get('/dentist/treatment/view-all', routeAuth.setSession, routeAuth.isAuth
 router.get('/dentist/treatment/view/:ctId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, clinicTreatmentController.viewTreatment);
 
 //Oral Record
+router.get('/dentist/patient/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, patientController.viewPatients);
+
 router.get('/dentist/oral-record/create/:apptId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewCreate);
 router.get('/dentist/oral-record/edit/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewEdit);
-router.get('/dentist/oral-record/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, patientController.viewPatients);
-router.get('/dentist/oral-record/view/:patientId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecords);
+router.get('/dentist/oral-record/view/:recordId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecord);
+router.get('/dentist/oral-record/view-all/:patientId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, oralRecordController.viewRecords);
 
 /* End of Dentist Route */
 

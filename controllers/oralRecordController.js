@@ -43,8 +43,8 @@ exports.viewRecords = async (req, res, next) => {
         patientId: req.params.patientId
     });
     const result = await oralrecord.getAll();
-
-    res.status(HTTP_STATUS.OK).render('table/dentist-oralrecord', {
+    
+    res.status(HTTP_STATUS.OK).render('table/oralrecord', {
         pageTitle: 'Patient Health Card(s)',
         path: '/dentist/oral-record/view-all',
         query: req.query,
@@ -72,11 +72,12 @@ exports.viewRecord = async (req, res, next) => {
         recordId: req.params.recordId
     });
     const result = await oralrecord.get();
+    const userRole = req.url.split('/')[1];
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('detail/oralRecord', {
             pageTitle: 'Oral Health Record',
-            path: '/dentist/oral-record/view',
+            path: '/' + userRole + '/oral-record/view',
             query: req.query,
             oralrecordData: result
         });

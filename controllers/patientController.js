@@ -80,7 +80,6 @@ exports.viewLogin = async (req, res, next) => {
 };
 
 exports.viewRegister = async (req, res, next) => {
-
     res.status(HTTP_STATUS.OK).render('auth/register', {
         pageTitle: 'Patient Register',
         path: '/register',

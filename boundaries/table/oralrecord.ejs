@@ -21,51 +21,65 @@
 
       <!-- Main content -->
       <section class="content">
-        <% if (oralrecordData.length > 0){ %>
-        <% for(let i = 0; i < oralrecordData.length; i++) { %>
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- general form elements -->
-                  <div class="card card-primary">
-                    <div class="card-header">
-                      <h3 class="card-title text-capitalize">Oral Health Record</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label for="tb_recordTeeth">Tooth(s) Recorded</label>
-                            <input type="text" class="form-control-plaintext" name="recordTeeth" value="<%= oralrecordData[i].recordTeeth %>" disabled>
-                          </div>
-                          <div class="form-group">
-                            <label for="tb_TeethDesc">Teeth Description</label>
-                            <textarea class="form-control-plaintext" name="recordDescription" disabled><%= oralrecordData[i].recordDescription %></textarea>
-                          </div>
-                          <div class="form-group">
-                            <label for="tb_CreatedAt">Created At</label>
-                            <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="<%= oralrecordData[i].recordCreatedAt %>" disabled>
-                          </div>            
-                        </div>
-                      </div>
-                    </div>
-                  </div>
- 
-              <!-- /.card-body -->
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">List of Oral Health Records</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="tbl_Patients" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Record Teeth</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if (oralrecordData.length > 0){ %>
+                      <% for(let i = 0; i < oralrecordData.length; i++) { %>
+                      <tr>
+                        <td><%= oralrecordData[i].recordTeeth %></td>
+                        <td><%= oralrecordData[i].recordDescription %></td>
+                        <td><%= oralrecordData[i].recordCreatedAt %></td>
+                        <td class="d-flex">
+                          <% if (_userRole === "Patient") { %>
+                          <a href="/patient/oral-record/view/<%= oralrecordData[i].recordId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <% } %>
+                          <% if (_userRole === "Dentist") { %>
+                            <a href="/dentist/oral-record/view/<%= oralrecordData[i].recordId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                            <a href="/dentist/oral-record/edit/<%= oralrecordData[i].recordId %>" class="btn btn-primary mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% } %>
+                      <% } %>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Record Teeth</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
             </div>
-          <!-- /.col -->
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
-      </div>
-      <% } %>
-      <% }else{ %>
-        <div class="card-body">
-        <h5 class="login-box-msg">No record found!</h5>
-        </div>
-      <% } %>
         <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
@@ -94,6 +108,50 @@
   <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      $("#tbl_Patients").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": [{
+            extend: 'copy',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'excel',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          "colvis"
+        ]
+      }).buttons().container().appendTo('#tbl_Patients_wrapper .col-md-6:eq(0)');
+    });
+  </script>
 </body>
 
 </html>

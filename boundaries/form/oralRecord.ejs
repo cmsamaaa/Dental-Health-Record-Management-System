@@ -38,11 +38,28 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-12">
+                        <label for="tb_teethrecord">Select Teeth </label>
                         <div class="form-group">
-                          <label for="tb_teethrecord">Select Teeth </label>
-                          <% for(let i = 1; i < 33; i++) { %>
-                          <input type="checkbox" name="recordTeeth" value="<%= i %>"> <%= i %>
-                          <% } %>
+                          <div class="row">
+                            <div class="col-md-12">
+                            <% for(let i = 1; i < 17; i++) { %>
+                            <div class="form-check form-check-inline">
+                            <input type="checkbox" name="recordTeeth" value="<%= i %>">  
+                            <%= i %>
+                            </div>
+                            <% } %>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                            <% for(let i = 17; i < 33; i++) { %>
+                            <div class="form-check form-check-inline">
+                            <input type="checkbox" name="recordTeeth" value="<%= i %>">  
+                            <%= i %>
+                            </div>
+                            <% } %>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

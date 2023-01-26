@@ -54,9 +54,11 @@
                     </div>
                   </div>
                   <!-- /.card-body -->
+                  <% if (_userRole === "Dentist") { %>
                   <div class="card-footer text-right">
                     <a href="/dentist/oral-record/edit/<%= oralrecordData.recordId %>" class="btn btn-primary">Edit</a>
                   </div>
+                  <% } %>
                 </form>
               </div>
               <!-- /.card -->
