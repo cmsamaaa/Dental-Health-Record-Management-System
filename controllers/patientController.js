@@ -48,7 +48,7 @@ exports.register = async (req, res, next) => {
             if (req.session.userRole === 'Administrator')
                 res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=create&id=' + results[0]));
             else
-                res.redirect(parse_uri.parse(req, '/login'));
+                res.redirect(parse_uri.parse(req, '/register?type=success'));
         else
             if (req.session.userRole === 'Administrator')
                 res.redirect(parse_uri.parse(req, '/admin/patient/create?error=true'));

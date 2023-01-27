@@ -116,3 +116,11 @@ exports.viewForgotPassword = async (req, res, next) => {
         query: req.query,
     });
 };
+
+exports.viewFAQ = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('auth/faq', {
+        pageTitle: 'Frequently Asked Questions',
+        path: '/faq',
+        query: req.query,
+    });
+};

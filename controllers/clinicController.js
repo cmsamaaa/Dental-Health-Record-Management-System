@@ -40,7 +40,7 @@ exports.register = async (req, res, next) => {
                 const addSuperAdmin = await staff.registerStaff();
 
                 if (!_.isEmpty(addSuperAdmin))
-                    res.redirect(parse_uri.parse(req, '/staff/login'));
+                    res.redirect(parse_uri.parse(req, '/register-clinic?type=success'));
                 else
                     res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
             }

@@ -14,6 +14,8 @@
         <p class="login-box-msg text-danger">
           Duplicate email found!
         </p>
+        <% } else if (query.type === 'success') { %>
+          <p class="login-box-msg text-success">Register successfully! Please login with your clinic email and phone number.</p>
         <% } else { %>
         <p class="login-box-msg">
           Register your clinic
