@@ -8,6 +8,7 @@ class Inventory {
     inventoryId;
     name;
     quantity;
+    minQuantity;
     costPerUnit;
     expiryDate;
     inboundDate;
@@ -33,6 +34,7 @@ class Inventory {
                 inventoryId: this.inventoryId,
                 name: this.name,
                 quantity: this.quantity,
+                minQuantity: this.minQuantity ? this.minQuantity : null,
                 costPerUnit: this.costPerUnit,
                 expiryDate: this.expiryDate,
                 inboundDate: this.inboundDate,
@@ -110,6 +112,7 @@ class Inventory {
             result = await db(tableName).update({
                 name: this.itemName,
                 quantity: this.quantity,
+                minQuantity: this.minQuantity,
                 costPerUnit: this.cost,
                 expiryDate: this.expiry,
                 inboundDate: this.inbound,

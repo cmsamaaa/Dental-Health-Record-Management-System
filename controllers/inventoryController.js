@@ -9,6 +9,7 @@ exports.createInventory = async (req, res, next) => {
         const inventory = new Inventory({ 
             name: req.body.itemName,
             quantity: req.body.quantity,
+            minQuantity: req.body.minQuantity,
             costPerUnit: req.body.cost,
             expiryDate: req.body.expiry,
             inboundDate: req.body.inbound,

@@ -53,13 +53,19 @@
                       </div>
                       <div class="col-md-6">
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
                               <label for="tb_Quantity">Quantity<span style="color:red;">*</span></label>
                               <input type="number" class="form-control-plaintext" id="tb_Quantity" name="quantity" min="1" value="<%= inventoryData.quantity %>" disabled>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="tb_Quantity">Minimum Quantity</label>
+                              <input type="number" class="form-control-plaintext" id="tb_minQuantity" name="minQuantity" min="10" value="<%= inventoryData.minQuantity %>" disabled>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
                             <div class="form-group">
                               <label for="tb_cost">Cost per Unit ($)<span style="color:red;">*</span></label>
                               <input type="number" class="form-control-plaintext" step="0.01" id="tb_cost" name="cost" min="1" value="<%= inventoryData.costPerUnit %>" disabled>
