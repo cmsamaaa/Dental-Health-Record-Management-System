@@ -36,7 +36,7 @@ class Patient extends User {
                 address: this.address,
                 postal: this.postal,
                 unit: this.unit,
-                familyId: this.familyId > 0 ? this.familyId : 0,
+                familyId: this.familyId ? this.familyId : null,
                 userId: this.userId
             });
         }
@@ -55,7 +55,8 @@ class Patient extends User {
     async getAllPatients() {
         let result;
         try {
-            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId');
+            result = await db(tableName).select('*')
+                    .innerJoin('users', 'patients.userId', 'users.userId');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
@@ -76,7 +77,9 @@ class Patient extends User {
     async getPatient() {
         let result;
         try {
-            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('patients.userId', this.userId);
+            result = await db(tableName).select('*')
+                    .innerJoin('users', 'patients.userId', 'users.userId')
+                    .where('patients.userId', this.userId);
 
             result = _.map(result, (patient) => {
                 patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
@@ -95,7 +98,9 @@ class Patient extends User {
     async getProfile() {
         let result;
         try {
-            result = await db(tableName).select('*').innerJoin('users', 'patients.userId', 'users.userId').where('patients.userId', this.userId);
+            result = await db(tableName).select('*')
+                    .innerJoin('users', 'patients.userId', 'users.userId')
+                    .where('patients.userId', this.userId);
 
             result = _.map(result, (patient) => {
                 patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');

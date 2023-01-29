@@ -40,7 +40,7 @@ exports.register = async (req, res, next) => {
             address: req.body.address,
             postal: req.body.postal,
             unit: req.body.unit,
-            familyId: req.body.familyId
+            familyId: req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId
         });
         const results = await patient.registerPatient();
 
@@ -61,7 +61,7 @@ exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const patient = new Patient(req.body);
         const results = await patient.updatePatient();
-
+        
         if (results)
             res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=edit&id=' + req.body.userId));
         else
@@ -88,11 +88,16 @@ exports.viewRegister = async (req, res, next) => {
 };
 
 exports.viewCreatePatient = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('form/patient', {
-        pageTitle: 'Patient',
-        path: '/admin/patient/create',
-        query: req.query
-    });
+    const patient = new Patient(req.body);
+    const result = await patient.getAllPatients();
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('form/patient', {
+            pageTitle: 'Patient',
+            path: '/admin/patient/create',
+            query: req.query,
+            otherPatientData: result
+        });
+    }
 };
 
 exports.viewEditPatient = async (req, res, next) => {
@@ -100,13 +105,15 @@ exports.viewEditPatient = async (req, res, next) => {
         userId: req.params.userId
     });
     const result = await patient.getPatient();
+    const results = await patient.getAllPatients();
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/patient', {
             pageTitle: 'Patient',
             path: '/admin/patient/edit',
             query: req.query,
-            patientData: result
+            patientData: result,
+            otherPatientData: results
         });
     }
     else

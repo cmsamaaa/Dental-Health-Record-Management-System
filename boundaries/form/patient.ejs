@@ -59,8 +59,14 @@
                           <input type="text" class="form-control" id="tb_medicareID" name="medicareId" tabindex="7" value="<%= actionText === 'edit' ? patientData.medicareId : '' %>" placeholder="Enter medicare ID">
                         </div>
                         <div class="form-group">
-                          <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" value="<%= actionText === 'edit' ? patientData.address : '' %>" required>
+                          <label for="tb_FamilyID" class="col-form-label">Family Member NRIC</label>
+                          <!-- <input type="text" class="form-control" name="familyId" value="<%= actionText === 'edit' ? patientData.familyId : '' %>" placeholder="Enter family group ID"> -->
+                          <select class="form-control form-select" name="familyId" multiple>
+                            <!--<option selected>Open this select menu</option>-->
+                            <% for(let i = 0; i < otherPatientData.length; i++) { %>
+                            <option value="<%= otherPatientData[i].nric %>"><%= otherPatientData[i].firstName %> <%= otherPatientData[i].lastName %>, <%= otherPatientData[i].nric %></option>
+                            <% } %>
+                          </select>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -87,8 +93,8 @@
                           </select>
                         </div>
                         <div class="form-group">
-                          <label for="tb_FamilyID">Family Group ID</label>
-                          <input type="text" class="form-control" id="tb_FamilyID" name="familyId" tabindex="8" value="<%= actionText === 'edit' ? patientData.familyId : '' %>" placeholder="Enter family group ID">
+                          <label for="tb_Address">Home Address<span style="color:red;">*</span></label>
+                          <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" value="<%= actionText === 'edit' ? patientData.address : '' %>" required>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
