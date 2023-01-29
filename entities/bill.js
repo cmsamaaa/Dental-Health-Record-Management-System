@@ -57,6 +57,7 @@ class Bill {
 
             result = _.map(result, (bill) => {
                 bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
                 bill = _.omit(bill, 'password');
                 return bill;
             });
@@ -85,6 +86,7 @@ class Bill {
 
             result = _.map(result, (bill) => {
                 bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
                 bill = _.omit(bill, 'password');
                 return bill;
             });
