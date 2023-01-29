@@ -3,7 +3,13 @@
   <div class="col-12">
     <h4>
       <i class="fas fa-globe"></i> HappySmile Pte Ltd.
-      <small class="float-right">Date: <%= billData.billDateTime %></small>
+      <small class="float-right">
+        <% if (billData.paymentDateTime) { %>
+        Paid:
+        <% } else { %>
+        Billed: <%= billData.billDateTime %>
+        <% } %>
+      </small>
     </h4>
   </div>
   <!-- /.col -->
@@ -47,42 +53,21 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Qty</th>
-          <th>Product</th>
-          <th>Serial #</th>
-          <th>Description</th>
+          <th>#</th>
+          <th>Treatment</th>
+          <th>Treatment ID #</th>
           <th>Subtotal</th>
         </tr>
       </thead>
       <tbody>
+        <% for(let i = 0; i < treatmentData.length; i++) { %>
         <tr>
-          <td>1</td>
-          <td>Call of Duty</td>
-          <td>455-981-221</td>
-          <td>El snort testosterone trophy driving gloves handsome</td>
-          <td>$64.50</td>
+          <td><%= i + 1 %></td>
+          <td><%= treatmentData[i].treatmentName %></td>
+          <td><%= treatmentData[i].treatmentId %></td>
+          <td><%= treatmentData[i].treatmentPrice %></td>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>Need for Speed IV</td>
-          <td>247-925-726</td>
-          <td>Wes Anderson umami biodiesel</td>
-          <td>$50.00</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Monsters DVD</td>
-          <td>735-845-642</td>
-          <td>Terry Richardson helvetica tousled street art master</td>
-          <td>$10.70</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Grown Ups Blue Ray</td>
-          <td>422-568-642</td>
-          <td>Tousled lomo letterpress</td>
-          <td>$25.99</td>
-        </tr>
+        <% } %>
       </tbody>
     </table>
   </div>
@@ -111,15 +96,15 @@
       <table class="table">
         <tr>
           <th style="width:50%">Subtotal:</th>
-          <td>$<%= billData.billAmount %></td>
+          <td>$<%= billData.billSubtotal %></td>
         </tr>
         <tr>
           <th>GST (8%)</th>
-          <td>$<%= Math.round(billData.billAmount * 0.08).toFixed(2) %></td>
+          <td>$<%= billData.billTax %></td>
         </tr>
         <tr>
           <th>Total:</th>
-          <td>$<%= Math.round(billData.billAmount * 1.08).toFixed(2) %></td>
+          <td>$<%= billData.billTotal %></td>
         </tr>
       </table>
     </div>

@@ -5,7 +5,9 @@ const tableName = 'bills';
 
 class Bill {
     billId;
-    billAmount;
+    billSubtotal;
+    billTax;
+    billTotal;
     billStatus;
     paymentMethod;
     billDateTime;
@@ -25,7 +27,9 @@ class Bill {
         let result;
         try {
             result = await db(tableName).insert({
-                billAmount: this.billAmount,
+                billSubtotal: this.billSubtotal,
+                billTax: this.billTax,
+                billTotal: this.billTotal,
                 billDateTime: new Date(),
                 apptId: this.apptId
             });
@@ -39,7 +43,34 @@ class Bill {
     }
 
     /**
-     * Retrieves one `bill` inner join `patient` and `user` record
+     * Retrieves one `bill` inner join `patient` and `user` record by billId
+     * Returns: JSON Object
+     * */
+    async getBill() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('billId', this.billId);
+
+            result = _.map(result, (bill) => {
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
+    /**
+     * Retrieves one `bill` inner join `patient` and `user` record by apptId
      * Returns: JSON Object
      * */
     async getBillByApptId() {

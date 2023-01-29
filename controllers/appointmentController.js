@@ -58,7 +58,9 @@ exports.endInSessionAppointment = async (req, res, next) => {
         if (!_.isEmpty(treatmentData)) {
             // Create bill record
             const bill = new Bill({
-                billAmount: treatmentData.totalPrice,
+                billSubtotal: treatmentData.totalPrice,
+                billTax: treatmentData.totalPrice * 0.08,
+                billTotal: treatmentData.totalPrice * 1.08,
                 apptId: req.body.apptId
             });
             const billData = await bill.createBill();
