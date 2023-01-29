@@ -67,7 +67,7 @@
                           <a href="/admin/queue/edit/<%= queueData[i].queueId %>" class="btn btn-primary mr-2" title="Link Appointment"><i class="fas fa-calendar-alt"></i></a>
                           <% } %>
                           <% if (queueData[i].queueStatus === 'Payment') { %>
-                          <a href="/admin/bill/invoice?apptId=<%= queueData[i].apptId %>" class="btn btn-primary mr-2" title="View Invoice"><i class="fas fa-receipt"></i></a>
+                          <a href="/admin/bill/invoice?apptId=<%= queueData[i].apptId %>" class="btn btn-primary mr-2" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
                           <% } %>
                           <form action="/admin/queue/suspend" method="post" onsubmit="return confirm('Are you sure you want to cancel queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %>?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">

@@ -1,0 +1,200 @@
+<%- include('../includes/head.ejs') %>
+<!-- DataTables -->
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">List of Customer Bills</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="tbl_Bills" class="table table-bordered table-striped">
+                    <% if (_userRole === 'Administrator') { %>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Patient Name</th>
+                        <th>NRIC</th>
+                        <th>Billed On</th>
+                        <th>Paid On</th>
+                        <th>Total ($)</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < billData.length; i++) { %>
+                      <tr>
+                        <td><%= billData[i].billId %></td>
+                        <td><%= billData[i].firstName + ' ' + billData[i].lastName %></td>
+                        <td><%= billData[i].nric %></td>
+                        <td><%= billData[i].billDateTime %></td>
+                        <td><%= billData[i].paymentDateTime ? billData[i].paymentDateTime : 'Unpaid' %></td>
+                        <td><%= billData[i].billTotal %></td>
+                        <td class="d-flex">
+                          <a href="/admin/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Patient</th>
+                        <th>NRIC</th>
+                        <th>Billed On</th>
+                        <th>Status</th>
+                        <th>Total ($)</th>
+                        <th>Actions</th>
+                      </tr>
+                    </tfoot>
+                    <% } %>
+
+                    <% if (_userRole === 'Patient') { %>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Clinic Name</th>
+                        <th>Billed On</th>
+                        <th>Paid On</th>
+                        <th>Total ($)</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < billData.length; i++) { %>
+                      <tr>
+                        <td><%= billData[i].billId %></td>
+                        <td><%= billData[i].clinicName %></td>
+                        <td><%= billData[i].billDateTime %></td>
+                        <td><%= billData[i].paymentDateTime ? billData[i].paymentDateTime : 'Unpaid' %></td>
+                        <td><%= billData[i].billTotal %></td>
+                        <td class="d-flex">
+                          <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Clinic Name</th>
+                        <th>Billed On</th>
+                        <th>Status</th>
+                        <th>Total ($)</th>
+                        <th>Actions</th>
+                      </tr>
+                    </tfoot>
+                    <% } %>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="/plugins/jszip/jszip.min.js"></script>
+  <script src="/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      $("#tbl_Bills").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "order": [
+          [0, 'desc']
+        ],
+        "buttons": [{
+            extend: 'copy',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'csv',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'excel',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'pdf',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          {
+            extend: 'print',
+            exportOptions: {
+              columns: 'th:not(:last-child)'
+            }
+          },
+          "colvis"
+        ]
+      }).buttons().container().appendTo('#tbl_Bills_wrapper .col-md-6:eq(0)');
+    });
+  </script>
+</body>
+
+</html>

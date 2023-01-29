@@ -43,6 +43,61 @@ class Bill {
     }
 
     /**
+     * Retrieves all `bill` inner join `patient` and `user` record by clinicId
+     * Returns: JSON Object
+     * */
+    async getClinicBills(clinicId) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('clinicId', clinicId);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `bill` inner join `patient` and `user` record by userId
+     * Returns: JSON Object
+     * */
+    async getUserBills(userId) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('users.userId', userId);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves one `bill` inner join `patient` and `user` record by billId
      * Returns: JSON Object
      * */

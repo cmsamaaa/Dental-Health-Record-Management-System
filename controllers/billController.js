@@ -6,27 +6,44 @@ const HTTP_STATUS = require('../constants/http_status');
 const Bill = require('../entities/bill');
 const Treatment = require('../entities/treatment');
 
-exports.viewBills_Admin = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('table/admin-bills', {
-        pageTitle: 'Bill',
-        path: '/admin/bill/view-all',
-        query: req.query
-    });
-};
+exports.viewBills = async (req, res, next) => {
+    const user = req.url.split('/')[1];
 
-exports.viewBills_Patient = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('table/patient-bills', {
-        pageTitle: 'Bill',
-        path: '/patient/bill/view-all',
-        query: req.query
+    const title = 'Bills';
+    const path = '/' + user + '/bill/view-all';
+    let billData = [];
+
+    if (user === 'admin') {
+        const bill = new Bill();
+        billData = await bill.getClinicBills(req.session.userInfo.clinicId);
+    }
+    else if (user === 'patient') {
+        const bill = new Bill();
+        billData = await bill.getUserBills(req.session.userInfo.userId);
+    }
+    else {
+        res.status(HTTP_STATUS.OK).render('404', {
+            pageTitle: title,
+            path: path,
+            query: req.query
+        });
+    }
+
+    res.status(HTTP_STATUS.OK).render('table/bills', {
+        pageTitle: title,
+        path: path,
+        query: req.query,
+        billData: billData
     });
 };
 
 exports.viewInvoice = async (req, res, next) => {
+    const user = req.url.split('/')[1];
     const pathname = req.originalUrl.split('?')[0].split('/')[3];
 
-    let title = 'Invoice';
-    let path = '/admin/bill/' + pathname;
+    const title = 'Invoice';
+    const path = '/' + user + '/bill/' + pathname;
+
     let billData = {};
     let treatmentData = [];
 
@@ -65,11 +82,3 @@ exports.viewInvoice = async (req, res, next) => {
         treatmentData: treatmentData
     });
 };
-
-// exports.viewInvoicePrint = async (req, res, next) => {
-//     res.status(HTTP_STATUS.OK).render('bill/invoice-print', {
-//         pageTitle: 'Invoice',
-//         path: '/invoice-print',
-//         query: req.query
-//     });
-// };

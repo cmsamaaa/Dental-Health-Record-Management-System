@@ -40,13 +40,18 @@ router.get('/index', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultP
 
 /* Start of Admin Route */
 
+//Profile
+router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);
+router.get('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, staffController.viewEditProfile);
+
 // Clinic Info
 router.get('/admin/clinic', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewClinicInfo);
 router.get('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.viewEditClinicInfo);
 
-//Profile
-router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);
-router.get('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, staffController.viewEditProfile);
+// Bill
+router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewBills);
+router.get('/admin/bill/invoice', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
+router.get('/admin/bill/invoice-print', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
 
 // Staff
 router.get('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewCreateStaff);
@@ -82,11 +87,6 @@ router.get('/admin/inventory/edit/:inventoryId', routeAuth.setSession, routeAuth
 router.get('/admin/inventory/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventories);
 router.get('/admin/inventory/view/:inventoryId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventory);
 
-// Bill
-router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewBills_Admin);
-router.get('/admin/bill/invoice', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
-router.get('/admin/bill/invoice-print', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
-
 /* End of Admin Route */
 
 
@@ -95,6 +95,11 @@ router.get('/admin/bill/invoice-print', routeAuth.setSession, routeAuth.isAuth, 
 //Profile
 router.get('/patient/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
 router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewEditProfile);
+
+// Bill
+router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewBills);
+router.get('/patient/bill/invoice', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewInvoice);
+router.get('/patient/bill/invoice-print', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewInvoice);
 
 // Queue
 router.get('/patient/queue/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, statusMiddleware.updateMissedQueue, queueController.viewCreateQueue);
@@ -116,9 +121,6 @@ router.get('/patient/review/create/:clinicId', routeAuth.setSession, routeAuth.i
 router.get('/patient/review/edit/:reviewId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewEdit);
 router.get('/patient/review/view-all/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewMyReviews);
 router.get('/patient/review/view/:reviewId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.viewReview);
-
-// Bill
-router.get('/patient/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.viewBills_Patient);
 
 /* End of Patient Route */
 
