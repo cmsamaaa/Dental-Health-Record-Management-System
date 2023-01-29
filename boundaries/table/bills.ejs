@@ -53,7 +53,7 @@
                         <td><%= billData[i].firstName + ' ' + billData[i].lastName %></td>
                         <td><%= billData[i].nric %></td>
                         <td><%= billData[i].billDateTime %></td>
-                        <td><%= billData[i].paymentDateTime ? billData[i].paymentDateTime : 'Unpaid' %></td>
+                        <td><%= billData[i].billStatus === 'Paid' ? billData[i].paymentDateTime : billData[i].billStatus %></td>
                         <td><%= billData[i].billTotal %></td>
                         <td class="d-flex">
                           <a href="/admin/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
@@ -91,7 +91,7 @@
                         <td><%= billData[i].billId %></td>
                         <td><%= billData[i].clinicName %></td>
                         <td><%= billData[i].billDateTime %></td>
-                        <td><%= billData[i].paymentDateTime ? billData[i].paymentDateTime : 'Unpaid' %></td>
+                        <td><%= billData[i].billStatus === 'Paid' ? billData[i].paymentDateTime : billData[i].billStatus %></td>
                         <td><%= billData[i].billTotal %></td>
                         <td class="d-flex">
                           <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>

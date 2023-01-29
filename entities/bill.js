@@ -150,6 +150,28 @@ class Bill {
 
         return result[0];
     }
+
+    /**
+     * Update a `bill` record with paymentMethod and paymentDateTime.
+     * Can be used to update bill payment.
+     * Returns: Object
+     * */
+    async updatePayment() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                billStatus: this.billStatus,
+                paymentMethod: this.paymentMethod,
+                paymentDateTime: new Date()
+            }).where('billId', this.billId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
 }
 
 module.exports = Bill;

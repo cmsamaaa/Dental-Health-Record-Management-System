@@ -340,6 +340,28 @@ class Queue {
     }
 
     /**
+     * Update a `queue` record by apptId and queueStatus to 'Completed'.
+     * Can be used to close queue.
+     * Returns: Object
+     * */
+    async closeQueue() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                queueStatus: this.queueStatus
+            })
+                .where('apptId', this.apptId)
+                .andWhere('queueStatus', 'Payment');
+        }
+        catch (e) {
+            console.error(e);
+            result = 0;
+        }
+
+        return result;
+    }
+
+    /**
      * Delete a `queue` record.
      * Can be used to clear record after unit testing.
      * Returns: Object

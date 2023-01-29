@@ -1,5 +1,6 @@
 const express = require('express');
 
+const billController = require('../controllers/billController');
 const userController = require('../controllers/userController');
 const clinicController = require('../controllers/clinicController');
 const patientController = require('../controllers/patientController');
@@ -30,6 +31,8 @@ router.post('/admin/user/suspend', routeAuth.setSession, routeAuth.isAuth, route
 router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
 
 router.post('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, userController.editProfile);
+
+router.post('/admin/bill/payment', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.updatePayment);
 
 router.post('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.register);
 router.post('/admin/staff/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);
@@ -65,6 +68,8 @@ router.post('/patient/queue/cancel', routeAuth.setSession, routeAuth.isAuth, rou
 router.post('/patient/appointment/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.createAppointment);
 router.post('/patient/appointment/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.editAppointment);
 router.post('/patient/appointment/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, appointmentController.suspendAppointment);
+
+router.post('/patient/bill/payment', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, billController.updatePayment);
 
 router.post('/patient/review/create/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.create);
 router.post('/patient/review/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.edit);

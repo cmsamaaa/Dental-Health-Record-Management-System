@@ -19,35 +19,51 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-              <div class="callout callout-info">
-                <h5><i class="fas fa-info"></i> Note:</h5>
-                This page has been enhanced for printing. Click the print button at the bottom of the
-                invoice.
-              </div>
-
-
               <!-- Main content -->
               <div class="invoice p-3 mb-3">
                 <%- include('invoice-body.ejs') %>
 
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
-                  <div class="col-12">
+                  <div class="col-6">
                     <% if (_userRole === 'Administrator') { %>
                     <a href="/admin/bill/invoice-print?billId=<%= billData.billId %>" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                    <button type="button" class="btn btn-outline-primary float-right"><i class="far fa-credit-card"></i>
-                      Cashless Payment
-                    </button>
-                    <button type="button" class="btn btn-outline-success float-right mr-2"><i class="far fa-money-bill-alt"></i>
-                      Paid by Cash
-                    </button>
+                    <% } %>
+                    <% if (_userRole === 'Patient') { %>
+                    <a href="/patient/bill/invoice-print?billId=<%= billData.billId %>" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                    <% } %>
+                  </div>
+                  <div class="col-6">
+                    <% if (billData.billStatus === 'Unpaid') { %>
+                    <% if (_userRole === 'Administrator') { %>
+                    <form action="/admin/bill/payment" method="post" onsubmit="return confirm('Do you wish to proceed to payment gateway?');">
+                      <input type="hidden" name="billId" value="<%= billData.billId %>">
+                      <input type="hidden" name="apptId" value="<%= billData.apptId %>">
+                      <input type="hidden" name="paymentMethod" value="Credit Card">
+                      <button type="submit" class="btn btn-outline-primary float-right"><i class="far fa-credit-card"></i>
+                        Cashless Payment
+                      </button>
+                    </form>
+                    <form action="/admin/bill/payment" method="post" onsubmit="return confirm('Do you wish to proceed with closing the invoice?');">
+                      <input type="hidden" name="billId" value="<%= billData.billId %>">
+                      <input type="hidden" name="apptId" value="<%= billData.apptId %>">
+                      <input type="hidden" name="paymentMethod" value="Cash">
+                      <button type="submit" class="btn btn-outline-success float-right mr-2"><i class="far fa-money-bill-alt"></i>
+                        Paid by Cash
+                      </button>
+                    </form>
                     <% } %>
 
                     <% if (_userRole === 'Patient') { %>
-                    <a href="/patient/bill/invoice-print?billId=<%= billData.billId %>" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i>
-                      Make Payment
-                    </button>
+                    <form action="/patient/bill/payment" method="post" onsubmit="return confirm('Do you wish to proceed to payment gateway?');">
+                      <input type="hidden" name="billId" value="<%= billData.billId %>">
+                      <input type="hidden" name="apptId" value="<%= billData.apptId %>">
+                      <input type="hidden" name="paymentMethod" value="Credit Card">
+                      <button type="submit" class="btn btn-success float-right"><i class="far fa-credit-card"></i>
+                        Pay by Card
+                      </button>
+                    </form>
+                    <% } %>
                     <% } %>
                   </div>
                 </div>

@@ -1,10 +1,50 @@
 const _ = require('lodash');
 const moment = require('moment');
-const request = require('request');
 const parse_uri = require('../lib/parse_uri');
 const HTTP_STATUS = require('../constants/http_status');
+const Appointment = require('../entities/appointment');
 const Bill = require('../entities/bill');
 const Treatment = require('../entities/treatment');
+const Queue = require('../entities/queue');
+
+exports.updatePayment = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+    const status = 'Completed';
+
+    const bill = new Bill({
+        billId: req.body.billId,
+        billStatus: 'Paid',
+        paymentMethod: req.body.paymentMethod
+    });
+    const billResult = await bill.updatePayment();
+
+    if (billResult) {
+        // Update appointment status to 'Completed'
+        const appointment = new Appointment({
+            apptId: req.body.apptId,
+            status: status
+        });
+        const appointmentResult = await appointment.updateAppointmentStatus();
+
+        if (appointmentResult) {
+            // Update queue status to 'Completed'
+            const queue = new Queue({
+                apptId: req.body.apptId,
+                queueStatus: status
+            });
+            const queueResult = await queue.closeQueue();
+
+            if (queueResult)
+                res.redirect(parse_uri.parse(req, '/' + user + '/bill/invoice?billId=' + req.body.billId));
+            else
+                res.redirect(parse_uri.parse(req, '/' + user + '/bill/invoice?billId=' + req.body.billId + '&error=queue'));
+        }
+        else
+            res.redirect(parse_uri.parse(req, '/' + user + '/bill/invoice?billId=' + req.body.billId + '&error=appointment'));
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/' + user + '/bill/invoice?billId=' + req.body.billId + '&error=bill'));
+};
 
 exports.viewBills = async (req, res, next) => {
     const user = req.url.split('/')[1];
