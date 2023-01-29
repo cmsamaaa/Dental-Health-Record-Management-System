@@ -53,8 +53,12 @@
                       <tr>
                         <td><%= inventoryData[i].inventoryId %></td>
                         <td><%= inventoryData[i].name %></td>
-                        <td><%= inventoryData[i].quantity %></td>
-
+                        <td>
+                          <%= inventoryData[i].quantity %>
+                          <% if (inventoryData[i].quantity <= inventoryData[i].minQuantity) { %>
+                              <span class="badge bg-warning text-dark">Low</span>
+                          <% } %>
+                        </td>
                         <td><%= inventoryData[i].costPerUnit %></td>
                         <td><%= inventoryData[i].expiryDate %></td>
                         <td><%= inventoryData[i].inboundDate %></td>

@@ -100,6 +100,21 @@ class Inventory {
 
         return result[0];
     }
+
+    async getLowStock() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+            .where('quantity', '<=', 'minQuantity')
+            .andWhere('inventoryId', this.inventoryId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
     
     /**
      * Update a `inventory` record.
