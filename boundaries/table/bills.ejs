@@ -29,7 +29,7 @@
 
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">List of Customer Bills</h3>
+                  <h3 class="card-title">List of Invoice Bills</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -56,7 +56,11 @@
                         <td><%= billData[i].billStatus === 'Paid' ? billData[i].paymentDateTime : billData[i].billStatus %></td>
                         <td><%= billData[i].billTotal %></td>
                         <td class="d-flex">
-                          <a href="/admin/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
+                          <% if (billData[i].billStatus === 'Paid') { %>
+                          <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
+                          <% } else { %>
+                          <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-success" title="Make Payment"><i class="far fa-credit-card"></i></a>
+                          <% } %>
                         </td>
                       </tr>
                       <% } %>
@@ -94,7 +98,11 @@
                         <td><%= billData[i].billStatus === 'Paid' ? billData[i].paymentDateTime : billData[i].billStatus %></td>
                         <td><%= billData[i].billTotal %></td>
                         <td class="d-flex">
+                          <% if (billData[i].billStatus === 'Paid') { %>
                           <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
+                          <% } else { %>
+                          <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-success" title="Make Payment"><i class="far fa-credit-card"></i></a>
+                          <% } %>
                         </td>
                       </tr>
                       <% } %>

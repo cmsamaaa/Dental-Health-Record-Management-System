@@ -46,6 +46,7 @@
     <br>
     <b>Appointment ID:</b> <%= billData.apptId %><br>
     <% if (billData.billStatus === 'Paid') { %>
+    <b>Payment Method:</b> <%= billData.paymentMethod %><br>
     <b>Paid On:</b> <%= billData.paymentDateTime %><br>
     <% } %>
     <% if (billData.billStatus === 'Unpaid') { %>
