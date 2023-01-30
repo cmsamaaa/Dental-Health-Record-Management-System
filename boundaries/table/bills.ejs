@@ -57,9 +57,9 @@
                         <td><%= billData[i].billTotal %></td>
                         <td class="d-flex">
                           <% if (billData[i].billStatus === 'Paid') { %>
-                          <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
+                          <a href="/admin/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-primary" title="View Invoice"><i class="fas fa-file-invoice-dollar"></i></a>
                           <% } else { %>
-                          <a href="/patient/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-success" title="Make Payment"><i class="far fa-credit-card"></i></a>
+                          <a href="/admin/bill/invoice?billId=<%= billData[i].billId %>" class="btn btn-success" title="Make Payment"><i class="far fa-credit-card"></i></a>
                           <% } %>
                         </td>
                       </tr>
