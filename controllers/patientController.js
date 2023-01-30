@@ -28,6 +28,10 @@ exports.login = async (req, res, next) => {
 exports.register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
     if (!_.isEmpty(req.body)) {
+        let familyId = null;
+        if (req.body.familyId){
+            familyId = req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId
+        }
         const patient = new Patient({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -40,8 +44,9 @@ exports.register = async (req, res, next) => {
             address: req.body.address,
             postal: req.body.postal,
             unit: req.body.unit,
-            familyId: req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId
+            familyId: familyId
         });
+
         const results = await patient.registerPatient();
 
         if (!_.isEmpty(results))
