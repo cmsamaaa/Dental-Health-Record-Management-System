@@ -15,7 +15,7 @@
           Duplicate NRIC and/or email found.
         </p>
         <% } else if (query.type === 'success') { %>
-        <p class="login-box-msg text-success">Register successfully! Please login with your email and NRIC.</p>
+        <p class="login-box-msg text-success">Registered successfully! Please login with your email and NRIC.</p>
         <% } else { %>
         <p class="login-box-msg">
           Register your account
@@ -45,7 +45,7 @@
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <select class="form-control" id="ddl_Gender" name="gender" style="width: 100%;" tabindex="6" required>
+              <select class="form-control" id="ddl_Gender" name="gender" style="width: 100%;" tabindex="5" required>
                 <option disabled selected>Select Your Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -54,22 +54,22 @@
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="email" class="form-control" id="tb_Email" name="email" title="E.g abc@xyz.com" placeholder="E.g abc@xyz.com" tabindex="5" required>
+              <input type="email" class="form-control" id="tb_Email" name="email" title="E.g abc@xyz.com" placeholder="E.g abc@xyz.com" tabindex="6" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_Address" name="address" tabindex="9" placeholder="Enter home address" required>
+              <input type="text" class="form-control" id="tb_Address" name="address" tabindex="7" placeholder="Enter home address" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" placeholder="E.g 543210" required>
+              <input type="text" class="form-control" id="tb_Postal" name="postal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="8" placeholder="E.g 543210" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <input type="text" class="form-control" id="tb_Unit" name="unit" tabindex="11" placeholder="E.g 01-01" required>
+              <input type="text" class="form-control" id="tb_Unit" name="unit" tabindex="9" placeholder="E.g 01-01" required>
             </div>
           </div>
 
