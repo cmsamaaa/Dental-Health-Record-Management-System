@@ -156,22 +156,24 @@ class Queue {
      * Retrieves current count of `queue` where queueDate = today & queueStatus = Waiting
      * Returns: Integer
      * */
-    // async getQueueCount() {
-    //     let result;
-    //     try {
-    //         result = await db(tableName).distinct('clinicId')
-    //             .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
-    //             .andWhere('clinicId', this.clinicId)
-    //             .count('queueNo', { as: 'inQueue' })
-    //             .first();
-    //     }
-    //     catch (e) {
-    //         console.error(e);
-    //         result = {};
-    //     }
+    async getQueueCount() {
+        let result;
+        try {
+            result = await db(tableName).select('*').distinct(tableName + '.clinicId')
+                .where('queueDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                .andWhere('queueStatus', 'Waiting')
+                .andWhere('queues.clinicId', this.clinicId)
+                .rightJoin('clinics', 'queues.clinicId', 'clinics.clinicId')
+                .count('queueNo', { as: 'count' })
+                .first();
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
 
-    //     return result.inQueue;
-    // }
+        return result;
+    }
 
     /**
      * Update a `queue` apptId.

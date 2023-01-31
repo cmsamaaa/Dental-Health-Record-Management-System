@@ -1,0 +1,183 @@
+<%- include('../includes/head.ejs') %>
+
+<!-- Select2 -->
+<link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <% let actionText = path.split('/')[3] %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">
+                    Queue Status
+                  </h3>
+                </div>
+                <!-- /.card-header -->
+
+                <% if (!query.clinicId) { %>
+                <!-- form start -->
+                <form action="<%= path %>" method="get">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="ddl_Clinic">List of Clinics<span style="color:red;">*</span></label>
+                          <select id="ddl_Clinic" name="clinicId" class="form-control select2bs4" style="width: 100%;" required>
+                            <option selected="selected" disabled>Find clinic...</option>
+                            <% for (let i = 0; i < clinicData.length; i++) { %>
+                            <option value="<%= clinicData[i].clinicId %>"><%= clinicData[i].clinicId %>. <%= clinicData[i].clinicName %> | <%= clinicData[i].clinicAddress + ' #' +  clinicData[i].clinicUnit + ' (S)' + clinicData[i].clinicPostal %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+                <% } else { %>
+                <div class="card-body">
+                  <div class="row mb-5">
+                    <div class="col-md-6 offset-md-3 text-center">
+                      <strong><%= queueData.clinicName %></strong>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 offset-md-3 text-center">
+                      <span>Current No. of Patients in Queue</span>
+                    </div>
+                  </div>
+                  <div class="row mt-5">
+                    <div class="col-md-6 offset-md-3 text-center">
+                      <h1><%= queueData.count %></h1>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-md-6 offset-md-3 text-center">
+                      <% if (queueData.count < 5) { %>
+                      <span class="text-uppercase text-success font-weight-bold">Short waiting time</span>
+                      <% } else if (queueData.count < 10) { %>
+                      <span class="text-uppercase text-warning font-weight-bold">Moderate waiting time</span>
+                      <% } else {  %>
+                      <span class="text-uppercase text-danger font-weight-bold">Long waiting time</span>
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="row mt-5 mb-5">
+                    <div class="col-md-6 offset-md-3 text-center">
+                      <% if (!_isLoggedIn) { %>
+                      Login to get a queue number.
+                      <% } else { %>
+                      <% if (_userRole === 'Patient') { %>
+                      <% if (queueData.count < 5) { %>
+                      <a href="/patient/queue" class="btn btn-success">GET QUEUE NUMBER</a>
+                      <% } else if (queueData.count < 10) { %>
+                      <a href="/patient/queue" class="btn btn-warning">GET QUEUE NUMBER</a>
+                      <% } else {  %>
+                      <a href="/patient/queue" class="btn btn-danger">GET QUEUE NUMBER</a>
+                      <% } %>
+                      <% } %>
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 offset-md-3 text-center">
+                      <strong>Current Time:</strong>
+                      <span id="time"></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <a href="/queue" class="btn btn-secondary">Back</a>
+                </div>
+                <% } %>
+
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- Select2 -->
+  <script src="/plugins/select2/js/select2.full.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+
+  <!-- Page specific script -->
+  <script>
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+
+    $('button[type=reset]').on('click', () => {
+      $('#tb_NRIC').val('Find NRIC...').trigger('change');
+    });
+
+    //Date and time picker
+    $('#tb_ApptDateTime').datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+      minDate: new Date(),
+      icons: {
+        time: 'far fa-clock'
+      }
+    });
+
+    // Current time
+    const refreshTime = () => {
+      const dateMomentObject = moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
+      document.getElementById("time").innerHTML = dateMomentObject;
+    };
+
+    setInterval(refreshTime, 100);
+  </script>
+</body>
+
+</html>

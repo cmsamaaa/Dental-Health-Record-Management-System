@@ -149,6 +149,55 @@ exports.startSession = async (req, res, next) => {
     }
 };
 
+exports.viewQueues = async (req, res, next) => {
+    const title = 'Queue @ Clinic';
+    const path = '/queue';
+
+    if (!req.query.clinicId) {
+        // get patient info & list of clinics
+        const clinicResponse = await request(parse_uri.parse(req, '/api/clinic/get/all'));
+
+        if (clinicResponse.statusCode === HTTP_STATUS.NOT_FOUND)
+            res.status(HTTP_STATUS.NOT_FOUND).render('404', {
+                pageTitle: title,
+                path: path,
+                query: req.query
+            });
+
+        res.status(HTTP_STATUS.OK).render('detail/queue', {
+            pageTitle: title,
+            path: path,
+            query: req.query,
+            clinicData: JSON.parse(clinicResponse.body)
+        });
+    }
+    else {
+        // get patient info & list of clinics
+        const queueResponse = await request(parse_uri.parse(req, '/api/queue/get/count/' + req.query.clinicId));
+
+        if (queueResponse.statusCode === HTTP_STATUS.OK) {
+            res.status(HTTP_STATUS.OK).render('detail/queue', {
+                pageTitle: title,
+                path: path,
+                query: req.query,
+                queueData: JSON.parse(queueResponse.body)
+            });
+        }
+        else {
+            const clinicResponse = await request(parse_uri.parse(req, '/api/clinic/get/' + req.query.clinicId));
+            const queueData = JSON.parse(clinicResponse.body);
+            queueData.count = 0;
+
+            res.status(HTTP_STATUS.NOT_FOUND).render('detail/queue', {
+                pageTitle: title,
+                path: path,
+                query: req.query,
+                queueData: queueData
+            });
+        }
+    }
+};
+
 exports.viewCreateQueue = async (req, res, next) => {
     const user = req.url.split('/')[1];
     const title = 'Queue';
@@ -201,15 +250,17 @@ exports.viewPatientQueueNumber = async (req, res, next) => {
             queueObj.queueDateTime = moment(queueObj.queueDateTime).format('YYYY-MM-DD HH:mm:ss');
 
             const clinicResponse = await request(parse_uri.parse(req, '/api/clinic/get/' + queueObj.clinicId));
+            const queueCountResponse = await request(parse_uri.parse(req, '/api/queue/get/count/' + queueObj.clinicId));
 
-            if (queueResponse.statusCode === HTTP_STATUS.OK)
+            if (clinicResponse.statusCode === HTTP_STATUS.OK && queueCountResponse.statusCode === HTTP_STATUS.OK)
                 res.status(HTTP_STATUS.OK).render('detail/queue_patient', {
                     pageTitle: title,
                     path: path,
                     query: req.query,
                     profileData: patientObj,
                     queueData: queueObj,
-                    clinicData: JSON.parse(clinicResponse.body)
+                    clinicData: JSON.parse(clinicResponse.body),
+                    queueCount: JSON.parse(queueCountResponse.body).count
                 });
             else
                 res.status(HTTP_STATUS.NOT_FOUND).render('404', {

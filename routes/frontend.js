@@ -30,13 +30,12 @@ router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsB
 router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
 router.get('/clinic/view-all', routeAuth.setSession, clinicController.viewClinics);
 router.get('/review/view-all/:clinicId', routeAuth.setSession, reviewController.viewReviews);
+router.get('/queue', routeAuth.setSession, statusMiddleware.updateMissedQueue, queueController.viewQueues);
 
 // Protected routes
 router.get('/', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
 router.get('/home', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
 router.get('/index', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
-// router.get('/invoice', routeAuth.setSession, routeAuth.isAuth, billController.viewInvoice);
-// router.get('/invoice-print', routeAuth.setSession, routeAuth.isAuth, billController.viewInvoicePrint);
 
 /* Start of Admin Route */
 

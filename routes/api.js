@@ -25,5 +25,6 @@ router.post('/appointment/edit', appointmentAPIController.editAppointment);
 router.post('/appointment/suspend', appointmentAPIController.suspendAppointment);
 
 router.get('/queue/get/:patientId', queueAPIController.getPatientQueue);
+router.get('/queue/get/count/:clinicId', queueAPIController.getQueueCount);
 
 module.exports = router;
