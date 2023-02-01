@@ -118,9 +118,17 @@ exports.viewForgotPassword = async (req, res, next) => {
 };
 
 exports.viewFAQ = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('auth/faq', {
-        pageTitle: 'Frequently Asked Questions',
+    res.status(HTTP_STATUS.OK).render('faq', {
+        pageTitle: 'Frequently Asked Questions (For Patients)',
         path: '/faq',
+        query: req.query,
+    });
+};
+
+exports.viewFAQ_Staff = async (req, res, next) => {
+    res.status(HTTP_STATUS.OK).render('faq', {
+        pageTitle: 'Frequently Asked Questions (For Clinics)',
+        path: '/staff/faq',
         query: req.query,
     });
 };

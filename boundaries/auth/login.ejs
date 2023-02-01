@@ -84,12 +84,18 @@
     </div>
   </div>
   <!-- /.login-box -->
-      <div class="social-auth-links text-center mb-3">
-        <a href="/clinic/view-all">View Clinics</a> &bull;	
-        <a href="/faq">FAQ</a> 
-      </div>
+  <div class="social-auth-links text-center mb-3">
+    <a href="/clinic/view-all">View Clinics</a> &bull;
+    <% if (path === '/login') { %>
+    <a href="/faq">FAQ</a>
+    <% } %>
+    <% if (path === '/staff/login') { %>
+    <a href="/staff/faq">FAQ</a>
+    <% } %>
+  </div>
   <!-- REQUIRED SCRIPTS -->
   <%- include('../includes/end-scripts.ejs') %>
 
 </body>
+
 </html>

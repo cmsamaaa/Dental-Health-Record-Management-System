@@ -26,6 +26,7 @@ router.get('/register-clinic', clinicController.viewRegister);
 router.get('/staff/login', staffController.viewLogin);
 router.get('/forgot-password', userController.viewForgotPassword);
 router.get('/faq', userController.viewFAQ);
+router.get('/staff/faq', userController.viewFAQ_Staff);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);
 router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
 router.get('/clinic/view-all', routeAuth.setSession, clinicController.viewClinics);

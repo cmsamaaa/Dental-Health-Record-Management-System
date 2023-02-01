@@ -1,0 +1,105 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body class="hold-transition login-page">
+  <!-- Navbar -->
+  <%- include('includes/preloader.ejs') %>
+  <!-- /.navbar -->
+  <!-- /.login-logo -->
+  <br>
+  <div class="col-lg-6">
+    <%- include('auth/login-logo.ejs') %>
+
+    <% if (path === '/faq') { %>
+    <div class="card">
+      <div class="card-header"><b>Frequently Asked Questions (For Patients)</b></div>
+      <div class="card-body">
+        <div class="card-title">
+          <h6><b>What is HappySmile?</b></h6>
+          <p>
+            We are a platform that links up dental clinics and patients.
+            Clinics can join our platform to be exposed to customers on our platform.
+            Patients on the other hand, can use our platform to find a suitable clinic within their vicinity.
+          </p>
+        </div>
+        <div class="card-title">
+          <h6><b>Can I Get An MC (Medical Certificate) From You?</b></h6>
+          <p>
+            Yes, most of the clinics should be able to issue MC.
+            However, MCs are only provided to cover specific procedures.
+            Please check with the clinic that you're visiting to confirm if they can do so.
+          </p>
+        </div>
+        <div class="card-title">
+          <h6><b>Do You Accept CHAS Or Pioneer Generation Cards?</b></h6>
+          <p>
+            Please check with the respective clinic that you will be visiting.
+            Always remember to bring the original card along with you.
+            You are entitled to a subsidy (fee reduction) according to the limits set by your card type.
+            Do note that CHAS and Pioneer cards do not entitle you for free treatment.
+          </p>
+        </div>
+        <div class="card-title">
+          <h6><b>Do You Accept Walk-In Patients?</b></h6>
+          <p>
+            You can check the current queue status and make an appointment on the spot with a few clicks.
+            You are however, required to be a registered user on our platform.
+          </p>
+        </div>
+        <div class="card-title">
+          <h6><b>What Should I Bring On My First Appointment?</b></h6>
+          <p>
+            Please bring your identification documents (NRIC, EP, Work Pass, passport), insurance policyholder cards/policy numbers,
+            CHAS/Pioneer Generation cards (if applicable), insurance forms (if required), list of medication you are currently taking
+            and the most recent copy of any previous dental x-rays. It is a good idea to email your x-rays to us prior to your visit.
+          </p>
+        </div>
+        <div class="card-title">
+          <h6><b>Can I Use My Medisave To Pay For My Dental Treatment?</b></h6>
+          <p>
+            Yes, you may. However, Medisave only covers certain surgical treatments.
+          </p>
+        </div>
+      </div>
+      <p class="text-center">
+        <a href="/login">Back to Login</a>
+      </p>
+    </div>
+    <% } %>
+
+    <% if (path === '/staff/faq') { %>
+    <div class="card">
+      <div class="card-header"><b>Frequently Asked Questions (For Clinics)</b></div>
+      <div class="card-body">
+        <div class="card-title">
+          <h6><b>What is HappySmile?</b></h6>
+          <p>
+            We are a platform that links up dental clinics and patients.
+            Clinics can join our platform to be exposed to customers on our platform.
+            Patients on the other hand, can use our platform to find a suitable clinic within their vicinity.
+          </p>
+        </div>
+        <div class="card-title">
+          <h6><b>Any other questions?</b></h6>
+          <p>
+            Please head over to our <a href="https://fyp-22-s4-23.wixsite.com/happysmile" target="_blank">marketing site</a> for more info.
+          </p>
+          <p>
+            Alternatively, you may contact us at <a href="mailto:faq@happysmile.com">faq@happysmile.com</a>.
+          </p>
+        </div>
+      </div>
+      <p class="text-center">
+        <a href="/staff/login">Back to Login</a>
+      </p>
+    </div>
+    <% } %>
+  </div>
+
+  </div>
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('includes/end-scripts.ejs') %>
+
+</body>
+
+</html>
