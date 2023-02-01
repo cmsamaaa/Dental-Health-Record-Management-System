@@ -97,7 +97,7 @@ exports.viewEdit = async (req, res, next) => {
     const result = await oralrecord.get();
 
     if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('form/oralrecord', {
+        res.status(HTTP_STATUS.OK).render('form/oralRecord', {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oral-record/edit',
             query: req.query,
