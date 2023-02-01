@@ -255,6 +255,48 @@ class Appointment {
     }
 
     /**
+     * Retrieves all `appointment` inner join `patient` and `user` records by `users.nric`
+     * Returns: JSON[]
+     * */
+    async getAllUserUpcomingAppointments_NRIC(nric) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
+                .where('users.nric', nric)
+                .andWhere('startDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                .orderBy('startDateTime', 'asc');
+
+            result = _.map(result, (appointment) => {
+                appointment = _.omit(appointment, 'email');
+                appointment = _.omit(appointment, 'nric');
+                appointment = _.omit(appointment, 'DOB');
+                appointment = _.omit(appointment, 'password');
+                appointment = _.omit(appointment, 'verifiedEmail');
+                appointment = _.omit(appointment, 'medicareId');
+                appointment = _.omit(appointment, 'familyId');
+                appointment = _.omit(appointment, 'profilePic');
+                appointment = _.omit(appointment, 'isDeactivated');
+                appointment = _.omit(appointment, 'address');
+                appointment = _.omit(appointment, 'unit');
+                appointment = _.omit(appointment, 'postal');
+                appointment = _.omit(appointment, 'gender');
+                appointment.startDateTime = moment(appointment.startDateTime).format('YYYY-MM-DD HH:mm');
+                appointment.endDateTime = moment(appointment.endDateTime).format('YYYY-MM-DD HH:mm');
+                return appointment;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves all `appointment` inner join `patient` and `user` records by `userId`
      * Returns: JSON[]
      * */

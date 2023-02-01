@@ -265,6 +265,31 @@ describe('Run all test units', () => {
         });
     });
 
+    describe(i++ + ' | /GET /api/appointment/get/all/upcoming/nric/:nric 200 | Request with Valid NRIC', () => {
+        it('it should return a JSON object with HTTP status code 200', (done) => {
+            tester.request(app)
+                .get('/api/appointment/get/all/upcoming/nric/S9876543Z')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.not.be.null;
+                    res.body.should.not.be.empty;
+                    done();
+                });
+        });
+    });
+
+    describe(i++ + ' | /GET /api/appointment/get/all/upcoming/nric/:nric 404 | Request with Invalid NRIC', () => {
+        it('it should return an empty JSON object with HTTP status code 404', (done) => {
+            tester.request(app)
+                .get('/api/appointment/get/all/upcoming/nric/' + Number.MAX_SAFE_INTEGER)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.should.be.empty;
+                    done();
+                });
+        });
+    });
+
     describe(i++ + ' | /GET /api/appointment/get/:apptId 200 | Request with Valid ApptId', () => {
         it('it should return a JSON object with HTTP status code 200', (done) => {
             tester.request(app)

@@ -27,6 +27,16 @@ exports.getAllUserUpcomingAppointments = async (req, res, next) => {
         res.status(HTTP_STATUS.NOT_FOUND).json({});
 };
 
+exports.getAllUserUpcomingAppointments_NRIC = async (req, res, next) => {
+    const appointment = new Appointment();
+    const results = await appointment.getAllUserUpcomingAppointments_NRIC(req.params.nric);
+
+    if (!_.isEmpty(results))
+        res.status(HTTP_STATUS.OK).json(results);
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).json({});
+};
+
 exports.getAppointment = async (req, res, next) => {
     const appointment = new Appointment({
         apptId: req.params.apptId

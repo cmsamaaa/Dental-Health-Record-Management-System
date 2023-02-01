@@ -20,6 +20,7 @@ router.get('/dentist/get/:staffId', staffAPIController.getDentist);
 
 router.post('/appointment/create', appointmentAPIController.createAppointment);
 router.get('/appointment/get/all/upcoming/:userId', appointmentAPIController.getAllUserUpcomingAppointments);
+router.get('/appointment/get/all/upcoming/nric/:nric', appointmentAPIController.getAllUserUpcomingAppointments_NRIC);
 router.get('/appointment/get/:apptId', appointmentAPIController.getAppointment);
 router.post('/appointment/edit', appointmentAPIController.editAppointment);
 router.post('/appointment/suspend', appointmentAPIController.suspendAppointment);
