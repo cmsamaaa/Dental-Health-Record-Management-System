@@ -335,10 +335,12 @@ class Appointment {
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('appointments.apptId', this.apptId);
 
-            result = _.map(result, (patient) => {
-                patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
-                patient = _.omit(patient, 'password');
-                return patient;
+            result = _.map(result, (appointment) => {
+                appointment.startDateTime = moment(appointment.startDateTime).format('DD/MM/YYYY HH:mm');
+                appointment.endDateTime = moment(appointment.endDateTime).format('DD/MM/YYYY HH:mm');
+                appointment.DOB = moment(appointment.DOB).format('YYYY-MM-DD');
+                appointment = _.omit(appointment, 'password');
+                return appointment;
             });
         }
         catch (e) {

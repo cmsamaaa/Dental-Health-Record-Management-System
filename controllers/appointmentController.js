@@ -227,9 +227,6 @@ exports.viewEditAppointment = async (req, res, next) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             let userData = JSON.parse(response.body);
 
-            userData.startDateTime = moment(new Date(userData.startDateTime)).format('DD/MM/YYYY HH:mm');
-            userData.endDateTime = moment(new Date(userData.endDateTime)).format('DD/MM/YYYY HH:mm');
-
             request.get({
                 url: parse_uri.parse(req, '/api/dentist/get/' + userData.staffId)
             }, (err, response, body) => {
@@ -435,9 +432,6 @@ exports.viewAppointment = async (req, res, next) => {
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK) {
             let userData = JSON.parse(response.body);
-
-            userData.startDateTime = moment(new Date(userData.startDateTime)).format('DD/MM/YYYY HH:mm');
-            userData.endDateTime = moment(new Date(userData.endDateTime)).format('DD/MM/YYYY HH:mm');
 
             request.get({
                 url: parse_uri.parse(req, '/api/dentist/get/' + userData.staffId)
