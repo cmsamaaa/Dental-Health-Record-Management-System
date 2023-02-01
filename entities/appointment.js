@@ -283,8 +283,8 @@ class Appointment {
                 appointment = _.omit(appointment, 'unit');
                 appointment = _.omit(appointment, 'postal');
                 appointment = _.omit(appointment, 'gender');
-                appointment.startDateTime = moment(appointment.startDateTime).format('YYYY-MM-DD HH:mm');
-                appointment.endDateTime = moment(appointment.endDateTime).format('YYYY-MM-DD HH:mm');
+                appointment.startDateTime = moment(appointment.startDateTime).format('DD/MM/YYYY HH:mm');
+                appointment.endDateTime = moment(appointment.endDateTime).format('DD/MM/YYYY HH:mm');
                 return appointment;
             });
         }
