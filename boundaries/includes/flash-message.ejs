@@ -82,6 +82,13 @@
 </div>
 <% } %>
 
+<% if (query.empty === 'teeth') { %>
+<div class="callout callout-warning">
+  <h5><i class="fas fa-exclamation-triangle"></i> Warning</h5>
+  No tooth were selected. Please select at least one!
+</div>
+<% } %>
+
 <% if (query.error === 'true') { %>
 <div class="callout callout-danger">
   <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>

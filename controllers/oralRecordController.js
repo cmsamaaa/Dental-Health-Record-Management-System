@@ -6,33 +6,37 @@ const Appointment = require("../entities/appointment");
 
 exports.create = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const oralrecord = new oralRecord({ 
-            recordTeeth: req.body.recordTeeth.constructor === Array ? req.body.recordTeeth.join(',') : req.body.recordTeeth,
-            recordDescription: req.body.recordDescription,
-            recordCreatedAt: new Date().toISOString().slice(0,10),
-            patientId: req.body.patientId,
-            apptId: req.body.apptId
-        });
-        const results = await oralrecord.add();
+        if (req.body.recordTeeth) {
+            const oralrecord = new oralRecord({
+                recordTeeth: req.body.recordTeeth.constructor === Array ? req.body.recordTeeth.join(',') : req.body.recordTeeth,
+                recordDescription: req.body.recordDescription,
+                recordCreatedAt: new Date().toISOString().slice(0, 10),
+                patientId: req.body.patientId,
+                apptId: req.body.apptId
+            });
+            const results = await oralrecord.add();
 
-        if (results)
-            res.redirect(parse_uri.parse(req, '/dentist/oral-record/view/' + results[0]));
+            if (results)
+                res.redirect(parse_uri.parse(req, '/dentist/oral-record/view/' + results[0]));
+            else
+                res.redirect(parse_uri.parse(req, '/dentist/oral-record/create/' + req.body.apptId + '?error=true'));
+        }
         else
-            res.redirect(parse_uri.parse(req, '/dentist/oral-record/create?error=true'));
+            res.redirect(parse_uri.parse(req, '/dentist/oral-record/create/' + req.body.apptId + '?empty=teeth'));
     }
     else
-        res.redirect(parse_uri.parse(req, '/dentist/oral-record/create?error=true'));
+        res.redirect(parse_uri.parse(req, '/dentist/oral-record/create/' + req.body.apptId + '?error=true'));
 };
 
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const oralrecord = new oralRecord({ 
+        const oralrecord = new oralRecord({
             recordId: req.body.recordId,
             recordTeeth: req.body.recordTeeth.constructor === Array ? req.body.recordTeeth.join(',') : req.body.recordTeeth,
             recordDescription: req.body.recordDescription
         });
         const results = await oralrecord.update();
-        
+
         if (results)
             res.redirect(parse_uri.parse(req, '/dentist/oral-record/view/' + req.body.recordId));
         else
@@ -47,7 +51,7 @@ exports.viewRecords = async (req, res, next) => {
         patientId: req.params.patientId
     });
     const result = await oralrecord.getAll();
-    
+
     res.status(HTTP_STATUS.OK).render('table/oralrecord', {
         pageTitle: 'Patient Health Card(s)',
         path: '/dentist/oral-record/view-all',
@@ -110,7 +114,7 @@ exports.viewEdit = async (req, res, next) => {
 
 exports.viewCreate = async (req, res, next) => {
     const appointment = new Appointment({
-            apptId: req.params.apptId
+        apptId: req.params.apptId
     });
     const result = await appointment.getAppointment();
 
@@ -124,4 +128,4 @@ exports.viewCreate = async (req, res, next) => {
     }
     else
         res.redirect(parse_uri.parse(req, '/dentist/oral-record/create?error=true'));
-}
+};

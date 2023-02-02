@@ -141,28 +141,11 @@
         </li>
 
         <li class="nav-header">CLINIC</li>
-        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'queue') { %>menu-open<% } %>">
-          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'queue') { %>active<% } %>">
+        <li class="nav-item">
+          <a href="/admin/queue/view-all" class="nav-link <% if(path === '/admin/queue/view-all') { %>active<% } %>">
             <i class="nav-icon fas fa-ticket-alt"></i>
-            <p>
-              Queue
-              <i class="right fas fa-angle-left"></i>
-            </p>
+            <p>Queue</p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link <% if(path === '/admin/queue/create') { %>active<% } %>">
-                <i class="nav-icon fas fa-plus"></i>
-                <p>Create</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/admin/queue/view-all" class="nav-link <% if(path === '/admin/queue/view-all') { %>active<% } %>">
-                <i class="nav-icon fas fa-list"></i>
-                <p>View All</p>
-              </a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'appointment') { %>menu-open<% } %>">
           <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'appointment') { %>active<% } %>">
@@ -181,29 +164,6 @@
             </li>
             <li class="nav-item">
               <a href="/admin/appointment/view-all" class="nav-link <% if(path === '/admin/appointment/view-all') { %>active<% } %>">
-                <i class="nav-icon fas fa-list"></i>
-                <p>View All</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item <% if(arrPath[1] === 'admin' && arrPath[2] === 'service') { %>menu-open<% } %>">
-          <a href="#" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'service') { %>active<% } %>">
-            <i class="nav-icon fas fa-notes-medical"></i>
-            <p>
-              Services
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link <% if(path === '/admin/service/open') { %>active<% } %>">
-                <i class="nav-icon fas fa-plus"></i>
-                <p>Create</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link <% if(path === '/admin/service/view-all') { %>active<% } %>">
                 <i class="nav-icon fas fa-list"></i>
                 <p>View All</p>
               </a>

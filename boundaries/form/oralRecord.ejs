@@ -42,65 +42,65 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-md-12">
-                            <% for(let i = 1; i < 17; i++) { %>
-                            <div class="form-check form-check-inline">
-                            <input type="checkbox" name="recordTeeth" value="<%= i %>">  
-                            <%= i %>
-                            </div>
-                            <% } %>
+                              <% for(let i = 1; i < 17; i++) { %>
+                              <div class="form-check form-check-inline">
+                                <input type="checkbox" name="recordTeeth" value="<%= i %>">
+                                <%= i %>
+                              </div>
+                              <% } %>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col-md-12">
-                            <% for(let i = 17; i < 33; i++) { %>
-                            <div class="form-check form-check-inline">
-                            <input type="checkbox" name="recordTeeth" value="<%= i %>">  
-                            <%= i %>
-                            </div>
-                            <% } %>
+                              <% for(let i = 17; i < 33; i++) { %>
+                              <div class="form-check form-check-inline">
+                                <input type="checkbox" name="recordTeeth" value="<%= i %>">
+                                <%= i %>
+                              </div>
+                              <% } %>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="tb_TeethDesc">Teeth Description</label>
+                      <textarea class="form-control" name="recordDescription" placeholder="Add description here" rows="4" required><%= actionText === 'edit' ? oralrecordData.recordDescription : '' %></textarea>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
                         <div class="form-group">
-                          <label for="tb_TeethDesc">Teeth Description</label>
-                          <textarea class="form-control" name="recordDescription" placeholder="Add description here" rows="4" required><%= actionText === 'edit' ? oralrecordData.recordDescription : '' %></textarea>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="tb_CreatedAt">Created At</label>
-                              <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="<%= new Date().toISOString().slice(0,10) %>" disabled>
-                            </div>
-                          </div>
+                          <label for="tb_CreatedAt">Created At</label>
+                          <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="<%= new Date().toISOString().slice(0,10) %>" disabled>
                         </div>
                       </div>
-                      <div class="card-footer text-right">
-                        <input type="hidden" name="patientId" value="<%= oralrecordData.patientId %>">
-                        <input type="hidden" name="apptId" value="<%= oralrecordData.apptId %>">
-                        <input type="hidden" name="recordId" value="<%= oralrecordData.recordId %>">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                    </form>
                     </div>
-
                   </div>
-                  <!-- /.card-body -->
+                  <div class="card-footer text-right">
+                    <input type="hidden" name="patientId" value="<%= oralrecordData.patientId %>">
+                    <input type="hidden" name="apptId" value="<%= oralrecordData.apptId %>">
+                    <input type="hidden" name="recordId" value="<%= oralrecordData.recordId %>">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
               </div>
-              <!-- /.card -->
 
             </div>
+            <!-- /.card-body -->
           </div>
-          <!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+          <!-- /.card -->
 
-    <!-- End -->
-    <%- include('../includes/footer.ejs') %>
+        </div>
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- End -->
+  <%- include('../includes/footer.ejs') %>
   </div>
   <!-- ./wrapper -->
 
