@@ -46,6 +46,39 @@ exports.updatePayment = async (req, res, next) => {
         res.redirect(parse_uri.parse(req, '/' + user + '/bill/invoice?billId=' + req.body.billId + '&error=bill'));
 };
 
+exports.updateMedicare = async (req, res, next) => {
+    const treatment = new Treatment({
+        apptId: req.body.apptId
+    });
+    const result = await treatment.resetMedicare();
+
+    const medicareClaim = req.body.medicareClaim;
+    if (medicareClaim.constructor === Array) {
+        for (let i = 0; i < medicareClaim.length; i++) {
+            const treatment = new Treatment({
+                treatmentId: medicareClaim[i],
+                medicareClaim: 1,
+                medicareService: req.body.medicareService
+            });
+
+            const result = await treatment.updateMedicare();
+        }
+    }
+    else if (medicareClaim) {
+        const treatment = new Treatment({
+            treatmentId: medicareClaim,
+            medicareClaim: 1,
+            medicareService: req.body.medicareService
+        });
+
+        const result = await treatment.updateMedicare();
+    }
+    else
+        res.redirect(parse_uri.parse(req, '/admin/bill/medicare?billId=' + req.body.billId + '&apptId=' + req.body.apptId));
+
+    res.redirect(parse_uri.parse(req, '/admin/bill/invoice?billId=' + req.body.billId));
+};
+
 exports.viewBills = async (req, res, next) => {
     const user = req.url.split('/')[1];
 
@@ -113,6 +146,18 @@ exports.viewInvoice = async (req, res, next) => {
     billData.billDateTime = moment(billData.billDateTime).format('DD/MM/YYYY HH:mm:ss');
     billData.paymentDateTime = billData.paymentDateTime ? moment(billData.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
 
+    billData.medicareDeduction = 0;
+    for (let i = 0; i < treatmentData.length; i++) {
+        if (treatmentData[i].medicareClaim)
+            billData.medicareDeduction += Number(treatmentData[i].treatmentPrice);
+    }
+
+    billData.billTotal -= billData.medicareDeduction * 1.08;
+
+    billData.medicareDeduction = billData.medicareDeduction.toFixed(2);
+    billData.medicareDeductionTax = (billData.medicareDeduction * 0.08).toFixed(2);
+    billData.billTotal = billData.billTotal.toFixed(2);
+
     res.status(HTTP_STATUS.OK).render('bill/' + pathname, {
         pageTitle: title,
         path: path,
@@ -121,4 +166,37 @@ exports.viewInvoice = async (req, res, next) => {
         invoiceNum: billData.billId < 1000000 ? String(billData.billId).padStart(6, '0') : billData.billId,
         treatmentData: treatmentData
     });
+};
+
+exports.viewMedicare = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+
+    const title = 'Medicare';
+    const path = '/' + user + '/bill/medicare';
+
+    if (req.query.billId) {
+        const treatment = new Treatment({ apptId: req.query.apptId });
+        const treatmentData = await treatment.getAllTreatments();
+
+        let medicareService = null;
+        for (let i = 0; i < treatmentData.length; i++) {
+            if (treatmentData[i].medicareService)
+                medicareService = treatmentData[i].medicareService;
+        }
+
+        res.status(HTTP_STATUS.OK).render('form/medicare', {
+            pageTitle: title,
+            path: path,
+            query: req.query,
+            treatmentData: treatmentData,
+            medicareService: medicareService
+        });
+    }
+    else {
+        res.status(HTTP_STATUS.OK).render('404', {
+            pageTitle: title,
+            path: path,
+            query: req.query
+        });
+    }
 };

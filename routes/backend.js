@@ -33,6 +33,7 @@ router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, ro
 router.post('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, userController.editProfile);
 
 router.post('/admin/bill/payment', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.updatePayment);
+router.post('/admin/bill/medicare', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.updateMedicare);
 
 router.post('/admin/staff/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.register);
 router.post('/admin/staff/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.edit);

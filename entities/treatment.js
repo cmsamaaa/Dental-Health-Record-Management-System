@@ -129,6 +129,48 @@ class Treatment {
     }
 
     /**
+     * Reset all `treatment` record medicare status.
+     * Can be used to update treatment medicare status.
+     * Returns: Object
+     * */
+    async resetMedicare() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                medicareClaim: 0,
+                medicareService: null
+            }).where('apptId', this.apptId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `treatment` record with medicareClaim and medicareService.
+     * Can be used to update treatment medicare status.
+     * Returns: Object
+     * */
+    async updateMedicare() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                medicareClaim: this.medicareClaim,
+                medicareService: this.medicareService
+            }).where('treatmentId', this.treatmentId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Update a `treatment` record treatmentEnd.
      * Can be used to end treatment.
      * Returns: 0 or 1

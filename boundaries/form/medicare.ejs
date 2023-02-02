@@ -1,0 +1,123 @@
+<%- include('../includes/head.ejs') %>
+
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../includes/navbar.ejs') %>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <%- include('../includes/sidebar.ejs') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <%- include('../includes/content-header.ejs') %>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Error Message -->
+              <%- include('../includes/flash-message.ejs') %>
+
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Treatments</h3>
+                </div>
+                <!-- /.card-header -->
+                <form action="<%= path %>" method="post" onsubmit="return confirm('Save selection and return to billing?');">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-3 font-weight-bold">
+                        Index #
+                      </div>
+                      <div class="col-md-3 font-weight-bold">
+                        Treatment
+                      </div>
+                      <div class="col-md-3 font-weight-bold">
+                        Price
+                      </div>
+                      <div class="col-md-3 font-weight-bold">
+                        Claim
+                      </div>
+                    </div>
+                    <% for(let i = 0; i < treatmentData.length; i++) { %>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <%= i + 1 %>
+                      </div>
+                      <div class="col-md-3">
+                        <%= treatmentData[i].treatmentName %>
+                      </div>
+                      <div class="col-md-3">
+                        <%= treatmentData[i].treatmentPrice %>
+                      </div>
+                      <div class="col-md-3">
+                        <% if (treatmentData[i].medicareClaim) { %>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="medicareClaim" type="checkbox" id="cb_MedicareClaim" value="<%= treatmentData[i].treatmentId %>" checked>
+                        </div>
+                        <% } else { %>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" name="medicareClaim" type="checkbox" id="cb_MedicareClaim" value="<%= treatmentData[i].treatmentId %>">
+                        </div>
+                        <% } %>
+                      </div>
+                    </div>
+                    <% } %>
+                    <div class="row mt-5">
+                      <div class="col-md-6 offset-md-6">
+                        <div class="form-group">
+                          <label for="ddl_Gender">Medicare Service<span style="color:red;">*</span></label>
+                          <select class="form-control" id="ddl_MedicareService" name="medicareService" style="width: 100%;" tabindex="6" required>
+                            <option <% if (!medicareService) { %>selected<% } %> value="" disabled>Select one...</option>
+                            <option <% if (medicareService === 'Medisave') { %>selected<% } %> value="Medisave">Medisave</option>
+                            <option <% if (medicareService === 'CHAS') { %>selected<% } %> value="CHAS">CHAS</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer text-right">
+                    <input type="hidden" name="billId" value="<%= query.billId %>">
+                    <input type="hidden" name="apptId" value="<%= query.apptId %>">
+                    <button type="submit" class="btn btn-success">Submit Claim</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- End -->
+    <%- include('../includes/footer.ejs') %>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <%- include('../includes/end-scripts.ejs') %>
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+</body>
+
+</html>

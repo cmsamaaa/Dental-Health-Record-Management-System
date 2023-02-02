@@ -70,6 +70,7 @@
         </tr>
       </thead>
       <tbody>
+        <% let medicareClaim = false %>
         <% for(let i = 0; i < treatmentData.length; i++) { %>
         <tr>
           <td><%= i + 1 %></td>
@@ -77,6 +78,15 @@
           <td><%= treatmentData[i].treatmentId %></td>
           <td><%= treatmentData[i].treatmentPrice %></td>
         </tr>
+        <% if (treatmentData[i].medicareClaim === 1) { %>
+        <% medicareClaim = true %>
+        <tr>
+          <td></td>
+          <td><i><%= treatmentData[i].treatmentName %> (<%= treatmentData[i].medicareService %>)</i></td>
+          <td></td>
+          <td>- <%= treatmentData[i].treatmentPrice %></td>
+        </tr>
+        <% }%>
         <% } %>
       </tbody>
     </table>
@@ -112,8 +122,18 @@
           <th>GST (8%)</th>
           <td>$<%= billData.billTax %></td>
         </tr>
+        <% if (medicareClaim) { %>
         <tr>
-          <th>Total:</th>
+          <th>Claim Deductibles</th>
+          <td>- $<%= billData.medicareDeduction %></td>
+        </tr>
+        <tr>
+          <th>GST Deductibles </th>
+          <td>- $<%= billData.medicareDeductionTax %></td>
+        </tr>
+        <% } %>
+        <tr>
+          <th>Total Payable:</th>
           <td>$<%= billData.billTotal %></td>
         </tr>
       </table>
