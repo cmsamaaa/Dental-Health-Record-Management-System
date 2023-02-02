@@ -64,6 +64,30 @@ class Staff extends User {
     }
 
     /**
+     * Retrieves all `staff` inner join `user` records where role = Dental Assistant
+     * Returns: JSON[]
+     * */
+    async getAllAssistants() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('users', 'staffs.userId', 'users.userId')
+                .where('clinicId', this.clinicId)
+                .andWhere((builder) => builder.whereIn('role', ['Dentist', 'Dental Assistant']));
+
+            result = _.map(result, (staff) => {
+                return _.omit(staff, 'password');
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves specific `staff` inner join `user` record
      * Returns: JSON Object
      * */
@@ -184,7 +208,7 @@ class Staff extends User {
 
         return result;
     }
-    
+
 }
 
 module.exports = Staff;

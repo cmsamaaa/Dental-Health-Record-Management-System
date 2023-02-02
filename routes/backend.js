@@ -6,6 +6,7 @@ const clinicController = require('../controllers/clinicController');
 const patientController = require('../controllers/patientController');
 const staffController = require('../controllers/staffController');
 const appointmentController = require('../controllers/appointmentController');
+const participantController = require('../controllers/participantController');
 const inventoryController = require('../controllers/inventoryController');
 const clinicTreatmentController = require('../controllers/clinicTreatmentController');
 const oralRecordController = require('../controllers/oralRecordController');
@@ -82,6 +83,8 @@ router.post('/dentist/appointment/in-session/treatment/add', routeAuth.setSessio
 router.post('/dentist/appointment/in-session/treatment/edit', routeAuth.setSession, routeAuth.isDentist, treatmentController.editTreatment);
 router.post('/dentist/appointment/in-session/treatment/complete', routeAuth.setSession, routeAuth.isDentist, treatmentController.completeTreatment);
 router.post('/dentist/appointment/in-session/treatment/delete', routeAuth.setSession, routeAuth.isDentist, treatmentController.deleteTreatment);
+router.post('/dentist/appointment/in-session/participant/add', routeAuth.setSession, routeAuth.isDentist, participantController.addParticipant);
+router.post('/dentist/appointment/in-session/participant/delete', routeAuth.setSession, routeAuth.isDentist, participantController.deleteParticipant);
 
 router.post('/dentist/queue/call', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, queueController.callQueue);
 router.post('/dentist/queue/skip', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, queueController.skipQueue);

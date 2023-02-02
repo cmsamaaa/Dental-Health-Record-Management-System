@@ -1,5 +1,9 @@
 <%- include('../includes/head.ejs') %>
 
+<!-- Select2 -->
+<link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
@@ -105,13 +109,102 @@
                 </div>
                 <!-- /.card-body -->
 
-
                 <div class="card-footer text-right">
                   <form action="/dentist/appointment/in-session/end" method="post" onsubmit="return confirm('Are you finished with this session? This action is irreversible.');">
                     <input type="hidden" name="apptId" value="<%= appointmentData.apptId %>">
                     <button type="submit" class="btn btn-success">End Session</button>
                   </form>
                 </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Participants</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <% if (participantData.length > 0) { %>
+                  <table id="tbl_Participants" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Staff</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < participantData.length; i++) { %>
+                      <tr>
+                        <td><%= i + 1 %></td>
+                        <td>
+                          <% if (participantData[i].role === 'Dentist') { %>
+                          Dr.
+                          <% } %>
+                          <% if (participantData[i].gender === 'Male' && participantData[i].role !== 'Dentist') { %>
+                          Mr.
+                          <% } %>
+                          <% if (participantData[i].gender === 'Female' && participantData[i].role !== 'Dentist') { %>
+                          Ms.
+                          <% } %>
+                          <%= participantData[i].firstName + ' ' + participantData[i].lastName %>
+                        </td>
+                        <td><%= participantData[i].role %></td>
+                        <td>
+                          <% if (participantData[i].staffId !== _staffId) { %>
+                          <form action="/dentist/appointment/in-session/participant/delete" method="post" onsubmit="return confirm('Remove <%= participantData[i].firstName %> <%= participantData[i].lastName %> as a participant?');">
+                            <input type="hidden" name="apptId" value="<%= participantData[i].apptId %>">
+                            <input type="hidden" name="staffId" value="<%= participantData[i].staffId %>">
+                            <button type="submit" class="btn btn-danger" title="Remove"><i class="fas fa-times"></i></button>
+                          </form>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                  <% } %>
+                  <form action="/dentist/appointment/in-session/participant/add" method="post">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group mt-3">
+                          <select id="ddl_Staffs" name="staffId" class="form-control select2bs4" style="width: 100%;" required>
+                            <option selected="selected" disabled>Find dentist or assistant...</option>
+                            <% for (let i = 0; i < staffData.length; i++) { %>
+                            <option value="<%= staffData[i].staffId %>">
+                              <% if (staffData[i].role === 'Dentist') { %>
+                              Dr.
+                              <% } %>
+                              <% if (staffData[i].gender === 'Male' && staffData[i].role !== 'Dentist') { %>
+                              Mr.
+                              <% } %>
+                              <% if (staffData[i].gender === 'Female' && staffData[i].role !== 'Dentist') { %>
+                              Ms.
+                              <% } %>
+                              <%= staffData[i].firstName %> <%= staffData[i].lastName %>
+                            </option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="hidden" name="apptId" value="<%= appointmentData.apptId %>">
+                        <button type="submit" class="btn btn-outline-primary mt-3 float-right" style="width: 100%;">
+                          <i class="fas fa-user-plus"></i>
+                          &nbsp;&nbsp;
+                          Add Participant
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card-body -->
               </div>
               <!-- /.card -->
             </div>
@@ -402,6 +495,9 @@
   <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+  <!-- Select2 -->
+  <script src="/plugins/select2/js/select2.full.min.js"></script>
+
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="/plugins/moment/moment.min.js"></script>
   <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
@@ -409,6 +505,11 @@
   <script src="/dist/js/demo.js"></script>
 
   <script>
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+
     $(function() {
       $("#tbl_Treatments").DataTable({
         "responsive": true,

@@ -5,6 +5,7 @@ const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 const Queue = require("../entities/queue");
 const Appointment = require('../entities/appointment');
+const Participant = require('../entities/participant');
 
 exports.createQueue = async (req, res, next) => {
     const user = req.url.split('/')[1];
@@ -139,7 +140,13 @@ exports.startSession = async (req, res, next) => {
             });
             const queueResult = await queue.updateQueueStatus();
 
-            if (queueResult)
+            const participant = new Participant({
+                apptId: req.body.apptId,
+                staffId: req.session.userInfo.staffId
+            });
+            const participantResult = await participant.addParticipant();
+
+            if (queueResult && participantResult)
                 res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session'));
             else
                 res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?error=true'));

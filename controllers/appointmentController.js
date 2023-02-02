@@ -5,6 +5,8 @@ const async_request = require('async-request');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 const Appointment = require("../entities/appointment");
+const Participant = require("../entities/participant");
+const Staff = require('../entities/staff');
 const ClinicTreatment = require("../entities/clinicTreatment");
 const Treatment = require("../entities/treatment");
 const oralRecord = require("../entities/oralRecord");
@@ -483,6 +485,14 @@ exports.viewInSessionAppointment = async (req, res, next) => {
         const dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + appointmentData.staffId));
 
         if (dentistResponse.statusCode === HTTP_STATUS.OK) {
+            // Get list of participants
+            const participant = new Participant({ apptId: appointmentData.apptId });
+            const participantData = await participant.getParticipants();
+
+            // Get list of dental assistant
+            const staff = new Staff({ clinicId: appointmentData.clinicId });
+            const staffData = await staff.getAllAssistants();
+
             // Get clinic's treatment data
             const clinicTreatment = new ClinicTreatment({ clinicId: appointmentData.clinicId });
             const clinicTreatmentData = await clinicTreatment.getAllActive();
@@ -503,7 +513,9 @@ exports.viewInSessionAppointment = async (req, res, next) => {
                 oralrecordData: oralrecordData,
                 dentistData: JSON.parse(dentistResponse.body),
                 clinicTreatmentData: !_.isEmpty(clinicTreatmentData) ? clinicTreatmentData : [],
-                treatmentData: !_.isEmpty(treatmentData) ? treatmentData : []
+                treatmentData: !_.isEmpty(treatmentData) ? treatmentData : [],
+                participantData: !_.isEmpty(participantData) ? participantData : [],
+                staffData: !_.isEmpty(staffData) ? staffData : [],
             });
         }
         else
