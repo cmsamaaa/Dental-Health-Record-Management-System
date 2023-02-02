@@ -14,7 +14,7 @@ exports.logout = async (req, res, next) => {
     if (req.session.userRole === 'Administrator' || req.session.userRole === 'Dentist' || req.session.userRole === 'Dental Assistant')
         path = '/staff' + path;
 
-    req.session.destroy();
+    req.session = null;
     res.redirect(parse_uri.parse(req, path));
 };
 
