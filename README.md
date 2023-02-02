@@ -1,19 +1,20 @@
 # HappySmile
+
 #### Dental Health Record Management System
 
 ## Table of Contents
 
-- [Start the Application](#start-the-application)
+-   [Start the Application](#start-the-application)
     1. [Node.js](#nodejs)
-- [Setup Guide (Local)](#setup-guide-local)
+-   [Setup Guide (Local)](#setup-guide-local)
     1. [Node.js](#1-nodejs)
     2. [Process Environment Variables](#2-process-environment-variables)
-- [npm Commands](#npm-commands)
-    - [npm ci](#npm-ci)
-    - [npm start](#npm-start)
-    - [npm run dev](#npm-run-dev)
-    - [npm run test](#npm-run-test)
-- [Dependencies](#dependencies)
+-   [npm Commands](#npm-commands)
+    -   [npm ci](#npm-ci)
+    -   [npm start](#npm-start)
+    -   [npm run dev](#npm-run-dev)
+    -   [npm run test](#npm-run-test)
+-   [Dependencies](#dependencies)
 
 ## Start the Application
 
@@ -41,7 +42,7 @@ You may simply execute the following command to start the application:
 ./start.sh
 ```
 
-> **NOTE:** Please configure the required environment variables in the script. For more details, you may refer to the 
+> **NOTE:** Please configure the required environment variables in the script. For more details, you may refer to the
 > setup guide [below](#2-process-environment-variables).
 
 ## Setup Guide (Local)
@@ -95,29 +96,28 @@ the following:
 
 ### `npm ci`
 
-- This command will install all necessary dependencies based on the `package-lock.json`.
-- You only need to run this command <b>once</b> in the project directory.
+-   This command will install all necessary dependencies based on the `package-lock.json`.
+-   You only need to run this command <b>once</b> in the project directory.
 
 ### `npm start`
 
-- This command starts the node server located in the root of the repository.
-- Alternatively, you may run `node app.js`.
-- You can now access the app through `localhost:3000`.
+-   This command starts the node server located in the root of the repository.
+-   Alternatively, you may run `node app.js`.
+-   You can now access the app through `localhost:3000`.
 
 ### `npm run dev`
 
-- This command starts the node server in development mode using nodemon.
-- It will monitor for any changes to the JavaScript files and restart the node server when changes are observed.
-- Alternatively, you may run `nodemon app.js`
-- For more info, please refer to [Nodemon](https://github.com/remy/nodemon#nodemon).
+-   This command starts the node server in development mode using nodemon.
+-   It will monitor for any changes to the JavaScript files and restart the node server when changes are observed.
+-   Alternatively, you may run `nodemon app.js`
+-   For more info, please refer to [Nodemon](https://github.com/remy/nodemon#nodemon).
 
 ### `npm run test`
 
-- This command runs the unit tests and generates a code coverage report.
-- Code coverage report are generated in `./coverage`, in HTML format for ease of readability.
-- Alternatively, you may run `nyc --reporter=html --reporter=text mocha test/test.js --exit"`
-- For more info, you may read up on them in their official documentations: [Istanbul / nyc](https://istanbul.js.org/)
-  , [Mocha.js](https://mochajs.org/), [Chai.js](https://www.chaijs.com/).
+-   This command runs the unit tests and generates a code coverage report.
+-   Code coverage report are generated in `./coverage`, in HTML format for ease of readability.
+-   Alternatively, you may run `nyc --reporter=html --reporter=text mocha test/test.js --exit"`
+-   For more info, you may read up on them in their official documentations: [Istanbul / nyc](https://istanbul.js.org/), [Mocha.js](https://mochajs.org/), [Chai.js](https://www.chaijs.com/).
 
 ## Dependencies
 
@@ -128,10 +128,12 @@ summarised list taken from [package.json](./package.json):
 
 ```json5
   "dependencies": {
+    "async-request": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
     "bootstrap": "^5.2.2",
     "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
