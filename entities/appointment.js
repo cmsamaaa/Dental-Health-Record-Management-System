@@ -9,7 +9,6 @@ class Appointment {
     apptId;
     startDateTime;
     endDateTime;
-    followUpApptId;
     status;     // Upcoming, In Session, Payment, Completed, Missed, Cancelled
     patientId;
     staffId;
@@ -31,7 +30,6 @@ class Appointment {
                 apptId: this.apptId ? this.apptId : null,
                 startDateTime: dateTimeFormat.parse(this.startDateTime),
                 endDateTime: dateTimeFormat.parseWithAddition(this.startDateTime, 1, 30),
-                followUpApptId: this.followUpApptId ? this.followUpApptId : null,
                 patientId: this.patientId,
                 staffId: this.staffId,
                 clinicId: this.clinicId
