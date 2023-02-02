@@ -175,7 +175,7 @@
                       <div class="col-md-8">
                         <div class="form-group mt-3">
                           <select id="ddl_Staffs" name="staffId" class="form-control select2bs4" style="width: 100%;" required>
-                            <option selected="selected" disabled>Find dentist or assistant...</option>
+                            <option selected="selected" disabled value="">Find dentist or assistant...</option>
                             <% for (let i = 0; i < staffData.length; i++) { %>
                             <option value="<%= staffData[i].staffId %>">
                               <% if (staffData[i].role === 'Dentist') { %>
