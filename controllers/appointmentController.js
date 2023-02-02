@@ -436,6 +436,10 @@ exports.viewAppointment = async (req, res, next) => {
     const participant = new Participant({ apptId: req.params.apptId });
     const participantData = await participant.getParticipants();
 
+    // Get current appointment's treatment data
+    const treatment = new Treatment({ apptId: req.params.apptId });
+    const treatmentData = await treatment.getAllTreatments();
+
     request.get({
         url: uri,
     }, (err, response, body) => {
@@ -455,7 +459,8 @@ exports.viewAppointment = async (req, res, next) => {
                         oralrecordData: oralrecordData,
                         userData: userData,
                         userRole: user,
-                        participantData: participantData
+                        participantData: participantData,
+                        treatmentData: treatmentData
                     });
                 }
                 else {
