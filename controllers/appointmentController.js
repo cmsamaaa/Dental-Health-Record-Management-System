@@ -423,11 +423,18 @@ exports.viewPastAppointments = async (req, res, next) => {
 exports.viewAppointment = async (req, res, next) => {
     const user = req.url.split('/')[1];
 
+    const title = 'Appointment';
+    const path = '/' + user + '/appointment/view';
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/get/' + req.params.apptId);
 
     const oralrecord = new oralRecord({ apptId: req.params.apptId });
     const oralrecordData = await oralrecord.getApptOralRecord();
+
+    // Get list of participants
+    const participant = new Participant({ apptId: req.params.apptId });
+    const participantData = await participant.getParticipants();
 
     request.get({
         url: uri,
@@ -439,20 +446,22 @@ exports.viewAppointment = async (req, res, next) => {
                 url: parse_uri.parse(req, '/api/dentist/get/' + userData.staffId)
             }, (err, response, body) => {
                 if (response.statusCode === HTTP_STATUS.OK) {
+
                     res.status(HTTP_STATUS.OK).render('detail/appointment', {
-                        pageTitle: 'Appointment',
-                        path: '/' + user + '/appointment/edit',
+                        pageTitle: title,
+                        path: path,
                         query: req.query,
                         dentistData: JSON.parse(response.body),
                         oralrecordData: oralrecordData,
                         userData: userData,
-                        userRole: user
+                        userRole: user,
+                        participantData: participantData
                     });
                 }
                 else {
                     res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                        pageTitle: 'Appointment',
-                        path: '/' + user + '/appointment/edit',
+                        pageTitle: title,
+                        path: path,
                         query: req.query
                     });
                 }
@@ -460,8 +469,8 @@ exports.viewAppointment = async (req, res, next) => {
         }
         else {
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
-                pageTitle: 'Appointment',
-                path: '/' + user + '/appointment/edit',
+                pageTitle: title,
+                path: path,
                 query: req.query
             });
         }

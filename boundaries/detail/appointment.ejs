@@ -77,14 +77,62 @@
           </div>
           <!-- /.row -->
 
+          <% if (participantData.length > 0) { %>
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Participants</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="tbl_Participants" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Staff</th>
+                        <th>Role</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < participantData.length; i++) { %>
+                      <tr>
+                        <td><%= i + 1 %></td>
+                        <td>
+                          <% if (participantData[i].role === 'Dentist') { %>
+                          Dr.
+                          <% } %>
+                          <% if (participantData[i].gender === 'Male' && participantData[i].role !== 'Dentist') { %>
+                          Mr.
+                          <% } %>
+                          <% if (participantData[i].gender === 'Female' && participantData[i].role !== 'Dentist') { %>
+                          Ms.
+                          <% } %>
+                          <%= participantData[i].firstName + ' ' + participantData[i].lastName %>
+                        </td>
+                        <td><%= participantData[i].role %></td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <% } %>
+          <!-- /.row -->
+
           <% if (userRole !== 'patient' ) { %>
           <!-- Patient Details Card -->
           <%- include('../includes/patient-card.ejs') %>
           <% } %>
           <% if (userRole === 'patient' ) { %>
-            <!-- Patient Details Card -->
-            <%- include('../includes/my-card.ejs') %>
-            <% } %>
+          <!-- Patient Details Card -->
+          <%- include('../includes/my-card.ejs') %>
+          <% } %>
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
