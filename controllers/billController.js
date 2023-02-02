@@ -53,10 +53,21 @@ exports.updateMedicare = async (req, res, next) => {
     const result = await treatment.resetMedicare();
 
     const medicareClaim = req.body.medicareClaim;
-    if (medicareClaim.constructor === Array) {
-        for (let i = 0; i < medicareClaim.length; i++) {
+    if (medicareClaim) {
+        if (medicareClaim.constructor === Array) {
+            for (let i = 0; i < medicareClaim.length; i++) {
+                const treatment = new Treatment({
+                    treatmentId: medicareClaim[i],
+                    medicareClaim: 1,
+                    medicareService: req.body.medicareService
+                });
+
+                const result = await treatment.updateMedicare();
+            }
+        }
+        else {
             const treatment = new Treatment({
-                treatmentId: medicareClaim[i],
+                treatmentId: medicareClaim,
                 medicareClaim: 1,
                 medicareService: req.body.medicareService
             });
@@ -64,17 +75,6 @@ exports.updateMedicare = async (req, res, next) => {
             const result = await treatment.updateMedicare();
         }
     }
-    else if (medicareClaim) {
-        const treatment = new Treatment({
-            treatmentId: medicareClaim,
-            medicareClaim: 1,
-            medicareService: req.body.medicareService
-        });
-
-        const result = await treatment.updateMedicare();
-    }
-    else
-        res.redirect(parse_uri.parse(req, '/admin/bill/medicare?billId=' + req.body.billId + '&apptId=' + req.body.apptId));
 
     res.redirect(parse_uri.parse(req, '/admin/bill/invoice?billId=' + req.body.billId));
 };
