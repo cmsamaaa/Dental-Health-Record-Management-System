@@ -149,7 +149,7 @@ exports.viewProfile = async (req, res, next) => {
     });
     const result = await staff.getProfile();
     const userRole = req.url.split('/')[1];
-    
+
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('detail/profile', {
             pageTitle: 'Profile',
@@ -176,7 +176,7 @@ exports.viewEditProfile = async (req, res, next) => {
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/profile', {
             pageTitle: 'Profile',
-            path: '/' + userRole + '/profile/edit/:userId',
+            path: '/' + userRole + '/profile/edit/' + req.session.userInfo.userId,
             query: req.query,
             profileData: result
         });
