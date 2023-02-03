@@ -63,8 +63,9 @@
                           <!-- <input type="text" class="form-control" name="familyId" value="<%= actionText === 'edit' ? patientData.familyId : '' %>" placeholder="Enter family group ID"> -->
                           <select class="form-control form-select" name="familyId" multiple>
                             <% for(let i = 0; i < otherPatientData.length; i++) { %>
-                            <!--<option selected>Open this select menu</option>-->
-                            <option <% if (patientData.nric === otherPatientData[i].nric) { %>disabled<% } %> <% if (patientData.familyId === otherPatientData[i].nric) { %>selected<% } %> value="<%= otherPatientData[i].nric %>"><%= otherPatientData[i].firstName %> <%= otherPatientData[i].lastName %>, <%= otherPatientData[i].nric %></option>
+                            <option <% if (patientData.nric === otherPatientData[i].nric) { %>disabled<% } %> <% if(familyData.includes(otherPatientData[i].nric)) { %>selected<% } %> value="<%= otherPatientData[i].nric %>">
+                              <%= otherPatientData[i].firstName %> <%= otherPatientData[i].lastName %>, <%= otherPatientData[i].nric %>
+                            </option>
                             <% } %>
                           </select>
                         </div>

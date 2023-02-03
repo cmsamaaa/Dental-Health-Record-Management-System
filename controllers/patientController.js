@@ -130,6 +130,8 @@ exports.viewEditPatient = async (req, res, next) => {
     });
     const result = await patient.getPatient();
     const results = await patient.getAllPatients();
+    let familyId = result.familyId;
+    const myArray = familyId.split(",");
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/patient', {
@@ -137,6 +139,7 @@ exports.viewEditPatient = async (req, res, next) => {
             path: '/admin/patient/edit',
             query: req.query,
             patientData: result,
+            familyData: myArray,
             otherPatientData: results
         });
     }
