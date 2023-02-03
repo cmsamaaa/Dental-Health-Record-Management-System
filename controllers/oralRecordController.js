@@ -99,12 +99,14 @@ exports.viewEdit = async (req, res, next) => {
         recordId: req.params.recordId
     });
     const result = await oralrecord.get();
+    let teeth = result.recordTeeth;
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/oralRecord', {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oral-record/edit',
             query: req.query,
+            teethData: teeth,
             oralrecordData: result
         });
     }
