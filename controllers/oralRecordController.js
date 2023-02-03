@@ -100,14 +100,14 @@ exports.viewEdit = async (req, res, next) => {
     });
     const result = await oralrecord.get();
     let teeth = result.recordTeeth;
-    //const myArray = teeth.split(",");
+    const teethArray = teeth.split(",");
 
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/oralRecord', {
             pageTitle: 'Oral Health Record',
             path: '/dentist/oral-record/edit',
             query: req.query,
-            teethData: teeth,
+            teethData: teethArray,
             oralrecordData: result
         });
     }
