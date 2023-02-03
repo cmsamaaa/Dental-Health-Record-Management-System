@@ -77,6 +77,49 @@
           </div>
           <!-- /.row -->
 
+          <% if (treatmentData.length > 0) { %>
+          <div class="row">
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title text-capitalize">Treatments</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="tbl_Treatments" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Treatment</th>
+                        <th>Price (S$)</th>
+                        <th>Treated Tooth(s)</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < treatmentData.length; i++) { %>
+                      <tr>
+                        <td><%= i + 1 %></td>
+                        <td><%= treatmentData[i].treatmentName %></td>
+                        <td><%= treatmentData[i].treatmentPrice %></td>
+                        <td><%= treatmentData[i].treatmentTeeth === '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32' ? 'ALL' : treatmentData[i].treatmentTeeth %></td>
+                        <td><%= treatmentData[i].treatmentStart %></td>
+                        <td><%= treatmentData[i].treatmentEnd !== 'Invalid date' ? treatmentData[i].treatmentEnd : 'In progress' %></td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+          <% } %>
+          <!-- /.row -->
+
           <% if (participantData.length > 0) { %>
           <div class="row">
             <div class="col-md-12">
@@ -125,36 +168,32 @@
           <% } %>
           <!-- /.row -->
 
-          <% if (treatmentData.length > 0) { %>
+          <% if (usedMaterialData.length > 0) { %>
           <div class="row">
             <div class="col-md-12">
               <!-- general form elements -->
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title text-capitalize">Treatments</h3>
+                  <h3 class="card-title text-capitalize">Materials Used</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_Treatments" class="table table-bordered table-striped">
+                  <table id="tbl_UsedMaterials" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Treatment</th>
-                        <th>Price (S$)</th>
-                        <th>Treated Tooth(s)</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <% for(let i = 0; i < treatmentData.length; i++) { %>
+                      <% for(let i = 0; i < usedMaterialData.length; i++) { %>
                       <tr>
                         <td><%= i + 1 %></td>
-                        <td><%= treatmentData[i].treatmentName %></td>
-                        <td><%= treatmentData[i].treatmentPrice %></td>
-                        <td><%= treatmentData[i].treatmentTeeth === '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32' ? 'ALL' : treatmentData[i].treatmentTeeth %></td>
-                        <td><%= treatmentData[i].treatmentStart %></td>
-                        <td><%= treatmentData[i].treatmentEnd !== 'Invalid date' ? treatmentData[i].treatmentEnd : 'In progress' %></td>
+                        <td><%= usedMaterialData[i].treatmentName %></td>
+                        <td><%= usedMaterialData[i].name %></td>
+                        <td><%= usedMaterialData[i].materialQty %></td>
                       </tr>
                       <% } %>
                     </tbody>

@@ -483,6 +483,10 @@ exports.viewAppointment = async (req, res, next) => {
     const treatment = new Treatment({ apptId: req.params.apptId });
     const treatmentData = await treatment.getAllTreatments();
 
+    // Get used materials data
+    const usedMaterial = new UsedMaterial({ apptId: req.params.apptId });
+    const usedMaterialData = await usedMaterial.getUsedMaterials();
+
     request.get({
         url: uri,
     }, (err, response, body) => {
@@ -503,7 +507,8 @@ exports.viewAppointment = async (req, res, next) => {
                         userData: userData,
                         userRole: user,
                         participantData: participantData,
-                        treatmentData: treatmentData
+                        treatmentData: treatmentData,
+                        usedMaterialData: usedMaterialData
                     });
                 }
                 else {
