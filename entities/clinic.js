@@ -43,7 +43,7 @@ class Clinic {
             result = {};
         }
 
-        return result;
+        return result[0];
     }
 
     /**
