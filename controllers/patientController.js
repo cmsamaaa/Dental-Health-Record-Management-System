@@ -64,7 +64,26 @@ exports.register = async (req, res, next) => {
 
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const patient = new Patient(req.body);
+        let familyId = null;
+        if (req.body.familyId){
+            familyId = req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId
+        }
+        const patient = new Patient({
+            userId: req.body.userId,
+            patientId: req.body.patientId,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            nric: req.body.nric,
+            DOB: req.body.DOB,
+            gender: req.body.gender,
+            email: req.body.email,
+            medicareId: req.body.medicareId,
+            address: req.body.address,
+            postal: req.body.postal,
+            unit: req.body.unit,
+            familyId: familyId
+        });
+        
         const results = await patient.updatePatient();
         
         if (results)

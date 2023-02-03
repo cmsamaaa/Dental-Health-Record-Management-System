@@ -157,7 +157,7 @@ class Patient extends User {
         let result;
         try {
             result = await db(tableName).update({
-                medicareId: this.medicareId,
+                medicareId: this.medicareId ? this.medicareId : null,
                 address: this.address,
                 postal: this.postal,
                 unit: this.unit,

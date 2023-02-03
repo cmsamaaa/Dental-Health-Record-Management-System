@@ -33,7 +33,7 @@ class Clinic {
                 clinicPostal: this.clinicPostal,
                 clinicUnit: this.clinicUnit,
                 clinicEmail: this.clinicEmail,
-                clinicSubEmail: this.clinicSubEmail  ? this.clinicSubEmail : null,
+                clinicSubEmail: this.clinicSubEmail ? this.clinicSubEmail : null,
                 clinicPhone: this.clinicPhone,
                 clinicSubPhone: this.clinicSubPhone ? this.clinicSubPhone : null
             });
