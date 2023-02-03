@@ -68,6 +68,13 @@
 </div>
 <% } %>
 
+<% if (query.inventory === 'error') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  Some materials used are recorded beyond the current inventory quantity. Negative inventory quantity is not allowed!
+</div>
+<% } %>
+
 <% if (query.treatment === 'in-progress') { %>
 <div class="callout callout-danger">
   <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>

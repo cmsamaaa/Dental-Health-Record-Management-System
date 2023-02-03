@@ -60,7 +60,7 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .where('clinicId', this.clinicId);
+                .where('clinicId', this.clinicId);
 
             result = _.map(result, (inventory) => {
                 inventory.expiryDate = moment(inventory.expiryDate).format('DD-MM-YYYY');
@@ -105,8 +105,8 @@ class Inventory {
         let result;
         try {
             result = await db(tableName).select('*')
-            .where('quantity', '<=', 'minQuantity')
-            .andWhere('inventoryId', this.inventoryId);
+                .where('quantity', '<=', 'minQuantity')
+                .andWhere('inventoryId', this.inventoryId);
         }
         catch (e) {
             console.error(e);
@@ -115,7 +115,7 @@ class Inventory {
 
         return result[0];
     }
-    
+
     /**
      * Update a `inventory` record.
      * Can be used to update inventory.
@@ -135,6 +135,23 @@ class Inventory {
                 UPC: this.UPC,
                 note: this.note
             }).where('inventoryId', this.inventoryId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+        return result;
+    }
+
+    /**
+     * Update a `inventory` record qty.
+     * Can be used to update inventory qty.
+     * Returns: Object
+     * */
+    async updateInventoryQty() {
+        let result;
+        try {
+            result = await db(tableName).decrement('quantity', this.quantity).where('inventoryId', this.inventoryId);
         }
         catch (e) {
             console.error(e);

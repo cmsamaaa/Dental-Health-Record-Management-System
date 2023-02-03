@@ -12,6 +12,8 @@ const Treatment = require("../entities/treatment");
 const oralRecord = require("../entities/oralRecord");
 const Queue = require('../entities/queue');
 const Bill = require('../entities/bill');
+const Inventory = require('../entities/inventory');
+const UsedMaterial = require('../entities/usedMaterial');
 
 exports.createAppointment = async (req, res, next) => {
     const path = req.session.userRole === 'Patient' ? '/appointment/upcoming' : '/appointment/view-all';
@@ -46,56 +48,97 @@ exports.editAppointment = async (req, res, next) => {
 exports.endInSessionAppointment = async (req, res, next) => {
     const status = 'Payment';
 
-    const treatment = new Treatment({
-        apptId: req.body.apptId
-    });
+    const treatment = new Treatment({ apptId: req.body.apptId });
 
     // Check if all treatments are marked as done
     const isInProgress = await treatment.checkInProgressTreatments();
 
+    const usedMaterial = new UsedMaterial({ apptId: req.body.apptId });
+    const usedMaterialData = await usedMaterial.getUsedMaterials();
+
     if (!isInProgress) {
-        // Get treatment price sum
-        const treatmentData = await treatment.getSumTreatmentPrice();
+        let quantityPass = true;
+        if (!_.isEmpty(usedMaterialData)) {
+            const hashMap = new Map();
 
-        if (!_.isEmpty(treatmentData)) {
-            // Create bill record
-            const bill = new Bill({
-                billSubtotal: treatmentData.totalPrice,
-                billTax: treatmentData.totalPrice * 0.08,
-                billTotal: treatmentData.totalPrice * 1.08,
-                apptId: req.body.apptId
-            });
-            const billData = await bill.createBill();
-
-            if (!_.isEmpty(billData)) {
-                // Update queue record to payment phase
-                const queue = new Queue({
-                    apptId: req.body.apptId,
-                    queueStatus: status
-                });
-                const queueData = await queue.endInSessionQueue();
-
-                if (queueData) {
-                    // Update appointment record to payment phase
-                    const appointment = new Appointment({
-                        apptId: req.body.apptId,
-                        status: status
-                    });
-                    const appointmentData = await appointment.updateAppointmentStatus();
-
-                    if (appointmentData)
-                        res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?apptStatus=payment'));
-                    else
-                        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=appointment&error=true'));
+            for (let i = 0; i < usedMaterialData.length; i++) {
+                if (hashMap.has(usedMaterialData[i].inventoryId)) {
+                    const currQty = hashMap.get(usedMaterialData[i].inventoryId);
+                    hashMap.set(usedMaterialData[i].inventoryId, currQty + usedMaterialData[i].materialQty);
                 }
                 else
-                    res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=queue&error=true'));
+                    hashMap.set(usedMaterialData[i].inventoryId, usedMaterialData[i].materialQty);
+            }
+
+            const mapIterator1 = hashMap.entries();
+            while (pair = mapIterator1.next().value) {
+                const inventory = new Inventory({
+                    inventoryId: pair[0],
+                });
+                const result = await inventory.getInventory();
+
+                if (result.quantity < pair[1])
+                    quantityPass = false;
+            }
+
+            if (quantityPass) {
+                const mapIterator2 = hashMap.entries();
+                while (pair = mapIterator2.next().value) {
+                    const inventory = new Inventory({
+                        inventoryId: pair[0],
+                        quantity: pair[1]
+                    });
+                    const result = await inventory.updateInventoryQty();
+                }
+            }
+        }
+
+        if (quantityPass) {
+            // Get treatment price sum
+            const treatmentData = await treatment.getSumTreatmentPrice();
+
+            if (!_.isEmpty(treatmentData)) {
+                // Create bill record
+                const bill = new Bill({
+                    billSubtotal: treatmentData.totalPrice,
+                    billTax: treatmentData.totalPrice * 0.08,
+                    billTotal: treatmentData.totalPrice * 1.08,
+                    apptId: req.body.apptId
+                });
+                const billData = await bill.createBill();
+
+                if (!_.isEmpty(billData)) {
+                    // Update queue record to payment phase
+                    const queue = new Queue({
+                        apptId: req.body.apptId,
+                        queueStatus: status
+                    });
+                    const queueData = await queue.endInSessionQueue();
+
+                    if (queueData) {
+                        // Update appointment record to payment phase
+                        const appointment = new Appointment({
+                            apptId: req.body.apptId,
+                            status: status
+                        });
+                        const appointmentData = await appointment.updateAppointmentStatus();
+
+                        if (appointmentData)
+                            res.redirect(parse_uri.parse(req, '/dentist/queue/view-all?apptStatus=payment'));
+                        else
+                            res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=appointment&error=true'));
+                    }
+                    else
+                        res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=queue&error=true'));
+                }
+                else
+                    res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=bill&error=true'));
             }
             else
-                res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=bill&error=true'));
+                res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=treatment&error=true'));
         }
         else
-            res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?entity=treatment&error=true'));
+            res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?inventory=error'));
     }
     else
         res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session?treatment=in-progress'));
@@ -499,6 +542,10 @@ exports.viewInSessionAppointment = async (req, res, next) => {
         const dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + appointmentData.staffId));
 
         if (dentistResponse.statusCode === HTTP_STATUS.OK) {
+            // Get clinic's treatment data
+            const clinicTreatment = new ClinicTreatment({ clinicId: appointmentData.clinicId });
+            const clinicTreatmentData = await clinicTreatment.getAllActive();
+
             // Get list of participants
             const participant = new Participant({ apptId: appointmentData.apptId });
             const participantData = await participant.getParticipants();
@@ -507,13 +554,17 @@ exports.viewInSessionAppointment = async (req, res, next) => {
             const staff = new Staff({ clinicId: appointmentData.clinicId });
             const staffData = await staff.getAllAssistants();
 
-            // Get clinic's treatment data
-            const clinicTreatment = new ClinicTreatment({ clinicId: appointmentData.clinicId });
-            const clinicTreatmentData = await clinicTreatment.getAllActive();
-
             // Get current appointment's treatment data
             const treatment = new Treatment({ apptId: appointmentData.apptId });
             const treatmentData = await treatment.getAllTreatments();
+
+            // Get used materials data
+            const usedMaterial = new UsedMaterial({ apptId: appointmentData.apptId });
+            const usedMaterialData = await usedMaterial.getUsedMaterials();
+
+            // Get inventory list
+            const inventory = new Inventory({ clinicId: req.session.userInfo.clinicId });
+            const inventoryData = await inventory.getAllInventories();
 
             const oralrecord = new oralRecord({ apptId: appointmentData.apptId });
             const oralrecordData = await oralrecord.getApptOralRecord();
@@ -524,12 +575,14 @@ exports.viewInSessionAppointment = async (req, res, next) => {
                 query: req.query,
                 appointmentData: appointmentData,
                 userData: appointmentData,
-                oralrecordData: oralrecordData,
                 dentistData: JSON.parse(dentistResponse.body),
                 clinicTreatmentData: !_.isEmpty(clinicTreatmentData) ? clinicTreatmentData : [],
-                treatmentData: !_.isEmpty(treatmentData) ? treatmentData : [],
                 participantData: !_.isEmpty(participantData) ? participantData : [],
                 staffData: !_.isEmpty(staffData) ? staffData : [],
+                treatmentData: !_.isEmpty(treatmentData) ? treatmentData : [],
+                usedMaterialData: usedMaterialData,
+                inventoryData: inventoryData,
+                oralrecordData: oralrecordData
             });
         }
         else
