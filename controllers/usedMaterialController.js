@@ -19,3 +19,19 @@ exports.deleteUsedMaterial = async (req, res, next) => {
 
     res.redirect(parse_uri.parse(req, '/dentist/appointment/in-session'));
 };
+
+exports.viewUsedMaterials = async (req, res, next) => {
+    const title = 'Inventory';
+    const path = '/admin/inventory/history';
+
+    // Get used material data
+    const usedMaterial = new UsedMaterial();
+    const usedMaterialData = await usedMaterial.getUsedMaterialsByClinicId(req.session.userInfo.clinicId);
+
+    res.status(HTTP_STATUS.OK).render('table/usedMaterials', {
+        pageTitle: title,
+        path: path,
+        query: req.query,
+        usedMaterialData: usedMaterialData
+    });
+};

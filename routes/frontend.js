@@ -12,6 +12,7 @@ const clinicTreatmentController = require('../controllers/clinicTreatmentControl
 const oralRecordController = require('../controllers/oralRecordController');
 const queueController = require('../controllers/queueController');
 const reviewController = require('../controllers/reviewController');
+const usedMaterialController = require('../controllers/usedMaterialController');
 
 const routeAuth = require('../middleware/route-auth');
 const routeRedir = require('../middleware/route-redir');
@@ -87,6 +88,7 @@ router.get('/admin/inventory/create', routeAuth.setSession, routeAuth.isAuth, ro
 router.get('/admin/inventory/edit/:inventoryId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewEditInventory);
 router.get('/admin/inventory/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventories);
 router.get('/admin/inventory/view/:inventoryId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventory);
+router.get('/admin/inventory/history', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, usedMaterialController.viewUsedMaterials);
 
 /* End of Admin Route */
 
