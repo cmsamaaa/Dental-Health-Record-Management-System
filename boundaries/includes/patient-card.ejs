@@ -2,6 +2,13 @@
 
 <div class="row pt-3 mb-4">
   <div class="col-md-12">
+    <% if (path === '/dentist/appointment/in-session') { %>
+    <button id="btnAppointSummary" class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#divAppointmentSummary" aria-expanded="false" aria-controls="divAppointmentSummary">
+      <i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;
+      Appointment Summary
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <% } %>
     <button id="btnPatientDetail" class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#divPatientDetail" aria-expanded="false" aria-controls="divPatientDetail">
       <i class="nav-icon fas fa-plus"></i>&nbsp;&nbsp;
       Full Patient Details
@@ -13,6 +20,60 @@
     </button>
   </div>
 </div>
+
+<% if (path === '/dentist/appointment/in-session') { %>
+<div id="divAppointmentSummary" class="collapse">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- general form elements -->
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Appointment Summary</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tb_firstName">First Name:</label>
+                  <input type="text" class="form-control-plaintext" id="tb_firstName" name="firstName" tabindex="1" value="<%= appointmentData.firstName %>" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="tb_NRIC">Patient's NRIC:</label>
+                  <input type="text" class="form-control-plaintext" id="tb_NRIC" name="nric" tabindex="3" value="<%= appointmentData.nric %>" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="tb_Dentist">Dentist:</label>
+                  <input type="text" class="form-control-plaintext" id="tb_Dentist" name="name" tabindex="5" value="Dr. <%= dentistData.firstName + ' ' + dentistData.lastName %>" disabled>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tb_lastName">Last Name (Surname):</label>
+                  <input type="text" class="form-control-plaintext" id="tb_lastName" name="lastName" tabindex="2" value="<%= appointmentData.lastName %>" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="tb_ClinicName">Clinic Name:</label>
+                  <input type="text" class="form-control-plaintext" id="tb_ClinicName" name="clinicName" tabindex="4" value="<%= dentistData.clinicName %>" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="tb_ApptDateTime">Appointment Date & Time:</label>
+                  <input type="text" class="form-control-plaintext" id="tb_ApptDateTime" name="startDateTime" tabindex="6" value="<%= appointmentData.startDateTime %>" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<% } %>
 
 <div id="divPatientDetail" class="collapse">
   <div class="row">
@@ -99,9 +160,9 @@
         </div>
         <!-- /.card-header -->
         <% if (userData.status === 'Missed') { %>
-          <div class="card-body">
-            <label>Not Recorded</label>
-          </div>
+        <div class="card-body">
+          <label>Not Recorded</label>
+        </div>
         <% } else { %>
         <div class="card-body">
           <div class="row">
@@ -129,21 +190,23 @@
                 <% } else {  %>
                 <input type="text" class="form-control-plaintext" name="recordCreatedAt" value="Not recorded" disabled>
                 <% } %>
-              </div>            
+              </div>
             </div>
           </div>
-        </div>           
+        </div>
+        <% if (path === '/dentist/appointment/in-session') { %>
         <div class="card-footer text-right">
           <form method="post">
             <% if (oralrecordData) {  %>
             <a href="/dentist/oral-record/edit/<%= oralrecordData.recordId %>" class="btn btn-primary">Edit Record</a>
             <% } else {  %>
-              <input type="hidden" name="patientId" value="<%= userData.patientId %>">
-              <input type="hidden" name="apptId" value="<%= userData.apptId %>">
-              <a href="/dentist/oral-record/create/<%= userData.apptId %>" class="btn btn-primary">Create Record</a>
+            <input type="hidden" name="patientId" value="<%= userData.patientId %>">
+            <input type="hidden" name="apptId" value="<%= userData.apptId %>">
+            <a href="/dentist/oral-record/create/<%= userData.apptId %>" class="btn btn-primary">Create Record</a>
             <% } %>
           </form>
         </div>
+        <% } %>
         <% } %>
         <!-- /.card-body -->
       </div>
@@ -155,6 +218,16 @@
 
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
+
+<% if (path === '/dentist/appointment/in-session') { %>
+<script>
+  // Expand & Collapse Appointment Summary
+  $('#btnAppointmentSummary').click(function() {
+    $(this).toggleClass('btn-outline-primary').toggleClass('btn-primary');
+    $(this).find('i').toggleClass('fa-plus').toggleClass('fa-minus');
+  });
+</script>
+<% } %>
 
 <script>
   $('#btnPatientDetail').click(function() {
