@@ -45,12 +45,14 @@ exports.viewReviews = async (req, res, next) => {
         clinicId: req.params.clinicId
     });
     const result = await review.getAll();
+    const avgRating = await review.getAvgRating();
 
     res.status(HTTP_STATUS.OK).render('table/review', {
         pageTitle: 'Patient Review(s)',
         path: '/review/view-all',
         query: req.query,
         clinicId: req.params.clinicId,
+        avgData: !_.isEmpty(avgRating.Average) ? avgRating.Average : [],
         reviewData: !_.isEmpty(result) ? result : []
     });
 

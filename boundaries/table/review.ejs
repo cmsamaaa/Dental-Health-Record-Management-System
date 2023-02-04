@@ -18,7 +18,10 @@
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <%- include('../includes/content-header.ejs') %>
-
+      <div class="card-body text-center">
+        <h4>Average Review Score:</h4> 
+        <h1><%= Math.round(avgData) %> <span class="fa fa-star checked"></span></h1>
+      </div>
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">

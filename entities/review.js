@@ -72,6 +72,21 @@ class Review {
         return result[0];
     }
 
+    async getAvgRating() {
+        let result;
+        try {
+            result = await db(tableName).select('clinicId')
+                .avg('reviewScore', { as: 'Average' })
+                .where('clinicId', this.clinicId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
     async get() {
         let result;
         try {
