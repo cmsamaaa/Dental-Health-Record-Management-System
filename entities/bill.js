@@ -12,6 +12,7 @@ class Bill {
     paymentMethod;
     billDateTime;
     paymentDateTime;
+    medicareFile;
     apptId;
 
     constructor(data) {
@@ -151,6 +152,46 @@ class Bill {
         }
 
         return result[0];
+    }
+
+    /**
+     * Update a `bill` record with medicareFile.
+     * Can be used to update medicare.
+     * Returns: Object
+     * */
+    async uploadMedicareFile() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                medicareFile: this.medicareFile
+            }).where('billId', this.billId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Update a `bill` record to remove medicareFile.
+     * Can be used to update medicare.
+     * Returns: Object
+     * */
+    async removeMedicareFile() {
+        let result;
+        try {
+            result = await db(tableName).update({
+                medicareFile: null
+            }).where('billId', this.billId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
     }
 
     /**

@@ -103,6 +103,34 @@
 </div>
 <% } %>
 
+<% if (query.error === 'file-type') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  Wrong file uploaded! Please ensure that the medicare claim form is uploaded as a PDF.
+</div>
+<% } %>
+
+<% if (query.error === 'no-file') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  No file uploaded! Please attach a medicare claim form to submit the claim.
+</div>
+<% } %>
+
+<% if (query.error === 'select-medicare') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  Please select a medicare service for the claim.
+</div>
+<% } %>
+
+<% if (query.error === 'download') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  Fail to download medicare claim form! Please contact the Administrators for assistance.
+</div>
+<% } %>
+
 <% if (query.apptCreate === 'false' && query.listClinics === 'error') { %>
 <div class="callout callout-warning">
   <h5><i class="fas fa-exclamation-triangle"></i> Warning</h5>

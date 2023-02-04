@@ -41,7 +41,7 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 
 // middleware
 app.use(bodyParser.json()); // parse application/json
-app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded & multipart/form-data
 app.use(session({
     secret: "tempPass123",
     resave: true,

@@ -33,17 +33,17 @@
                   <h3 class="card-title text-capitalize">Treatments</h3>
                 </div>
                 <!-- /.card-header -->
-                <form action="<%= path %>" method="post" onsubmit="return confirm('Save selection and return to billing?');">
+                <form action="<%= path %>" method="post" onsubmit="return beforeSubmit();" enctype="multipart/form-data">
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-md-3 font-weight-bold">
-                        Index #
+                      <div class="col-md-2 font-weight-bold">
+                        #
                       </div>
-                      <div class="col-md-3 font-weight-bold">
+                      <div class="col-md-4 font-weight-bold">
                         Treatment
                       </div>
                       <div class="col-md-3 font-weight-bold">
-                        Price
+                        Price ($)
                       </div>
                       <div class="col-md-3 font-weight-bold">
                         Claim
@@ -51,10 +51,10 @@
                     </div>
                     <% for(let i = 0; i < treatmentData.length; i++) { %>
                     <div class="row">
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <%= i + 1 %>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <%= treatmentData[i].treatmentName %>
                       </div>
                       <div class="col-md-3">
@@ -74,10 +74,21 @@
                     </div>
                     <% } %>
                     <div class="row mt-5">
-                      <div class="col-md-6 offset-md-6">
+                      <div class="col-md-6">
                         <div class="form-group">
-                          <label for="ddl_Gender">Medicare Service<span style="color:red;">*</span></label>
-                          <select class="form-control" id="ddl_MedicareService" name="medicareService" style="width: 100%;" tabindex="6" required>
+                          <label for="exampleInputFile">Upload Claim Form</label>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="fileUpload_MedicareForm" name="pdfFile" accept="application/pdf">
+                              <label class=" custom-file-label" for="exampleInputFile">Choose PDF file</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="ddl_MedicareService">Medicare Service</label>
+                          <select class="form-control" id="ddl_MedicareService" name="medicareService" style="width: 100%;">
                             <option <% if (!medicareService) { %>selected<% } %> value="" disabled>Select one...</option>
                             <option <% if (medicareService === 'Medisave') { %>selected<% } %> value="Medisave">Medisave</option>
                             <option <% if (medicareService === 'CHAS') { %>selected<% } %> value="CHAS">CHAS</option>
@@ -91,6 +102,7 @@
                   <div class="card-footer text-right">
                     <input type="hidden" name="billId" value="<%= query.billId %>">
                     <input type="hidden" name="apptId" value="<%= query.apptId %>">
+                    <input id="hiddenMedicareField" type="hidden" name="medicareFile">
                     <button type="submit" class="btn btn-success">Submit Claim</button>
                   </div>
                 </form>
@@ -118,6 +130,35 @@
   <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/dist/js/demo.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      bsCustomFileInput.init();
+    });
+
+    function getBase64(file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function() {
+        $('#hiddenMedicareField').val(reader.result);
+        console.log(reader.result);
+      };
+      reader.onerror = function(error) {
+        console.log('Error: ', error);
+      };
+    }
+
+    function beforeSubmit() {
+      var file = document.querySelector('input[type="file"]').files[0];
+      getBase64(file); // prints the base64 string
+      console.log($('#hiddenMedicareField').val());
+
+      return confirm('Save selection and return to billing?');
+    }
+  </script>
 </body>
 
 </html>

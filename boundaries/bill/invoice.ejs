@@ -69,6 +69,19 @@
                     </form>
                     <% } %>
                     <% } %>
+
+                    <% if (_userRole === 'Administrator') { %>
+                    <% if (billData.medicareFile) { %>
+                    <form action="/admin/bill/medicare/download" method="post">
+                      <input type="hidden" name="billId" value="<%= billData.billId %>">
+                      <input type="hidden" name="apptId" value="<%= billData.apptId %>">
+                      <input type="hidden" name="paymentMethod" value="Credit Card">
+                      <button type="submit" class="btn btn-outline-info float-right mr-2"><i class="fas fa-download"></i>
+                        Uploaded Medicare Form
+                      </button>
+                    </form>
+                    <% } %>
+                    <% } %>
                   </div>
                 </div>
               </div>
