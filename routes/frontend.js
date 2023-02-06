@@ -131,9 +131,6 @@ router.get('/patient/review/view/:reviewId', routeAuth.setSession, routeAuth.isA
 
 /* Start of Dentist Route */
 
-// Dashboard
-router.get('/dentist/dashboard', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewDashboard);
-
 // Profile
 router.get('/dentist/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewProfile);
 router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewEditProfile);
