@@ -24,8 +24,10 @@ exports.login = async (req, res, next) => {
 
                     if (result.role === 'Administrator')
                         res.redirect(parse_uri.parse(req, '/admin/dashboard?result=true&id=' + req.session.userInfo.userId));
-                    else
+                    else if (result.role === 'Dentist')
                         res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all?filter=upcoming&result=true&id=' + req.session.userInfo.userId));
+                    else
+                        res.redirect(parse_uri.parse(req, '/dentist/clinic?result=true&id=' + req.session.userInfo.userId));
                 }
                 else
                     res.redirect(parse_uri.parse(req, '/staff/login?error=true'));

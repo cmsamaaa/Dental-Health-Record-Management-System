@@ -144,7 +144,7 @@
                         </td>
                         <td><%= participantData[i].role %></td>
                         <td>
-                          <% if (participantData[i].staffId !== _staffId) { %>
+                          <% if (participantData[i].staffId !== _staffId && participantData[i].staffId !== dentistData.staffId) { %>
                           <form action="/dentist/appointment/in-session/participant/delete" method="post" onsubmit="return confirm('Remove <%= participantData[i].firstName %> <%= participantData[i].lastName %> as a participant?');">
                             <input type="hidden" name="apptId" value="<%= participantData[i].apptId %>">
                             <input type="hidden" name="staffId" value="<%= participantData[i].staffId %>">
@@ -484,7 +484,7 @@
             <div class="col-md-12 mt-2 mb-2">
               <form action="/dentist/appointment/in-session/end" method="post" onsubmit="return confirm('Are you finished with this session? A bill will be invoiced to the patient based on this session. This action is irreversible!');">
                 <input type="hidden" name="apptId" value="<%= appointmentData.apptId %>">
-                <button type="submit" class="btn btn-success text-uppercase" style="width: 100%; font-size: 1.5rem;">
+                <button type="submit" class="btn btn-success text-uppercase" style="width: 100%; font-size: 1.5rem;" <% if (_userRole === 'Dental Assistant') { %>disabled title='Only a dentist can end the session!' <% } %>>
                   End session
                 </button>
               </form>

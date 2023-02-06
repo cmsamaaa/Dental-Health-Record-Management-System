@@ -537,14 +537,20 @@ exports.viewInSessionAppointment = async (req, res, next) => {
     const path = '/' + user + '/appointment/in-session';
 
     // Get appointment in-session by staffId
-    let appointment = new Appointment({
-        staffId: req.session.userInfo.staffId
-    });
+    let appointment = new Appointment({ staffId: req.session.userInfo.staffId });
     const appointmentData = await appointment.getDentistCurrentAppointment();
 
     if (!_.isEmpty(appointmentData)) {
         // Get dentist info
-        const dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + appointmentData.staffId));
+        let dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + appointmentData.staffId));
+
+        // Get dentist info if user is `Dental Assistant`
+        if (req.session.userRole === 'Dental Assistant') {
+            appointment = new Appointment({ apptId: appointmentData.apptId });
+            const tempData = await appointment.getAppointment();
+
+            dentistResponse = await async_request(parse_uri.parse(req, '/api/dentist/get/' + tempData.staffId));
+        }
 
         if (dentistResponse.statusCode === HTTP_STATUS.OK) {
             // Get clinic's treatment data

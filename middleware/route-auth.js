@@ -25,7 +25,7 @@ exports.setSession = async (req, res, next) => {
         if (req.session.userRole !== 'Patient')
             res.locals._staffId = req.session.userInfo.staffId;
 
-        if (req.session.userRole === 'Dentist' && req.session.userRole !== 'Dental Assistant') {
+        if (req.session.userRole === 'Dentist' || req.session.userRole === 'Dental Assistant') {
             let appointment = new Appointment({
                 staffId: req.session.userInfo.staffId
             });

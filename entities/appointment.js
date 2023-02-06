@@ -365,7 +365,8 @@ class Appointment {
             result = await db(tableName).select('*')
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('users', 'patients.userId', 'users.userId')
-                .where('staffId', this.staffId)
+                .innerJoin('participants', 'appointments.apptId', 'participants.apptId')
+                .where('participants.staffId', this.staffId)
                 .andWhere('status', 'In Session')
                 .first();
 
