@@ -15,14 +15,17 @@ exports.login = async (req, res, next) => {
             req.session.isLoggedIn = true;
             req.session.userRole = result.role;
             req.session.userInfo = result;
-            const user = result.role === 'Administrator' ? 'admin' : 'dentist';
 
             request.get({
                 url: parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId),
             }, (err, response, body) => {
                 if (response.statusCode === HTTP_STATUS.OK) {
                     req.session.clinicInfo = JSON.parse(body);
-                    res.redirect(parse_uri.parse(req, '/' + user + '/dashboard?result=true&id=' + req.session.userInfo.userId));
+
+                    if (result.role === 'Administrator')
+                        res.redirect(parse_uri.parse(req, '/admin/dashboard?result=true&id=' + req.session.userInfo.userId));
+                    else
+                        res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all?filter=upcoming&result=true&id=' + req.session.userInfo.userId));
                 }
                 else
                     res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
@@ -75,11 +78,20 @@ exports.edit = async (req, res, next) => {
 };
 
 exports.viewLogin = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('auth/login', {
-        pageTitle: 'Staff Login',
-        path: '/staff/login',
-        query: req.query
-    });
+    if (req.session.isLoggedIn) {
+        if (req.session.userRole === 'Administrator')
+            res.redirect(parse_uri.parse(req, '/admin/dashboard'));
+        if (req.session.userRole === 'Dentist' || req.session.userRole === 'Dental Assistant')
+            res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all?filter=upcoming'));
+        if (req.session.userRole === 'Patient')
+            res.redirect(parse_uri.parse(req, '/login'));
+    }
+    else
+        res.status(HTTP_STATUS.OK).render('auth/login', {
+            pageTitle: 'Staff Login',
+            path: '/staff/login',
+            query: req.query
+        });
 };
 
 exports.viewDashboard = async (req, res, next) => {

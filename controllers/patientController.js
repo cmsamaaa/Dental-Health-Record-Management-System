@@ -96,11 +96,18 @@ exports.edit = async (req, res, next) => {
 };
 
 exports.viewLogin = async (req, res, next) => {
-    res.status(HTTP_STATUS.OK).render('auth/login', {
-        pageTitle: 'Login',
-        path: '/login',
-        query: req.query
-    });
+    if (req.session.isLoggedIn) {
+        if (req.session.userRole === 'Administrator' || req.session.userRole === 'Dentist' || req.session.userRole === 'Dental Assistant')
+            res.redirect(parse_uri.parse(req, '/staff/login'));
+        if (req.session.userRole === 'Patient')
+            res.redirect(parse_uri.parse(req, '/patient/appointment/upcoming'));
+    }
+    else
+        res.status(HTTP_STATUS.OK).render('auth/login', {
+            pageTitle: 'Login',
+            path: '/login',
+            query: req.query
+        });
 };
 
 exports.viewRegister = async (req, res, next) => {
