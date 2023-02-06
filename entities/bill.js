@@ -72,6 +72,62 @@ class Bill {
     }
 
     /**
+     * Retrieves all `bill` inner join `patient` and `user` record by clinicId and status
+     * Returns: JSON Object
+     * */
+    async getClinicBillsByStatus(clinicId) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('clinicId', clinicId)
+                .andWhere('billStatus', this.billStatus);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves sum of `bills` inner join `patient` and `user` record by clinicId and status
+     * Returns: JSON Object
+     * */
+    async getClinicIncome(clinicId) {
+        let result;
+        try {
+            result = await db(tableName).sum('billTotal', { as: 'gross' })
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .where('clinicId', clinicId)
+                .andWhere('billStatus', this.billStatus);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
+    /**
      * Retrieves all `bill` inner join `patient` and `user` record by userId
      * Returns: JSON Object
      * */

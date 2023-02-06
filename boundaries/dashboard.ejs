@@ -28,6 +28,85 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small card -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3><%= queueData %></h3>
+                  <p>
+                    <% if (queueData > 1) { %>
+                    Customers In Queue
+                    <% } else { %>
+                    Customer In Queue
+                    <% } %>
+                  </p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <a href="/admin/queue/view-all" class="small-box-footer">
+                  More info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small card -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>S$<%= Number(grossIncome).toLocaleString() %></h3>
+
+                  <p>
+                    Gross Income (<span id="lbl_Month"></span>)
+                  </p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <a href="/admin/bill/view-all?filter=paid" class="small-box-footer">
+                  More info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small card -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3><%= lowStock %></h3>
+
+                  <p>Low Stocks</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-boxes"></i>
+                </div>
+                <a href="/admin/inventory/view-all" class="small-box-footer">
+                  More info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small card -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3><%= unpaidInvoices %></h3>
+
+                  <p>Invoices Due</p>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <a href="/admin/bill/view-all?filter=unpaid" class="small-box-footer">
+                  More info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+          <!-- /.row -->
+
+          <div class="row">
             <div class="col-lg-6">
               <div class="card">
                 <div class="card-header border-0">
@@ -287,10 +366,17 @@
 
   <!-- OPTIONAL SCRIPTS -->
   <script src="../plugins/chart.js/Chart.min.js"></script>
+  <script src="/plugins/moment/moment.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="../dist/js/pages/dashboard3.js"></script>
+
+  <script>
+    $(function() {
+      $('#lbl_Month').text(moment(new Date()).format('MMMM'));
+    });
+  </script>
 
 </body>
 

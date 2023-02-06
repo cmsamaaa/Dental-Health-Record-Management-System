@@ -1,8 +1,10 @@
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
-const request = require('request');
+const request = require('async-request');
 
 const Staff = require('../entities/staff');
+const Bill = require('../entities/bill');
+const Inventory = require('../entities/inventory');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
@@ -16,22 +18,19 @@ exports.login = async (req, res, next) => {
             req.session.userRole = result.role;
             req.session.userInfo = result;
 
-            request.get({
-                url: parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId),
-            }, (err, response, body) => {
-                if (response.statusCode === HTTP_STATUS.OK) {
-                    req.session.clinicInfo = JSON.parse(body);
+            const clinicResponse = await request(parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId));
+            if (clinicResponse.statusCode === HTTP_STATUS.OK) {
+                req.session.clinicInfo = JSON.parse(clinicResponse.body);
 
-                    if (result.role === 'Administrator')
-                        res.redirect(parse_uri.parse(req, '/admin/dashboard?result=true&id=' + req.session.userInfo.userId));
-                    else if (result.role === 'Dentist')
-                        res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all?filter=upcoming&result=true&id=' + req.session.userInfo.userId));
-                    else
-                        res.redirect(parse_uri.parse(req, '/dentist/clinic?result=true&id=' + req.session.userInfo.userId));
-                }
+                if (result.role === 'Administrator')
+                    res.redirect(parse_uri.parse(req, '/admin/dashboard?result=true&id=' + req.session.userInfo.userId));
+                else if (result.role === 'Dentist')
+                    res.redirect(parse_uri.parse(req, '/dentist/appointment/view-all?filter=upcoming&result=true&id=' + req.session.userInfo.userId));
                 else
-                    res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
-            });
+                    res.redirect(parse_uri.parse(req, '/dentist/clinic?result=true&id=' + req.session.userInfo.userId));
+            }
+            else
+                res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
         }
         else
             res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
@@ -97,10 +96,28 @@ exports.viewLogin = async (req, res, next) => {
 };
 
 exports.viewDashboard = async (req, res, next) => {
+    const queueResponse = await request(parse_uri.parse(req, '/api/queue/get/count/' + req.session.userInfo.clinicId));
+    let queueData = 0;
+    if (queueResponse.statusCode === HTTP_STATUS.OK)
+        queueData = JSON.parse(queueResponse.body).count;
+
+    let bill = new Bill({ billStatus: 'Paid' });
+    const incomeData = await bill.getClinicIncome(req.session.userInfo.clinicId);
+
+    const inventory = new Inventory({ clinicId: req.session.userInfo.clinicId });
+    const inventoryData = await inventory.getLowStocks();
+
+    bill = new Bill({ billStatus: 'Unpaid' });
+    const unpaidBillData = await bill.getClinicBillsByStatus(req.session.userInfo.clinicId);
+
     res.status(HTTP_STATUS.OK).render('dashboard', {
         pageTitle: 'Dashboard',
         path: '/admin/dashboard',
         query: req.query,
+        queueData: queueData,
+        grossIncome: incomeData.gross,
+        lowStock: inventoryData.length,
+        unpaidInvoices: unpaidBillData.length
     });
 };
 

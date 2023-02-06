@@ -33,6 +33,29 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <% if (_userRole !== 'Patient') { %>
+                  <div class="row mb-4">
+                    <div class="col-md-12">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <% if (query.filter === 'all') { %>
+                        All Invoices
+                        <% } else if (query.filter === 'unpaid') { %>
+                        Unpaid Invoices
+                        <% } else if (query.filter === 'paid') { %>
+                        Paid Invoices
+                        <% } else { %>
+                        Filter display
+                        <% } %>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="?filter=all">All Invoices</a>
+                        <a class="dropdown-item" href="?filter=unpaid">Unpaid Invoices</a>
+                        <a class="dropdown-item" href="?filter=paid">Paid Invoices</a>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+
                   <table id="tbl_Bills" class="table table-bordered table-striped">
                     <% if (_userRole === 'Administrator') { %>
                     <thead>

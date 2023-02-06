@@ -136,14 +136,23 @@ exports.downloadMedicareFile = async (req, res, next) => {
 
 exports.viewBills = async (req, res, next) => {
     const user = req.url.split('/')[1];
+    const filter = req.query.filter;
 
     const title = 'Bills';
     const path = '/' + user + '/bill/view-all';
     let billData = [];
 
     if (user === 'admin') {
-        const bill = new Bill();
-        billData = await bill.getClinicBills(req.session.userInfo.clinicId);
+        const bill = new Bill({ billStatus: filter });
+
+        if (filter === 'all')
+            billData = await bill.getClinicBills(req.session.userInfo.clinicId);
+        else if (filter === 'unpaid')
+            billData = await bill.getClinicBillsByStatus(req.session.userInfo.clinicId);
+        else if (filter === 'paid')
+            billData = await bill.getClinicBills(req.session.userInfo.clinicId);
+        else
+            billData = await bill.getClinicBills(req.session.userInfo.clinicId);
     }
     else if (user === 'patient') {
         const bill = new Bill();

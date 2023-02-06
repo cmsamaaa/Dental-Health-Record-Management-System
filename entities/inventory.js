@@ -78,6 +78,32 @@ class Inventory {
     }
 
     /**
+     * Retrieves all `inventories` records that are low in stock
+     * Returns: JSON[]
+     * */
+    async getLowStocks() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('clinicId', this.clinicId)
+                .andWhere('quantity', '<=', db.ref(tableName + '.minQuantity'));
+
+            result = _.map(result, (inventory) => {
+                inventory.expiryDate = moment(inventory.expiryDate).format('DD-MM-YYYY');
+                inventory.inboundDate = moment(inventory.inboundDate).format('DD-MM-YYYY');
+                return inventory;
+            });
+
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves one `inventories` record
      * Returns: JSON Object
      * */
@@ -92,21 +118,6 @@ class Inventory {
                 inventory.inboundDate = moment(inventory.inboundDate).format('YYYY-MM-DD');
                 return inventory;
             });
-        }
-        catch (e) {
-            console.error(e);
-            result = {};
-        }
-
-        return result[0];
-    }
-
-    async getLowStock() {
-        let result;
-        try {
-            result = await db(tableName).select('*')
-                .where('quantity', '<=', 'minQuantity')
-                .andWhere('inventoryId', this.inventoryId);
         }
         catch (e) {
             console.error(e);
