@@ -135,11 +135,11 @@
 <div class="row">
   <div class="col-md-12">
     <!-- general form elements -->
-    <div class="card card-primary collapsed-card">
+    <div class="card card-primary">
       <div class="card-header">
         <h3 class="card-title text-capitalize">Oral Health Records</h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
           </button>
         </div>
         <!-- /.card-tools -->
@@ -182,15 +182,14 @@
       </div>
       <% if (path === '/dentist/appointment/in-session') { %>
       <div class="card-footer text-right">
-        <form method="post">
-          <% if (oralrecordData) {  %>
-          <a href="/dentist/oral-record/edit/<%= oralrecordData.recordId %>" class="btn btn-primary">Edit Record</a>
-          <% } else {  %>
-          <input type="hidden" name="patientId" value="<%= userData.patientId %>">
-          <input type="hidden" name="apptId" value="<%= userData.apptId %>">
-          <a href="/dentist/oral-record/create/<%= userData.apptId %>" class="btn btn-primary">Create Record</a>
-          <% } %>
-        </form>
+        <a href="/dentist/oral-record/view-all/<%= userData.patientId %>" class="btn btn-success mr-2" target="_blank">View Past Records</a>
+        <% if (oralrecordData) {  %>
+        <a href="/dentist/oral-record/edit/<%= oralrecordData.recordId %>" class="btn btn-primary">Edit Record</a>
+        <% } else {  %>
+        <input type="hidden" name="patientId" value="<%= userData.patientId %>">
+        <input type="hidden" name="apptId" value="<%= userData.apptId %>">
+        <a href="/dentist/oral-record/create/<%= userData.apptId %>" class="btn btn-primary">Create Record</a>
+        <% } %>
       </div>
       <% } %>
       <% } %>
