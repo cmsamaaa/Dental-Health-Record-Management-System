@@ -240,6 +240,7 @@ class Appointment {
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('patients.userId', this.userId)
+                .andWhere('status', 'Upcoming')
                 .andWhere('startDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .orderBy('startDateTime', 'asc');
 
@@ -267,6 +268,7 @@ class Appointment {
                 .innerJoin('users', 'patients.userId', 'users.userId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('users.nric', nric)
+                .andWhere('status', 'Upcoming')
                 .andWhere('startDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .orderBy('startDateTime', 'asc');
 
@@ -308,6 +310,7 @@ class Appointment {
                 .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('patients.userId', this.userId)
+                .andWhere('status', '!=', 'Upcoming')
                 .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .orderBy('startDateTime', 'desc');
 
