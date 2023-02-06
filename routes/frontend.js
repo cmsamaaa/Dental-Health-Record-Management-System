@@ -15,7 +15,6 @@ const reviewController = require('../controllers/reviewController');
 const usedMaterialController = require('../controllers/usedMaterialController');
 
 const routeAuth = require('../middleware/route-auth');
-const routeRedir = require('../middleware/route-redir');
 const statusMiddleware = require('../middleware/statusMiddleware');
 
 const router = express.Router();
