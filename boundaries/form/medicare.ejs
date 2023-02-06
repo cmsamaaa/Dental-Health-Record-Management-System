@@ -138,26 +138,6 @@
     $(function() {
       bsCustomFileInput.init();
     });
-
-    function getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function() {
-        $('#hiddenMedicareField').val(reader.result);
-        console.log(reader.result);
-      };
-      reader.onerror = function(error) {
-        console.log('Error: ', error);
-      };
-    }
-
-    function beforeSubmit() {
-      var file = document.querySelector('input[type="file"]').files[0];
-      getBase64(file); // prints the base64 string
-      console.log($('#hiddenMedicareField').val());
-
-      return confirm('Save selection and return to billing?');
-    }
   </script>
 </body>
 
