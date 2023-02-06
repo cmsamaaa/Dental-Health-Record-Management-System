@@ -84,7 +84,6 @@ exports.viewLogin = async (req, res, next) => {
 
 exports.viewDashboard = async (req, res, next) => {
     const user = req.url.split('/')[1];
-    console.log(user);
 
     res.status(HTTP_STATUS.OK).render('dashboard', {
         pageTitle: 'Dashboard',
