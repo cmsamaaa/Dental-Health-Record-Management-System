@@ -21,9 +21,9 @@ const statusMiddleware = require('../middleware/statusMiddleware');
 const router = express.Router();
 
 // Non-protected routes
-router.get('/', routeAuth.setSession, defaultController.viewIndex);
-router.get('/home', routeAuth.setSession, defaultController.viewIndex);
-router.get('/index', routeAuth.setSession, defaultController.viewIndex);
+router.get('/', defaultController.viewIndex);
+router.get('/home', defaultController.viewIndex);
+router.get('/index', defaultController.viewIndex);
 router.get('/login', patientController.viewLogin);
 router.get('/register', patientController.viewRegister);
 router.get('/register-clinic', clinicController.viewRegister);
@@ -41,7 +41,10 @@ router.get('/queue', routeAuth.setSession, statusMiddleware.updateMissedQueue, q
 
 /* Start of Admin Route */
 
-//Profile
+// Dashboard
+router.get('/admin/dashboard', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewDashboard);
+
+// Profile
 router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);
 router.get('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, staffController.viewEditProfile);
 
@@ -95,7 +98,7 @@ router.get('/admin/inventory/history', routeAuth.setSession, routeAuth.isAuth, r
 
 /* Start of Patient Route */
 
-//Profile
+// Profile
 router.get('/patient/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewProfile);
 router.get('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, patientController.viewEditProfile);
 
@@ -129,7 +132,10 @@ router.get('/patient/review/view/:reviewId', routeAuth.setSession, routeAuth.isA
 
 /* Start of Dentist Route */
 
-//Profile
+// Dashboard
+router.get('/dentist/dashboard', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewDashboard);
+
+// Profile
 router.get('/dentist/profile', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewProfile);
 router.get('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isDentist, staffController.viewEditProfile);
 

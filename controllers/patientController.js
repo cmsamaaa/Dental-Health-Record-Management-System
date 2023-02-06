@@ -16,7 +16,7 @@ exports.login = async (req, res, next) => {
             req.session.userRole = 'Patient';
             req.session.userInfo = result;
 
-            res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userInfo.userId));
+            res.redirect(parse_uri.parse(req, '/patient/dashboard?result=true&id=' + req.session.userInfo.userId));
         }
         else
             res.redirect(parse_uri.parse(req, '/login?error=true'));
@@ -29,8 +29,8 @@ exports.register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.nric, 12); // encrypt password with bcrypt, salt length 12
     if (!_.isEmpty(req.body)) {
         let familyId = null;
-        if (req.body.familyId){
-            familyId = req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId
+        if (req.body.familyId) {
+            familyId = req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId;
         }
         const patient = new Patient({
             firstName: req.body.firstName,
@@ -65,8 +65,8 @@ exports.register = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         let familyId = null;
-        if (req.body.familyId){
-            familyId = req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId
+        if (req.body.familyId) {
+            familyId = req.body.familyId.constructor === Array ? req.body.familyId.join(',') : req.body.familyId;
         }
         const patient = new Patient({
             userId: req.body.userId,
@@ -83,9 +83,9 @@ exports.edit = async (req, res, next) => {
             unit: req.body.unit,
             familyId: familyId
         });
-        
+
         const results = await patient.updatePatient();
-        
+
         if (results)
             res.redirect(parse_uri.parse(req, '/admin/patient/view-all?action=edit&id=' + req.body.userId));
         else
@@ -133,7 +133,7 @@ exports.viewEditPatient = async (req, res, next) => {
     const result = await patient.getPatient();
     const results = await patient.getAllPatients();
     let familyId = result.familyId;
-    
+
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('form/patient', {
             pageTitle: 'Patient',
@@ -196,7 +196,7 @@ exports.viewProfile = async (req, res, next) => {
         userId: req.session.userInfo.userId
     });
     const result = await patient.getProfile();
-    
+
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('detail/profile', {
             pageTitle: 'Profile',

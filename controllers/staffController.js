@@ -15,13 +15,14 @@ exports.login = async (req, res, next) => {
             req.session.isLoggedIn = true;
             req.session.userRole = result.role;
             req.session.userInfo = result;
+            const user = result.role === 'Administrator' ? 'admin' : 'dentist';
 
             request.get({
                 url: parse_uri.parse(req, '/api/clinic/get/' + req.session.userInfo.clinicId),
             }, (err, response, body) => {
                 if (response.statusCode === HTTP_STATUS.OK) {
                     req.session.clinicInfo = JSON.parse(body);
-                    res.redirect(parse_uri.parse(req, '/index?result=true&id=' + req.session.userInfo.userId));
+                    res.redirect(parse_uri.parse(req, '/' + user + '/dashboard?result=true&id=' + req.session.userInfo.userId));
                 }
                 else
                     res.redirect(parse_uri.parse(req, '/staff/login?error=true'));
@@ -78,6 +79,17 @@ exports.viewLogin = async (req, res, next) => {
         pageTitle: 'Staff Login',
         path: '/staff/login',
         query: req.query
+    });
+};
+
+exports.viewDashboard = async (req, res, next) => {
+    const user = req.url.split('/')[1];
+    console.log(user);
+
+    res.status(HTTP_STATUS.OK).render('dashboard', {
+        pageTitle: 'Dashboard',
+        path: '/' + user + '/dashboard',
+        query: req.query,
     });
 };
 

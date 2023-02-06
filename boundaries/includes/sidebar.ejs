@@ -53,7 +53,7 @@
         <% if (_isLoggedIn && _userRole === 'Administrator') { %>
         <li class="nav-header">ADMINISTRATION</li>
         <li class="nav-item">
-          <a href="/" class="nav-link <% if(arrPath[1] === '') { %>active<% } %>">
+          <a href="/admin/dashboard" class="nav-link <% if(arrPath[1] === 'admin' && arrPath[2] === 'dashboard') { %>active<% } %>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
@@ -205,6 +205,12 @@
         <!-- Start of Dentist -->
         <% if (_isLoggedIn && (_userRole === 'Dentist' || _userRole === 'Dental Assistant')) { %>
         <li class="nav-header">INFORMATION</li>
+        <li class="nav-item">
+          <a href="/dentist/dashboard" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'dashboard') { %>active<% } %>">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="/dentist/clinic" class="nav-link <% if(arrPath[1] === 'dentist' && arrPath[2] === 'clinic') { %>active<% } %>">
             <i class="nav-icon fas fa-info-circle"></i>
