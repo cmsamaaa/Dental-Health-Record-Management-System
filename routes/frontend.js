@@ -21,6 +21,9 @@ const statusMiddleware = require('../middleware/statusMiddleware');
 const router = express.Router();
 
 // Non-protected routes
+router.get('/', routeAuth.setSession, defaultController.viewIndex);
+router.get('/home', routeAuth.setSession, defaultController.viewIndex);
+router.get('/index', routeAuth.setSession, defaultController.viewIndex);
 router.get('/login', patientController.viewLogin);
 router.get('/register', patientController.viewRegister);
 router.get('/register-clinic', clinicController.viewRegister);
@@ -35,9 +38,6 @@ router.get('/review/view-all/:clinicId', routeAuth.setSession, reviewController.
 router.get('/queue', routeAuth.setSession, statusMiddleware.updateMissedQueue, queueController.viewQueues);
 
 // Protected routes
-router.get('/', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
-router.get('/home', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
-router.get('/index', routeAuth.setSession, routeAuth.isAuth, routeRedir.defaultPage, defaultController.viewIndex);
 
 /* Start of Admin Route */
 
