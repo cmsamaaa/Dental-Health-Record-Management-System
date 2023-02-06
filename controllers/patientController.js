@@ -16,7 +16,7 @@ exports.login = async (req, res, next) => {
             req.session.userRole = 'Patient';
             req.session.userInfo = result;
 
-            res.redirect(parse_uri.parse(req, '/patient/dashboard?result=true&id=' + req.session.userInfo.userId));
+            res.redirect(parse_uri.parse(req, '/patient/appointment/upcoming?result=true&id=' + req.session.userInfo.userId));
         }
         else
             res.redirect(parse_uri.parse(req, '/login?error=true'));
