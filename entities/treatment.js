@@ -69,6 +69,29 @@ class Treatment {
     }
 
     /**
+     * Retrieves all `treatment` records performed by a clinic
+     * Returns: JSON[]
+     * */
+    async getAllTreatmentsByClinic(clinicId) {
+        let result;
+        try {
+            result = await db(tableName).select('treatmentName', 'treatmentPrice')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .count('treatmentName', { as: 'occurrence' })
+                .groupBy('treatmentName', 'treatmentPrice')
+                .orderBy('occurrence', 'desc')
+                .where('appointments.clinicId', clinicId)
+                .limit(5);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves sum of `treatment` prices
      * Returns: JSON
      * */

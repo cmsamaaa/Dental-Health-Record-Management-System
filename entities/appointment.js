@@ -96,6 +96,37 @@ class Appointment {
     }
 
     /**
+     * Retrieves all `appointment` inner join `patient` and `user` records for the day
+     * Returns: JSON[]
+     * */
+    async getAllClinicAppointmentsToday() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where(tableName + '.clinicId', this.clinicId)
+                .andWhere('startDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 23:59:59'))
+                .orderBy('startDateTime', 'asc');
+
+            result = _.map(result, (appt) => {
+                appt.startDateTime = moment(appt.startDateTime).format('YYYY-MM-DD HH:mm:ss');
+                appt.endDateTime = moment(appt.endDateTime).format('YYYY-MM-DD HH:mm:ss');
+                appt.nric = appt.nric[0] + 'XXXX' + appt.nric.slice(5);
+                appt = _.omit(appt, 'password');
+                return appt;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves all `appointment` inner join `patient` and `user` records apptDateTime >= today
      * Returns: JSON[]
      * */

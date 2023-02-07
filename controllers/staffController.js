@@ -5,6 +5,8 @@ const request = require('async-request');
 const Staff = require('../entities/staff');
 const Bill = require('../entities/bill');
 const Inventory = require('../entities/inventory');
+const Treatment = require('../entities/treatment');
+const Appointment = require('../entities/appointment');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
@@ -110,6 +112,12 @@ exports.viewDashboard = async (req, res, next) => {
     bill = new Bill({ billStatus: 'Unpaid' });
     const unpaidBillData = await bill.getClinicBillsByStatus(req.session.userInfo.clinicId);
 
+    const treatment = new Treatment();
+    const treatmentData = await treatment.getAllTreatmentsByClinic(req.session.userInfo.clinicId);
+
+    const appointment = new Appointment({ clinicId: req.session.userInfo.clinicId });
+    const appointmentData = await appointment.getAllClinicAppointmentsToday();
+
     res.status(HTTP_STATUS.OK).render('dashboard', {
         pageTitle: 'Dashboard',
         path: '/admin/dashboard',
@@ -117,7 +125,9 @@ exports.viewDashboard = async (req, res, next) => {
         queueData: queueData,
         grossIncome: incomeData.gross,
         lowStock: inventoryData.length,
-        unpaidInvoices: unpaidBillData.length
+        unpaidInvoices: unpaidBillData.length,
+        treatmentData: treatmentData,
+        appointmentData: appointmentData
     });
 };
 
