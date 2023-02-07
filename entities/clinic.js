@@ -63,6 +63,20 @@ class Clinic {
         return result;
     }
 
+    async getTop6() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                    .limit('6');
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
     /**
      * Retrieves all `clinic` records inner join `staff` role dentists
      * Returns: JSON[]

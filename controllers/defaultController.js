@@ -5,7 +5,7 @@ exports.viewIndex = async (req, res, next) => {
     const clinic = new Clinic({
         //clinicId: req.session.userInfo.clinicId
     });
-    const result = await clinic.getAll();
+    const result = await clinic.getTop6();
 
     res.status(HTTP_STATUS.OK).render('index', {
         pageTitle: 'Index',
