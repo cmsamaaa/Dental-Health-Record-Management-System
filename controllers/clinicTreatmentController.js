@@ -159,3 +159,29 @@ exports.viewTreatment = async (req, res, next) => {
     else
         res.redirect(parse_uri.parse(req, '/admin/treatment/view-all?error=true'));
 };
+
+exports.viewCompareTreatments = async (req, res, next) => {
+    const pageTitle = 'Treatment';
+    const path = '/clinic/treatments/compare';
+
+    const clinicTreatment = new ClinicTreatment({
+        ctName: req.query.treatmentName
+    });
+    const result = await clinicTreatment.getCompare();
+
+    if (!_.isEmpty(result)) {
+        res.status(HTTP_STATUS.OK).render('table/compare-treatments', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            treatmentData: result
+        });
+    }
+    else
+        res.status(HTTP_STATUS.NOT_FOUND).render('table/compare-treatments', {
+            pageTitle: pageTitle,
+            path: path,
+            query: req.query,
+            treatmentData: []
+        });
+};

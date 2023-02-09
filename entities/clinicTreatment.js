@@ -54,6 +54,30 @@ class ClinicTreatment {
     }
 
     /**
+     * Retrieves all `clinic_treatments` records similar `ctName`
+     * Returns: JSON[]
+     * */
+    async getCompare() {
+        let result;
+        try {
+            result = await db(tableName).select('*').select('clinics.clinicId')
+                .innerJoin('clinics', tableName + '.clinicId', 'clinics.clinicId')
+                .leftJoin('reviews', tableName + '.clinicId', 'reviews.clinicId')
+                .avg('reviewScore', { as: 'review' })
+                .groupBy(tableName + '.clinicId')
+                .orderBy('ctPrice', 'asc')
+                .orderBy('review', 'desc')
+                .where('ctName', 'like', `%${this.ctName}%`);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Retrieves all `clinic_treatments` records by `clinicId`
      * Returns: JSON[]
      * */

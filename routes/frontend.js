@@ -31,6 +31,7 @@ router.get('/forgot-password', userController.viewForgotPassword);
 router.get('/faq', userController.viewFAQ);
 router.get('/staff/faq', userController.viewFAQ_Staff);
 router.get('/clinic/search', routeAuth.setSession, clinicController.findClinicsByPostal);
+router.get('/clinic/treatments/compare', routeAuth.setSession, clinicTreatmentController.viewCompareTreatments);
 router.get('/clinic/view/:clinicId', routeAuth.setSession, clinicController.viewClinicInfo);
 router.get('/clinic/view-all', routeAuth.setSession, clinicController.viewClinics);
 router.get('/review/view-all/:clinicId', routeAuth.setSession, reviewController.viewReviews);
