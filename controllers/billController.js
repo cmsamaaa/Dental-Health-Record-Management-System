@@ -150,7 +150,7 @@ exports.viewBills = async (req, res, next) => {
         else if (filter === 'unpaid')
             billData = await bill.getClinicBillsByStatus(req.session.userInfo.clinicId);
         else if (filter === 'paid')
-            billData = await bill.getClinicBills(req.session.userInfo.clinicId);
+            billData = await bill.getClinicBillsByStatus(req.session.userInfo.clinicId);
         else
             billData = await bill.getClinicBills(req.session.userInfo.clinicId);
     }
