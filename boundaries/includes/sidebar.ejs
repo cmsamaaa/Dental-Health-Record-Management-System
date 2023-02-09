@@ -143,13 +143,13 @@
                 <p>View History</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="/admin/inventory/history/report" class="nav-link <% if(path === '/admin/inventory/history/report') { %>active<% } %>">
+                <i class="nav-icon fas fa-scroll"></i>
+                <p>Report</p>
+              </a>
+            </li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <a href="/admin/report/used-materials" class="nav-link <% if(path === '/admin/report/used-materials') { %>active<% } %>">
-            <i class="nav-icon fas fa-scroll"></i>
-            <p>Report</p>
-          </a>
         </li>
 
         <li class="nav-header">CLINIC</li>
@@ -300,6 +300,12 @@
           <a href="/clinic/search" class="nav-link <% if(path === '/clinic/search') { %>active<% } %>">
             <i class="fas fa-search nav-icon"></i>
             <p>Clinics Near Me</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/clinic/treatments/compare" class="nav-link <% if(path === '/clinic/treatments/compare') { %>active<% } %>">
+            <i class="fas fa-search nav-icon"></i>
+            <p>Compare Treatments</p>
           </a>
         </li>
         <li class="nav-item">

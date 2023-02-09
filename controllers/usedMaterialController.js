@@ -37,8 +37,8 @@ exports.viewUsedMaterials = async (req, res, next) => {
 };
 
 exports.viewUsedMaterialsReport = async (req, res, next) => {
-    const title = 'Report';
-    const path = '/admin/report/used-materials';
+    const title = 'Inventory Report';
+    const path = '/admin/inventory/history/report';
 
     const usedMaterial = new UsedMaterial();
     let usedMaterialData = [];

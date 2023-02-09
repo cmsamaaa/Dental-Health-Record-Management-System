@@ -42,7 +42,6 @@ router.get('/queue', routeAuth.setSession, statusMiddleware.updateMissedQueue, q
 
 // Dashboard
 router.get('/admin/dashboard', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewDashboard);
-router.get('/admin/report/used-materials', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, usedMaterialController.viewUsedMaterialsReport);
 
 // Profile
 router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);
@@ -92,6 +91,7 @@ router.get('/admin/inventory/edit/:inventoryId', routeAuth.setSession, routeAuth
 router.get('/admin/inventory/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventories);
 router.get('/admin/inventory/view/:inventoryId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.viewInventory);
 router.get('/admin/inventory/history', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, usedMaterialController.viewUsedMaterials);
+router.get('/admin/inventory/history/report', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, usedMaterialController.viewUsedMaterialsReport);
 
 /* End of Admin Route */
 
