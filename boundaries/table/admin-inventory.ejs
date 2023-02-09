@@ -146,31 +146,31 @@
         "buttons": [{
             extend: 'copy',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: ['th:not(#actions)', ':visible']
             }
           },
           {
             extend: 'csv',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: ['th:not(#actions)', ':visible']
             }
           },
           {
             extend: 'excel',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: ['th:not(#actions)', ':visible']
             }
           },
           {
             extend: 'pdf',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: ['th:not(#actions)', ':visible']
             }
           },
           {
             extend: 'print',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: ['th:not(#actions)', ':visible']
             }
           },
           "colvis"

@@ -19,7 +19,7 @@
       <!-- Content Header (Page header) -->
       <%- include('../includes/content-header.ejs') %>
       <div class="card-body text-center">
-        <h4>Average Review Score:</h4> 
+        <h4>Average Review Score:</h4>
         <h1><%= Math.round(avgData) %> <span class="fa fa-star checked"></span></h1>
       </div>
       <!-- Main content -->
@@ -33,54 +33,54 @@
                 <% if (reviewData.length > 0){ %>
                 <% for(let i = 0; i < reviewData.length; i++) { %>
                 <div class="col-md-6">
-                    <div class="card">
+                  <div class="card">
                     <div class="card-header">
-                      <label><%= reviewData[i].reviewTitle %></label>                     
+                      <label><%= reviewData[i].reviewTitle %></label>
                     </div>
-                      <div class="card-body">
-                        <%= reviewData[i].reviewDescription %>
-                        <blockquote class="blockquote mb-3">
-                          Rating: <%= reviewData[i].reviewScore %>  <span class="fa fa-star checked"></span>
-                          <footer class="blockquote-footer">Patient: <%= reviewData[i].firstName %><cite title="Last Name"> <%= reviewData[i].lastName %></cite></footer>
-                        </blockquote>
-                      </div>
-                    </div>
-                  </div>
-                  <% } %>
-                  <% }else{ %>
                     <div class="card-body">
-                    <h5 class="login-box-msg">No review found!</h5>
+                      <%= reviewData[i].reviewDescription %>
+                      <blockquote class="blockquote mb-3">
+                        Rating: <%= reviewData[i].reviewScore %> <span class="fa fa-star checked"></span>
+                        <footer class="blockquote-footer">Patient: <%= reviewData[i].firstName %><cite title="Last Name"> <%= reviewData[i].lastName %></cite></footer>
+                      </blockquote>
                     </div>
-                  <% } %>
-                  </div>
-                  <div class="text-right">
-                    <% if (_isLoggedIn) { %>
-                    <% if (_userRole === 'Patient'){ %>
-                      <a href="/patient/review/view-all/<%= clinicId %>" class="btn btn-secondary">My Review(s)</a>
-                      <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
-                    <% } %>
-                    <% }else{ %>
-                      <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
-                    <% } %>
                   </div>
                 </div>
-
-                <!-- /.card-body -->
+                <% } %>
+                <% }else{ %>
+                <div class="card-body">
+                  <h5 class="login-box-msg">No review found!</h5>
+                </div>
+                <% } %>
               </div>
-              <!-- /.card -->
+              <div class="text-right">
+                <% if (_isLoggedIn) { %>
+                <% if (_userRole === 'Patient'){ %>
+                <a href="/patient/review/view-all/<%= clinicId %>" class="btn btn-secondary">My Review(s)</a>
+                <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
+                <% } %>
+                <% }else{ %>
+                <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
+                <% } %>
+              </div>
             </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
 
-    <!-- End -->
-    <%- include('../includes/footer.ejs') %>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- End -->
+  <%- include('../includes/footer.ejs') %>
   </div>
   <!-- ./wrapper -->
 
@@ -107,7 +107,7 @@
     .checked {
       color: orange;
     }
-    </style>
+  </style>
 </body>
 
 </html>

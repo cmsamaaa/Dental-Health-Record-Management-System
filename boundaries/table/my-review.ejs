@@ -30,45 +30,45 @@
                 <% if (reviewData.length > 0){ %>
                 <% for(let i = 0; i < reviewData.length; i++) { %>
                 <div class="col-md-6">
-                    <div class="card">
+                  <div class="card">
                     <div class="card-header">
-                      <label><%= reviewData[i].reviewTitle %></label>                      
+                      <label><%= reviewData[i].reviewTitle %></label>
                     </div>
                     <div class="card-body">
                       <%= reviewData[i].reviewDescription %>
                       <blockquote class="blockquote mb-3">
-                        Rating: <%= reviewData[i].reviewScore %>  <span class="fa fa-star checked"></span>
+                        Rating: <%= reviewData[i].reviewScore %> <span class="fa fa-star checked"></span>
                       </blockquote>
                     </div>
                     <div class="card-footer text-right">
                       <a href="/patient/review/edit/<%= reviewData[i].reviewId %>" class="btn btn-primary">Edit Review</a>
                     </div>
-                    </div>
                   </div>
-                  <% } %>
-                  <% }else{ %>
-                    <div class="card-body">
-                    <h5 class="login-box-msg">No review found!</h5>
-                    </div>
-                  <% } %>
                 </div>
-
-                <!-- /.card-body -->
+                <% } %>
+                <% }else{ %>
+                <div class="card-body">
+                  <h5 class="login-box-msg">No review found!</h5>
+                </div>
+                <% } %>
               </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
 
-    <!-- End -->
-    <%- include('../includes/footer.ejs') %>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- End -->
+  <%- include('../includes/footer.ejs') %>
   </div>
   <!-- ./wrapper -->
 
@@ -95,7 +95,7 @@
     .checked {
       color: orange;
     }
-    </style>
+  </style>
 </body>
 
 </html>

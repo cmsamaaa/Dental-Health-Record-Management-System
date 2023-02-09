@@ -45,7 +45,7 @@
                         <th>Gender</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th id="actions">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -140,31 +140,31 @@
         "buttons": [{
             extend: 'copy',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: [':visible']
             }
           },
           {
             extend: 'csv',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: [':visible']
             }
           },
           {
             extend: 'excel',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: [':visible']
             }
           },
           {
             extend: 'pdf',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: [':visible']
             }
           },
           {
             extend: 'print',
             exportOptions: {
-              columns: 'th:not(:last-child)'
+              columns: [':visible']
             }
           },
           "colvis"

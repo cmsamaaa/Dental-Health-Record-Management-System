@@ -196,36 +196,7 @@
         "order": [
           [1, 'asc']
         ],
-        "buttons": [{
-            extend: 'copy',
-            exportOptions: {
-              columns: 'th:not(:last-child)'
-            }
-          },
-          {
-            extend: 'csv',
-            exportOptions: {
-              columns: 'th:not(:last-child)'
-            }
-          },
-          {
-            extend: 'excel',
-            exportOptions: {
-              columns: 'th:not(:last-child)'
-            }
-          },
-          {
-            extend: 'pdf',
-            exportOptions: {
-              columns: 'th:not(:last-child)'
-            }
-          },
-          {
-            extend: 'print',
-            exportOptions: {
-              columns: 'th:not(:last-child)'
-            }
-          },
+        "buttons": [
           "colvis"
         ]
       }).buttons().container().appendTo('#tbl_Queues_wrapper .col-md-6:eq(0)');
