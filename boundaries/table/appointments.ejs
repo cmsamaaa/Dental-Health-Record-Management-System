@@ -81,7 +81,19 @@
                         <td><%= appointmentData[i].medicareId ? appointmentData[i].medicareId : 'Not Applicable' %></td>
                         <td><%= appointmentData[i].email %></td>
                         <td><%= appointmentData[i].gender %></td>
-                        <td><%= appointmentData[i].status %></td>
+                        <td>
+                          <h5>
+                            <% if (appointmentData[i].status === 'Upcoming' || appointmentData[i].status === 'Completed') { %>
+                            <span class="badge bg-success ml-1 text-uppercase">
+                              <% } else if (appointmentData[i].status === 'In Session' || appointmentData[i].status === 'Payment') { %>
+                              <span class="badge bg-warning ml-1 text-uppercase">
+                                <% } else { %>
+                                <span class="badge bg-danger ml-1 text-uppercase">
+                                  <% } %>
+                                  <%= appointmentData[i].status %>
+                                </span>
+                          </h5>
+                        </td>
                         <% if (path !== '/dentist/appointment/view-all') { %>
                         <td class="d-flex">
                           <a href="/admin/appointment/view/<%= appointmentData[i].apptId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
@@ -135,7 +147,19 @@
                         <td><%= appointmentData[i].startDateTime %></td>
                         <td><%= appointmentData[i].clinicName %></td>
                         <td><%= appointmentData[i].clinicAddress + ', #' + appointmentData[i].clinicUnit + ', (S)' + appointmentData[i].clinicPostal %></td>
-                        <td><%= appointmentData[i].status %></td>
+                        <td>
+                          <h5>
+                            <% if (appointmentData[i].status === 'Upcoming' || appointmentData[i].status === 'Completed') { %>
+                            <span class="badge bg-success ml-1 text-uppercase">
+                              <% } else if (appointmentData[i].status === 'In Session' || appointmentData[i].status === 'Payment') { %>
+                              <span class="badge bg-warning ml-1 text-uppercase">
+                                <% } else { %>
+                                <span class="badge bg-danger ml-1 text-uppercase">
+                                  <% } %>
+                                  <%= appointmentData[i].status %>
+                                </span>
+                          </h5>
+                        </td>
                         <td class="d-flex">
                           <a href="/patient/appointment/view/<%= appointmentData[i].apptId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
                           <% if(appointmentData[i].status === 'Upcoming') { %>

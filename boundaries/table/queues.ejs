@@ -50,7 +50,19 @@
                         <td><%= String(queueData[i].queueNo).padStart(3, '0') %></td>
                         <td><%= queueData[i].nric %></td>
                         <td><%= queueData[i].startDateTime === 'Invalid date' ? 'No appointment linked yet' : queueData[i].startDateTime %></td>
-                        <td><%= queueData[i].queueStatus %></td>
+                        <td>
+                          <h5>
+                            <% if (queueData[i].queueStatus === 'Waiting' || queueData[i].queueStatus === 'Completed') { %>
+                            <span class="badge bg-success ml-1 text-uppercase">
+                              <% } else if (queueData[i].queueStatus === 'In Session' || queueData[i].queueStatus === 'Payment') { %>
+                              <span class="badge bg-warning ml-1 text-uppercase">
+                                <% } else { %>
+                                <span class="badge bg-danger ml-1 text-uppercase">
+                                  <% } %>
+                                  <%= queueData[i].queueStatus %>
+                                </span>
+                          </h5>
+                        </td>
                         <td class="d-flex">
                           <form action="/admin/queue/call" method="post" onsubmit="return confirm('Do you want to call queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> next?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
@@ -106,7 +118,19 @@
                         <td><%= String(queueData[i].queueNo).padStart(3, '0') %></td>
                         <td><%= queueData[i].startDateTime === 'Invalid date' ? 'No appointment linked yet' : queueData[i].startDateTime %></td>
                         <td><%= 'Dr. ' + queueData[i].firstName + ' ' + queueData[i].lastName %></td>
-                        <td><%= queueData[i].queueStatus %></td>
+                        <td>
+                          <h5>
+                            <% if (queueData[i].queueStatus === 'Waiting' || queueData[i].queueStatus === 'Completed') { %>
+                            <span class="badge bg-success ml-1 text-uppercase">
+                              <% } else if (queueData[i].queueStatus === 'In Session' || queueData[i].queueStatus === 'Payment') { %>
+                              <span class="badge bg-warning ml-1 text-uppercase">
+                                <% } else { %>
+                                <span class="badge bg-danger ml-1 text-uppercase">
+                                  <% } %>
+                                  <%= queueData[i].queueStatus %>
+                                </span>
+                          </h5>
+                        </td>
                         <td class="d-flex">
                           <form action="/dentist/queue/call" method="post" onsubmit="return confirm('Do you want to call queue no. <%= String(queueData[i].queueNo).padStart(3, `0`) %> next?');">
                             <input type="hidden" name="queueId" value="<%= queueData[i].queueId %>">
