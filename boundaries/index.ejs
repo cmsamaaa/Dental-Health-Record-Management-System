@@ -63,7 +63,7 @@
             <div class="features-header text-center">
               <div class="container-sm">
                 <h2 class="section-title mt-0">Dental Clinics</h2>
-                <p class="section-paragraph">Difficulty with getting an appointment and stress of long waiting times? 
+                <p class="section-paragraph">Difficulty with getting an appointment and stress of long waiting times?
                   With HappySmile, simply book an appointment or take a queue number from all these clinics anytime, anywhere.</p>
                 <div class="features-image">
                   <img class="features-illustration asset-dark" src="dist/img/home/features-illustration-dark.svg" alt="Feature illustration">
@@ -78,32 +78,30 @@
             <div class="row">
               <% for(let i = 0; i < clinicsData.length; i++) { %>
               <div class="col-md-6">
-              <div class="feature is-revealing">
-                <div class="feature-inner">
-                  <div class="feature-icon">
-                    <img class="asset-light" src="dist/img/home/feature-03-light.svg" alt="Feature 01">
-                    <img class="asset-dark" src="dist/img/home/feature-03-dark.svg" alt="Feature 01">
-                  </div>
-                  <div class="feature-content">
-                    <h3 class="feature-title mt-0"><%= clinicsData[i].clinicName %></h3>
-                    <p class="text-sm mb-0"><b>Clinic Address:</b> <%= clinicsData[i].clinicAddress %></p>
-                    <p class="text-sm mb-0"><b>Unit No:</b> <%= clinicsData[i].clinicUnit %> 
-                      <b>Postal:</b> (S) <%= clinicsData[i].clinicPostal %></p>
-                    <p></p>
-                      <a href="/review/view-all/<%= clinicsData[i].clinicId %>">View Reviews</a>
-                    <p></p>
+                <div class="feature is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img class="asset-light" src="dist/img/home/feature-03-light.svg" alt="Feature 01">
+                      <img class="asset-dark" src="dist/img/home/feature-03-dark.svg" alt="Feature 01">
+                    </div>
+                    <div class="feature-content">
+                      <h3 class="feature-title mt-0"><%= clinicsData[i].clinicName %></h3>
+                      <p class="text-sm mb-0"><b>Clinic Address:</b> <%= clinicsData[i].clinicAddress %></p>
+                      <p class="text-sm mb-1"><b>Unit No:</b> <%= clinicsData[i].clinicUnit %>
+                        <b>Postal:</b> (S) <%= clinicsData[i].clinicPostal %>
+                      </p>
+                      <a href="/clinic/view/<%= clinicsData[i].clinicId %>">Treatments</a> | <a href="/review/view-all/<%= clinicsData[i].clinicId %>">Customer Reviews</a>
+                      <p></p>
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
               <% } %>
-              <p></p>
 
               <div class="cta-cta">
                 <a class="button button-primary" href="/clinic/view-all">View More</a>
               </div>
             </div>
-
           </div>
 
         </div>
@@ -149,19 +147,19 @@
           </ul>
           <ul class="footer-social-links list-reset">
             <li>
-                <span class="screen-reader-text">Facebook</span>
-                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                </svg>
+              <span class="screen-reader-text">Facebook</span>
+              <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+              </svg>
             </li>
             <li>
-                <span class="screen-reader-text">Twitter</span>
-                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                </svg>
+              <span class="screen-reader-text">Twitter</span>
+              <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+              </svg>
             </li>
             <li>
-                <span class="screen-reader-text">Google</span>
-                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                </svg>
+              <span class="screen-reader-text">Google</span>
+              <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+              </svg>
             </li>
           </ul>
           <div class="footer-copyright">&copy;
