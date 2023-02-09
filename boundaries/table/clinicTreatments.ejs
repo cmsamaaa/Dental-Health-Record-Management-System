@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_Appointments" class="table table-bordered table-striped">
+                  <table id="tbl_Treatments" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -114,7 +114,7 @@
   <!-- Page specific script -->
   <script>
     $(function() {
-      $("#tbl_Appointments").DataTable({
+      $("#tbl_Treatments").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
@@ -159,7 +159,7 @@
           },
           "colvis"
         ]
-      }).buttons().container().appendTo('#tbl_Appointments_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#tbl_Treatments_wrapper .col-md-6:eq(0)');
     });
   </script>
 </body>

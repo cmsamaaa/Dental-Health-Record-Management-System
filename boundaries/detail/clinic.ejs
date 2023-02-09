@@ -100,6 +100,45 @@
             </div>
           </div>
           <!-- /.row -->
+
+          <% if (path === '/clinic/view') { %>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Treatments Available</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <% if (path === '/clinic/view' && clinicTreatmentData.length > 0) { %>
+                  <table id="tbl_Treatments" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Treatment Name</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < clinicTreatmentData.length; i++) { %>
+                      <tr>
+                        <td><%= clinicTreatmentData[i].ctName %></td>
+                        <td><%= '$ ' + clinicTreatmentData[i].ctPrice %></td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                  <% } else { %>
+                  <span class="text-danger">No treatment listed, please contact the clinic for more information.</span>
+                  <% } %>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+          <% } %>
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
@@ -111,19 +150,11 @@
   </div>
   <!-- ./wrapper -->
 
-  <!-- disabled SCRIPTS -->
+  <!-- REQUIRED SCRIPTS -->
   <%- include('../includes/end-scripts.ejs') %>
 
-  <!-- bs-custom-file-input -->
-  <script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/dist/js/demo.js"></script>
-  <!-- Page specific script -->
-  <script>
-    $(function() {
-      bsCustomFileInput.init();
-    });
-  </script>
 </body>
 
 </html>

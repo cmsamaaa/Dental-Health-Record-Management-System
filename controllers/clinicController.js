@@ -4,15 +4,16 @@ const request = require('request');
 const Clinic = require('../entities/clinic');
 const User = require('../entities/user');
 const Staff = require('../entities/staff');
+const ClinicTreatment = require('../entities/clinicTreatment');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
 exports.register = async (req, res, next) => {
 
     if (!_.isEmpty(req.body)) {
-        const user = new User ({ email : req.body.clinicEmail});
+        const user = new User({ email: req.body.clinicEmail });
         const emailExist = await user.getEmail();
-        if (_.isEmpty(emailExist)){
+        if (_.isEmpty(emailExist)) {
             const clinic = new Clinic({
                 clinicName: req.body.clinicName,
                 clinicAddress: req.body.clinicAddress,
@@ -49,7 +50,7 @@ exports.register = async (req, res, next) => {
         }
         else
             res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
-        
+
     }
     else
         res.redirect(parse_uri.parse(req, '/register-clinic?error=true'));
@@ -133,25 +134,30 @@ exports.viewClinicInfo = async (req, res, next) => {
             clinicId = req.params.clinicId;
     }
 
+    const clinicTreatment = new ClinicTreatment({ clinicId: clinicId });
+    const clinicTreatmentData = await clinicTreatment.getAll();
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/clinic/get/' + clinicId);
     request.get({
         url: uri,
     }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK) {
+        if (response.statusCode === HTTP_STATUS.OK)
             res.status(HTTP_STATUS.OK).render('detail/clinic', {
                 pageTitle: pageTitle,
                 path: path,
                 query: req.query,
-                clinicData: JSON.parse(response.body)
+                clinicData: JSON.parse(response.body),
+                clinicTreatmentData: clinicTreatmentData
             });
-        }
-        else {
+        else
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: pageTitle,
-                path: path
+                path: path,
+                query: req.query,
+                clinicData: {},
+                clinicTreatmentData: clinicTreatmentData
             });
-        }
     });
 };
 
