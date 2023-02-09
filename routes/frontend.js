@@ -42,6 +42,7 @@ router.get('/queue', routeAuth.setSession, statusMiddleware.updateMissedQueue, q
 
 // Dashboard
 router.get('/admin/dashboard', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, staffController.viewDashboard);
+router.get('/admin/report/used-materials', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, usedMaterialController.viewUsedMaterialsReport);
 
 // Profile
 router.get('/admin/profile', routeAuth.setSession, routeAuth.isAdmin, staffController.viewProfile);

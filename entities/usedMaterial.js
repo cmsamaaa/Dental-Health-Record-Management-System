@@ -85,6 +85,70 @@ class UsedMaterial {
     }
 
     /**
+     * Retrieves all `used_materials` by clinicId
+     * Returns: JSON Object
+     * */
+    async getClinicUsedMaterialsFullReport(clinicId) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('treatments', tableName + '.treatmentId', 'treatments.treatmentId')
+                .innerJoin('inventories', tableName + '.inventoryId', 'inventories.inventoryId')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .count(tableName + '.inventoryId', { as: 'count' })
+                .sum(tableName + '.materialQty', { as: 'sum' })
+                .groupBy(tableName + '.inventoryId')
+                .orderBy('count', 'desc')
+                .where('appointments.clinicId', clinicId);
+
+            result = _.map(result, (usedMaterial) => {
+                usedMaterial.treatmentStart = moment(usedMaterial.treatmentStart).format('DD/MM/YYYY HH:mm');
+                usedMaterial.treatmentEnd = moment(usedMaterial.treatmentEnd).format('DD/MM/YYYY HH:mm');
+                return usedMaterial;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `used_materials` by clinicId
+     * Returns: JSON Object
+     * */
+    async getClinicUsedMaterialsReport(clinicId, startDate, endDate) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('treatments', tableName + '.treatmentId', 'treatments.treatmentId')
+                .innerJoin('inventories', tableName + '.inventoryId', 'inventories.inventoryId')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .count(tableName + '.inventoryId', { as: 'count' })
+                .sum(tableName + '.materialQty', { as: 'sum' })
+                .groupBy(tableName + '.inventoryId')
+                .orderBy('count', 'desc')
+                .where('appointments.clinicId', clinicId)
+                .andWhere('treatments.treatmentEnd', '>=', startDate)
+                .andWhere('treatments.treatmentEnd', '<=', endDate);
+
+            result = _.map(result, (usedMaterial) => {
+                usedMaterial.treatmentStart = moment(usedMaterial.treatmentStart).format('DD/MM/YYYY HH:mm');
+                usedMaterial.treatmentEnd = moment(usedMaterial.treatmentEnd).format('DD/MM/YYYY HH:mm');
+                return usedMaterial;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
      * Delete a `used_materials` record.
      * Can be used to remove a used material record.
      * Returns: Object

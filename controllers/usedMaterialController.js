@@ -35,3 +35,30 @@ exports.viewUsedMaterials = async (req, res, next) => {
         usedMaterialData: usedMaterialData
     });
 };
+
+exports.viewUsedMaterialsReport = async (req, res, next) => {
+    const title = 'Report';
+    const path = '/admin/report/used-materials';
+
+    const usedMaterial = new UsedMaterial();
+    let usedMaterialData = [];
+
+    if (req.query.startDate && req.query.endDate) {
+        let [day, month, year] = req.query.startDate.split('/');
+        const formatStartDate = new Date(+year, month - 1, +day);
+
+        [day, month, year] = req.query.endDate.split('/');
+        const formatEndDate = new Date(+year, month - 1, +day);
+
+        usedMaterialData = await usedMaterial.getClinicUsedMaterialsReport(req.session.userInfo.clinicId, formatStartDate, formatEndDate);
+    }
+    else
+        usedMaterialData = await usedMaterial.getClinicUsedMaterialsFullReport(req.session.userInfo.clinicId);
+
+    res.status(HTTP_STATUS.OK).render('report/usedMaterial', {
+        pageTitle: title,
+        path: path,
+        query: req.query,
+        usedMaterialData: usedMaterialData
+    });
+};
