@@ -107,7 +107,6 @@
           <!-- /.row -->
 
           <div class="row">
-            <% if (appointmentData.length > 0) { %>
             <div class="col-lg-6">
               <div class="card">
                 <div class="card-header border-0">
@@ -116,6 +115,7 @@
                     <a href="/admin/appointment/view-all?filter=upcoming">View All</a>
                   </div>
                 </div>
+                <% if (appointmentData.length > 0) { %>
                 <div class="card-body table-responsive p-0">
                   <table class="table table-striped table-valign-middle">
                     <thead>
@@ -146,11 +146,15 @@
                     </tbody>
                   </table>
                 </div>
+                <% } else { %>
+                <div class="card-body">
+                  <span>Your clinic has no more appointments today!</span>
+                </div>
+                <% } %>
               </div>
               <!-- /.card -->
             </div>
             <!-- /.col-md-6 -->
-            <% } %>
 
             <% if (treatmentData.length > 0) { %>
             <div class="col-lg-6">
