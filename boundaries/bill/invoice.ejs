@@ -52,10 +52,20 @@
                         Paid by Cash
                       </button>
                     </form>
-                    <a href="/admin/bill/medicare?billId=<%= billData.billId %>&apptId=<%= billData.apptId %>" class="btn btn-outline-primary float-right mr-2">
-                      <i class="fas fa-shield-alt"></i>
-                      Medicare Claim
+                    <form action="/admin/bill/medicare" method="get">
+                      <input type="hidden" name="billId" value="<%= billData.billId %>">
+                      <input type="hidden" name="apptId" value="<%= billData.apptId %>">
+                      <button type="submit" class="btn btn-outline-primary float-right mr-2" <% if(!billData.medicareId) { %>title='No medicare ID for patient found!' disabled<% } %>>
+                        <i class="fas fa-shield-alt"></i>
+                        Medicare Claim
+                      </button>
+                    </form>
+                    <% if(!billData.medicareId) { %>
+                    <a href="/admin/patient/edit/<%= billData.userId %>" class="btn btn-outline-primary float-right mr-2">
+                      <i class="fas fa-edit"></i>
+                      Add Medicare ID
                     </a>
+                    <% } %>
                     <% } %>
 
                     <% if (_userRole === 'Patient') { %>
