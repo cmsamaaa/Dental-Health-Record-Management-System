@@ -53,7 +53,10 @@ class Clinic {
     async getAll() {
         let result;
         try {
-            result = await db(tableName).select('*');
+            result = await db(tableName).select('*').select('clinics.clinicId')
+                .leftJoin('reviews', tableName + '.clinicId', 'reviews.clinicId')
+                .avg('reviewScore', { as: 'review' })
+                .groupBy(tableName + '.clinicId');
         }
         catch (e) {
             console.error(e);
@@ -67,7 +70,7 @@ class Clinic {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .limit('6');
+                .limit('6');
         }
         catch (e) {
             console.error(e);

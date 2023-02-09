@@ -8,7 +8,7 @@ class Review {
     reviewDescription;
     reviewTitle;
     clinicId;
-    patientId 
+    patientId;
 
     constructor(data) {
         Object.assign(this, data);
@@ -46,9 +46,9 @@ class Review {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .innerJoin('patients', 'patients.patientId', 'reviews.patientId')
-                    .innerJoin('users', 'users.userId', 'patients.userId')
-                    .where('clinicId', this.clinicId);
+                .innerJoin('patients', 'patients.patientId', 'reviews.patientId')
+                .innerJoin('users', 'users.userId', 'patients.userId')
+                .where('clinicId', this.clinicId);
         }
         catch (e) {
             console.error(e);
@@ -121,7 +121,6 @@ class Review {
             result = await db(tableName).select('*')
                 .where('patientId', this.patientId)
                 .andWhere('clinicId', this.clinicId);
-                
         }
         catch (e) {
             console.error(e);
@@ -130,7 +129,7 @@ class Review {
 
         return result;
     }
-    
+
     /**
      * Update a `review`.
      * Can be used to update review.

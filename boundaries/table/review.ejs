@@ -20,7 +20,7 @@
       <%- include('../includes/content-header.ejs') %>
       <div class="card-body text-center">
         <h4>Average Review Score:</h4>
-        <h1><%= Math.round(avgData) %> <span class="fa fa-star checked"></span></h1>
+        <h1><%= Number(avgData).toFixed(2) %> <span class="fa fa-star checked"></span></h1>
       </div>
       <!-- Main content -->
       <section class="content">
@@ -49,7 +49,7 @@
                 <% } %>
                 <% }else{ %>
                 <div class="card-body">
-                  <h5 class="login-box-msg">No review found!</h5>
+                  <h5 class="login-box-msg">No reviews yet!</h5>
                 </div>
                 <% } %>
               </div>
