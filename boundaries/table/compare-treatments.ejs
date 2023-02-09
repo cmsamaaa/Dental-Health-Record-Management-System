@@ -79,7 +79,13 @@
                             <%= treatmentData[i].clinicAddress + ', #' + treatmentData[i].clinicUnit + ', (S)' + treatmentData[i].clinicPostal %>
                           </a>
                         </td>
-                        <td><%= Number(treatmentData[i].review).toFixed(2) %> <span class="fa fa-star checked"></span></td>
+                        <td>
+                          <% if (treatmentData[i].review > 0) { %>
+                          <%= Number(treatmentData[i].review).toFixed(2) %> <span class="fa fa-star checked"></span>
+                          <% } else { %>
+                          No reviews yet
+                          <% } %>
+                        </td>
                       </tr>
                       <% } %>
                     </tbody>
