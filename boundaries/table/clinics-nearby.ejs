@@ -80,7 +80,7 @@
                         <td><%= i + 1 %></td>
                         <td><%= clinicsData[i].clinicName %></td>
                         <td>
-                          <a href="https://www.google.com/search?q=<%= clinicsData[i].clinicName %>" target="_blank">
+                          <a href="https://maps.google.com/maps?q=<%= encodeURIComponent(clinicsData[i].clinicName) %>%20Singapore+<%= clinicsData[i].clinicPostal %>" target="_blank">
                             <%= clinicsData[i].clinicAddress + ', #' + clinicsData[i].clinicUnit + ', (S)' + clinicsData[i].clinicPostal %>
                           </a>
                         </td>
@@ -92,10 +92,10 @@
                           <% } %>
                         </td>
                         <td>
-                          <%= '+65 ' + clinicsData[i].clinicPhone %>
+                          <a href="https://wa.me/65<%= clinicsData[i].clinicPhone %>" target="_blank"><%= '+65 ' + clinicsData[i].clinicPhone %></a>
                           <% if (clinicsData[i].clinicSubPhone) { %>
                           <br />
-                          <%= '+65 ' + clinicsData[i].clinicSubPhone %>
+                          <a href="https://wa.me/65<%= clinicsData[i].clinicSubPhone %>" target="_blank"><%= '+65 ' + clinicsData[i].clinicSubPhone %></a>
                           <% } %>
                         </td>
                         <td class="d-flex">
