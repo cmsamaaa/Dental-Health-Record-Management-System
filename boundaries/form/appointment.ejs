@@ -59,7 +59,7 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12">
-                        Suggestions based on your home address <span class="badge bg-secondary"><%= nearbyClinicData.length %></span>:
+                        Suggestions based on your postal code <span class="badge bg-secondary"><%= nearbyClinicData.length %></span>:
                         <ul>
                           <% for (let i = 0; i < nearbyClinicData.length && i < 5 ; i++) { %>
                           <li><a href='/patient/appointment/create?clinicId=<%= nearbyClinicData[i].clinicId %>'><%= nearbyClinicData[i].clinicId %>. <%= nearbyClinicData[i].clinicName %></a></li>
