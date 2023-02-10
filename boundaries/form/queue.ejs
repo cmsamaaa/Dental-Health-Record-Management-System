@@ -53,9 +53,19 @@
                           <select id="ddl_Clinic" name="clinicId" class="form-control select2bs4" style="width: 100%;" required>
                             <option selected="selected" disabled>Find clinic...</option>
                             <% for (let i = 0; i < clinicData.length; i++) { %>
-                            <option value="<%= clinicData[i].clinicId %>"><%= clinicData[i].clinicId %>. <%= clinicData[i].clinicName %> | <%= clinicData[i].clinicAddress + ' #' +  clinicData[i].clinicUnit + ' (S)' + clinicData[i].clinicPostal %></option>
+                            <option value="<%= clinicData[i].clinicId %>" <% if (clinicData[i].clinicId == query.clinicId) { %>selected="selected" <% } %>><%= clinicData[i].clinicId %>. <%= clinicData[i].clinicName %> | <%= clinicData[i].clinicAddress + ' #' +  clinicData[i].clinicUnit + ' (S)' + clinicData[i].clinicPostal %></option>
                             <% } %>
                           </select>
+                          <% if (appointmentData.length > 0) { %>
+                          <div class="mt-4">
+                            Suggestions based on your upcoming appointments <span class="badge bg-secondary"><%= appointmentData.length %></span>:
+                            <ul>
+                              <% for (let i = 0; i < appointmentData.length && i < 5 ; i++) { %>
+                              <li><a href='/patient/queue/create?clinicId=<%= appointmentData[i].clinicId %>'><%= appointmentData[i].clinicId %>. <%= appointmentData[i].clinicName %></a></li>
+                              <% } %>
+                            </ul>
+                          </div>
+                          <% } %>
                           <% } %>
 
                           <% if (_userRole === 'Administrator') { %>

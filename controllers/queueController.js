@@ -214,6 +214,13 @@ exports.viewCreateQueue = async (req, res, next) => {
         // get patient info & list of clinics
         const patientResponse = await request(parse_uri.parse(req, '/api/patient/get/' + req.session.userInfo.userId));
         const clinicResponse = await request(parse_uri.parse(req, '/api/clinic/get/all'));
+        const appointmentResponse = await request(parse_uri.parse(req, '/api/appointment/get/all/upcoming/' + req.session.userInfo.userId));
+
+        let appointmentData = [];
+        if (appointmentResponse.body) {
+            appointmentData = JSON.parse(appointmentResponse.body);
+            appointmentData = _.uniqBy(appointmentData, 'clinicId');
+        }
 
         if (patientResponse.statusCode === HTTP_STATUS.NOT_FOUND || clinicResponse.statusCode === HTTP_STATUS.NOT_FOUND)
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
@@ -235,7 +242,8 @@ exports.viewCreateQueue = async (req, res, next) => {
                 path: path,
                 query: req.query,
                 profileData: patientObj,
-                clinicData: JSON.parse(clinicResponse.body)
+                clinicData: JSON.parse(clinicResponse.body),
+                appointmentData: appointmentData
             });
         }
     }
