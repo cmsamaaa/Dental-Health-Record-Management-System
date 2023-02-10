@@ -211,7 +211,7 @@
           <!-- Patient Details Card -->
           <%- include('../includes/patient-card.ejs') %>
           <% } %>
-          <% if (userRole === 'patient' ) { %>
+          <% if (userRole === 'patient' &&  userData.status === 'Completed') { %>
           <!-- Patient Details Card -->
           <%- include('../includes/my-card.ejs') %>
           <% } %>
