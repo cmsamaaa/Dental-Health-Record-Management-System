@@ -83,7 +83,7 @@ exports.findClinicsByPostal = async (req, res, next) => {
     const path = '/clinic/search';
 
     if (req.query.type === 'district' || req.query.type === 'region') {
-        const uri = parse_uri.parse(req, '/api/clinic/get/all/' + req.query.postal);
+        const uri = parse_uri.parse(req, '/api/clinic/get/all/' + req.query.postal + '?type=' + req.query.type);
         request.get({
             url: uri
         }, (err, response, body) => {
