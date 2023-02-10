@@ -57,6 +57,19 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        Suggestions based on your home address <span class="badge bg-secondary"><%= nearbyClinicData.length %></span>:
+                        <ul>
+                          <% for (let i = 0; i < nearbyClinicData.length && i < 5 ; i++) { %>
+                          <li><a href='/patient/appointment/create?clinicId=<%= nearbyClinicData[i].clinicId %>'><%= nearbyClinicData[i].clinicId %>. <%= nearbyClinicData[i].clinicName %></a></li>
+                          <% } %>
+                        </ul>
+                        <% if (nearbyClinicData.length <= 0) { %>
+                        No clinics near you.
+                        <% } %>
+                      </div>
+                    </div>
                   </div>
                   <div class="card-footer text-right">
                     <button type="submit" class="btn btn-primary">Next</button>

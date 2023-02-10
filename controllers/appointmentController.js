@@ -162,10 +162,12 @@ exports.viewCreateAppointment = async (req, res, next) => {
     const user = req.url.split('/')[1];
 
     if (user === 'patient') {
-        // api endpoint uri
-        const uri = parse_uri.parse(req, '/api/patient/get/' + req.session.userInfo.userId);
+        let nearbyClinicData = await async_request(parse_uri.parse(req, '/api/clinic/get/all/' + req.session.userInfo.postal + '?type=district'));
+        if (!nearbyClinicData.body)
+            nearbyClinicData = await async_request(parse_uri.parse(req, '/api/clinic/get/all/' + req.session.userInfo.postal + '?type=region'));
+
         request.get({
-            url: uri,
+            url: parse_uri.parse(req, '/api/patient/get/' + req.session.userInfo.userId),
         }, (err, response, body) => {
             if (response.statusCode === HTTP_STATUS.OK) {
                 const userData = JSON.parse(response.body);
@@ -180,7 +182,8 @@ exports.viewCreateAppointment = async (req, res, next) => {
                                 path: '/' + user + '/appointment/create',
                                 query: req.query,
                                 dentistData: [],
-                                clinicData: JSON.parse(response.body)
+                                clinicData: JSON.parse(response.body),
+                                nearbyClinicData: nearbyClinicData.body ? JSON.parse(nearbyClinicData.body) : []
                             });
                         }
                         else {
