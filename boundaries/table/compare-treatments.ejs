@@ -51,6 +51,24 @@
                         </div>
                       </div>
                     </div>
+                    <% if (!query.treatmentName) { %>
+                    <div class="row">
+                      <div class="col-md-12">
+                        Some suggestions:
+                        <a href='/clinic/treatments/compare?treatmentName=Scaling'>Scaling</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Polishing'>Polishing</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Cleaning'>Cleaning</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Whitening'>Whitening</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Extraction'>Extraction</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Veneer'>Veneer</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Filling'>Filling</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Crowns'>Crowns</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Braces'>Braces</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Denture'>Denture</a>,
+                        <a href='/clinic/treatments/compare?treatmentName=Bonding'>Bonding</a>
+                      </div>
+                    </div>
+                    <% } %>
                   </form>
 
                   <% if (query.treatmentName) { %>
