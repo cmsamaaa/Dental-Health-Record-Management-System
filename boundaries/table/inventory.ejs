@@ -33,6 +33,23 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div class="row mb-4">
+                    <div class="col-md-12">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <% if (query.filter === 'all') { %>
+                        Full Inventory
+                        <% } else if (query.filter === 'low') { %>
+                        Low Stocks
+                        <% } else { %>
+                        Filter display
+                        <% } %>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="?filter=all">Full Inventory</a>
+                        <a class="dropdown-item" href="?filter=low">Low Stocks</a>
+                      </div>
+                    </div>
+                  </div>
                   <table id="tbl_Inventories" class="table table-bordered table-striped">
                     <thead>
                       <tr>

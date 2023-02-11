@@ -6,7 +6,7 @@ const HTTP_STATUS = require("../constants/http_status");
 
 exports.createInventory = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
-        const inventory = new Inventory({ 
+        const inventory = new Inventory({
             name: req.body.itemName,
             quantity: req.body.quantity,
             minQuantity: req.body.minQuantity,
@@ -47,18 +47,28 @@ exports.viewInventories = async (req, res, next) => {
     const inventory = new Inventory({
         clinicId: req.session.userInfo.clinicId
     });
-    const result = await inventory.getAllInventories();
 
-    if (!_.isEmpty(result)) {
-        res.status(HTTP_STATUS.OK).render('table/admin-inventory', {
+    let inventoryData = [];
+
+    if (req.query.filter) {
+        if (req.query.filter === 'all')
+            inventoryData = await inventory.getAllInventories();
+        else if (req.query.filter === 'low')
+            inventoryData = await inventory.getLowStocks();
+    }
+    else
+        inventoryData = await inventory.getAllInventories();
+
+    if (!_.isEmpty(inventoryData)) {
+        res.status(HTTP_STATUS.OK).render('table/inventory', {
             pageTitle: 'Inventory',
             path: '/admin/inventory/view-all',
             query: req.query,
-            inventoryData: result
+            inventoryData: inventoryData
         });
     }
     else
-        res.status(HTTP_STATUS.NOT_FOUND).render('table/admin-inventory', {
+        res.status(HTTP_STATUS.NOT_FOUND).render('table/inventory', {
             pageTitle: 'Inventory',
             path: '/admin/inventory/view-all',
             query: req.query,
