@@ -72,6 +72,23 @@ class Review {
         return result[0];
     }
 
+    async getGroupScore() {
+        let result;
+        try {
+            result = await db(tableName).select('reviewScore')
+                .count('reviewScore', { as: 'count' })
+                .groupBy('reviewScore')
+                .orderBy('reviewScore', 'desc')
+                .where('clinicId', this.clinicId);
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
     async getAvgRating() {
         let result;
         try {

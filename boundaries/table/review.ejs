@@ -18,15 +18,39 @@
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <%- include('../includes/content-header.ejs') %>
-      <div class="card-body text-center">
-        <h4>Average Review Score:</h4>
-        <h1><%= Number(avgData).toFixed(2) %> <span class="fa fa-star checked"></span></h1>
-      </div>
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
+              <div class="text-center mt-2 mb-4">
+                <h4>Average Review Score:</h4>
+                <h1><%= Number(avgData).toFixed(2) %> <span class="fa fa-star checked"></span></h1>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="text-center mt-2 mb-2">
+                <div class="d-flex justify-content-center">
+                  <% for(let i = 0; i < reviewGroupData.length; i++) { %>
+                  <div class="ml-1 mr-2">
+                    <h5>
+                      <span class="badge bg-secondary">
+                        <span class="mr-1"><%= reviewGroupData[i].count %></span>
+                        <% for(let j = 0; j < Number(reviewGroupData[i].reviewScore); j++) { %>
+                        <span class="fa fa-star checked"></span>
+                        <% } %>
+                      </span>
+                    </h5>
+                  </div>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <!-- Error Message -->
               <%- include('../includes/flash-message.ejs') %>
               <div class="row">
@@ -53,14 +77,14 @@
                 </div>
                 <% } %>
               </div>
-              <div class="text-right">
+              <div class="text-right mb-2">
                 <% if (_isLoggedIn) { %>
-                <% if (_userRole === 'Patient'){ %>
-                <a href="/patient/review/view-all/<%= clinicId %>" class="btn btn-secondary">My Review(s)</a>
-                <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
+                <% if (_userRole === 'Patient') { %>
+                <a href="/patient/review/view-all/<%= clinicId %>" class="btn btn-secondary mr-1">My Review(s)</a>
+                <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Add Review</a>
                 <% } %>
-                <% }else{ %>
-                <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Create Review</a>
+                <% } else { %>
+                <a href="/patient/review/create/<%= clinicId %>" class="btn btn-primary">Add Review</a>
                 <% } %>
               </div>
             </div>

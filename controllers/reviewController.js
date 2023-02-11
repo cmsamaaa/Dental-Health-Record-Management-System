@@ -8,7 +8,7 @@ const HTTP_STATUS = require("../constants/http_status");
 exports.create = async (req, res, next) => {
 
     if (!_.isEmpty(req.body)) {
-        const review = new Review({ 
+        const review = new Review({
             reviewScore: req.body.reviewScore,
             reviewDescription: req.body.reviewDescription,
             reviewTitle: req.body.reviewTitle,
@@ -30,9 +30,9 @@ exports.edit = async (req, res, next) => {
     if (!_.isEmpty(req.body)) {
         const review = new Review(req.body);
         const results = await review.update();
-        
+
         if (results)
-            res.redirect(parse_uri.parse(req,  '/review/view-all/' + req.body.clinicId));
+            res.redirect(parse_uri.parse(req, '/review/view-all/' + req.body.clinicId));
         else
             res.redirect(parse_uri.parse(req, '/patient/review/edit/' + req.body.reviewId + '?error=true'));
     }
@@ -44,7 +44,8 @@ exports.viewReviews = async (req, res, next) => {
     const review = new Review({
         clinicId: req.params.clinicId
     });
-    const result = await review.getAll();
+    const reviewData = await review.getAll();
+    const reviewGroupData = await review.getGroupScore();
     const avgRating = await review.getAvgRating();
 
     res.status(HTTP_STATUS.OK).render('table/review', {
@@ -53,7 +54,8 @@ exports.viewReviews = async (req, res, next) => {
         query: req.query,
         clinicId: req.params.clinicId,
         avgData: !_.isEmpty(avgRating.Average) ? avgRating.Average : [],
-        reviewData: !_.isEmpty(result) ? result : []
+        reviewData: !_.isEmpty(reviewData) ? reviewData : [],
+        reviewGroupData: !_.isEmpty(reviewGroupData) ? reviewGroupData : []
     });
 
 };
@@ -67,13 +69,13 @@ exports.viewMyReviews = async (req, res, next) => {
 
     res.status(HTTP_STATUS.OK).render('table/my-review', {
         pageTitle: 'My Review(s)',
-        path: '/patient/review/view-all/' + req.params.clinicId,
+        path: '/patient/review/view-all',
         query: req.query,
         reviewData: !_.isEmpty(result) ? result : []
     });
 };
 
- exports.viewReview = async (req, res, next) => {
+exports.viewReview = async (req, res, next) => {
     const review = new Review({
         clinicId: req.params.clinicId
     });
@@ -89,7 +91,7 @@ exports.viewMyReviews = async (req, res, next) => {
     }
     else
         res.redirect(parse_uri.parse(req, '/patient/review/view-all?error=true'));
-}; 
+};
 
 exports.viewEdit = async (req, res, next) => {
     const review = new Review({
@@ -119,7 +121,7 @@ exports.viewCreate = async (req, res, next) => {
     if (result) {
         res.status(HTTP_STATUS.OK).render('form/review', {
             pageTitle: 'My Review',
-            path: '/patient/review/create/' + req.params.clinicId,
+            path: '/patient/review/create',
             query: req.query,
             clinicId: req.params.clinicId,
             staffData: result
@@ -127,4 +129,4 @@ exports.viewCreate = async (req, res, next) => {
     }
     else
         res.redirect(parse_uri.parse(req, '/patient/review/create?error=true'));
-}
+};
