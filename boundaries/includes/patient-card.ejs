@@ -132,12 +132,13 @@
 </div>
 <!-- /.row -->
 
+<% if (userData.status !== 'Upcoming' && userData.status !== 'Missed' && userData.status !== 'Cancelled') { %>
 <div class="row">
   <div class="col-md-12">
     <!-- general form elements -->
     <div class="card card-primary">
       <div class="card-header">
-        <h3 class="card-title text-capitalize">Oral Health Records</h3>
+        <h3 class="card-title text-capitalize">Oral Health Record</h3>
         <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
           </button>
@@ -145,11 +146,6 @@
         <!-- /.card-tools -->
       </div>
       <!-- /.card-header -->
-      <% if (userData.status === 'Missed') { %>
-      <div class="card-body">
-        <label>Not Recorded</label>
-      </div>
-      <% } else { %>
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
@@ -192,13 +188,13 @@
         <% } %>
       </div>
       <% } %>
-      <% } %>
       <!-- /.card-body -->
     </div>
     <!-- /.card -->
   </div>
 </div>
 <!-- /.row -->
+<% } %>
 
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
