@@ -73,7 +73,14 @@
                 <% } %>
                 <% }else{ %>
                 <div class="card-body">
-                  <h5 class="login-box-msg">No reviews yet!</h5>
+                  <h5 class="login-box-msg">
+                    No reviews yet!
+                    <% if (_isLoggedIn) { %>
+                    <% if (_userRole === 'Patient') { %>
+                    How about you be the first to give a review?
+                    <% } %>
+                    <% } %>
+                  </h5>
                 </div>
                 <% } %>
               </div>
