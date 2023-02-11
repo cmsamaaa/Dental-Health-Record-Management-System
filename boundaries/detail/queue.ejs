@@ -58,6 +58,18 @@
                         </div>
                       </div>
                     </div>
+                    <% if (nearbyClinicData.length > 0) { %>
+                    <div class="row">
+                      <div class="col-md-12">
+                        Suggestions based on your postal code <span class="badge bg-secondary"><%= nearbyClinicData.length %></span>:
+                        <ul>
+                          <% for (let i = 0; i < nearbyClinicData.length && i < 5 ; i++) { %>
+                          <li><a href='/queue?clinicId=<%= nearbyClinicData[i].clinicId %>'><%= nearbyClinicData[i].clinicId %>. <%= nearbyClinicData[i].clinicName %></a></li>
+                          <% } %>
+                        </ul>
+                      </div>
+                    </div>
+                    <% } %>
                   </div>
                   <!-- /.card-body -->
 
@@ -96,7 +108,13 @@
                   <div class="row mt-5 mb-5">
                     <div class="col-md-6 offset-md-3 text-center">
                       <% if (!_isLoggedIn) { %>
-                      Login to get a queue number.
+                      <% if (queueData.count < 5) { %>
+                      <a href="/patient/queue" class="btn btn-success">GET QUEUE NUMBER</a>
+                      <% } else if (queueData.count < 10) { %>
+                      <a href="/patient/queue" class="btn btn-warning">GET QUEUE NUMBER</a>
+                      <% } else {  %>
+                      <a href="/patient/queue" class="btn btn-danger">GET QUEUE NUMBER</a>
+                      <% } %>
                       <% } else { %>
                       <% if (_userRole === 'Patient') { %>
                       <% if (queueData.count < 5) { %>

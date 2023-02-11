@@ -164,19 +164,29 @@ exports.viewQueues = async (req, res, next) => {
         // get patient info & list of clinics
         const clinicResponse = await request(parse_uri.parse(req, '/api/clinic/get/all'));
 
+        let nearbyClinicData = [];
+        if (!_.isEmpty(req.session.userInfo)) {
+            if (req.session.userInfo.postal) {
+                nearbyClinicData = await request(parse_uri.parse(req, '/api/clinic/get/all/' + req.session.userInfo.postal + '?type=district'));
+                if (!nearbyClinicData.body)
+                    nearbyClinicData = await request(parse_uri.parse(req, '/api/clinic/get/all/' + req.session.userInfo.postal + '?type=region'));
+            }
+        }
+
         if (clinicResponse.statusCode === HTTP_STATUS.NOT_FOUND)
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
                 pageTitle: title,
                 path: path,
                 query: req.query
             });
-
-        res.status(HTTP_STATUS.OK).render('detail/queue', {
-            pageTitle: title,
-            path: path,
-            query: req.query,
-            clinicData: JSON.parse(clinicResponse.body)
-        });
+        else
+            res.status(HTTP_STATUS.OK).render('detail/queue', {
+                pageTitle: title,
+                path: path,
+                query: req.query,
+                clinicData: JSON.parse(clinicResponse.body),
+                nearbyClinicData: nearbyClinicData.body ? JSON.parse(nearbyClinicData.body) : []
+            });
     }
     else {
         // get patient info & list of clinics
