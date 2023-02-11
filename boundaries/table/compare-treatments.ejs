@@ -71,20 +71,20 @@
                         <td><%= i + 1 %></td>
                         <td><%= treatmentData[i].ctName %></td>
                         <td><%= '$ ' + treatmentData[i].ctPrice %></td>
+                        <td><a href="/clinic/view/<%= treatmentData[i].clinicId %>"><%= treatmentData[i].clinicName %></a></td>
                         <td>
-                          <a href="/clinic/view/<%= treatmentData[i].clinicId %>" target="_blank"><%= treatmentData[i].clinicName %></a>
-                        </td>
-                        <td>
-                          <a href="https://www.google.com/search?q=<%= treatmentData[i].clinicName %>" target="_blank">
+                          <a href="https://maps.google.com/maps?q=<%= encodeURIComponent(treatmentData[i].clinicName) %>%20Singapore+<%= treatmentData[i].clinicPostal %>" target="_blank">
                             <%= treatmentData[i].clinicAddress + ', #' + treatmentData[i].clinicUnit + ', (S)' + treatmentData[i].clinicPostal %>
                           </a>
                         </td>
                         <td>
-                          <% if (treatmentData[i].review > 0) { %>
-                          <%= Number(treatmentData[i].review).toFixed(2) %> <span class="fa fa-star checked"></span>
-                          <% } else { %>
-                          No reviews yet
-                          <% } %>
+                          <a href="/review/view-all/<%= treatmentData[i].clinicId %>">
+                            <% if (treatmentData[i].review > 0) { %>
+                            <%= Number(treatmentData[i].review).toFixed(2) %> <span class="fa fa-star checked"></span>
+                            <% } else { %>
+                            No reviews yet
+                            <% } %>
+                          </a>
                         </td>
                       </tr>
                       <% } %>

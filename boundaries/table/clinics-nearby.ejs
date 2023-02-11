@@ -69,37 +69,27 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Address</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th id="actions">Actions</th>
+                        <th>Ratings</th>
                       </tr>
                     </thead>
                     <tbody>
                       <% for(let i = 0; i < clinicsData.length; i++) { %>
                       <tr>
                         <td><%= i + 1 %></td>
-                        <td><%= clinicsData[i].clinicName %></td>
+                        <td><a href="/clinic/view/<%= clinicsData[i].clinicId %>"><%= clinicsData[i].clinicName %></a></td>
                         <td>
                           <a href="https://maps.google.com/maps?q=<%= encodeURIComponent(clinicsData[i].clinicName) %>%20Singapore+<%= clinicsData[i].clinicPostal %>" target="_blank">
                             <%= clinicsData[i].clinicAddress + ', #' + clinicsData[i].clinicUnit + ', (S)' + clinicsData[i].clinicPostal %>
                           </a>
                         </td>
                         <td>
-                          <a href="mailto:<%= clinicsData[i].clinicEmail %>"><%= clinicsData[i].clinicEmail %></a>
-                          <% if (clinicsData[i].clinicSubEmail) { %>
-                          <br />
-                          <a href="mailto:<%= clinicsData[i].clinicSubEmail %>"><%= clinicsData[i].clinicSubEmail %></a>
-                          <% } %>
-                        </td>
-                        <td>
-                          <a href="https://wa.me/65<%= clinicsData[i].clinicPhone %>" target="_blank"><%= '+65 ' + clinicsData[i].clinicPhone %></a>
-                          <% if (clinicsData[i].clinicSubPhone) { %>
-                          <br />
-                          <a href="https://wa.me/65<%= clinicsData[i].clinicSubPhone %>" target="_blank"><%= '+65 ' + clinicsData[i].clinicSubPhone %></a>
-                          <% } %>
-                        </td>
-                        <td class="d-flex">
-                          <a href="/clinic/view/<%= clinicsData[i].clinicId %>" class="btn btn-secondary mr-2" title="View Details"><i class="fas fa-eye"></i></a>
+                          <a href="/review/view-all/<%= clinicsData[i].clinicId %>">
+                            <% if (clinicsData[i].review > 0) { %>
+                            <%= Number(clinicsData[i].review).toFixed(2) %> <span class="fa fa-star checked"></span>
+                            <% } else { %>
+                            No reviews yet
+                            <% } %>
+                          </a>
                         </td>
                       </tr>
                       <% } %>
@@ -109,9 +99,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Address</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
+                        <th>Ratings</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -163,21 +151,17 @@
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "columnDefs": [{
-            "width": "30%",
-            "targets": 2
-          },
-          {
-            "width": "20%",
-            "targets": 1
-          }
-        ],
         "buttons": [
           "colvis"
         ]
       }).buttons().container().appendTo('#tbl_Appointments_wrapper .col-md-6:eq(0)');
     });
   </script>
+  <style>
+    .checked {
+      color: orange;
+    }
+  </style>
 </body>
 
 </html>
