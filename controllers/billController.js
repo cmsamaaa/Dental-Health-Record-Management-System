@@ -264,3 +264,37 @@ exports.viewMedicare = async (req, res, next) => {
         });
     }
 };
+
+exports.viewBillsReport = async (req, res, next) => {
+    const filter = req.url.split('/')[4].split('?')[0];
+
+    const title = 'Bill Report';
+    const path = '/admin/bill/report/' + filter;
+
+    let billData = [];
+    let billSumData = [];
+    const bill = new Bill({ billStatus: filter.charAt(0).toUpperCase() + filter.slice(1) });
+
+    if (req.query.startDate && req.query.endDate) {
+        let [day, month, year] = req.query.startDate.split('/');
+        const formatStartDate = new Date(+year, month - 1, +day);
+
+        [day, month, year] = req.query.endDate.split('/');
+        const formatEndDate = new Date(+year, month - 1, +day);
+
+        billData = await bill.getClinicBillsReport(req.session.userInfo.clinicId, formatStartDate, formatEndDate);
+        billSumData = await bill.getClinicBillSumReport(req.session.userInfo.clinicId, formatStartDate, formatEndDate);
+    }
+    else {
+        billData = await bill.getClinicBillsByStatus(req.session.userInfo.clinicId);
+        billSumData = await bill.getClinicBillSum(req.session.userInfo.clinicId);
+    }
+
+    res.status(HTTP_STATUS.OK).render('report/bills', {
+        pageTitle: title,
+        path: path,
+        query: req.query,
+        billData: !_.isEmpty(billData) ? billData : [],
+        billSumData: !_.isEmpty(billSumData) ? billSumData[0] : {}
+    });
+};

@@ -101,16 +101,113 @@ class Bill {
     }
 
     /**
-     * Retrieves sum of `bills` inner join `patient` and `user` record by clinicId and status
+     * Retrieves sum of `bills` by clinicId and status
+     * Returns: JSON Object
+     * */
+    async getClinicBillSum(clinicId) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .sum(tableName + '.billSubtotal', { as: 'subtotal' })
+                .sum(tableName + '.billTax', { as: 'totalTax' })
+                .sum(tableName + '.billTotal', { as: 'total' })
+                .where('clinicId', clinicId)
+                .andWhere('billStatus', this.billStatus);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves all `bill` by clinicId, status, and date range
+     * Returns: JSON Object
+     * */
+    async getClinicBillsReport(clinicId, startDate, endDate) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .innerJoin('patients', 'appointments.patientId', 'patients.patientId')
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('clinicId', clinicId)
+                .andWhere('billStatus', this.billStatus)
+                .andWhere(tableName + '.billDateTime', '>=', startDate)
+                .andWhere(tableName + '.billDateTime', '<=', endDate);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves sum of `bills` by clinicId, status, and date range
+     * Returns: JSON Object
+     * */
+    async getClinicBillSumReport(clinicId, startDate, endDate) {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
+                .sum(tableName + '.billSubtotal', { as: 'subtotal' })
+                .sum(tableName + '.billTax', { as: 'totalTax' })
+                .sum(tableName + '.billTotal', { as: 'total' })
+                .where('clinicId', clinicId)
+                .andWhere('billStatus', this.billStatus)
+                .andWhere(tableName + '.billDateTime', '>=', startDate)
+                .andWhere(tableName + '.billDateTime', '<=', endDate);
+
+            result = _.map(result, (bill) => {
+                bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');
+                bill.paymentDateTime = bill.paymentDateTime ? moment(bill.paymentDateTime).format('DD/MM/YYYY HH:mm:ss') : null;
+                bill = _.omit(bill, 'password');
+                return bill;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves sum of `bills` by clinicId, status, and current month
      * Returns: JSON Object
      * */
     async getClinicIncome(clinicId) {
         let result;
         try {
+            const date = new Date();
+
             result = await db(tableName).sum('billTotal', { as: 'gross' })
                 .innerJoin('appointments', tableName + '.apptId', 'appointments.apptId')
                 .where('clinicId', clinicId)
-                .andWhere('billStatus', this.billStatus);
+                .andWhere('billStatus', this.billStatus)
+                .andWhere('billDateTime', '>=', new Date(date.getFullYear(), date.getMonth(), 1))
+                .andWhere('billDateTime', '<=', new Date(date.getFullYear(), date.getMonth() + 1, 0));
 
             result = _.map(result, (bill) => {
                 bill.billDateTime = moment(bill.billDateTime).format('DD/MM/YYYY HH:mm:ss');

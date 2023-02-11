@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const moment = require('moment');
 const bcrypt = require('bcryptjs');
 const request = require('async-request');
 
@@ -127,7 +128,9 @@ exports.viewDashboard = async (req, res, next) => {
         lowStock: inventoryData.length,
         unpaidInvoices: unpaidBillData.length,
         treatmentData: treatmentData,
-        appointmentData: appointmentData
+        appointmentData: appointmentData,
+        startOfMonth: moment().startOf('month').format('DD/MM/YYYY'),
+        endOfMonth: moment().endOf('month').format('DD/MM/YYYY')
     });
 };
 

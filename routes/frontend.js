@@ -54,6 +54,8 @@ router.get('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAut
 
 // Bill
 router.get('/admin/bill/view-all', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewBills);
+router.get('/admin/bill/report/paid', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewBillsReport);
+router.get('/admin/bill/report/unpaid', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewBillsReport);
 router.get('/admin/bill/invoice', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
 router.get('/admin/bill/invoice-print', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewInvoice);
 router.get('/admin/bill/medicare', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.viewMedicare);
