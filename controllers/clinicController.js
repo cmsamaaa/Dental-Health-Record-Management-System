@@ -163,7 +163,7 @@ exports.viewClinicInfo = async (req, res, next) => {
 
 exports.viewEditClinicInfo = async (req, res, next) => {
     const title = 'Clinic';
-    const path = '/admin/clinic/edit/' + req.params.clinicId;
+    const path = '/admin/clinic/edit';
 
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/clinic/get/' + req.params.clinicId);

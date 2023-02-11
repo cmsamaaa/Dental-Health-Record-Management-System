@@ -30,12 +30,12 @@ router.post('/forgot-password', userController.resetPassword);
 router.get('/logout', routeAuth.setSession, userController.logout);
 
 // Protected routes
-router.post('/admin/clinic/edit/:clinicId', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
+router.post('/admin/clinic/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, clinicController.edit);
 
 router.post('/admin/user/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.suspend);
 router.post('/admin/user/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, userController.reactivate);
 
-router.post('/admin/profile/edit/:userId', routeAuth.setSession, routeAuth.isAdmin, userController.editProfile);
+router.post('/admin/profile/edit', routeAuth.setSession, routeAuth.isAdmin, userController.editProfile);
 
 router.post('/admin/bill/payment', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, billController.updatePayment);
 router.post('/admin/bill/medicare', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, upload.single('pdfFile'), billController.updateMedicare);
@@ -66,7 +66,7 @@ router.post('/admin/inventory/edit', routeAuth.setSession, routeAuth.isAuth, rou
 router.post('/admin/inventory/suspend', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.suspendInventory);
 router.post('/admin/inventory/reactivate', routeAuth.setSession, routeAuth.isAuth, routeAuth.isAdmin, inventoryController.reactivateInventory);
 
-router.post('/patient/profile/edit/:userId', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
+router.post('/patient/profile/edit', routeAuth.setSession, routeAuth.isPatient, patientController.editProfile);
 router.post('/patient/profile/suspend', routeAuth.setSession, routeAuth.isPatient, userController.suspendProfile);
 
 router.post('/patient/queue/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, queueController.createQueue);
@@ -81,7 +81,7 @@ router.post('/patient/bill/payment', routeAuth.setSession, routeAuth.isAuth, rou
 router.post('/patient/review/create', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.create);
 router.post('/patient/review/edit', routeAuth.setSession, routeAuth.isAuth, routeAuth.isPatient, reviewController.edit);
 
-router.post('/dentist/profile/edit/:userId', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
+router.post('/dentist/profile/edit', routeAuth.setSession, routeAuth.isDentist, userController.editProfile);
 
 router.post('/dentist/appointment/in-session/end', routeAuth.setSession, routeAuth.isDentist, appointmentController.endInSessionAppointment);
 router.post('/dentist/appointment/in-session/treatment/add', routeAuth.setSession, routeAuth.isDentist, treatmentController.addTreatment);
