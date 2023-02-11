@@ -49,7 +49,11 @@
                       <% for(let i = 0; i < clinicsData.length; i++) { %>
                       <tr>
                         <td><%= clinicsData[i].clinicName %></td>
-                        <td><%= clinicsData[i].clinicPostal %></td>
+                        <td>
+                          <a href="https://maps.google.com/maps?q=<%= encodeURIComponent(clinicsData[i].clinicName) %>%20Singapore+<%= clinicsData[i].clinicPostal %>" target="_blank">
+                            <%= clinicsData[i].clinicPostal %>
+                          </a>
+                        </td>
                         <td><%= clinicsData[i].clinicUnit %></td>
                         <td><%= clinicsData[i].clinicEmail %></td>
                         <td><%= clinicsData[i].clinicPhone %></td>

@@ -33,7 +33,7 @@
           <div class="hero-inner">
             <div class="hero-copy">
               <h1 class="hero-title mt-0">One Stop Platform For Your Dental Health Care.</h1>
-              <p class="hero-paragraph">Chat online with a <a href="https://t.me/dhrms_happysmile_bot">assistant bot</a>
+              <p class="hero-paragraph">Chat online with an <a href="https://t.me/dhrms_happysmile_bot">assistant bot</a>
                 or <a href="/clinic/search">find a dental clinic nearby</a> to book your appointment now. However you would like to consult a dentist, we got you covered.</p>
               <div class="hero-cta">
                 <a class="button button-primary" href="/login">Login Now</a>
@@ -86,7 +86,12 @@
                     </div>
                     <div class="feature-content">
                       <h3 class="feature-title mt-0"><%= clinicsData[i].clinicName %></h3>
-                      <p class="text-sm mb-0"><b>Clinic Address:</b> <%= clinicsData[i].clinicAddress %></p>
+                      <p class="text-sm mb-0">
+                        <b>Clinic Address:</b>
+                        <a href="https://maps.google.com/maps?q=<%= encodeURIComponent(clinicsData[i].clinicName) %>%20Singapore+<%= clinicsData[i].clinicPostal %>" target="_blank">
+                          <%= clinicsData[i].clinicAddress %>
+                        </a>
+                      </p>
                       <p class="text-sm mb-1"><b>Unit No:</b> <%= clinicsData[i].clinicUnit %>
                         <b>Postal:</b> (S) <%= clinicsData[i].clinicPostal %>
                       </p>
