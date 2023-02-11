@@ -145,8 +145,12 @@
                       <tr>
                         <td><%= appointmentData[i].apptId %></td>
                         <td><%= appointmentData[i].startDateTime %></td>
-                        <td><%= appointmentData[i].clinicName %></td>
-                        <td><%= appointmentData[i].clinicAddress + ', #' + appointmentData[i].clinicUnit + ', (S)' + appointmentData[i].clinicPostal %></td>
+                        <td><a href="/clinic/view/<%= appointmentData[i].clinicId %>"><%= appointmentData[i].clinicName %></a></td>
+                        <td>
+                          <a href="https://maps.google.com/maps?q=<%= encodeURIComponent(appointmentData[i].clinicName) %>%20Singapore+<%= appointmentData[i].clinicPostal %>" target="_blank">
+                            <%= appointmentData[i].clinicAddress + ', #' + appointmentData[i].clinicUnit + ', (S)' + appointmentData[i].clinicPostal %>
+                          </a>
+                        </td>
                         <td>
                           <h5>
                             <% if (appointmentData[i].status === 'Upcoming' || appointmentData[i].status === 'Completed') { %>
