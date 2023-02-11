@@ -102,7 +102,7 @@
                           <form action="/admin/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
                             <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
                             <input type="hidden" name="for" value="admin">
-                            <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-user-times"></i></button>
+                            <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-calendar-times"></i></button>
                           </form>
                           <% } %>
                         </td>
@@ -171,7 +171,7 @@
                           <form action="/patient/appointment/suspend" method="post" onsubmit="return confirm('Do you really want to suspend appointment ID #<%= appointmentData[i].apptId %>?');">
                             <input type="hidden" name="apptId" value="<%= appointmentData[i].apptId %>">
                             <input type="hidden" name="for" value="patient">
-                            <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-user-times"></i></button>
+                            <button type="submit" class="btn btn-danger" title="Cancel"><i class="fas fa-calendar-times"></i></button>
                           </form>
                           <% } %>
                         </td>
