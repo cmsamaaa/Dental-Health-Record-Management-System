@@ -5,6 +5,7 @@ const Clinic = require('../entities/clinic');
 const User = require('../entities/user');
 const Staff = require('../entities/staff');
 const ClinicTreatment = require('../entities/clinicTreatment');
+const Review = require('../entities/review');
 const parse_uri = require("../lib/parse_uri");
 const HTTP_STATUS = require("../constants/http_status");
 
@@ -137,6 +138,9 @@ exports.viewClinicInfo = async (req, res, next) => {
     const clinicTreatment = new ClinicTreatment({ clinicId: clinicId });
     const clinicTreatmentData = await clinicTreatment.getAll();
 
+    const review = new Review({ clinicId: clinicId });
+    const reviewData = await review.getAvgRating();
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/clinic/get/' + clinicId);
     request.get({
@@ -148,7 +152,8 @@ exports.viewClinicInfo = async (req, res, next) => {
                 path: path,
                 query: req.query,
                 clinicData: JSON.parse(response.body),
-                clinicTreatmentData: clinicTreatmentData
+                clinicTreatmentData: clinicTreatmentData,
+                reviewData: reviewData
             });
         else
             res.status(HTTP_STATUS.NOT_FOUND).render('404', {
@@ -156,7 +161,8 @@ exports.viewClinicInfo = async (req, res, next) => {
                 path: path,
                 query: req.query,
                 clinicData: {},
-                clinicTreatmentData: clinicTreatmentData
+                clinicTreatmentData: clinicTreatmentData,
+                reviewData: reviewData
             });
     });
 };

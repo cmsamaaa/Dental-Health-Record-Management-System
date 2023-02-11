@@ -84,6 +84,22 @@
                         </div>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Rating:</label>
+                          <div>
+                            <a href="/review/view-all/<%= clinicData.clinicId %>">
+                              <% if (reviewData.Average) { %>
+                              <%= Number(reviewData.Average).toFixed(2) %> <span class="fa fa-star checked"></span>
+                              <% } else { %>
+                              No reviews
+                              <% } %>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <!-- /.card-body -->
 
@@ -155,6 +171,11 @@
 
   <!-- AdminLTE for demo purposes -->
   <script src="/dist/js/demo.js"></script>
+  <style>
+    .checked {
+      color: orange;
+    }
+  </style>
 </body>
 
 </html>
