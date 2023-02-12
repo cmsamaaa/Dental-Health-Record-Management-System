@@ -57,7 +57,7 @@
                           <% if(treatmentData[i].isDeactivated === 1) { actionText = 'reactivate' } %>
                           <form action="/<%= userRole %>/treatment/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> the treatment \'<%= treatmentData[i].ctName %>\'?');">
                             <input type="hidden" name="ctId" value="<%= treatmentData[i].ctId %>">
-                            <button type="submit" class="btn <% if(treatmentData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(treatmentData[i].isDeactivated === 0) { %><i class="fas fa-user-times"></i><% } else { %><i class="fas fa-user-check"></i><% } %></button>
+                            <button type="submit" class="btn <% if(treatmentData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(treatmentData[i].isDeactivated === 0) { %><i class="fas fa-ban"></i><% } else { %><i class="fas fa-check-circle"></i><% } %></button>
                           </form>
                         </td>
                       </tr>
