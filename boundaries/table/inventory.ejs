@@ -92,7 +92,7 @@
                           <form action="/admin/inventory/<%= actionText %>" method="post" onsubmit="return confirm('Do you really want to <%= actionText %> Inventory ID #<%= inventoryData[i].inventoryId %>?');">
                             <input type="hidden" name="inventoryId" value="<%= inventoryData[i].inventoryId %>">
                             <input type="hidden" name="for" value="inventory">
-                            <button type="submit" class="btn <% if(inventoryData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(inventoryData[i].isDeactivated === 0) { %><i class="fas fa-user-times"></i><% } else { %><i class="fas fa-user-check"></i><% } %></button>
+                            <button type="submit" class="btn <% if(inventoryData[i].isDeactivated === 0) { %>btn-danger<% } else { %>btn-success<% } %> text-capitalize" title="<%= actionText[0].toUpperCase() + actionText.slice(1) %>"><% if(inventoryData[i].isDeactivated === 0) { %><i class="fas fa-ban"></i><% } else { %><i class="fas fa-check-circle"></i><% } %></button>
                           </form>
                         </td>
                       </tr>
