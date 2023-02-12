@@ -86,7 +86,8 @@ class Inventory {
         try {
             result = await db(tableName).select('*')
                 .where('clinicId', this.clinicId)
-                .andWhere('quantity', '<=', db.ref(tableName + '.minQuantity'));
+                .andWhere('quantity', '<=', db.ref(tableName + '.minQuantity'))
+                .andWhere('isDeactivated', 0);
 
             result = _.map(result, (inventory) => {
                 inventory.expiryDate = moment(inventory.expiryDate).format('DD-MM-YYYY');
