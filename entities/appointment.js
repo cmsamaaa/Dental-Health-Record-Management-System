@@ -308,10 +308,8 @@ class Appointment {
                 appointment = _.omit(appointment, 'nric');
                 appointment = _.omit(appointment, 'DOB');
                 appointment = _.omit(appointment, 'password');
-                appointment = _.omit(appointment, 'verifiedEmail');
                 appointment = _.omit(appointment, 'medicareId');
                 appointment = _.omit(appointment, 'familyId');
-                appointment = _.omit(appointment, 'profilePic');
                 appointment = _.omit(appointment, 'isDeactivated');
                 appointment = _.omit(appointment, 'address');
                 appointment = _.omit(appointment, 'unit');

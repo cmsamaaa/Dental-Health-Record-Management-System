@@ -11,8 +11,6 @@ class User {
     nric;
     DOB;
     gender;
-    profilePic;
-    verifiedEmail;
     isDeactivated;
 
     constructor(data) {
@@ -164,7 +162,7 @@ class User {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .where('email', this.email);
+                .where('email', this.email);
 
         }
         catch (e) {
