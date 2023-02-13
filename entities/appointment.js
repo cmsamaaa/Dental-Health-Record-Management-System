@@ -385,7 +385,49 @@ class Appointment {
     }
 
     /**
-     * Retrieves one `appointment` inner join `patient` and `user` record with
+     * Retrieves one `appointment` by startDateTime and staffId
+     * Returns: JSON Object
+     * */
+    async getDentistTimeslot() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('startDateTime', dateTimeFormat.parse(this.startDateTime))
+                .andWhere('staffId', this.staffId)
+                .andWhere('status', 'Upcoming')
+                .first();
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves one `appointment` by startDateTime and patientId
+     * Returns: JSON Object
+     * */
+    async getPatientTimeslot() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .where('startDateTime', dateTimeFormat.parse(this.startDateTime))
+                .andWhere('patientId', this.patientId)
+                .andWhere('status', 'Upcoming')
+                .first();
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves one `appointment` inner join `patient` and `user` record with staffId
      * Returns: JSON Object
      * */
     async getDentistCurrentAppointment() {

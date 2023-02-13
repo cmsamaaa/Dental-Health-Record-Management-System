@@ -68,6 +68,25 @@
 </div>
 <% } %>
 
+<% if (query.booked === 'dentist') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  The dentist you selected has already been booked at this timeslot! Please try a different dentist or another timeslot.
+</div>
+<% } %>
+
+<% if (query.booked === 'patient') { %>
+<div class="callout callout-danger">
+  <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>
+  <% if (path.split('/')[1] === 'admin') { %>
+  The patient already have an existing appointment at this time!
+  <% } %>
+  <% if (path.split('/')[1] === 'patient') { %>
+  You already have an existing appointment at this time! Please head over to your <a href='/patient/appointment/upcoming'>appointments</a> should you wish to reschedule it.
+  <% } %>
+</div>
+<% } %>
+
 <% if (query.inventory === 'error') { %>
 <div class="callout callout-danger">
   <h5><i class="fas fa-exclamation-triangle"></i> Danger</h5>

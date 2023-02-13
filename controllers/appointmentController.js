@@ -18,31 +18,68 @@ const UsedMaterial = require('../entities/usedMaterial');
 exports.createAppointment = async (req, res, next) => {
     const path = req.session.userRole === 'Patient' ? '/appointment/upcoming' : '/appointment/view-all';
 
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/create');
-    request.post({
-        url: uri,
-        form: req.body
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.CREATED)
-            res.redirect(parse_uri.parse(req, '/' + req.body.userType + path + '?action=create&id=' + JSON.parse(body).apptId));
-        else
-            res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/create?error=true'));
+    const appointment = new Appointment({
+        startDateTime: req.body.startDateTime,
+        staffId: req.body.staffId,
+        patientId: req.body.patientId
     });
+
+    const isDentistAvailable = await appointment.getDentistTimeslot();
+    const isPatientAvailable = await appointment.getPatientTimeslot();
+
+    if (isDentistAvailable)
+        res.redirect(parse_uri.parse(req, `/${req.body.userType}/appointment/create?booked=dentist&clinicId=${req.body.clinicId}&staffId=${req.body.staffId}&patientId=${req.body.patientId}&startDateTime=${req.body.startDateTime}`));
+    else if (isPatientAvailable)
+        res.redirect(parse_uri.parse(req, `/${req.body.userType}/appointment/create?booked=patient&clinicId=${req.body.clinicId}&staffId=${req.body.staffId}&patientId=${req.body.patientId}&startDateTime=${req.body.startDateTime}`));
+    else {
+        // api endpoint uri
+        const uri = parse_uri.parse(req, '/api/appointment/create');
+        request.post({
+            url: uri,
+            form: req.body
+        }, (err, response, body) => {
+            if (response.statusCode === HTTP_STATUS.CREATED)
+                res.redirect(parse_uri.parse(req, '/' + req.body.userType + path + '?action=create&id=' + JSON.parse(body).apptId));
+            else
+                res.redirect(parse_uri.parse(req, '/' + req.body.userType + '/appointment/create?error=true'));
+        });
+    }
 };
 
 exports.editAppointment = async (req, res, next) => {
-    // api endpoint uri
-    const uri = parse_uri.parse(req, '/api/appointment/edit');
-    request.post({
-        url: uri,
-        form: req.body
-    }, (err, response, body) => {
-        if (response.statusCode === HTTP_STATUS.OK)
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?action=edit&id=' + req.body.apptId));
-        else
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
+    const path = req.session.userRole === 'Patient' ? '/appointment/upcoming' : '/appointment/view-all';
+
+    const appointment = new Appointment({
+        startDateTime: req.body.startDateTime,
+        staffId: req.body.staffId,
+        patientId: req.body.patientId
     });
+
+    const isDentistAvailable = await appointment.getDentistTimeslot();
+    const isPatientAvailable = await appointment.getPatientTimeslot();
+
+    if (isDentistAvailable) {
+        if (isDentistAvailable.apptId == req.body.apptId)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + path + '?action=edit&id=' + req.body.apptId));
+        else
+            res.redirect(parse_uri.parse(req, `/${req.body.for}/appointment/edit/${req.body.apptId}?booked=dentist&clinicId=${req.body.clinicId}&staffId=${req.body.staffId}&patientId=${req.body.patientId}&startDateTime=${req.body.startDateTime}`));
+    }
+    else if (isPatientAvailable) {
+        if (isPatientAvailable.apptId == req.body.apptId)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + path + '?action=edit&id=' + req.body.apptId));
+        else
+            res.redirect(parse_uri.parse(req, `/${req.body.for}/appointment/edit/${req.body.apptId}?booked=patient&clinicId=${req.body.clinicId}&staffId=${req.body.staffId}&patientId=${req.body.patientId}&startDateTime=${req.body.startDateTime}`));
+    }
+    else {
+        const appointmentResponse = await async_request(parse_uri.parse(req, '/api/appointment/edit'), {
+            method: 'POST',
+            data: req.body
+        });
+        if (appointmentResponse.statusCode === HTTP_STATUS.OK)
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + path + '?action=edit&id=' + req.body.apptId));
+        else
+            res.redirect(parse_uri.parse(req, `/${req.body.for}/appointment/edit/${req.body.apptId}?error=true`));
+    }
 };
 
 exports.endInSessionAppointment = async (req, res, next) => {
