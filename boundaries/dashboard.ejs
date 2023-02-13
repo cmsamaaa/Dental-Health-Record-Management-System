@@ -140,7 +140,17 @@
                         </td>
                         <td><%= appointmentData[i].nric %></td>
                         <td><%= appointmentData[i].startDateTime %></td>
-                        <td><%= appointmentData[i].status %></td>
+                        <td>
+                          <% if (appointmentData[i].status === 'Upcoming' || appointmentData[i].status === 'Completed') { %>
+                          <span class="badge bg-success ml-1 text-uppercase">
+                            <% } else if (appointmentData[i].status === 'In Session' || appointmentData[i].status === 'Payment') { %>
+                            <span class="badge bg-warning ml-1 text-uppercase">
+                              <% } else { %>
+                              <span class="badge bg-danger ml-1 text-uppercase">
+                                <% } %>
+                                <%= appointmentData[i].status %>
+                              </span>
+                        </td>
                       </tr>
                       <% } %>
                     </tbody>
