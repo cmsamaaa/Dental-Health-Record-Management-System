@@ -204,18 +204,31 @@ exports.viewProfile = async (req, res, next) => {
     });
     const result = await patient.getProfile();
 
+    let familyData = [];
+    if (result.familyId) {
+        const familyNRIC = result.familyId.split(',');
+
+        for (let i = 0; i < familyNRIC.length; i++) {
+            patient.nric = familyNRIC[i];
+            const temp = await patient.getProfileByNRIC();
+            familyData.push(temp);
+        }
+    }
+
     if (!_.isEmpty(result)) {
         res.status(HTTP_STATUS.OK).render('detail/profile', {
             pageTitle: 'Profile',
             path: '/patient/profile',
             query: req.query,
-            profileData: result
+            profileData: result,
+            familyData: familyData
         });
     }
     else {
         res.status(HTTP_STATUS.NOT_FOUND).render('404', {
             pageTitle: 'Profile',
-            path: '/patient/profile'
+            path: '/patient/profile',
+            query: req.query
         });
     }
 };

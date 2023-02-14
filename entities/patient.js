@@ -56,7 +56,7 @@ class Patient extends User {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .innerJoin('users', 'patients.userId', 'users.userId');
+                .innerJoin('users', 'patients.userId', 'users.userId');
 
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
@@ -78,8 +78,8 @@ class Patient extends User {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .innerJoin('users', 'patients.userId', 'users.userId')
-                    .where('patients.userId', this.userId);
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('patients.userId', this.userId);
 
             result = _.map(result, (patient) => {
                 patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
@@ -99,11 +99,32 @@ class Patient extends User {
         let result;
         try {
             result = await db(tableName).select('*')
-                    .innerJoin('users', 'patients.userId', 'users.userId')
-                    .where('patients.userId', this.userId);
+                .innerJoin('users', 'patients.userId', 'users.userId')
+                .where('patients.userId', this.userId);
 
             result = _.map(result, (patient) => {
                 patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
+                return patient;
+            });
+        }
+        catch (e) {
+            console.error(e);
+            result = {};
+        }
+
+        return result[0];
+    }
+
+    async getProfileByNRIC() {
+        let result;
+        try {
+            result = await db(tableName).select('*')
+                .innerJoin('users', tableName + '.userId', 'users.userId')
+                .where('users.nric', this.nric);
+
+            result = _.map(result, (patient) => {
+                patient.DOB = moment(patient.DOB).format('YYYY-MM-DD');
+                patient.nric = patient.nric[0] + "XXXX" + patient.nric.slice(5);
                 return patient;
             });
         }

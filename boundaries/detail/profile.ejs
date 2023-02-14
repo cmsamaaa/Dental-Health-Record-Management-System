@@ -53,6 +53,10 @@
                         <label for="tb_Address">Home Address:</label>
                         <input type="text" class="form-control-plaintext" id="tb_Address" name="address" tabindex="9" value="<%= profileData.address %>" disabled>
                       </div>
+                      <div class="form-group">
+                        <label for="tb_FamilyID">Medicare ID:</label>
+                        <input type="text" class="form-control-plaintext" id="tb_FamilyID" name="familyId" tabindex="8" value="<%= profileData.medicareId ? profileData.medicareId : 'Not specified' %>" disabled>
+                      </div>
                       <% } %>
                     </div>
                     <div class="col-md-6">
@@ -109,6 +113,43 @@
                 </div>
               </div>
               <!-- /.card -->
+
+              <% if (_userRole === 'Patient') { %>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Family Members</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <% if (profileData.familyId && familyData.length > 0) { %>
+                  <table id="tbl_Family" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Full Name</th>
+                        <th>NRIC</th>
+                        <th>Medicare ID</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = 0; i < familyData.length; i++) { %>
+                      <tr>
+                        <td><%= i + 1 %></td>
+                        <td><%= familyData[i].firstName + ' ' + familyData[i].lastName %></td>
+                        <td><%= familyData[i].nric %></td>
+                        <td><%= familyData[i].medicareId ? familyData[i].medicareId : 'Not specified' %></td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                  <% } else { %>
+                  <span>You have no family members linked to you. Do approach your clinic's administrator to link on your behalf.</span>
+                  <% } %>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              <% } %>
             </div>
           </div>
           <!-- /.row -->
