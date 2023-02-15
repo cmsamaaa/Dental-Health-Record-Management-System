@@ -220,7 +220,7 @@ class Appointment {
                 .innerJoin('users', 'patients.userId', 'users.userId')
                 .where('staffId', this.staffId)
                 .andWhere('status', '!=', 'Upcoming')
-                .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                // .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .orderBy('startDateTime', 'desc');
             result = _.map(result, (patient) => {
                 return _.omit(patient, 'password');
@@ -246,7 +246,7 @@ class Appointment {
                 .innerJoin('users', 'patients.userId', 'users.userId')
                 .where(tableName + '.clinicId', this.clinicId)
                 .andWhere('status', '!=', 'Upcoming')
-                .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                // .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .orderBy('startDateTime', 'desc');
 
             result = _.map(result, (patient) => {
@@ -341,7 +341,7 @@ class Appointment {
                 .innerJoin('clinics', 'appointments.clinicId', 'clinics.clinicId')
                 .where('patients.userId', this.userId)
                 .andWhere('status', '!=', 'Upcoming')
-                .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
+                // .andWhere('startDateTime', '<', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .orderBy('startDateTime', 'desc');
 
             result = _.map(result, (patient) => {
