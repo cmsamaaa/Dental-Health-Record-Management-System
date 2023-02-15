@@ -191,6 +191,7 @@ class Appointment {
                 .where('startDateTime', '>=', moment(new Date()).format('YYYY-MM-DD 00:00:00'))
                 .andWhere('clinicId', this.clinicId)
                 .andWhere('patientId', this.patientId)
+                .andWhere('status', 'Upcoming')
                 .orderBy('startDateTime', 'asc');
 
             result = _.map(result, (appt) => {
