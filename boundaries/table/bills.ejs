@@ -124,7 +124,13 @@
                         <td><%= billData[i].billId %></td>
                         <td><%= billData[i].clinicName %></td>
                         <td><%= billData[i].billDateTime %></td>
-                        <td><%= billData[i].billStatus === 'Paid' ? billData[i].paymentDateTime : billData[i].billStatus %></td>
+                        <td>
+                          <% if (billData[i].billStatus === 'Paid') { %>
+                          <%= billData[i].paymentDateTime %>
+                          <% } else { %>
+                          <h5><span class="badge bg-danger ml-1">UNPAID</span></h5>
+                          <% } %>
+                        </td>
                         <td><%= billData[i].billTotal %></td>
                         <td class="d-flex">
                           <% if (billData[i].billStatus === 'Paid') { %>
