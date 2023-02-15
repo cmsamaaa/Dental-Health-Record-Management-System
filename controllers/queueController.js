@@ -66,7 +66,7 @@ exports.callQueue = async (req, res, next) => {
     else {
         const queue = new Queue({
             queueId: req.body.queueId,
-            queueStatus: req.body.status === 'Upcoming' ? 'Waiting' : req.body.status
+            queueStatus: req.body.status === 'Upcoming' || !req.body.status ? 'Waiting' : req.body.status
         });
         const results = await queue.callQueue();
 
