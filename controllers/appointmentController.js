@@ -182,6 +182,8 @@ exports.endInSessionAppointment = async (req, res, next) => {
 };
 
 exports.suspendAppointment = async (req, res, next) => {
+    const path = req.session.userRole === 'Patient' ? '/appointment/upcoming' : '/appointment/view-all';
+
     // api endpoint uri
     const uri = parse_uri.parse(req, '/api/appointment/suspend');
     request.post({
@@ -189,9 +191,9 @@ exports.suspendAppointment = async (req, res, next) => {
         form: req.body
     }, (err, response, body) => {
         if (response.statusCode === HTTP_STATUS.OK)
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?action=cancel&id=' + req.body.apptId));
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + path + '?action=cancel&id=' + req.body.apptId));
         else
-            res.redirect(parse_uri.parse(req, '/' + req.body.for + '/appointment/view-all?error=true'));
+            res.redirect(parse_uri.parse(req, '/' + req.body.for + path + '?error=true'));
     });
 };
 
