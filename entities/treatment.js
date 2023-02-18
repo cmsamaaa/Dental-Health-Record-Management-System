@@ -12,7 +12,6 @@ class Treatment {
     treatmentEnd;
     medicareClaim;
     medicareService;
-    staffId;
     apptId;
 
     constructor(data) {
