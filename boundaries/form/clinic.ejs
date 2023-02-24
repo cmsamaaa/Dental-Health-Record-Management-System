@@ -42,15 +42,15 @@
                         </div>
                         <div class="form-group">
                           <label for="tb_Email">Email Address<span style="color:red;">*</span></label>
-                          <input type="email" class="form-control" id="tb_Email" name="clinicEmail" tabindex="5" value="<%= clinicData.clinicEmail %>" required>
+                          <input type="email" class="form-control" id="tb_Email" name="clinicEmail" tabindex="3" value="<%= clinicData.clinicEmail %>" required>
                         </div>
                         <div class="form-group">
                           <label for="tb_Phone">Phone<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_Phone" name="clinicPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="3" value="<%= clinicData.clinicPhone %>" required>
+                          <input type="text" class="form-control" id="tb_Phone" name="clinicPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="5" value="<%= clinicData.clinicPhone %>" required>
                         </div>
                         <div class="form-group">
                           <label for="tb_Address">Address<span style="color:red;">*</span></label>
-                          <input type="text" class="form-control" id="tb_Address" name="clinicAddress" tabindex="9" value="<%= clinicData.clinicAddress %>" required>
+                          <input type="text" class="form-control" id="tb_Address" name="clinicAddress" tabindex="7" value="<%= clinicData.clinicAddress %>" required>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -60,23 +60,23 @@
                         </div>
                         <div class="form-group">
                           <label for="tb_SubEmail">Email Address (Secondary)</label>
-                          <input type="email" class="form-control" id="tb_SubEmail" name="clinicSubEmail" tabindex="3" value="<%= clinicData.clinicSubEmail %>">
+                          <input type="email" class="form-control" id="tb_SubEmail" name="clinicSubEmail" tabindex="4" value="<%= clinicData.clinicSubEmail %>">
                         </div>
                         <div class="form-group">
                           <label for="tb_SubPhone">Phone (Secondary)</label>
-                          <input type="text" class="form-control" id="tb_SubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="3" value="<%= clinicData.clinicSubPhone %>">
+                          <input type="text" class="form-control" id="tb_SubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" tabindex="6" value="<%= clinicData.clinicSubPhone %>">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="tb_Postal">Postal<span style="color:red;">*</span></label>
-                              <input type="text" class="form-control" id="tb_Postal" name="clinicPostal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="10" value="<%= clinicData.clinicPostal %>" required>
+                              <input type="text" class="form-control" id="tb_Postal" name="clinicPostal" pattern="\b[0-9]{6}\b" title="E.g 543210" tabindex="8" value="<%= clinicData.clinicPostal %>" required>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="tb_Unit">Unit Number<span style="color:red;">*</span></label>
-                              <input type="text" class="form-control" id="tb_Unit" name="clinicUnit" tabindex="11" value="<%= clinicData.clinicUnit %>" required>
+                              <input type="text" class="form-control" id="tb_Unit" name="clinicUnit" tabindex="9" value="<%= clinicData.clinicUnit %>" required>
                             </div>
                           </div>
                         </div>
@@ -86,7 +86,7 @@
                   <!-- /.card-body -->
 
                   <div class="card-footer text-right">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" tabindex="10">Submit</button>
                   </div>
                 </form>
               </div>

@@ -15,7 +15,7 @@
           Duplicate email found!
         </p>
         <% } else if (query.type === 'success') { %>
-          <p class="login-box-msg text-success">Register successfully! Please login with your clinic email and clinic phone number as password.</p>
+        <p class="login-box-msg text-success">Register successfully! Please login with your clinic email and clinic phone number as password.</p>
         <% } else { %>
         <p class="login-box-msg">
           Register your clinic
@@ -26,25 +26,25 @@
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Name">Enter Clinic Name<span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="tb_Name" name="clinicName" placeholder="Enter clinic name" tabindex="2" required>
+              <input type="text" class="form-control" id="tb_Name" name="clinicName" placeholder="Enter clinic name" tabindex="1" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Name">Enter Clinic Address<span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="tb_Address" name="clinicAddress" placeholder="Enter clinic address" tabindex="9"required>
+              <input type="text" class="form-control" id="tb_Address" name="clinicAddress" placeholder="Enter clinic address" tabindex="2" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
-              <label for="tb_Postal">Enter Clinic Postal<span style="color:red;" >*</span></label>
-              <input type="text" class="form-control" id="tb_Postal" name="clinicPostal" pattern="\b[0-9]{6}\b" placeholder="Enter clinic postal" title="E.g 543210" tabindex="10" required>
+              <label for="tb_Postal">Enter Clinic Postal<span style="color:red;">*</span></label>
+              <input type="text" class="form-control" id="tb_Postal" name="clinicPostal" pattern="\b[0-9]{6}\b" placeholder="Enter clinic postal" title="E.g 543210" tabindex="3" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Unit">Enter Clinic Unit Number<span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="tb_Unit" name="clinicUnit" placeholder="Enter clinic unit number" tabindex="11" required>
+              <input type="text" class="form-control" id="tb_Unit" name="clinicUnit" placeholder="Enter clinic unit number" tabindex="4" required>
             </div>
           </div>
           <div class="col mb-3">
@@ -56,19 +56,19 @@
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Email">Enter Clinic Sub Email Address (optional)</label>
-              <input type="email" class="form-control" id="tb_SubEmail" name="clinicSubEmail" placeholder="Enter clinic sub email address" tabindex="3">
+              <input type="email" class="form-control" id="tb_SubEmail" name="clinicSubEmail" placeholder="Enter clinic sub email address" tabindex="6">
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Phone">Enter Clinic Phone Number<span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="tb_Phone" name="clinicPhone" pattern="^[0-9]{8}$" placeholder="Enter clinic phone number" title="E.g 98765432" tabindex="3" required>
+              <input type="text" class="form-control" id="tb_Phone" name="clinicPhone" pattern="^[0-9]{8}$" placeholder="Enter clinic phone number" title="E.g 98765432" tabindex="7" required>
             </div>
           </div>
           <div class="col mb-3">
             <div class="form-group">
               <label for="tb_Phone">Enter Clinic Sub Phone Number (optional)</label>
-              <input type="text" class="form-control" id="tb_SubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" placeholder="Enter clinic sub phone number" tabindex="3">
+              <input type="text" class="form-control" id="tb_SubPhone" name="clinicSubPhone" pattern="^[0-9]{8}$" title="E.g 98765432" placeholder="Enter clinic sub phone number" tabindex="8">
             </div>
           </div>
 
@@ -76,7 +76,7 @@
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" id="remember">
+                <input type="checkbox" id="remember" tabindex="9">
                 <label for="remember">
                   I agree to the terms
                 </label>
@@ -84,7 +84,7 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block" href="/">Register</button>
+              <button type="submit" class="btn btn-primary btn-block" href="/" tabindex="10">Register</button>
             </div>
             <!-- /.col -->
           </div>
